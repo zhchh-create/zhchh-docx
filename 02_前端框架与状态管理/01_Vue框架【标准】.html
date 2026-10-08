@@ -147,7 +147,7 @@ section.card li strong{color:var(--ink)}
       <span class="badge std">标准</span>
       <span class="meta">定位：渐进式前端框架——数据驱动视图、组件化、响应式绑定</span>
     </div>
-    <p class="hero-desc">Vue 用"数据驱动视图"取代手写 DOM：你只改数据，框架负责更新界面。本页讲清响应式数据绑定、组件化系统、生命周期，以及 Vue2 选项式 API 的核心心智。案例来自本技术栈最真实的项目群：数据编排平台与低代码平台（Vue2+ElementUI）、iClean（Vue2 与 jQuery 渐进式混用）。Vue3 的 Proxy 响应式原理与组合式 API 单独成深入页。</p>
+    <p class="hero-desc">Vue 用"数据驱动视图"取代手写 DOM：你只改数据，框架负责更新界面。本页讲清响应式数据绑定、组件化系统、生命周期，以及 Vue2 选项式 API 的核心心智。案例来自本技术栈最真实的项目系列：数据编排平台与低代码平台（Vue2+ElementUI）、智能监控大屏（Vue2 与 jQuery 渐进式混用）。Vue3 的 Proxy 响应式原理与组合式 API 单独成深入页。</p>
   </div>
 </header>
 <nav class="doc-nav top" aria-label="文档导航">
@@ -173,7 +173,7 @@ section.card li strong{color:var(--ink)}
 <section id="sec1" class="card">
   <h2><span class="num">1</span>技术点概览</h2>
   <p><strong>是什么</strong>：Vue 是一套渐进式 JavaScript 框架，核心是<strong>响应式数据绑定 + 组件化</strong>。你维护一份状态（data），声明它在界面上长什么样（模板），状态一变，框架自动把受影响的那部分 DOM 更新掉——这就是"MVVM"（Model-View-ViewModel）：视图与模型双向绑定，中间的 ViewModel（Vue 实例）负责同步。Vue2 用 <code>Object.defineProperty</code> 做响应式，Vue3 换成 <code>Proxy</code>（见深入页）。</p>
-  <p><strong>解决什么问题</strong>：jQuery 时代"状态变了→自己改 DOM"极易漏改、难维护。Vue 把"状态到视图的同步"自动化，让开发者只关心数据；组件化又把界面拆成可复用、可组合的单元。本技术栈从 iClean（Vue2+jQuery）到数据编排平台（Vue2+ElementUI）再到 业务系统（Vue3），主线就是这条。</p>
+  <p><strong>解决什么问题</strong>：jQuery 时代"状态变了→自己改 DOM"极易漏改、难维护。Vue 把"状态到视图的同步"自动化，让开发者只关心数据；组件化又把界面拆成可复用、可组合的单元。本技术栈从 智能监控大屏（Vue2+jQuery）到数据编排平台（Vue2+ElementUI）再到 业务系统（Vue3），主线就是这条。</p>
   <div class="diagram">
     <svg viewBox="0 0 800 230" role="img" aria-label="Vue 数据驱动视图的响应式数据流示意图">
       <defs>
@@ -351,9 +351,9 @@ section.card li strong{color:var(--ink)}
   <h2><span class="num">5</span>实战项目经验（实战落地）</h2>
 
   <h3>5.1 项目背景</h3>
-  <p class="lead"><b>一句话定位</b>：从 jQuery 老项目（iClean）渐进引入 Vue2，到数据编排平台/低代码全面 Vue2+ElementUI 组件化。</p>
+  <p class="lead"><b>一句话定位</b>：从 jQuery 老项目（智能监控大屏）渐进引入 Vue2，到数据编排平台/低代码全面 Vue2+ElementUI 组件化。</p>
   <ul>
-    <li><strong>iClean</strong>（2016-2018）：jQuery 时代项目，要逐步上 Vue2 不推翻重写。</li>
+    <li><strong>智能监控大屏</strong>（2016-2018）：jQuery 时代项目，要逐步上 Vue2 不推翻重写。</li>
     <li><strong>数据编排平台/低代码</strong>：Vue2+ElementUI 完整组件化应用。</li>
   </ul>
 
@@ -375,7 +375,7 @@ section.card li strong{color:var(--ink)}
   </ul>
 
   <h3>5.5 关键实现要点</h3>
-  <pre class="code" data-lang="js"><code>// iClean：局部挂载 Vue，与 jQuery 页面共存
+  <pre class="code" data-lang="js"><code>// 智能监控大屏：局部挂载 Vue，与 jQuery 页面共存
 new Vue({
   el: '#alarm-panel',
   data: { alarms: [] },

@@ -147,7 +147,7 @@ section.card li strong{color:var(--ink)}
       <span class="badge deep">深入</span>
       <span class="meta">定位：配置式图表引擎——一份 option 描述一切，Canvas/SVG 双渲染</span>
     </div>
-    <p class="hero-desc">ECharts 是 Apache 顶级开源项目（现独立为 apache/echarts，6.x 为当前主线——6.0 于 2025-07 GA，5.x 为上一代维护线），用一份声明式 <code>option</code> 对象描述坐标系、系列、组件与交互，引擎负责把它变成可交互动画图表。本页从渲染管线、setOption 的 merge 机制讲到大数据渲染的层与增量策略，再以电力大屏实时告警热力图、变电 2.0 高频负荷监测两个实战落地，最后给出全量刷新卡顿这类高频面试坑。</p>
+    <p class="hero-desc">ECharts 是 Apache 顶级开源项目（现独立为 apache/echarts，6.x 为当前主线——6.0 于 2025-07 GA，5.x 为上一代维护线），用一份声明式 <code>option</code> 对象描述坐标系、系列、组件与交互，引擎负责把它变成可交互动画图表。本页从渲染管线、setOption 的 merge 机制讲到大数据渲染的层与增量策略，再以电力大屏实时告警热力图、可视化大屏系统 高频负荷监测两个实战落地，最后给出全量刷新卡顿这类高频面试坑。</p>
   </div>
 </header>
 <nav class="doc-nav top" aria-label="文档导航">
@@ -216,7 +216,7 @@ section.card li strong{color:var(--ink)}
     </svg>
     <p class="diagram-caption">图 1 ECharts 在可视化链路中的位置（示意）</p>
   </div>
-  <h3>横向对比：为什么项目群选 ECharts 而不是 Chart.js / D3 / AntV</h3>
+  <h3>横向对比：为什么项目系列选 ECharts 而不是 Chart.js / D3 / AntV</h3>
   <table>
     <colgroup><col style="width:16%"><col style="width:28%"><col style="width:28%"><col style="width:28%"></colgroup>
     <thead><tr><th>维度</th><th>ECharts</th><th>Chart.js</th><th>D3 / AntV</th></tr></thead>
@@ -480,10 +480,10 @@ chart.on('datazoom', function () { /* 拖缩放后刷新明细表格 */ });</cod
   <h2><span class="num">5</span>实战项目经验（实战落地）</h2>
 
   <h3>5.1 项目背景（业务量级/场景）</h3>
-  <p class="lead"><b>一句话定位</b>：电力大屏项目群（2016-2022）把大量实时遥测数据铺到值班大屏，要求一眼定位越限。</p>
+  <p class="lead"><b>一句话定位</b>：数据可视化大屏项目（2016-2022）把大量实时遥测数据铺到值班大屏，要求一眼定位越限。</p>
   <ul>
     <li><strong>场景一</strong>：值班大屏用热力矩阵铺一片区域的众多监测点，绿黄红分级、越限即闪，值班员扫一眼定位片区再下钻站点。</li>
-    <li><strong>场景二</strong>：变电 2.0（Qiankun 整合 5+ 子应用）实时负荷监测曲线，每 2 秒拉一次遥测刷新折线与状态点。</li>
+    <li><strong>场景二</strong>：可视化大屏系统（Qiankun 整合 5+ 子应用）实时负荷监测曲线，每 2 秒拉一次遥测刷新折线与状态点。</li>
     <li><strong>量级</strong>：监测点成百上千个、轮询秒级到达、大屏常跑在低配主机上，渲染预算紧。</li>
   </ul>
 
@@ -497,8 +497,8 @@ chart.on('datazoom', function () { /* 拖缩放后刷新明细表格 */ });</cod
   <h3>5.3 技术栈</h3>
   <p class="lead"><b>一句话定位</b>：Vue2 + jQuery + ECharts + Qiankun 微前端的混合栈。</p>
   <ul>
-    <li><strong>前端</strong>：Vue2、jQuery（早期 iClean 智能监控）、Layui+Vue 混合、ECharts。</li>
-    <li><strong>架构</strong>：变电 2.0 用 Qiankun 整合 5+ 子应用独立部署。</li>
+    <li><strong>前端</strong>：Vue2、jQuery（早期 智能监控大屏 智能监控）、Layui+Vue 混合、ECharts。</li>
+    <li><strong>架构</strong>：可视化大屏系统 用 Qiankun 整合 5+ 子应用独立部署。</li>
     <li><strong>后端</strong>：Java，分布式数据聚合。</li>
   </ul>
 

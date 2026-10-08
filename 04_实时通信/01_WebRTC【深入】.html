@@ -452,14 +452,14 @@ function requestKeyframe() { wsSend({ janus: 'videohangup-keyframe' }); /* Janus
   <ul>
     <li><strong>业务场景</strong>：变电站摄像头实时监控，值班人员要在值班室多屏同看多路摄像头流，7×24 常驻。</li>
     <li><strong>旧方案痛点</strong>：必须装 <strong>ActiveX 插件</strong>才能播流，绑定 IE；安全软件反复告警；每换一台值班机就要重装插件并过信息安全审计。</li>
-    <li><strong>后续整合</strong>：播放端要被 <strong>Qiankun 微前端</strong>整合成一个子应用，塞进变电 2.0 平台统一入口。</li>
+    <li><strong>后续整合</strong>：播放端要被 <strong>Qiankun 微前端</strong>整合成一个子应用，塞进可视化大屏系统 平台统一入口。</li>
     <li><strong>目标</strong>：零插件、浏览器原生、端到端低延迟、多路同屏 CPU 可控、可独立部署为子应用。</li>
   </ul>
 
   <h3>5.2 我的角色与职责</h3>
   <ul>
     <li><strong>角色</strong>：前端负责人，独立承担播放端从技术选型到上线的全部前端工作。</li>
-    <li><strong>分工</strong>：后端同学负责 Janus 网关部署与摄像头接入；我负责浏览器端播放核心、信令对接、渲染与质量自愈；前端组另有同学做变电 2.0 主框架，我按子应用契约接入。</li>
+    <li><strong>分工</strong>：后端同学负责 Janus 网关部署与摄像头接入；我负责浏览器端播放核心、信令对接、渲染与质量自愈；前端组另有同学做可视化大屏系统 主框架，我按子应用契约接入。</li>
     <li><strong>协作边界</strong>：信令消息格式由我与后端共同定，质量指标口径双方一起对齐。</li>
   </ul>
 

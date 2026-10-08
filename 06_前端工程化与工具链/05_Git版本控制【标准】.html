@@ -147,7 +147,7 @@ section.card li strong{color:var(--ink)}
       <span class="badge std">标准</span>
       <span class="meta">定位：分布式版本控制——分支模型、合并策略与多仓库协作的工程纪律</span>
     </div>
-    <p class="hero-desc">Git 是分布式版本控制系统，核心是"每次提交都是一棵可追溯的快照"。本页不停留在常用命令，而是讲透工程协作层面：Git Flow 与主干开发的取舍、rebase 与 merge 的本质区别、冲突怎么解、以及 monorepo/多仓库与子模块怎么选，并用多个项目群的真实分支协作收尾。</p>
+    <p class="hero-desc">Git 是分布式版本控制系统，核心是"每次提交都是一棵可追溯的快照"。本页不停留在常用命令，而是讲透工程协作层面：Git Flow 与主干开发的取舍、rebase 与 merge 的本质区别、冲突怎么解、以及 monorepo/多仓库与子模块怎么选，并用多个项目系列的真实分支协作收尾。</p>
   </div>
 </header>
 <nav class="doc-nav top" aria-label="文档导航">
@@ -377,10 +377,10 @@ git revert &lt;commit&gt;          # 生成一个"反向提交"来撤销（公�
 <section id="sec5" class="card">
   <h2><span class="num">5</span>实战项目经验（实战落地）</h2>
 
-  <h3>5.1 项目背景：多项目群的分支纪律</h3>
+  <h3>5.1 项目背景：多项目系列的分支纪律</h3>
   <p class="lead"><b>一句话定位</b>：横跨多个项目、团队 3-8 人，需要一套不依赖口头约定的分支纪律，否则发版全靠人肉对。</p>
   <ul>
-    <li><strong>项目群</strong>：大屏项目群、数据编排平台、业务系统、WebRTC 播放器（2016-2026）。</li>
+    <li><strong>项目系列</strong>：数据可视化大屏项目、数据编排平台、业务系统、WebRTC 播放器（2016-2026）。</li>
     <li><strong>痛点</strong>：发版时"谁的分支没合、哪个热修改了主干"靠人肉对，易出错。</li>
   </ul>
 
@@ -392,7 +392,7 @@ git revert &lt;commit&gt;          # 生成一个"反向提交"来撤销（公�
 
   <h3>5.4 落地设计：模型取舍与 rebase 纪律</h3>
   <ul>
-    <li><span class="tag-key">关键</span><strong>模型取舍</strong>：有发版周期的老项目（大屏/变电 2.0）用 Git Flow；持续迭代的新项目（业务系统）用主干开发 + 短特性分支 + PR。</li>
+    <li><span class="tag-key">关键</span><strong>模型取舍</strong>：有发版周期的老项目（大屏/可视化大屏系统）用 Git Flow；持续迭代的新项目（业务系统）用主干开发 + 短特性分支 + PR。</li>
     <li><strong>合并前同步主干</strong>：特性分支合前先 <code>git rebase main</code> 本地预解冲突。</li>
     <li><strong>rebase 纪律</strong>：未推远端的特性分支用 rebase 保持干净；已推公共分支只 merge 不 rebase。</li>
   </ul>
@@ -427,7 +427,7 @@ git push --force-with-lease feature/login   # rebase 后哈希变了，安全强
   </ul>
 
   <h3>5.10 面试讲法（一句话抓手）</h3>
-  <p class="key-sentence">一句话抓手："我在多项目群里按迭代节奏选分支模型——发版型用 Git Flow、持续迭代用主干开发 + 短特性分支 + PR，踩过对公共分支 force push 覆盖同事的坑后，定下已共享分支只 merge、强推用 --force-with-lease 的纪律。"</p>
+  <p class="key-sentence">一句话抓手："我在多项目系列里按迭代节奏选分支模型——发版型用 Git Flow、持续迭代用主干开发 + 短特性分支 + PR，踩过对公共分支 force push 覆盖同事的坑后，定下已共享分支只 merge、强推用 --force-with-lease 的纪律。"</p>
 </section>
 
 <section id="sec6" class="card">

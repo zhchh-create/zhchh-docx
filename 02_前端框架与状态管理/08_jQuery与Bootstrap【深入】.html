@@ -147,7 +147,7 @@ section.card li strong{color:var(--ink)}
       <span class="badge deep">深入</span>
       <span class="meta">定位：现代框架的前史——命令式 DOM 操作时代的工程遗产</span>
     </div>
-    <p class="hero-desc">jQuery 与 Bootstrap 是 Vue/React 之前的前端标配：jQuery 用"选择器+方法+链式调用"统一了 DOM 操作，Bootstrap 用栅格系统和现成组件快速搭后台。本技术栈从 iClean（jQuery 时代自研 Grid/Tree/Dialog 插件）到大屏（Layui+Vue 混合改造）一路走来。本页讲透 jQuery 的链式调用、事件委托、插件机制，Bootstrap 栅格原理，以及它们与现代框架的承接关系——这是理解"为什么需要现代框架"的最好对照。</p>
+    <p class="hero-desc">jQuery 与 Bootstrap 是 Vue/React 之前的前端标配：jQuery 用"选择器+方法+链式调用"统一了 DOM 操作，Bootstrap 用栅格系统和现成组件快速搭后台。本技术栈从 智能监控大屏（jQuery 时代自研 Grid/Tree/Dialog 插件）到大屏（Layui+Vue 混合改造）一路走来。本页讲透 jQuery 的链式调用、事件委托、插件机制，Bootstrap 栅格原理，以及它们与现代框架的承接关系——这是理解"为什么需要现代框架"的最好对照。</p>
   </div>
 </header>
 <nav class="doc-nav top" aria-label="文档导航">
@@ -206,7 +206,7 @@ section.card li strong{color:var(--ink)}
     <li><strong>事件绑定</strong>：jQuery <code>.on('click')</code>；现代框架模板里 <code>@click</code>。</li>
     <li><strong>组件复用</strong>：jQuery 靠插件（<code>$.fn.grid</code>）；现代框架靠组件/SFC。</li>
     <li><strong>布局</strong>：Bootstrap 栅格类；现代框架用 Flex/Grid + 组件库（Element 等）。</li>
-    <li><strong>渐进承接</strong>：新项目用现代框架，老项目可局部引入 jQuery，或逐步重写——iClean 就是 Vue2+jQuery 共存的过渡态。</li>
+    <li><strong>渐进承接</strong>：新项目用现代框架，老项目可局部引入 jQuery，或逐步重写——智能监控大屏 就是 Vue2+jQuery 共存的过渡态。</li>
   </ul>
 </section>
 
@@ -234,7 +234,7 @@ section.card li strong{color:var(--ink)}
   <ul>
     <li><strong>写法</strong>：<code>$.fn.grid = function(opts){ ... }</code>，之后 <code>$('#x').grid()</code>。</li>
   </ul>
-  <p>iClean 的 Grid/Tree/Dialog 都是这么做的；插件末尾要 <code>return this.each(...)</code> 保持可链式。</p>
+  <p>智能监控大屏 的 Grid/Tree/Dialog 都是这么做的；插件末尾要 <code>return this.each(...)</code> 保持可链式。</p>
   <h3>2.5 Ajax 封装</h3>
   <p class="lead"><b>一句话定位</b>：$.ajax/$.get/$.post 把 XHR 封装成回调/Promise，是 fetch/axios 之前的标准请求方式。</p>
   <ul>
@@ -258,7 +258,7 @@ section.card li strong{color:var(--ink)}
     <li><strong>jQuery 痛点</strong>：状态与 DOM 手动同步、选择器散落、插件难以组合。</li>
     <li><strong>现代框架的解法</strong>：命令式变声明式、DOM 同步自动化、复用从插件升级为组件。</li>
   </ul>
-  <p class="key-sentence"><span class="tag-point">样本</span>iClean 的 Vue2+jQuery 混用、大屏 Layui→Vue2 改造，正是这一承接的真实样本。</p>
+  <p class="key-sentence"><span class="tag-point">样本</span>智能监控大屏 的 Vue2+jQuery 混用、大屏 Layui→Vue2 改造，正是这一承接的真实样本。</p>
 </section>
 
 <section id="sec3" class="card">
@@ -348,10 +348,10 @@ $.fn.grid.defaults = { pageSize: 20 };
   <h2><span class="num">5</span>实战项目经验（实战落地）</h2>
 
   <h3>5.1 项目背景</h3>
-  <p class="lead"><b>一句话定位</b>：jQuery 时代的两处实战——iClean 自研 Grid/Tree/Dialog 插件，以及大屏项目群 Layui+Vue 混合改造。</p>
+  <p class="lead"><b>一句话定位</b>：jQuery 时代的两处实战——智能监控大屏 自研 Grid/Tree/Dialog 插件，以及数据可视化大屏项目 Layui+Vue 混合改造。</p>
   <ul>
-    <li><strong>iClean</strong>（2016-2018）：监控场景要高度定制的表格/树/弹窗，无合适现成库，自研 jQuery 插件。</li>
-    <li><strong>大屏项目群</strong>：早期基于 Layui（带 jQuery 的 UI 框架），后局部引入 Vue2。</li>
+    <li><strong>智能监控大屏</strong>（2016-2018）：监控场景要高度定制的表格/树/弹窗，无合适现成库，自研 jQuery 插件。</li>
+    <li><strong>数据可视化大屏项目</strong>：早期基于 Layui（带 jQuery 的 UI 框架），后局部引入 Vue2。</li>
   </ul>
 
   <h3>5.2 我的角色与职责</h3>

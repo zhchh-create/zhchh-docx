@@ -147,7 +147,7 @@ section.card li strong{color:var(--ink)}
       <span class="badge deep">深入</span>
       <span class="meta">定位：前端编程语言本体——类型、作用域、闭包、this、原型链的心智模型</span>
     </div>
-    <p class="hero-desc">JavaScript 的"难"不在语法，而在一套与多数后端语言不同的执行模型：动态类型、词法作用域、函数即对象、原型继承、闭包捕获词法环境。本页从执行上下文与调用栈讲起，落到闭包、this、原型链三块硬骨头，再以 iClean 智能监控与大屏项目群的真实代码（光跟踪算法、分布式数据聚合、自研 Grid/Tree/Dialog 插件）展示这套语言如何支撑一个 10 年的前端栈。异步与事件循环单独成页，本页聚焦"语言本体"。</p>
+    <p class="hero-desc">JavaScript 的"难"不在语法，而在一套与多数后端语言不同的执行模型：动态类型、词法作用域、函数即对象、原型继承、闭包捕获词法环境。本页从执行上下文与调用栈讲起，落到闭包、this、原型链三块硬骨头，再以 智能监控大屏 智能监控与数据可视化大屏项目的真实代码（光跟踪算法、分布式数据聚合、自研 Grid/Tree/Dialog 插件）展示这套语言如何支撑一个 10 年的前端栈。异步与事件循环单独成页，本页聚焦"语言本体"。</p>
   </div>
 </header>
 <nav class="doc-nav top" aria-label="文档导航">
@@ -227,7 +227,7 @@ section.card li strong{color:var(--ink)}
       <text x="35" y="122" font-size="11" fill="#475569">DOM 操作：手动写 .text() .html()</text>
       <text x="35" y="144" font-size="11" fill="#475569">模块：CommonJS require</text>
       <text x="35" y="175" font-size="11" font-weight="600" fill="#b91c1c">特点：灵活、但容易出 bug</text>
-      <text x="35" y="195" font-size="11" fill="#64748b">早期项目（iClean、大屏）</text>
+      <text x="35" y="195" font-size="11" fill="#64748b">早期项目（智能监控大屏、大屏）</text>
       <text x="35" y="220" font-size="10.5" fill="#b45309">错误推迟到运行期，靠人肉测试</text>
 
       <!-- TypeScript -->
@@ -253,7 +253,7 @@ section.card li strong{color:var(--ink)}
     <p class="diagram-caption">图 从原生 JS 到框架封装的三层演进（示意）</p>
   </div>
   <ul>
-    <li><strong>原生 ES vs TypeScript</strong>：TS 不改变运行时，它在编译期把类型擦除成普通 JS。原生 JS 的动态性是"灵活但把错误推迟到运行期"，TS 把这部分风险前移到编译期。本套技术栈早期（iClean、大屏）全是原生 JS + jQuery，后期 业务系统 全面切到 TS——迁移的收益正是"大型公共包与 API 客户端不再靠人肉契约"（见 TypeScript 页）。</li>
+    <li><strong>原生 ES vs TypeScript</strong>：TS 不改变运行时，它在编译期把类型擦除成普通 JS。原生 JS 的动态性是"灵活但把错误推迟到运行期"，TS 把这部分风险前移到编译期。本套技术栈早期（智能监控大屏、大屏）全是原生 JS + jQuery，后期 业务系统 全面切到 TS——迁移的收益正是"大型公共包与 API 客户端不再靠人肉契约"（见 TypeScript 页）。</li>
     <li><strong>命令式操作 DOM vs 框架声明式渲染</strong>：jQuery/原生时代，状态与 DOM 的同步全靠手写（改 <code>.text()</code>、<code>.html()</code>），一旦状态分支多就极易漏改。Vue/React 用"数据驱动视图"接管了这层映射，代价是要接受框架的响应式模型。理解原生 JS 仍然必要：框架编译产物、虚拟 DOM diff、插件底层最终都是原生 JS。</li>
     <li><strong>CommonJS vs ESM 模块</strong>：早期大屏 Webpack 项目用 CommonJS（<code>require</code>，运行时动态加载、值拷贝），现代 Vite/Node 用 ESM（<code>import/export</code>，编译期静态分析、活绑定、可 tree-shaking）。工程选型上，新代码一律 ESM，老代码靠工具兼容。</li>
   </ul>
@@ -476,7 +476,7 @@ const total = rows.reduce((sum, r) => sum + r.level, 0);
   <h2><span class="num">5</span>实战项目经验（实战落地）</h2>
 
   <h3>5.1 项目背景</h3>
-  <p class="lead"><b>一句话定位</b>：电力大屏项目群 iClean 智能监控——把多个变电站的摄像头画面、光跟踪算法框选结果、设备状态聚到一屏展示。</p>
+  <p class="lead"><b>一句话定位</b>：智能监控大屏——把多个变电站的摄像头画面、光跟踪算法框选结果、设备状态聚到一屏展示。</p>
   <ul>
     <li><strong>业务场景</strong>：调度中心一屏看多站，算法侧通过 WebSocket/轮询推送归一化目标坐标，前端要做数据清洗、聚合、叠加层绘制。</li>
     <li><strong>量级</strong>：单屏并发约 9 路视频叠加（估算），多个采集节点分布式上报。</li>
