@@ -9,47 +9,15 @@
 :root {
   --accent:#1d4ed8;--accent2:#0e7490;--warn:#b45309;--ok:#047857;--danger:#b91c1c;
   --ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--card:#ffffff;
-  --deep:#7c3aed;--std:#0e7490;--base:#64748b;
   --radius:12px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;color:var(--ink);line-height:1.8;background:#f8fafc}
 a{color:var(--accent);text-decoration:none}
 a:hover{text-decoration:underline}
-.container{max-width:900px;margin:0 auto;padding:0 20px}
-header.hero{background:linear-gradient(135deg,#1e293b 0%,#0f172a 100%);color:#fff;padding:40px 0 30px;margin-bottom:20px}
-.breadcrumb{font-size:13px;color:#94a3b8;margin-bottom:10px}
-h1{font-size:28px;margin-bottom:15px}
-.hero-desc{color:#cbd5e1;font-size:15px;line-height:1.8;max-width:760px}
-nav.toc{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin-bottom:20px}
-nav.toc h2{font-size:16px;margin-bottom:12px;color:var(--ink);border:none;padding:0}
-nav.toc ol{margin-left:20px;color:var(--muted);font-size:14px}
-nav.toc li{margin:6px 0}
-nav.toc a{color:var(--muted);text-decoration:none}
-nav.toc a:hover{color:var(--accent)}
-section.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:25px;margin-bottom:20px}
-section.card h2{font-size:20px;margin-bottom:15px;padding-bottom:10px;border-bottom:2px solid var(--line);display:flex;align-items:center;gap:10px}
-section.card h2 .num{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:14px}
-section.card h3{font-size:17px;margin:25px 0 10px;color:var(--accent)}
-section.card h4{font-size:15px;margin:18px 0 8px;color:var(--ink)}
-section.card p{margin:10px 0;font-size:15px;color:#334155}
-section.card ul,section.card ol{margin:10px 0 10px 25px;font-size:15px;color:#334155}
-section.card li{margin:6px 0}
-.lead{background:#f8fafc;padding:12px 16px;border-radius:8px;font-size:14px;margin:15px 0}
-.diagram{background:#fafafa;border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin:20px 0;text-align:center;overflow-x:auto}
-.diagram-caption{font-size:13px;color:var(--muted);margin-top:10px}
-.key-sentence{background:#eff6ff;border-left:4px solid var(--accent);padding:12px 16px;border-radius:0 8px 8px 0;margin:15px 0;font-size:14px}
-.warn-box{background:#fffbeb;border-left:4px solid var(--warn);padding:12px 16px;border-radius:0 8px 8px 0;margin:15px 0;font-size:14px}
-code{background:#f1f5f9;padding:2px 6px;border-radius:4px;font-size:14px;color:#0f766e}
-pre{background:#1e293b;color:#e2e8f0;padding:16px;border-radius:8px;overflow-x:auto;font-size:13px;line-height:1.6;margin:15px 0}
-pre code{background:none;color:inherit;padding:0}
-.topic{background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:18px;margin:15px 0}
-.topic h4{margin-top:0;color:var(--accent)}
-.read-more{font-size:13px;color:var(--muted);margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
-footer{text-align:center;padding:30px 20px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);margin-top:40px}
 
 /* ===== 全库统一导航 ===== */
-.doc-nav{display:flex;justify-content:space-between;align-items:center;gap:8px;max-width:980px;margin:0 auto;padding:10px 20px}
+.doc-nav{display:flex;justify-content:space-between;align-items:center;gap:8px;max-width:1280px;margin:0 auto;padding:10px 20px}
 .doc-nav.top{position:sticky;top:0;z-index:70;background:#fff;border-bottom:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(15,23,42,.08)}
 .doc-nav.bottom{border-top:1px solid #e2e8f0;padding-top:16px;padding-bottom:16px;margin-top:8px}
 .doc-nav-btn{color:#1d4ed8;text-decoration:none;font-size:14px;font-weight:600;line-height:1;padding:7px 12px;border:1px solid #e2e8f0;border-radius:8px;background:#fff;white-space:nowrap;transition:border-color .15s,background .15s}
@@ -57,7 +25,46 @@ a.doc-nav-btn:hover{border-color:#1d4ed8;background:#dbeafe}
 .doc-nav-btn.home{color:#475569}
 .doc-nav-btn.home:hover{color:#1d4ed8}
 .doc-nav-btn.hidden{visibility:hidden}
-@media(max-width:640px){.doc-nav{gap:6px;padding-left:14px;padding-right:14px}.doc-nav-btn{font-size:13px;padding:6px 9px}}
+
+/* ===== 布局：左侧目录树 + 右侧内容 ===== */
+.layout{display:flex;max-width:1280px;margin:0 auto;gap:24px;padding:20px}
+.sidebar{width:260px;flex-shrink:0;position:sticky;top:60px;align-self:flex-start;max-height:calc(100vh - 80px);overflow-y:auto;background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:16px}
+.sidebar h3{font-size:14px;color:var(--ink);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.toc-tree{list-style:none;font-size:13px}
+.toc-tree li{margin:4px 0}
+.toc-tree .l1{font-weight:600;color:var(--ink);margin-top:10px}
+.toc-tree .l2{padding-left:16px;color:var(--muted)}
+.toc-tree a{color:var(--muted);text-decoration:none;display:block;padding:3px 6px;border-radius:4px;line-height:1.4}
+.toc-tree a:hover{background:#eff6ff;color:var(--accent)}
+.toc-tree .l1>a{color:var(--ink);font-weight:600}
+
+.main-content{flex:1;min-width:0}
+
+/* ===== 卡片样式 ===== */
+section.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:28px;margin-bottom:20px;scroll-margin-top:70px}
+section.card h2{font-size:22px;margin-bottom:16px;padding-bottom:12px;border-bottom:2px solid var(--line);display:flex;align-items:center;gap:10px}
+section.card h2 .num{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:15px}
+section.card h3{font-size:18px;margin:24px 0 12px;color:var(--accent);padding-left:10px;border-left:4px solid var(--accent)}
+section.card h4{font-size:15px;margin:18px 0 8px;color:var(--ink)}
+section.card p{margin:10px 0;font-size:14.5px;color:#334155}
+section.card ul,section.card ol{margin:10px 0 10px 25px;font-size:14.5px;color:#334155}
+section.card li{margin:6px 0}
+
+.lead{background:#f8fafc;padding:12px 16px;border-radius:8px;font-size:14px;margin:15px 0;color:var(--muted)}
+.diagram{background:#fafafa;border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin:20px 0;text-align:center;overflow-x:auto}
+.diagram-caption{font-size:13px;color:var(--muted);margin-top:10px}
+.key-sentence{background:#eff6ff;border-left:4px solid var(--accent);padding:12px 16px;border-radius:0 8px 8px 0;margin:15px 0;font-size:14px}
+.warn-box{background:#fffbeb;border-left:4px solid var(--warn);padding:12px 16px;border-radius:0 8px 8px 0;margin:15px 0;font-size:14px}
+
+code{background:#f1f5f9;padding:2px 6px;border-radius:4px;font-size:13.5px;color:#0f766e}
+pre{background:#1e293b;color:#e2e8f0;padding:16px;border-radius:8px;overflow-x:auto;font-size:13px;line-height:1.6;margin:15px 0}
+pre code{background:none;color:inherit;padding:0}
+
+.topic{background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:18px;margin:15px 0}
+.topic h4{margin-top:0;color:var(--accent)}
+.read-more{font-size:13px;color:var(--muted);margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
+
+footer{text-align:center;padding:30px 20px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);margin-top:40px}
 
 /* ===== 层级标签 ===== */
 .level-tag{display:inline-block;font-size:12px;font-weight:600;padding:2px 8px;border-radius:10px;margin-left:8px;vertical-align:middle}
@@ -65,20 +72,19 @@ a.doc-nav-btn:hover{border-color:#1d4ed8;background:#dbeafe}
 .level-std{background:#dbeafe;color:#1d4ed8;border:1px solid #93c5fd}
 .level-deep{background:#fee2e2;color:#b91c1c;border:1px solid #fca5a5}
 
-/* ===== 全库统一 Prism 深色主题 ===== */
+/* ===== Prism 深色主题 ===== */
 code[class*=language-],pre[class*=language-]{color:#f8f8f2;background:0 0;text-shadow:0 1px rgba(0,0,0,.3);font-family:Consolas,Monaco,'Andale Mono','Ubuntu Mono',monospace;font-size:1em;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{padding:1em;margin:.5em 0;overflow:auto;border-radius:.3em}:not(pre)>code[class*=language-],pre[class*=language-]{background:#272822}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal}.token.cdata,.token.comment,.token.doctype,.token.prolog{color:#8292a2}.token.punctuation{color:#f8f8f2}.token.namespace{opacity:.7}.token.constant,.token.deleted,.token.property,.token.symbol,.token.tag{color:#f92672}.token.boolean,.token.number{color:#ae81ff}.token.attr-name,.token.builtin,.token.char,.token.inserted,.token.selector,.token.string{color:#a6e22e}.language-css .token.string,.style .token.string,.token.entity,.token.operator,.token.url,.token.variable{color:#f8f8f2}.token.atrule,.token.attr-value,.token.class-name,.token.function{color:#e6db74}.token.keyword{color:#66d9ef}.token.important,.token.regex{color:#fd971f}.token.bold,.token.important{font-weight:700}.token.italic{font-style:italic}.token.entity{cursor:help}
 pre.code code[class*=language-]{background:transparent;text-shadow:none;font-family:var(--mono);font-size:inherit;padding:0;line-height:inherit;color:inherit;white-space:inherit}
+
+/* ===== 移动端适配 ===== */
+@media(max-width:900px){
+  .layout{flex-direction:column}
+  .sidebar{width:100%;position:static;max-height:none}
+}
 </style>
 </head>
 <body>
 
-<header class="hero">
-  <div class="container">
-    <p class="breadcrumb">全面学习 · 全栈技术精讲</p>
-    <h1>前端基础篇</h1>
-    <p class="hero-desc">前端开发的完整知识体系，按「基础 → 标准 → 深入」三个层级递进：先掌握入门必备概念，再熟练日常开发常用技能，最后深入理解底层原理。这是所有前端技术的地基。</p>
-  </div>
-</header>
 <nav class="doc-nav top" aria-label="文档导航">
   <a class="doc-nav-btn hidden" href="#">← 上一篇</a>
   <a class="doc-nav-btn" href="./">📚 全面学习</a>
@@ -86,22 +92,35 @@ pre.code code[class*=language-]{background:transparent;text-shadow:none;font-fam
   <a class="doc-nav-btn" href="./02_前端框架篇【精讲】.html">02_前端框架篇 →</a>
 </nav>
 
-<div class="container">
+<div class="layout">
 
-<nav class="toc">
-  <h2>本页目录</h2>
-  <ol>
-    <li><a href="#sec1">本篇概览与学习路径</a></li>
-    <li><a href="#sec2">基础层 · 入门必备</a></li>
-    <li><a href="#sec3">标准层 · 日常开发</a></li>
-    <li><a href="#sec4">深入层 · 原理进阶</a></li>
-    <li><a href="#sec5">知识图谱</a></li>
-    <li><a href="#sec6">常见误区与实战要点</a></li>
-    <li><a href="#sec7">深入学习导航</a></li>
-  </ol>
-</nav>
+<!-- 左侧目录树 -->
+<aside class="sidebar">
+  <h3>📚 本节目录</h3>
+  <ul class="toc-tree">
+    <li class="l1"><a href="#sec1">本篇概览</a></li>
+    <li class="l1"><a href="#sec2">基础层 · 入门必备</a></li>
+    <li class="l2"><a href="#html-structure">HTML 文档结构</a></li>
+    <li class="l2"><a href="#css-basic">CSS 选择器与样式</a></li>
+    <li class="l2"><a href="#js-basic">JS 变量与数据类型</a></li>
+    <li class="l1"><a href="#sec3">标准层 · 日常开发</a></li>
+    <li class="l2"><a href="#flex">Flexbox 弹性布局</a></li>
+    <li class="l2"><a href="#dom-event">DOM 操作与事件</a></li>
+    <li class="l2"><a href="#fetch">Fetch 网络请求</a></li>
+    <li class="l2"><a href="#storage">本地存储</a></li>
+    <li class="l1"><a href="#sec4">深入层 · 原理进阶</a></li>
+    <li class="l2"><a href="#proto">原型链与继承</a></li>
+    <li class="l2"><a href="#eventloop">事件循环</a></li>
+    <li class="l2"><a href="#closure">闭包 Closure</a></li>
+    <li class="l2"><a href="#cache">浏览器缓存</a></li>
+    <li class="l1"><a href="#sec5">知识图谱</a></li>
+    <li class="l1"><a href="#sec6">常见误区</a></li>
+    <li class="l1"><a href="#sec7">深入导航</a></li>
+  </ul>
+</aside>
 
-<main>
+<!-- 右侧内容 -->
+<main class="main-content">
 
 <!-- ===== 概览 ===== -->
 <section id="sec1" class="card">
@@ -140,8 +159,7 @@ pre.code code[class*=language-]{background:transparent;text-shadow:none;font-fam
   <h2><span class="num">2</span>基础层 · 入门必备 <span class="level-tag level-base">基础</span></h2>
   <p>这一层是前端入门的最低要求，看完就能写出第一个网页。</p>
 
-  <!-- HTML基础 -->
-  <div class="topic">
+  <div id="html-structure" class="topic">
     <h4>2.1 HTML 文档结构 <span class="level-tag level-base">基础</span></h4>
     <p class="lead">HTML 是网页的骨架，浏览器从上到下解析标签，渲染出页面。</p>
     <ul>
@@ -183,8 +201,7 @@ pre.code code[class*=language-]{background:transparent;text-shadow:none;font-fam
     <div class="read-more">深入阅读 → <a href="../01_前端基础/01_HTML5与CSS3【深入】.html">HTML5与CSS3深入篇</a></div>
   </div>
 
-  <!-- CSS基础 -->
-  <div class="topic">
+  <div id="css-basic" class="topic">
     <h4>2.2 CSS 选择器与基本样式 <span class="level-tag level-base">基础</span></h4>
     <p class="lead">CSS 给HTML化妆：选择器找到元素，然后设置样式属性。</p>
     <ul>
@@ -208,8 +225,7 @@ h1 {
     <div class="read-more">深入阅读 → <a href="../01_前端基础/01_HTML5与CSS3【深入】.html">HTML5与CSS3深入篇</a></div>
   </div>
 
-  <!-- JS基础 -->
-  <div class="topic">
+  <div id="js-basic" class="topic">
     <h4>2.3 JavaScript 变量与数据类型 <span class="level-tag level-base">基础</span></h4>
     <p class="lead">JS 让网页动起来：存数据、做判断、处理交互。</p>
     <ul>
@@ -239,8 +255,7 @@ console.log('明年：', age);</code></pre>
   <h2><span class="num">3</span>标准层 · 日常开发 <span class="level-tag level-std">标准</span></h2>
   <p>这一层是实际工作中每天都要用的技能，掌握后就能独立写业务页面。</p>
 
-  <!-- CSS布局 -->
-  <div class="topic">
+  <div id="flex" class="topic">
     <h4>3.1 Flexbox 弹性布局 <span class="level-tag level-std">标准</span></h4>
     <p class="lead">Flex 是一维布局方案，用来处理一行或一列的排列对齐，替代传统的float hack。</p>
     <ul>
@@ -275,8 +290,7 @@ console.log('明年：', age);</code></pre>
     <div class="read-more">深入阅读 → <a href="../01_前端基础/01_HTML5与CSS3【深入】.html">CSS布局深入篇</a></div>
   </div>
 
-  <!-- DOM操作 -->
-  <div class="topic">
+  <div id="dom-event" class="topic">
     <h4>3.2 DOM 操作与事件绑定 <span class="level-tag level-std">标准</span></h4>
     <p class="lead">JS 通过DOM API操作页面元素：找到元素、改内容、绑事件。</p>
     <ul>
@@ -300,8 +314,7 @@ btn.addEventListener('click', function(e) {
     <div class="read-more">深入阅读 → <a href="../01_前端基础/02_JavaScript核心【深入】.html">DOM操作深入篇</a></div>
   </div>
 
-  <!-- 异步请求 -->
-  <div class="topic">
+  <div id="fetch" class="topic">
     <h4>3.3 Fetch 网络请求 <span class="level-tag level-std">标准</span></h4>
     <p class="lead">前端通过HTTP请求从后端拿数据，Fetch是浏览器内置的请求API。</p>
     <ul>
@@ -333,8 +346,7 @@ async function login(username, password) {
     <div class="read-more">深入阅读 → <a href="../01_前端基础/07_HTTP与跨域请求【标准】.html">HTTP与跨域标准篇</a></div>
   </div>
 
-  <!-- 存储 -->
-  <div class="topic">
+  <div id="storage" class="topic">
     <h4>3.4 本地存储 localStorage <span class="level-tag level-std">标准</span></h4>
     <p class="lead">把数据存在浏览器本地，刷新页面也不丢。</p>
     <ul>
@@ -364,8 +376,7 @@ const savedUser = JSON.parse(localStorage.getItem('user'));</code></pre>
   <h2><span class="num">4</span>深入层 · 原理进阶 <span class="level-tag level-deep">深入</span></h2>
   <p>这一层是理解底层运行机制，遇到bug能定位、能优化性能、能写出更可靠的代码。</p>
 
-  <!-- 原型链 -->
-  <div class="topic">
+  <div id="proto" class="topic">
     <h4>4.1 原型链与继承 <span class="level-tag level-deep">深入</span></h4>
     <p class="lead">JS 没有类的传统继承，靠原型链实现属性查找：对象找不到属性，就沿着 __proto__ 往上找。</p>
     <ul>
@@ -390,8 +401,7 @@ class Dog extends Animal {
 }
 
 const dog = new Dog('旺财');
-dog.speak(); // 旺财汪汪汪
-// dog本身没有speak？不对，Dog.prototype上有</code></pre>
+dog.speak(); // 旺财汪汪汪</code></pre>
     <div class="diagram">
       <svg width="480" height="240" viewBox="0 0 480 240">
         <rect x="140" y="10" width="200" height="35" rx="6" fill="#1e293b"/>
@@ -412,8 +422,7 @@ dog.speak(); // 旺财汪汪汪
     <div class="read-more">深入阅读 → <a href="../01_前端基础/02_JavaScript核心【深入】.html">JavaScript核心深入篇</a></div>
   </div>
 
-  <!-- 事件循环 -->
-  <div class="topic">
+  <div id="eventloop" class="topic">
     <h4>4.2 事件循环（Event Loop）<span class="level-tag level-deep">深入</span></h4>
     <p class="lead">JS 是单线程的，为什么能处理异步？靠事件循环：把异步任务放到队列里，等同步代码执行完再依次处理。</p>
     <ul>
@@ -429,8 +438,7 @@ Promise.resolve().then(() => console.log('3')); // 微任务
 
 console.log('4'); // 同步
 
-// 输出顺序：1 → 4 → 3 → 2
-// 不是 1→4→2→3！微任务比宏任务先执行</code></pre>
+// 输出顺序：1 → 4 → 3 → 2</code></pre>
     <div class="diagram">
       <svg width="650" height="200" viewBox="0 0 650 200">
         <rect x="250" y="20" width="150" height="40" rx="6" fill="#1e293b"/>
@@ -450,8 +458,7 @@ console.log('4'); // 同步
     <div class="read-more">深入阅读 → <a href="../01_前端基础/03_JavaScript进阶_事件循环与异步【深入】.html">JS异步深入篇</a></div>
   </div>
 
-  <!-- 闭包 -->
-  <div class="topic">
+  <div id="closure" class="topic">
     <h4>4.3 闭包（Closure）<span class="level-tag level-deep">深入</span></h4>
     <p class="lead">函数 + 它能访问的外部变量 = 闭包。内部函数记住了外部作用域，即使外部函数已经执行完了。</p>
     <ul>
@@ -472,13 +479,11 @@ function createCounter() {
 const counter = createCounter();
 counter.increment(); // 1
 counter.increment(); // 2
-console.log(counter.getCount()); // 2
-// 外面直接访问不到count，只能通过方法操作</code></pre>
+console.log(counter.getCount()); // 2</code></pre>
     <div class="read-more">深入阅读 → <a href="../01_前端基础/02_JavaScript核心【深入】.html">闭包与作用域深入篇</a></div>
   </div>
 
-  <!-- HTTP缓存 -->
-  <div class="topic">
+  <div id="cache" class="topic">
     <h4>4.4 浏览器缓存机制 <span class="level-tag level-deep">深入</span></h4>
     <p class="lead">浏览器把静态资源存在本地，下次不用再下载，加快页面加载。</p>
     <ul>
@@ -490,16 +495,16 @@ console.log(counter.getCount()); // 2
       <svg width="600" height="160" viewBox="0 0 600 160">
         <rect x="20" y="50" width="100" height="50" rx="6" fill="#dbeafe" stroke="#1d4ed8"/>
         <text x="70" y="80" text-anchor="middle" font-size="12">浏览器</text>
-        <line x1="120" y1="75" x2="180" y2="75" stroke="#047857" stroke-width="2" marker-end="url(#arr)"/>
+        <line x1="120" y1="75" x2="180" y2="75" stroke="#047857" stroke-width="2"/>
         <rect x="180" y="50" width="100" height="50" rx="6" fill="#d1fae5" stroke="#047857"/>
         <text x="230" y="80" text-anchor="middle" font-size="12">有强缓存？</text>
-        <line x1="280" y1="65" x2="350" y2="40" stroke="#047857" stroke-width="2" marker-end="url(#arr)"/>
-        <line x1="280" y1="85" x2="350" y2="110" stroke="#b45309" stroke-width="2" marker-end="url(#arr)"/>
+        <line x1="280" y1="65" x2="350" y2="40" stroke="#047857" stroke-width="2"/>
+        <line x1="280" y1="85" x2="350" y2="110" stroke="#b45309" stroke-width="2"/>
         <text x="310" y="50" font-size="11" fill="#047857">是</text>
         <text x="310" y="105" font-size="11" fill="#b45309">否</text>
-        <rect x="350" y="20" width="100" height="35" rx="6" fill="#d1fae5" stroke="#047857"/>
+        <rect x="350" y="20" width="100" height="35" rx="4" fill="#d1fae5" stroke="#047857"/>
         <text x="400" y="42" text-anchor="middle" font-size="11">直接用本地缓存</text>
-        <rect x="350" y="95" width="100" height="35" rx="6" fill="#fef3c7" stroke="#b45309"/>
+        <rect x="350" y="95" width="100" height="35" rx="4" fill="#fef3c7" stroke="#b45309"/>
         <text x="400" y="117" text-anchor="middle" font-size="11">发请求问服务器</text>
       </svg>
       <p class="diagram-caption">浏览器缓存判断流程</p>
@@ -513,11 +518,6 @@ console.log(counter.getCount()); // 2
   <h2><span class="num">5</span>知识图谱</h2>
   <div class="diagram">
     <svg width="750" height="300" viewBox="0 0 750 300">
-      <defs>
-        <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
-          <path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/>
-        </marker>
-      </defs>
       <rect x="275" y="10" width="200" height="40" rx="8" fill="#1e293b"/>
       <text x="375" y="35" text-anchor="middle" fill="white" font-size="14">前端基础</text>
       
@@ -595,7 +595,6 @@ console.log(counter.getCount()); // 2
 </section>
 
 </main>
-
 </div>
 
 <nav class="doc-nav bottom">
