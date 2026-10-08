@@ -62,15 +62,19 @@ pre code{background:none;color:inherit;padding:0}
 .compare-table th{background:#f8fafc;font-weight:600}
 footer{text-align:center;padding:30px 20px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);margin-top:40px}
 
-/* 吸顶导航 */
-.doc-nav.top{
-  position: sticky;
-  top: 0;
-  z-index: 70;
-  background: #fff;
-  border-bottom: 1px solid #e2e8f0;
-  box-shadow: 0 1px 3px rgba(15,23,42,.08);
-}
+
+
+
+/* ===== 全库统一导航 ===== */
+.doc-nav{display:flex;justify-content:space-between;align-items:center;gap:8px;max-width:980px;margin:0 auto;padding:10px 20px}
+.doc-nav.top{position:sticky;top:0;z-index:70;background:#fff;border-bottom:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(15,23,42,.08)}
+.doc-nav.bottom{border-top:1px solid #e2e8f0;padding-top:16px;padding-bottom:16px;margin-top:8px}
+.doc-nav-btn{color:#1d4ed8;text-decoration:none;font-size:14px;font-weight:600;line-height:1;padding:7px 12px;border:1px solid #e2e8f0;border-radius:8px;background:#fff;white-space:nowrap;transition:border-color .15s,background .15s}
+a.doc-nav-btn:hover{border-color:#1d4ed8;background:#dbeafe}
+.doc-nav-btn.home{color:#475569}
+.doc-nav-btn.home:hover{color:#1d4ed8}
+.doc-nav-btn.hidden{visibility:hidden}
+@media(max-width:640px){.doc-nav{gap:6px;padding-left:14px;padding-right:14px}.doc-nav-btn{font-size:13px;padding:6px 9px}}
 
 </style>
 </head>
@@ -88,9 +92,10 @@ footer{text-align:center;padding:30px 20px;color:var(--muted);font-size:13px;bor
   </div>
 </header>
 
-<nav class="doc-nav">
-  <a class="doc-nav-btn" href="../index.html">← 返回首页</a>
-  <a class="doc-nav-btn home" href="../index.html">⌂ 知识库</a>
+<nav class="doc-nav top" aria-label="文档导航">
+  <a class="doc-nav-btn hidden" href="#">← 上一篇</a>
+  <a class="doc-nav-btn home" href="../index.html">⌂ 返回首页</a>
+  <a class="doc-nav-btn hidden" href="#">下一篇 →</a>
 </nav>
 
 <div class="container">
@@ -418,6 +423,11 @@ instance.destroy();</code></pre>
 
 </div>
 
+<nav class="doc-nav bottom">
+  <a class="doc-nav-btn hidden" href="#">← 上一篇</a>
+  <a class="doc-nav-btn home" href="../index.html">⌂ 返回首页</a>
+  <a class="doc-nav-btn hidden" href="#">下一篇 →</a>
+</nav>
 <footer>
   全栈技术知识库 · 系统化技术梳理 · 仅供学习参考
 </footer>
