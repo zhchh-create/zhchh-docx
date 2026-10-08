@@ -231,7 +231,7 @@ section.card li strong{color:var(--ink)}
       <tr><td>适用</td><td>监控分发、多人会议（可选择性订阅）</td><td>弱网端、低算力端、需要统一布局</td><td>1v1、小房间</td></tr>
     </tbody>
   </table>
-  <p>本项目选 SFU/Janus 的依据：监控是"一路源、多观看者"，SFU 不解码、CPU 压力集中在转发，且观看者端自己决定订阅哪几路（本项目多路同屏正是这个能力）；MCU 会对本来就不该重编码的监控流做无谓转码，成本高还增加延迟。与 mediasoup（Node.js）对比，Janus 的优势是 C 写的单进程、插件生态成熟（streaming 插件直接吃 RTSP）、文档与社区资料多；劣势是多实例集群需要自己设计——这正是我们部署时要面对的（见案例）。</p>
+  <p>本项目选 SFU/Janus 的依据：监控是"一路源、多观看者"，SFU 不解码、CPU 压力集中在转发，且观看者端自己决定订阅哪几路（本项目多路同屏正是这个能力）；MCU 会对本来就不该重编码的监控流做无谓转码，成本高还增加延迟。与 mediasoup（Node.js）对比，Janus 的优势是 C 写的单进程、插件生态成熟（streaming 插件直接吃 RTSP）、文档与社区资料多；劣势是多实例集群需要自己设计——这正是项目组部署时要面对的（见案例）。</p>
 </section>
 
 <section id="sec2" class="card">
@@ -529,7 +529,7 @@ function openChannel(mountpointId, canvas) {
   </ul>
 
   <h3>5.10 面试讲法（一句话抓手）</h3>
-  <p class="key-sentence">一句话抓手："我在 WebRTC 无插件播放器里选了 Janus SFU 做 streaming 拉流，踩过 NAT 下 candidate 通告成内网 IP、SDP 在异步 event 里这两个最隐蔽的坑，并在 Qiankun 子应用卸载时做了 pc/handle/ws 的完整资源释放。"</p>
+  <p class="key-sentence">一句话抓手："在实践中 WebRTC 无插件播放器里选了 Janus SFU 做 streaming 拉流，踩过 NAT 下 candidate 通告成内网 IP、SDP 在异步 event 里这两个最隐蔽的坑，并在 Qiankun 子应用卸载时做了 pc/handle/ws 的完整资源释放。"</p>
 </section>
 
 <section id="sec6" class="card">

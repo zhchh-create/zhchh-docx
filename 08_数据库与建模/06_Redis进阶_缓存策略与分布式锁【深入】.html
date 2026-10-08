@@ -427,7 +427,7 @@ try {
   <h3>9 复盘与可复用经验</h3>
   <ul><li><strong>用成熟客户端</strong>：Redisson 而非手写 setnx，续期/可重入都解决了。</li><li><strong>锁内要短</strong>。</li></ul>
   <h3>10 面试讲法</h3>
-  <p class="key-sentence">"业务系统 我用 Redisson 按需求 id 加可重入锁、靠看门狗续期保证并发一致性，踩过手写 setnx 不释放和误删别人锁的坑，所以一律用成熟客户端。"</p>
+  <p class="key-sentence">"业务系统 实践中常采用 Redisson 按需求 id 加可重入锁、靠看门狗续期保证并发一致性，踩过手写 setnx 不释放和误删别人锁的坑，所以一律用成熟客户端。"</p>
 
 <section id="sec6" class="card">
   <h2><span class="num">6</span>易错点与面试重点</h2>

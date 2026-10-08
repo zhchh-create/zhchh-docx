@@ -179,7 +179,7 @@ section.card li strong{color:var(--ink)}
     <li><strong>比虚拟机轻</strong>：容器共享宿主内核，秒级启动。</li>
   </ul>
   <p><strong>解决什么问题</strong>："在我电脑上好好的，为什么上服务器就崩"——本地和服务器 JDK 版本、环境配置不一致。容器把环境也打包进去，本地开发、测试、生产跑同一个镜像，环境一致。</p>
-  <p class="pit-sentence">说明：本项目后端容器化主要由后端同学主导，我以前端视角参与学习与评估、配合写 Dockerfile，深度有限，下面如实呈现。</p>
+  <p class="pit-sentence">说明：本项目后端容器化主要由后端同学主导，以前端视角参与学习与评估、配合写 Dockerfile，深度有限，下面如实呈现。</p>
   <div class="diagram">
     <svg viewBox="0 0 800 200" role="img" aria-label="镜像分层与容器运行示意图">
       <defs>
@@ -339,11 +339,11 @@ docker compose down            # 停掉</code></pre>
 
 <section id="sec5" class="card">
   <h2><span class="num">5</span>实战项目经验（自学 + 自建 Demo）</h2>
-  <div class="warn-box"><strong>说明</strong>：本节是自学 + 自建 Demo，非生产环境项目。后端服务容器化在真实项目里由后端主导，我以前端视角学习与配合评估；下面是我本地用 Dockerfile + Compose 跑通的 SpringBoot 编排 demo。</div>
+  <div class="warn-box"><strong>说明</strong>：本节是自学 + 自建 Demo，非生产环境项目。后端服务容器化在真实项目里由后端主导，以前端视角学习与配合评估；下面是我本地用 Dockerfile + Compose 跑通的 SpringBoot 编排 demo。</div>
 
   <h3>5.1 自学背景与动机</h3>
   <p class="lead"><b>一句话定位</b>：补"把一个服务连同依赖一条命令起起来"的容器化实操缺口。</p>
-  <ul><li><strong>缺口</strong>：真实项目后端用 Docker，我以前端视角了解但没独立写过完整 Dockerfile/Compose。</li></ul>
+  <ul><li><strong>缺口</strong>：真实项目后端用 Docker，以前端视角了解但没独立写过完整 Dockerfile/Compose。</li></ul>
 
   <h3>5.2 搭建的 Demo 是什么</h3>
   <ul>

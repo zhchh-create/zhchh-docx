@@ -147,7 +147,7 @@ section.card li strong{color:var(--ink)}
       <span class="badge deep">深入</span>
       <span class="meta">定位：企业级重型关系库——SGA/PGA 内存架构与和 MySQL 的关键差异</span>
     </div>
-    <p class="hero-desc">Oracle 是金融、电信、政务等大型集中式系统的传统主力库。它和我们日常用的 MySQL 在"内存架构、主键生成、分页写法、锁机制"上差异明显。本页深入讲 Oracle 的实例与 SGA/PGA、数据文件/undo，以及迁移或接手一个 Oracle 库时最该知道的差异点。说明：实际项目（业务系统/数据编排平台）以 MySQL 为主，未列独立 Oracle 项目，本页案例为经典场景+接触经验，已在案例中如实标注。</p>
+    <p class="hero-desc">Oracle 是金融、电信、政务等大型集中式系统的传统主力库。它和项目组日常用的 MySQL 在"内存架构、主键生成、分页写法、锁机制"上差异明显。本页深入讲 Oracle 的实例与 SGA/PGA、数据文件/undo，以及迁移或接手一个 Oracle 库时最该知道的差异点。说明：实际项目（业务系统/数据编排平台）以 MySQL 为主，未列独立 Oracle 项目，本页案例为经典场景+接触经验，已在案例中如实标注。</p>
   </div>
 </header>
 <nav class="doc-nav top" aria-label="文档导航">
@@ -379,7 +379,7 @@ SELECT * FROM (
   <h3>6 与真实项目的差异</h3>
   <ul><li>本地单机验证，未上生产；真实大型 Oracle 系统的 RAC/表空间/权限模型仅作概念了解。</li></ul>
   <h3>7 面试讲法</h3>
-  <p class="key-sentence">"我用本地 Oracle 把 MySQL 常用 CRUD 对照重写过，清楚序列、ROWNUM 分页、空串即 NULL 这些差异，迁移 SQL 能快速上手。"</p>
+  <p class="key-sentence">"实践中常采用本地 Oracle 把 MySQL 常用 CRUD 对照重写过，清楚序列、ROWNUM 分页、空串即 NULL 这些差异，迁移 SQL 能快速上手。"</p>
 
 <section id="sec6" class="card">
   <h2><span class="num">6</span>易错点与面试重点</h2>

@@ -426,7 +426,7 @@ function throttle(fn, interval) {
   <h3>5.2 我的角色与职责</h3>
   <ul>
     <li><strong>角色</strong>：前端开发，负责大屏实时渲染节流与播放器启动时序。</li>
-    <li><strong>团队与分工</strong>：前端若干（估算），我做渲染调度与信令时序，后端/媒体服务同学对 Janus 信令接口。</li>
+    <li><strong>团队与分工</strong>：前端若干（估算），实践中通常做渲染调度与信令时序，后端/媒体服务同学对 Janus 信令接口。</li>
   </ul>
 
   <h3>5.3 技术栈</h3>
@@ -502,7 +502,7 @@ async function startPlay(streamId) {
   </ul>
 
   <h3>5.10 面试讲法</h3>
-  <p class="key-sentence"><span class="tag-point">抓手</span>用 rAF + 脏标记把大屏高频渲染压到每帧一次，并用 async/await + Promise.race 理顺了 WebRTC 信令与媒体的异步竞速。</p>
+  <p class="key-sentence"><span class="tag-point">实战要点</span>用 rAF + 脏标记把大屏高频渲染压到每帧一次，并用 async/await + Promise.race 理顺了 WebRTC 信令与媒体的异步竞速。</p>
 </section>
 
 <section id="sec6" class="card">

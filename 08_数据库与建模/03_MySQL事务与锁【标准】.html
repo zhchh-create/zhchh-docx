@@ -206,7 +206,7 @@ section.card li strong{color:var(--ink)}
   <p class="lead"><b>一句话定位</b>：原子性靠 undo log、持久性靠 redo log、隔离性靠锁+MVCC，一致性是前三者共同保证的目标。</p>
   <ul>
     <li><strong>undo log</strong>：失败时反向回滚（"我怎么做回去"）。</li>
-    <li><strong>redo log</strong>：提交后先写日志，宕机可重放（"我做过什么"，防丢）。</li>
+    <li><strong>redo log</strong>：提交后先写日志，宕机可重放（"实践中通常做过什么"，防丢）。</li>
   </ul>
   <h3>2.2 并发下的三类问题</h3>
   <p class="lead"><b>一句话定位</b>：脏读读未提交、不可重复读同行内容变、幻读符合条件的行数变。</p>
@@ -369,7 +369,7 @@ public void review(Long id, String next) {
   <h3>9 复盘与可复用经验</h3>
   <ul><li><strong>状态流转必带条件</strong>：乐观条件更新防丢失更新。</li><li><strong>事务尽量短</strong>：减少锁持有时间与死锁面。</li></ul>
   <h3>10 面试讲法</h3>
-  <p class="key-sentence">"业务系统 需求状态流转我用事务包住状态变更+流转记录，用 where status=期望态的条件更新防并发丢失更新，也处理过加锁顺序导致的死锁。"</p>
+  <p class="key-sentence">"业务系统 需求状态流转实践中常采用事务包住状态变更+流转记录，用 where status=期望态的条件更新防并发丢失更新，也处理过加锁顺序导致的死锁。"</p>
 
 <section id="sec6" class="card">
   <h2><span class="num">6</span>易错点与面试重点</h2>

@@ -147,7 +147,7 @@ section.card li strong{color:var(--ink)}
       <span class="badge basic">基础</span>
       <span class="meta">定位：容器编排入门——Deployment、Service、探针与配置挂载</span>
     </div>
-    <p class="hero-desc">Docker 解决"把单个应用打包跑起来"，Kubernetes（K8s）解决"几十上百个容器在多台机器上怎么自动调度、扩缩容、故障自愈"。本页入门讲清 Deployment/Service/探针/配置挂载这几个最核心的概念。（说明：K8s 在我项目系列里主要由运维/后端主导，我以学习与评估视角了解其编排模型，深度有限，如实呈现。）</p>
+    <p class="hero-desc">Docker 解决"把单个应用打包跑起来"，Kubernetes（K8s）解决"几十上百个容器在多台机器上怎么自动调度、扩缩容、故障自愈"。本页入门讲清 Deployment/Service/探针/配置挂载这几个最核心的概念。（说明：K8s 在我项目系列里主要由运维/后端主导，以学习与评估视角了解其编排模型，深度有限，如实呈现。）</p>
   </div>
 </header>
 <nav class="doc-nav top" aria-label="文档导航">
@@ -347,11 +347,11 @@ spec:
 
 <section id="sec5" class="card">
   <h2><span class="num">5</span>实战项目经验（自学 + 自建 Demo）</h2>
-  <div class="warn-box"><strong>说明</strong>：本节是自学 + 自建 Demo，非生产环境项目。生产 K8s 集群由运维管理，我没有独立操盘大规模集群的经历；下面是我用 Deployment/Service/探针在本地（minikube/单节点）跑通的编排 demo。</div>
+  <div class="warn-box"><strong>说明</strong>：本节是自学 + 自建 Demo，非生产环境项目。生产 K8s 集群由运维管理，我没有独立操盘大规模集群的经历；下面是实践中常采用 Deployment/Service/探针在本地（minikube/单节点）跑通的编排 demo。</div>
 
   <h3>5.1 自学背景与动机</h3>
   <p class="lead"><b>一句话定位</b>：补"一个服务从打成镜像到在集群里跑起来"的完整编排链路认知。</p>
-  <ul><li><strong>缺口</strong>：真实项目后端跑在容器编排上，但我以前端视角只接触部署结果，没亲手 apply 过资源对象。</li></ul>
+  <ul><li><strong>缺口</strong>：真实项目后端跑在容器编排上，但以前端视角只接触部署结果，没亲手 apply 过资源对象。</li></ul>
 
   <h3>5.2 搭建的 Demo 是什么</h3>
   <ul>
@@ -394,7 +394,7 @@ kubectl get pods                   # 看 Pod 状态</code></pre>
   <p>真实生产集群由运维管理，我没有独立操盘大规模集群、HPA、多环境发布的经历；本 demo 是本地单节点、无高可用、无监控告警，只验证资源对象的写法与概念。</p>
 
   <h3>5.7 面试讲法（一句话抓手）</h3>
-  <p class="key-sentence">一句话抓手："我在本地用 Deployment+Service+就绪探针把一个无状态服务跑通，理解为什么不能用 Pod IP 互访、配置要外置 ConfigMap；诚实说生产 K8s 集群由运维管，我是学习/评估视角。"</p>
+  <p class="key-sentence">一句话抓手："在实践中本地用 Deployment+Service+就绪探针把一个无状态服务跑通，理解为什么不能用 Pod IP 互访、配置要外置 ConfigMap；诚实说生产 K8s 集群由运维管，我是学习/评估视角。"</p>
 </section>
 
 <section id="sec6" class="card">

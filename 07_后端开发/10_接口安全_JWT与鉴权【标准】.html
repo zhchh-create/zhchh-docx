@@ -369,7 +369,7 @@ public Result&lt;Void&gt; delete(@PathVariable Long id) { ... }</code></pre>
   <h3>9 复盘与可复用经验</h3>
   <ul><li><strong>无状态要补失效</strong>：JWT + Redis 黑名单是标准组合。</li><li><strong>密钥与时效</strong>：密钥外置、access 短时效。</li></ul>
   <h3>10 面试讲法</h3>
-  <p class="key-sentence">"业务系统 我用 JWT + 拦截器做登录态，access 短时效配 Redis 黑名单解决 JWT 登出失效问题，再叠 RBAC 做接口级权限。"</p>
+  <p class="key-sentence">"业务系统 实践中常采用 JWT + 拦截器做登录态，access 短时效配 Redis 黑名单解决 JWT 登出失效问题，再叠 RBAC 做接口级权限。"</p>
 
 <section id="sec6" class="card">
   <h2><span class="num">6</span>易错点与面试重点</h2>

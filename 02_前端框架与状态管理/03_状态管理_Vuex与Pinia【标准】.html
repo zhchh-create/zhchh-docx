@@ -353,7 +353,7 @@ export const useUserStore = defineStore('user', () =&gt; {
   <h3>5.2 我的角色与职责</h3>
   <ul>
     <li><strong>角色</strong>：前端开发，负责 store 模块拆分与 Vuex→Pinia 迁移。</li>
-    <li><strong>团队与分工</strong>：前端若干（估算）；我做状态层设计与迁移。</li>
+    <li><strong>团队与分工</strong>：前端若干（估算）；实践中通常做状态层设计与迁移。</li>
   </ul>
 
   <h3>5.3 技术栈</h3>
@@ -402,7 +402,7 @@ function onLogin() { userStore.login(form); }        // action 直接调</code><
   </ul>
 
   <h3>5.10 面试讲法</h3>
-  <p class="key-sentence"><span class="tag-point">抓手</span>亲历 Vuex namespaced modules 到 Pinia setup 风格的迁移，最直观的收益是跨模块调用从 root:true 字符串变成直接 import，并守住了 storeToRefs 这条取用红线。</p>
+  <p class="key-sentence"><span class="tag-point">实战要点</span>亲历 Vuex namespaced modules 到 Pinia setup 风格的迁移，最直观的收益是跨模块调用从 root:true 字符串变成直接 import，并守住了 storeToRefs 这条取用红线。</p>
 </section>
 
 <section id="sec6" class="card">

@@ -223,7 +223,7 @@ section.card li strong{color:var(--ink)}
     <li><strong>字段注入</strong>：<code>@Autowired</code> 直接标字段，最省事，但不利于测试与不可变。</li>
   </ul>
   <h3>2.2 BeanFactory 与 ApplicationContext</h3>
-  <p class="lead"><b>一句话定位</b>：<code>BeanFactory</code> 是底层极简容器，<code>ApplicationContext</code> 是它的企业级增强版——我们日常用的是后者。</p>
+  <p class="lead"><b>一句话定位</b>：<code>BeanFactory</code> 是底层极简容器，<code>ApplicationContext</code> 是它的企业级增强版——项目组日常用的是后者。</p>
   <ul>
     <li><strong>BeanFactory</strong>：最顶层接口，提供 getBean、依赖解析，懒加载、功能精简。</li>
     <li><strong>ApplicationContext</strong>：启动时一次性实例化所有单例 Bean，额外提供国际化、事件发布、AOP、注解驱动（<code>@ComponentScan</code>）。</li>
@@ -464,7 +464,7 @@ public Object around(ProceedingJoinPoint pjp, OpLog opLog) throws Throwable { ..
     <li><strong>事务边界要清醒</strong>：自调用、异常类型是最高频失效点。</li>
   </ul>
   <h3>10 面试讲法</h3>
-  <p class="key-sentence">"业务系统 用构造器注入做分层，把鉴权/日志/事务抽成切面；我踩过 @Transactional 自调用失效和默认不回滚受检异常的坑，靠 rollbackFor 与拆 Bean 解决。"</p>
+  <p class="key-sentence">"业务系统 用构造器注入做分层，把鉴权/日志/事务抽成切面；实践中常见的坑包括过 @Transactional 自调用失效和默认不回滚受检异常的坑，靠 rollbackFor 与拆 Bean 解决。"</p>
 
 <section id="sec6" class="card">
   <h2><span class="num">6</span>易错点与面试重点</h2>

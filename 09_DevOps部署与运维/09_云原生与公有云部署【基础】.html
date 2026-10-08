@@ -147,7 +147,7 @@ section.card li strong{color:var(--ink)}
       <span class="badge basic">基础</span>
       <span class="meta">定位：云主机 / 容器服务 / Serverless、对象存储与 CDN——与自建部署的对比与取舍</span>
     </div>
-    <p class="hero-desc">把应用部署到自己买的物理服务器上，叫自建；把服务器/运行环境租给云厂商，就是公有云。云原生则更进一步——应用天生按容器、弹性、可观测来设计。本页入门讲清楚云主机、容器服务、Serverless、对象存储与 CDN 分别是什么，并和我们项目里实际用的 Nginx/Docker 自建部署做对比——这块我以了解与评估为主。</p>
+    <p class="hero-desc">把应用部署到自己买的物理服务器上，叫自建；把服务器/运行环境租给云厂商，就是公有云。云原生则更进一步——应用天生按容器、弹性、可观测来设计。本页入门讲清楚云主机、容器服务、Serverless、对象存储与 CDN 分别是什么，并和项目组项目里实际用的 Nginx/Docker 自建部署做对比——这块以了解与评估为主。</p>
   </div>
 </header>
 
@@ -181,8 +181,8 @@ section.card li strong{color:var(--ink)}
     <p><strong>解决什么问题</strong>：自建服务器要自己买机器、托管、出故障修硬件、扩容要等采购；公有云把这些变成"点几下开通、按用量付费、随用随扩"：</p>
     <ul>
       <li><strong>收益</strong>：免硬件运维、弹性扩缩、按需付费。</li>
-      <li><strong>配套</strong>：静态资源与文件放对象存储（OSS/S3），再套一层 CDN 就近加速——这正是我们前端静态产物常走的路。</li>
-      <li><strong>本项目定位</strong>：我们实际是自建 Nginx/Docker 部署（见对应篇），云原生是我了解与评估过的方向。</li>
+      <li><strong>配套</strong>：静态资源与文件放对象存储（OSS/S3），再套一层 CDN 就近加速——这正是项目组前端静态产物常走的路。</li>
+      <li><strong>本项目定位</strong>：项目组实际是自建 Nginx/Docker 部署（见对应篇），云原生是我了解与评估过的方向。</li>
     </ul>
     <div class="diagram">
       <svg viewBox="0 0 800 200" role="img" aria-label="自建部署与云原生部署对比示意图">
@@ -193,7 +193,7 @@ section.card li strong{color:var(--ink)}
         </defs>
         <text x="400" y="22" text-anchor="middle" font-size="14" font-weight="700" fill="#1f2937">自建部署 vs 云原生部署（示意）</text>
         <rect x="40" y="55" width="320" height="120" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
-        <text x="200" y="82" text-anchor="middle" font-size="13" font-weight="700" fill="#b45309">自建（我们项目实际）</text>
+        <text x="200" y="82" text-anchor="middle" font-size="13" font-weight="700" fill="#b45309">自建（项目组项目实际）</text>
         <text x="200" y="108" text-anchor="middle" font-size="12" fill="#475569">自有服务器 + Nginx + Docker</text>
         <text x="200" y="130" text-anchor="middle" font-size="12" fill="#475569">自己装环境 / 手动扩容 / 自维护</text>
         <text x="200" y="152" text-anchor="middle" font-size="12" fill="#475569">成本固定、可控</text>
@@ -338,7 +338,7 @@ ossutil cp -r ./dist/ oss://my-bucket/www/ --update
 
   <section id="sec5" class="card">
     <h2><span class="num">5</span>实战项目经验（自学 + 自建 Demo）</h2>
-    <div class="warn-box"><strong>说明</strong>：本节是自学 + 概念验证，非企业上云项目。我们真实部署是自建（Nginx 静态托管 + Docker），云原生/公有云我只做过方案评估与本地概念验证，不编造上云履历。</div>
+    <div class="warn-box"><strong>说明</strong>：本节是自学 + 概念验证，非企业上云项目。项目组真实部署是自建（Nginx 静态托管 + Docker），云原生/公有云我只做过方案评估与本地概念验证，不编造上云履历。</div>
 
     <h3>5.1 自学背景与动机</h3>
     <p class="lead"><b>一句话定位</b>：补"自建 vs 上云到底差在哪、OSS/CDN/Serverless 怎么选"的判断框架。</p>
@@ -373,7 +373,7 @@ location = /index.html {
     <p>真实项目是电力/内网环境，要求数据不出域、现场网络隔离，所以生产仍自建（Nginx+Docker），我没有把系统真正迁上公有云；本节是与自建部署对照的评估/概念验证。</p>
 
     <h3>5.7 面试讲法（一句话抓手）</h3>
-    <p class="key-sentence">一句话抓手："我们真实部署是内网自建 Nginx+Docker；云原生/公有云我做过方案评估——OSS+CDN 适合静态加速、Serverless 只适合波动型不适合常驻低延迟服务，且必须给 index.html 设 no-cache、发版刷 CDN；诚实说没真把生产迁上云。"</p>
+    <p class="key-sentence">一句话抓手："项目组真实部署是内网自建 Nginx+Docker；云原生/公有云实践中通常做过方案评估——OSS+CDN 适合静态加速、Serverless 只适合波动型不适合常驻低延迟服务，且必须给 index.html 设 no-cache、发版刷 CDN；诚实说没真把生产迁上云。"</p>
   </section>
 
   <section id="sec6" class="card">

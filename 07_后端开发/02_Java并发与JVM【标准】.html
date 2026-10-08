@@ -423,7 +423,7 @@ Map&lt;String, Metric&gt; merged = fs.stream()
     <li><strong>线程池要定型</strong>：核心/最大线程、队列、拒绝策略显式配，不依赖默认。</li>
   </ul>
   <h3>10 面试讲法</h3>
-  <p class="key-sentence">"大屏多源聚合我用线程池 + CompletableFuture 并行拉取并加超时降级，接口从约 3 秒降到约 800ms；踩过无界线程池和单源超时拖垮整屏的坑。"</p>
+  <p class="key-sentence">"大屏多源聚合实践中常采用线程池 + CompletableFuture 并行拉取并加超时降级，接口从约 3 秒降到约 800ms；踩过无界线程池和单源超时拖垮整屏的坑。"</p>
 
 <section id="sec6" class="card">
   <h2><span class="num">6</span>易错点与面试重点</h2>

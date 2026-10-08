@@ -147,7 +147,7 @@ section.card li strong{color:var(--ink)}
       <span class="badge std">标准</span>
       <span class="meta">定位：指标采集、PromQL 查询、告警规则与可视化面板——容器/K8s 时代的观测基座</span>
     </div>
-    <p class="hero-desc">服务上线后最头疼的是"出问题了但没人知道"。Prometheus 是云原生事实标准的指标监控系统：主动从各服务拉取（pull）时间序列指标，存进自己的时序库；Grafana 负责把这些指标画成看板；AlertManager 负责按规则告警。本页讲指标模型、exporter、PromQL、告警规则与可视化，并说明它如何与 K8s/容器监控衔接——这块我以学习与评估为主。</p>
+    <p class="hero-desc">服务上线后最头疼的是"出问题了但没人知道"。Prometheus 是云原生事实标准的指标监控系统：主动从各服务拉取（pull）时间序列指标，存进自己的时序库；Grafana 负责把这些指标画成看板；AlertManager 负责按规则告警。本页讲指标模型、exporter、PromQL、告警规则与可视化，并说明它如何与 K8s/容器监控衔接——这块以学习与评估为主。</p>
   </div>
 </header>
 
@@ -379,7 +379,7 @@ node_memory_MemAvailable_bytes</code></pre>
 
   <section id="sec5" class="card">
     <h2><span class="num">5</span>实战项目经验（自学 + 自建 Demo）</h2>
-    <div class="warn-box"><strong>说明</strong>：本节是自学 + 自建 Demo，非生产环境项目。生产监控由后端/运维落地，我以前端视角做学习与方案评估；下面是我本地用 node_exporter + Prometheus + Grafana 跑通的指标采集 demo。</div>
+    <div class="warn-box"><strong>说明</strong>：本节是自学 + 自建 Demo，非生产环境项目。生产监控由后端/运维落地，以前端视角做学习与方案评估；下面是我本地用 node_exporter + Prometheus + Grafana 跑通的指标采集 demo。</div>
 
     <h3>5.1 自学背景与动机</h3>
     <p class="lead"><b>一句话定位</b>：补"容器/服务指标怎么采集、怎么看板、怎么告警"这层只懂概念的缺口。</p>

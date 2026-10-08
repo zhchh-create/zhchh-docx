@@ -565,7 +565,7 @@ window.__POWERED_BY_QIANKUN__ &amp;&amp; (unmount =&gt; chart.dispose());</code>
   </ul>
 
   <h3>5.10 面试讲法</h3>
-  <p class="key-sentence"><span class="tag-key">抓手</span>「大屏高频图表卡顿，我用 rAF 定位到主线程被整图 setOption+动画占满，改成 merge 局部更新、关 animation、ResizeObserver 监听、卸载 dispose，长任务从 120ms 降到 16ms。」</p>
+  <p class="key-sentence"><span class="tag-key">实战要点</span>「大屏高频图表卡顿，实践中常采用 rAF 定位到主线程被整图 setOption+动画占满，改成 merge 局部更新、关 animation、ResizeObserver 监听、卸载 dispose，长任务从 120ms 降到 16ms。」</p>
 </section>
 
 <section id="sec6" class="card">

@@ -179,7 +179,7 @@ section.card li strong{color:var(--ink)}
     <li><strong>流水线（Pipeline）</strong>：把"拉代码→安装→构建→测试→打包→部署"写成一条自动化链；Jenkins 是最经典的引擎（同类 GitLab CI、GitHub Actions）。</li>
   </ul>
   <p><strong>解决什么问题</strong>：手工部署——本地打包、手动传服务器、人肉跑测试，慢且易错（"上次手动发的，谁知道发了啥"）。流水线把这套固化成可重复、可审计、失败即停的自动化流程。</p>
-  <p class="pit-sentence">说明：我在项目里主要是前端配合流水线产物，Jenkins 配置由后端/运维主导，下面是通用流水线设计实践。</p>
+  <p class="pit-sentence">说明：在实践中项目里主要是前端配合流水线产物，Jenkins 配置由后端/运维主导，下面是通用流水线设计实践。</p>
   <div class="diagram">
     <svg viewBox="0 0 800 180" role="img" aria-label="CI/CD 流水线分阶段示意图">
       <defs>
@@ -362,7 +362,7 @@ section.card li strong{color:var(--ink)}
 
   <h3>5.1 自学背景与动机</h3>
   <p class="lead"><b>一句话定位</b>：补"提交代码后自动验证、自动发到测试环境"的流水线实操缺口。</p>
-  <ul><li><strong>缺口</strong>：真实项目有 CI，但我以前端视角只提供 build/test 命令，没独立写过 Jenkinsfile。</li></ul>
+  <ul><li><strong>缺口</strong>：真实项目有 CI，但以前端视角只提供 build/test 命令，没独立写过 Jenkinsfile。</li></ul>
 
   <h3>5.2 搭建的 Demo 是什么</h3>
   <ul>
