@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Spring核心_IOC与AOP【深入】｜全栈技术栈详解</title>
+<title>Spring核心_IOC与AOP【深入】｜全栈技术知识库</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%231d4ed8'/%3E%3Crect x='3' y='4' width='10' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='7' width='7' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='10' width='9' height='2' rx='1' fill='%23fff'/%3E%3C/svg%3E">
 <style>
 :root{
@@ -147,7 +147,7 @@ section.card li strong{color:var(--ink)}
       <span class="badge deep">深入</span>
       <span class="meta">定位：整个 Spring 生态的内核——对象容器 + 动态代理切面</span>
     </div>
-    <p class="hero-desc">Spring 的一切都建立在两块地基上：IOC（控制反转）把对象的创建与装配从代码里抽走，交给容器；AOP（面向切面）用动态代理把日志、事务、鉴权这类横切逻辑从业务代码里抽走。本页源码级讲透 BeanFactory 与 ApplicationContext 的分工、Bean 完整生命周期、JDK 与 CGLIB 两种动态代理、三级缓存如何解决循环依赖，并用 DCP-RMP 的分层架构与切面落地收尾——重点包括面试必问的 @Transactional 失效场景。</p>
+    <p class="hero-desc">Spring 的一切都建立在两块地基上：IOC（控制反转）把对象的创建与装配从代码里抽走，交给容器；AOP（面向切面）用动态代理把日志、事务、鉴权这类横切逻辑从业务代码里抽走。本页源码级讲透 BeanFactory 与 ApplicationContext 的分工、Bean 完整生命周期、JDK 与 CGLIB 两种动态代理、三级缓存如何解决循环依赖，并用 业务系统 的分层架构与切面落地收尾——重点包括面试必问的 @Transactional 失效场景。</p>
   </div>
 </header>
 <nav class="doc-nav top" aria-label="文档导航">
@@ -163,7 +163,7 @@ section.card li strong{color:var(--ink)}
     <li><a href="#sec2">核心概念</a></li>
     <li><a href="#sec3">工作原理与流程</a></li>
     <li><a href="#sec4">核心语法与 API 要点</a></li>
-    <li><a href="#sec5">实战项目经验（真实项目落地）</a></li>
+    <li><a href="#sec5">实战项目经验（实战落地）</a></li>
     <li><a href="#sec6">易错点与面试重点</a></li>
     <li><a href="#sec7">学习资源与参考</a></li>
   </ol>
@@ -183,7 +183,7 @@ section.card li strong{color:var(--ink)}
     <thead><tr><th>方案</th><th>做法</th><th>取舍</th></tr></thead>
     <tbody>
       <tr><td>手动 new + 工厂</td><td>业务代码里自己 new 依赖，或写简单工厂</td><td>零框架成本，但耦合在源码里、难测试、难统一管理；只适合极小脚本。</td></tr>
-      <tr><td>Spring IOC/AOP</td><td>容器托管 Bean + 注解/JavaConfig 装配 + 动态代理切面</td><td>生态最大、注解声明式、切面与事务开箱即用；代价是启动慢、理解成本高、"魔法"出问题难调。本项目群选型。</td></tr>
+      <tr><td>Spring IOC/AOP</td><td>容器托管 Bean + 注解/JavaConfig 装配 + 动态代理切面</td><td>生态最大、注解声明式、切面与事务开箱即用；代价是启动慢、理解成本高、"魔法"出问题难调。本套技术栈选型。</td></tr>
       <tr><td>Guice / HK2</td><td>轻量级 JSR-330 注入容器</td><td>更轻、更显式，但生态小、没有事务/AOP 全家桶，国内后端极少单独用。</td></tr>
       <tr><td>EJB（传统）</td><td>早期重量级组件模型，配置繁琐</td><td>已基本被 Spring 淘汰，仅在遗留大型系统偶见；SSH 时代之后就退出主流。</td></tr>
     </tbody>
@@ -412,10 +412,10 @@ public void batchChange(List&lt;Long&gt; ids, Status next) {
 </section>
 
 <section id="sec5" class="card">
-  <h2><span class="num">5</span>实战项目经验（真实项目落地）</h2>
+  <h2><span class="num">5</span>实战项目经验（实战落地）</h2>
 
   <h3>1 项目背景</h3>
-  <p class="lead"><b>一句话定位</b>：DCP-RMP 与源启后端都是 Spring 容器托管的分层应用，IOC 组装 Bean、AOP 横切日志/鉴权/事务。</p>
+  <p class="lead"><b>一句话定位</b>：业务系统 与数据编排平台后端都是 Spring 容器托管的分层应用，IOC 组装 Bean、AOP 横切日志/鉴权/事务。</p>
   <ul>
     <li><strong>业务量级</strong>：需求流转、团队权限、工作流节点，涉及多处"进接口先鉴权、写操作加事务、关键操作记日志"。</li>
   </ul>
@@ -464,7 +464,7 @@ public Object around(ProceedingJoinPoint pjp, OpLog opLog) throws Throwable { ..
     <li><strong>事务边界要清醒</strong>：自调用、异常类型是最高频失效点。</li>
   </ul>
   <h3>10 面试讲法</h3>
-  <p class="key-sentence">"DCP-RMP 用构造器注入做分层，把鉴权/日志/事务抽成切面；我踩过 @Transactional 自调用失效和默认不回滚受检异常的坑，靠 rollbackFor 与拆 Bean 解决。"</p>
+  <p class="key-sentence">"业务系统 用构造器注入做分层，把鉴权/日志/事务抽成切面；我踩过 @Transactional 自调用失效和默认不回滚受检异常的坑，靠 rollbackFor 与拆 Bean 解决。"</p>
 
 <section id="sec6" class="card">
   <h2><span class="num">6</span>易错点与面试重点</h2>
@@ -539,7 +539,7 @@ public Object around(ProceedingJoinPoint pjp, OpLog opLog) throws Throwable { ..
   <a class="doc-nav-btn home" href="../index.html">⌂ 返回首页</a>
   <a class="doc-nav-btn" href="../07_后端开发/04_SpringBoot框架【标准】.html">下一篇 →</a>
 </nav>
-<footer>全栈技术栈详解 · Spring核心_IOC与AOP【深入】 · 基于简历项目实战编写</footer>
+<footer>全栈技术知识库 · Spring核心_IOC与AOP【深入】 · 基于实战经验编写</footer>
 <button id="backTop" type="button" aria-label="回到顶部">↑</button>
 <script>
 (function () {

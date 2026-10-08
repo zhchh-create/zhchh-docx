@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>可视化性能优化与大数据渲染【深入】｜全栈技术栈详解</title>
+<title>可视化性能优化与大数据渲染【深入】｜全栈技术知识库</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%231d4ed8'/%3E%3Crect x='3' y='4' width='10' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='7' width='7' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='10' width='9' height='2' rx='1' fill='%23fff'/%3E%3C/svg%3E">
 <style>
 :root{
@@ -147,7 +147,7 @@ section.card li strong{color:var(--ink)}
       <span class="badge deep">深入</span>
       <span class="meta">定位：把"万级数据 + 高频刷新"压进 16.6ms 帧预算的方法论</span>
     </div>
-    <p class="hero-desc">可视化性能不是单点技巧，而是一套体系：选对渲染后端（Canvas/SVG/WebGL）、增量更新代替全量重绘、虚拟化与视口裁剪、Worker 卸载计算、GPU 利用、帧预算管理。本项目群在一体化平台千节点流程、Three.js 万点、ECharts 高频刷新三处落地了这套体系，本页把它抽象成可复用的优化框架。</p>
+    <p class="hero-desc">可视化性能不是单点技巧，而是一套体系：选对渲染后端（Canvas/SVG/WebGL）、增量更新代替全量重绘、虚拟化与视口裁剪、Worker 卸载计算、GPU 利用、帧预算管理。本套技术栈在低代码平台千节点流程、Three.js 万点、ECharts 高频刷新三处落地了这套体系，本页把它抽象成可复用的优化框架。</p>
   </div>
 </header>
 <nav class="doc-nav top" aria-label="文档导航">
@@ -163,7 +163,7 @@ section.card li strong{color:var(--ink)}
     <li><a href="#sec2">核心概念</a></li>
     <li><a href="#sec3">工作原理与流程</a></li>
     <li><a href="#sec4">核心语法与 API 要点</a></li>
-    <li><a href="#sec5">实战项目经验（真实项目落地）</a></li>
+    <li><a href="#sec5">实战项目经验（实战落地）</a></li>
     <li><a href="#sec6">易错点与面试重点</a></li>
     <li><a href="#sec7">学习资源与参考</a></li>
   </ol>
@@ -367,12 +367,12 @@ function visibleRange(scrollTop, rowHeight, viewHeight) {
 </section>
 
 <section id="sec5" class="card">
-  <h2><span class="num">5</span>实战项目经验（真实项目落地）</h2>
+  <h2><span class="num">5</span>实战项目经验（实战落地）</h2>
 
   <h3>5.1 项目背景（业务量级/场景）</h3>
-  <p class="lead"><b>一句话定位</b>：一体化平台千节点流程编辑器掉帧，电力大屏同时跑 3D 万点与高频曲线两路都卡。</p>
+  <p class="lead"><b>一句话定位</b>：低代码平台千节点流程编辑器掉帧，电力大屏同时跑 3D 万点与高频曲线两路都卡。</p>
   <ul>
-    <li><strong>一体化平台</strong>（Vue3+G6）：流程编辑器节点上千，拖拽/缩放/滚动视野卡顿。</li>
+    <li><strong>低代码平台</strong>（Vue3+G6）：流程编辑器节点上千，拖拽/缩放/滚动视野卡顿。</li>
     <li><strong>电力大屏</strong>：Three.js 万级监测点 3D + ECharts 高频负荷曲线同屏，两路互相挤占。</li>
   </ul>
 
@@ -498,7 +498,7 @@ chart.setOption({ animation: false, series: [{ large: true, progressive: 5000 }]
   <a class="doc-nav-btn home" href="../index.html">⌂ 返回首页</a>
   <a class="doc-nav-btn" href="../03_数据可视化/06_可视化技术选型与原理【标准】.html">下一篇 →</a>
 </nav>
-<footer>全栈技术栈详解 · 可视化性能优化与大数据渲染【深入】 · 基于简历项目实战编写</footer>
+<footer>全栈技术知识库 · 可视化性能优化与大数据渲染【深入】 · 基于实战经验编写</footer>
 <button id="backTop" type="button" aria-label="回到顶部">↑</button>
 <script>
 (function () {

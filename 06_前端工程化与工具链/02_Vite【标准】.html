@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vite【标准】｜全栈技术栈详解</title>
+<title>Vite【标准】｜全栈技术知识库</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%231d4ed8'/%3E%3Crect x='3' y='4' width='10' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='7' width='7' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='10' width='9' height='2' rx='1' fill='%23fff'/%3E%3C/svg%3E">
 <style>
 :root{
@@ -147,7 +147,7 @@ section.card li strong{color:var(--ink)}
       <span class="badge std">标准</span>
       <span class="meta">定位：dev 用浏览器原生 ESM、build 用 Rollup——把冷启动从"打包完"变成"几乎为零"</span>
     </div>
-    <p class="hero-desc">Vite（法语"快"）是尤雨溪 2020 年推出的新一代构建工具。它 dev 模式不打包整棵依赖图，而是利用浏览器原生 ES Module 按需编译请求的模块；生产构建则交给成熟的 Rollup。本页讲清它的双模式架构、依赖预构建 optimizeDeps、proxy/别名配置，并用 DCP-RMP（Vue3+TS+Vite+pnpm）的真实配置收尾，同时讲清它与 Webpack 的取舍。</p>
+    <p class="hero-desc">Vite（法语"快"）是尤雨溪 2020 年推出的新一代构建工具。它 dev 模式不打包整棵依赖图，而是利用浏览器原生 ES Module 按需编译请求的模块；生产构建则交给成熟的 Rollup。本页讲清它的双模式架构、依赖预构建 optimizeDeps、proxy/别名配置，并用 业务系统（Vue3+TS+Vite+pnpm）的真实配置收尾，同时讲清它与 Webpack 的取舍。</p>
   </div>
 </header>
 <nav class="doc-nav top" aria-label="文档导航">
@@ -163,7 +163,7 @@ section.card li strong{color:var(--ink)}
     <li><a href="#sec2">核心概念</a></li>
     <li><a href="#sec3">工作原理与流程</a></li>
     <li><a href="#sec4">核心语法与配置要点</a></li>
-    <li><a href="#sec5">实战项目经验（真实项目落地）</a></li>
+    <li><a href="#sec5">实战项目经验（实战落地）</a></li>
     <li><a href="#sec6">易错点与面试重点</a></li>
     <li><a href="#sec7">学习资源与参考</a></li>
   </ol>
@@ -181,7 +181,7 @@ section.card li strong{color:var(--ink)}
   <p><strong>解决什么问题</strong>：中大型项目里 Webpack dev server 冷启动动辄几十秒到几分钟、改一行也要等重新构建。Vite 干掉了"启动要打包全部"：</p>
   <ul>
     <li><strong>启动几乎瞬时</strong>，HMR 无论项目多大都保持亚秒级。</li>
-    <li><strong>现状</strong>：2023 年后新建 Vue/React 项目几乎都默认用 Vite——DCP-RMP 正是选型它。</li>
+    <li><strong>现状</strong>：2023 年后新建 Vue/React 项目几乎都默认用 Vite——业务系统 正是选型它。</li>
   </ul>
   <div class="diagram">
     <svg viewBox="0 0 800 250" role="img" aria-label="Vite 与 Webpack dev 模式启动方式对比示意图">
@@ -343,12 +343,12 @@ const routes = [
 </section>
 
 <section id="sec5" class="card">
-  <h2><span class="num">5</span>实战项目经验（真实项目落地）</h2>
+  <h2><span class="num">5</span>实战项目经验（实战落地）</h2>
 
-  <h3>5.1 项目背景：DCP-RMP 多应用 Vite 工程</h3>
-  <p class="lead"><b>一句话定位</b>：DCP-RMP 是 pnpm monorepo，多个应用都用 Vite，要配好代理、别名、预构建并共享配置。</p>
+  <h3>5.1 项目背景：业务系统 多应用 Vite 工程</h3>
+  <p class="lead"><b>一句话定位</b>：业务系统 是 pnpm monorepo，多个应用都用 Vite，要配好代理、别名、预构建并共享配置。</p>
   <ul>
-    <li><strong>项目</strong>：需求管理平台 DCP-RMP（2026-，Vue3+TS+Vite+Pinia+ElementPlus）。</li>
+    <li><strong>项目</strong>：需求管理平台 业务系统（2026-，Vue3+TS+Vite+Pinia+ElementPlus）。</li>
     <li><strong>结构</strong>：web 主应用 + drawio + 工作流多应用；公共包有 API 客户端/通用组件/表单设计器渲染器等。</li>
   </ul>
 
@@ -396,7 +396,7 @@ export const http = axios.create({ baseURL: import.meta.env.VITE_API_BASE });</c
   </ul>
 
   <h3>5.10 面试讲法（一句话抓手）</h3>
-  <p class="key-sentence">一句话抓手："我在 DCP-RMP 这个 pnpm monorepo 多应用里用 Vite，配了 dev 代理、@别名与 TS paths 同步、optimizeDeps 预构建和 VITE_ 环境变量，把冷启动从 Webpack 的几十秒压到亚秒级。"</p>
+  <p class="key-sentence">一句话抓手："我在 业务系统 这个 pnpm monorepo 多应用里用 Vite，配了 dev 代理、@别名与 TS paths 同步、optimizeDeps 预构建和 VITE_ 环境变量，把冷启动从 Webpack 的几十秒压到亚秒级。"</p>
 </section>
 
 <section id="sec6" class="card">
@@ -426,7 +426,7 @@ export const http = axios.create({ baseURL: import.meta.env.VITE_API_BASE });</c
   <p class="lead"><b>一句话定位</b>：深度绑定 Webpack 生态的老项目继续用 Webpack，新项目默认 Vite。</p>
   <ul>
     <li><strong>继续 Webpack</strong>：极老、深度绑定大量自定义 Webpack loader/plugin 的存量项目，迁移成本高。</li>
-    <li><strong>本项目分界</strong>：源启/低代码（老，Webpack），DCP-RMP（新，Vite）。</li>
+    <li><strong>本项目分界</strong>：数据编排平台/低代码（老，Webpack），业务系统（新，Vite）。</li>
   </ul>
 </section>
 
@@ -452,7 +452,7 @@ export const http = axios.create({ baseURL: import.meta.env.VITE_API_BASE });</c
   <a class="doc-nav-btn home" href="../index.html">⌂ 返回首页</a>
   <a class="doc-nav-btn" href="../06_前端工程化与工具链/03_Monorepo_pnpm与Turborepo【标准】.html">下一篇 →</a>
 </nav>
-<footer>全栈技术栈详解 · Vite【标准】 · 基于简历项目实战编写</footer>
+<footer>全栈技术知识库 · Vite【标准】 · 基于实战经验编写</footer>
 <button id="backTop" type="button" aria-label="回到顶部">↑</button>
 <script>
 (function () {

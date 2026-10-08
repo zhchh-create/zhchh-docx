@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tailwind CSS 原子化【标准】｜全栈技术栈详解</title>
+<title>Tailwind CSS 原子化【标准】｜全栈技术知识库</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%231d4ed8'/%3E%3Crect x='3' y='4' width='10' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='7' width='7' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='10' width='9' height='2' rx='1' fill='%23fff'/%3E%3C/svg%3E">
 <style>
 :root{
@@ -187,8 +187,8 @@ section.card li strong{color:var(--ink)}
       <li><strong>Tailwind 的取舍</strong>：换来 HTML 变长，但消除了"想类名"和"跨文件找样式"的认知负担。</li>
     </ul>
     <h3>在本技术栈里的定位</h3>
-    <p class="lead"><b>一句话定位</b>：本简历项目以 ElementUI/ElementPlus 为主，Tailwind 是对低代码平台组件样式体系的"评估/规划"方向，不是已落地项目。</p>
-    <p>源启 CommonSlot、低代码平台都是用 Element 组件 + scoped CSS 搭起来的；后续若要让"配置驱动渲染"的物料摆脱组件库视觉锁定，Tailwind 的原子类可作为物料层的样式底座来评估。下面先把三种写法的演进讲清楚。</p>
+    <p class="lead"><b>一句话定位</b>：本知识库项目以 ElementUI/ElementPlus 为主，Tailwind 是对低代码平台组件样式体系的"评估/规划"方向，不是已落地项目。</p>
+    <p>数据编排平台 通用物料插槽、低代码平台都是用 Element 组件 + scoped CSS 搭起来的；后续若要让"配置驱动渲染"的物料摆脱组件库视觉锁定，Tailwind 的原子类可作为物料层的样式底座来评估。下面先把三种写法的演进讲清楚。</p>
     <div class="diagram">
       <svg viewBox="0 0 800 240" width="100%" role="img" aria-label="三种 CSS 组织方式演进对比图" xmlns="http://www.w3.org/2000/svg">
         <defs><marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/></marker></defs>
@@ -324,13 +324,13 @@ module.exports = {
 
   <section id="sec5" class="card">
     <h2><span class="num">5</span>实战项目经验（自学 + 自建 Demo）</h2>
-    <div class="warn-box"><strong>说明</strong>：本节为<strong>自学 + 自建 Demo，非企业项目</strong>。简历中的低代码平台当时用 Element + scoped CSS，并未引入 Tailwind；这里是把"物料样式体系若用 Tailwind 重写"作为自学验证的 demo，并附真实取舍结论。</div>
+    <div class="warn-box"><strong>说明</strong>：本节为<strong>自学 + 自建 Demo，非生产环境项目</strong>。实际项目中的低代码平台当时用 Element + scoped CSS，并未引入 Tailwind；这里是把"物料样式体系若用 Tailwind 重写"作为自学验证的 demo，并附真实取舍结论。</div>
 
     <h3>5.1 自学背景与动机</h3>
     <p class="lead"><b>一句话定位</b>：补"原子化 CSS 与工程化"这块缺口——团队一直写 scoped CSS/Bootstrap，想亲手验证 Tailwind 到底解决了什么。</p>
     <ul>
       <li><strong>缺口</strong>：之前只在文档里看过 utility-first，没在真实物料场景跑过 JIT 与令牌换肤。</li>
-      <li><strong>挂靠</strong>：以简历里低代码平台（Vue2+ElementUI）的物料为假想改造对象做 demo。</li>
+      <li><strong>挂靠</strong>：以实际项目中低代码平台（Vue2+ElementUI）的物料为假想改造对象做 demo。</li>
     </ul>
 
     <h3>5.2 搭建的 Demo 是什么</h3>
@@ -438,7 +438,7 @@ function renderClass(style) {
   <a class="doc-nav-btn" href="../02_前端框架与状态管理/01_Vue框架【标准】.html">下一篇 →</a>
 </nav>
 
-<footer>全栈技术栈详解 · Tailwind CSS 原子化【标准】 · 基于简历项目实战编写</footer>
+<footer>全栈技术知识库 · Tailwind CSS 原子化【标准】 · 基于实战经验编写</footer>
 <button id="backTop" type="button" aria-label="回到顶部">↑</button>
 <script>
 (function () {

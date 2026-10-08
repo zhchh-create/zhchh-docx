@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>vxe-table表格【深入】｜全栈技术栈详解</title>
+<title>vxe-table表格【深入】｜全栈技术知识库</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%231d4ed8'/%3E%3Crect x='3' y='4' width='10' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='7' width='7' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='10' width='9' height='2' rx='1' fill='%23fff'/%3E%3C/svg%3E">
 <style>
 :root{
@@ -147,7 +147,7 @@ section.card li strong{color:var(--ink)}
       <span class="badge deep">深入</span>
       <span class="meta">定位：Vue 大数据表格组件——列配置驱动 + 虚拟滚动 + 编辑能力</span>
     </div>
-    <p class="hero-desc">vxe-table 是面向 Vue 的高性能表格组件，主打大数据量下的流畅渲染：虚拟滚动只渲染可视行、列配置驱动、单元格编辑、合并表头等。后端设计平台"源启"用它承载配置项/数据源等大表格场景。本页讲透列配置与插槽、虚拟滚动机制、编辑与性能，并给出大表格落地的真实坑。</p>
+    <p class="hero-desc">vxe-table 是面向 Vue 的高性能表格组件，主打大数据量下的流畅渲染：虚拟滚动只渲染可视行、列配置驱动、单元格编辑、合并表头等。后端设计平台"数据编排平台"用它承载配置项/数据源等大表格场景。本页讲透列配置与插槽、虚拟滚动机制、编辑与性能，并给出大表格落地的真实坑。</p>
   </div>
 </header>
 <nav class="doc-nav top" aria-label="文档导航">
@@ -163,7 +163,7 @@ section.card li strong{color:var(--ink)}
     <li><a href="#sec2">核心概念</a></li>
     <li><a href="#sec3">工作原理与流程</a></li>
     <li><a href="#sec4">核心语法与 API 要点</a></li>
-    <li><a href="#sec5">实战项目经验（真实项目落地）</a></li>
+    <li><a href="#sec5">实战项目经验（实战落地）</a></li>
     <li><a href="#sec6">易错点与面试重点</a></li>
     <li><a href="#sec7">学习资源与参考</a></li>
   </ol>
@@ -357,10 +357,10 @@ const columns = [
 </section>
 
 <section id="sec5" class="card">
-  <h2><span class="num">5</span>实战项目经验（真实项目落地）</h2>
+  <h2><span class="num">5</span>实战项目经验（实战落地）</h2>
 
   <h3>5.1 项目背景（业务量级/场景）</h3>
-  <p class="lead"><b>一句话定位</b>：源启平台的字段与配置项表格行数千，普通 el-table 滚动卡顿。</p>
+  <p class="lead"><b>一句话定位</b>：数据编排平台平台的字段与配置项表格行数千，普通 el-table 滚动卡顿。</p>
   <ul>
     <li><strong>场景</strong>：数据源字段、组件配置项需大表格展示与行内编辑，行数千级。</li>
   </ul>
@@ -368,7 +368,7 @@ const columns = [
   <h3>5.2 我的角色与职责</h3>
   <p class="lead"><b>一句话定位</b>：表格层前端，负责虚拟滚动与行内编辑落地。</p>
   <ul>
-    <li><strong>分工</strong>：在源启公共表格组件上封装 vxe-table，供各模块复用。</li>
+    <li><strong>分工</strong>：在数据编排平台公共表格组件上封装 vxe-table，供各模块复用。</li>
   </ul>
 
   <h3>5.3 技术栈</h3>
@@ -417,7 +417,7 @@ const columns = [
   </ul>
 
   <h3>5.10 面试讲法</h3>
-  <p class="key-sentence"><span class="tag-key">抓手</span>「源启千行配置表格 el-table 卡顿，我换 vxe-table 开 scroll-y 虚拟滚动、固定高度、行内 edit-render、服务端排序，滚动恢复流畅。」</p>
+  <p class="key-sentence"><span class="tag-key">抓手</span>「数据编排平台千行配置表格 el-table 卡顿，我换 vxe-table 开 scroll-y 虚拟滚动、固定高度、行内 edit-render、服务端排序，滚动恢复流畅。」</p>
 </section>
 
 <section id="sec6" class="card">
@@ -464,7 +464,7 @@ const columns = [
   <a class="doc-nav-btn home" href="../index.html">⌂ 返回首页</a>
   <a class="doc-nav-btn" href="../05_前端常用工具库/03_JsPlumb连线【深入】.html">下一篇 →</a>
 </nav>
-<footer>全栈技术栈详解 · vxe-table表格【深入】 · 基于简历项目实战编写</footer>
+<footer>全栈技术知识库 · vxe-table表格【深入】 · 基于实战经验编写</footer>
 <button id="backTop" type="button" aria-label="回到顶部">↑</button>
 <script>
 (function () {

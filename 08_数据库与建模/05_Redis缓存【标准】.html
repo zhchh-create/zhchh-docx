@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Redis缓存【标准】｜全栈技术栈详解</title>
+<title>Redis缓存【标准】｜全栈技术知识库</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%231d4ed8'/%3E%3Crect x='3' y='4' width='10' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='7' width='7' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='10' width='9' height='2' rx='1' fill='%23fff'/%3E%3C/svg%3E">
 <style>
 :root{
@@ -147,7 +147,7 @@ section.card li strong{color:var(--ink)}
       <span class="badge std">标准</span>
       <span class="meta">定位：内存级 KV——给热点数据、会话、计数加速</span>
     </div>
-    <p class="hero-desc">Redis 是最常用的内存数据库，单线程内存操作带来微秒级读写，常挡在 MySQL 前面扛住热点读。本页讲清它的五大数据结构分别适合什么场景、过期与淘汰策略、RDB/AOF 持久化，以及最经典的缓存读写模式（旁路缓存）。以 DCP-RMP 的真实缓存落地收尾——热点数据、会话黑名单、计数器各用得其所。</p>
+    <p class="hero-desc">Redis 是最常用的内存数据库，单线程内存操作带来微秒级读写，常挡在 MySQL 前面扛住热点读。本页讲清它的五大数据结构分别适合什么场景、过期与淘汰策略、RDB/AOF 持久化，以及最经典的缓存读写模式（旁路缓存）。以 业务系统 的真实缓存落地收尾——热点数据、会话黑名单、计数器各用得其所。</p>
   </div>
 </header>
 <nav class="doc-nav top" aria-label="文档导航">
@@ -163,7 +163,7 @@ section.card li strong{color:var(--ink)}
     <li><a href="#sec2">核心概念</a></li>
     <li><a href="#sec3">工作原理与流程</a></li>
     <li><a href="#sec4">核心语法与 API 要点</a></li>
-    <li><a href="#sec5">实战项目经验（真实项目落地）</a></li>
+    <li><a href="#sec5">实战项目经验（实战落地）</a></li>
     <li><a href="#sec6">易错点与面试重点</a></li>
     <li><a href="#sec7">学习资源与参考</a></li>
   </ol>
@@ -326,10 +326,10 @@ Boolean ok = redisTemplate.opsForValue()
 </section>
 
 <section id="sec5" class="card">
-  <h2><span class="num">5</span>实战项目经验（真实项目落地）</h2>
+  <h2><span class="num">5</span>实战项目经验（实战落地）</h2>
 
   <h3>1 项目背景</h3>
-  <p class="lead"><b>一句话定位</b>：DCP-RMP 用 Redis 做热点数据缓存、登录会话/黑名单与计数器，减轻 MySQL 压力。</p>
+  <p class="lead"><b>一句话定位</b>：业务系统 用 Redis 做热点数据缓存、登录会话/黑名单与计数器，减轻 MySQL 压力。</p>
   <ul><li><strong>业务量级</strong>：字典/权限/热点配置读多写少；登录态与计数频繁访问。</li></ul>
   <h3>2 我的角色与职责</h3>
   <ul><li><strong>分工</strong>：接入 Redis，设计缓存 key、过期策略与缓存更新方式。</li></ul>
@@ -363,7 +363,7 @@ Boolean ok = redisTemplate.opsForValue()
   <h3>9 复盘与可复用经验</h3>
   <ul><li><strong>Cache-Aside + 删缓存</strong>：读穿透、写删缓存。</li><li><strong>JSON 序列化 + TTL</strong>。</li></ul>
   <h3>10 面试讲法</h3>
-  <p class="key-sentence">"DCP-RMP 我用 Redis 做字典缓存、JWT 黑名单和计数，Cache-Aside 读穿透写删缓存，踩过库更新后缓存不一致和序列化的坑。"</p>
+  <p class="key-sentence">"业务系统 我用 Redis 做字典缓存、JWT 黑名单和计数，Cache-Aside 读穿透写删缓存，踩过库更新后缓存不一致和序列化的坑。"</p>
 
 <section id="sec6" class="card">
   <h2><span class="num">6</span>易错点与面试重点</h2>
@@ -419,7 +419,7 @@ Boolean ok = redisTemplate.opsForValue()
   <a class="doc-nav-btn home" href="../index.html">⌂ 返回首页</a>
   <a class="doc-nav-btn" href="../08_数据库与建模/06_Redis进阶_缓存策略与分布式锁【深入】.html">下一篇 →</a>
 </nav>
-<footer>全栈技术栈详解 · Redis缓存【标准】 · 基于简历项目实战编写</footer>
+<footer>全栈技术知识库 · Redis缓存【标准】 · 基于实战经验编写</footer>
 <button id="backTop" type="button" aria-label="回到顶部">↑</button>
 <script>
 (function () {

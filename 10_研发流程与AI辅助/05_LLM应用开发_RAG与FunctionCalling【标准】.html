@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LLM应用开发_RAG与FunctionCalling【标准】｜全栈技术栈详解</title>
+<title>LLM应用开发_RAG与FunctionCalling【标准】｜全栈技术知识库</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%231d4ed8'/%3E%3Crect x='3' y='4' width='10' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='7' width='7' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='10' width='9' height='2' rx='1' fill='%23fff'/%3E%3C/svg%3E">
 <style>
 :root{
@@ -147,7 +147,7 @@ section.card li strong{color:var(--ink)}
       <span class="badge std">标准</span>
       <span class="meta">定位：把大模型能力做进业务应用的两条工程路径</span>
     </div>
-    <p class="hero-desc">大模型本身只有预训练知识，要在业务里用起来，靠两件事：RAG（检索增强生成，Retrieval-Augmented Generation）把私有知识查出来喂给模型；Function Calling（函数调用）让模型输出结构化指令去调真实工具。本页讲清 API 接入、RAG 检索链路、工具调用闭环与提示词工程化，并结合本人真实的 AI 辅助编码工作流与 DCP-RMP 集成 AI 的规划思路。</p>
+    <p class="hero-desc">大模型本身只有预训练知识，要在业务里用起来，靠两件事：RAG（检索增强生成，Retrieval-Augmented Generation）把私有知识查出来喂给模型；Function Calling（函数调用）让模型输出结构化指令去调真实工具。本页讲清 API 接入、RAG 检索链路、工具调用闭环与提示词工程化，并结合本人真实的 AI 辅助编码工作流与 业务系统 集成 AI 的规划思路。</p>
   </div>
 </header>
 
@@ -327,7 +327,7 @@ messages.push({ role: 'tool', tool_call_id, content: JSON.stringify(realData) })
 
 <section id="sec5" class="card">
   <h2><span class="num">5</span>实战项目经验（自学 + 自建 Demo）</h2>
-  <div class="warn-box"><strong>说明</strong>：本节为<strong>自学 + 自建 demo，非企业项目</strong>。RAG/Function Calling 处于学习与最小可行验证阶段，尚未上生产；DCP-RMP 集成 AI 仅为规划。本人真实经验在「AI 辅助编码工作流」（Cursor/Codex/ChatGPT/Claude/DeepSeek），与本 demo 区分。</div>
+  <div class="warn-box"><strong>说明</strong>：本节为<strong>自学 + 自建 demo，非生产环境项目</strong>。RAG/Function Calling 处于学习与最小可行验证阶段，尚未上生产；业务系统 集成 AI 仅为规划。本人真实经验在「AI 辅助编码工作流」（Cursor/Codex/ChatGPT/Claude/DeepSeek），与本 demo 区分。</div>
 
   <h3>5.1 自学背景与动机</h3>
   <p class="lead"><b>一句话定位</b>：AI 辅助编码已日常使用，想把大模型真正做进应用，补 RAG/工具调用的链路认知。</p>
@@ -366,11 +366,11 @@ const messages = [
   <h3>5.6 与真实项目的差异</h3>
   <ul>
     <li><span class="tag-pit">坑</span>单机 demo、小规模文档、无高可用监控与评测体系，未上生产。</li>
-    <li><span class="tag-point">要点</span>DCP-RMP 集成 AI 为规划项，架构上密钥与模型调用收敛后端、前端只拿最终答案。</li>
+    <li><span class="tag-point">要点</span>业务系统 集成 AI 为规划项，架构上密钥与模型调用收敛后端、前端只拿最终答案。</li>
   </ul>
 
   <h3>5.7 面试讲法</h3>
-  <p class="key-sentence"><span class="tag-key">抓手</span>「我自建了 RAG 与 Function Calling 最小 demo 跑通检索+生成+工具调用链路，清楚密钥后端代理、检索调参与参数校验这些工程边界，DCP-RMP 集成 AI 是规划项。」</p>
+  <p class="key-sentence"><span class="tag-key">抓手</span>「我自建了 RAG 与 Function Calling 最小 demo 跑通检索+生成+工具调用链路，清楚密钥后端代理、检索调参与参数校验这些工程边界，业务系统 集成 AI 是规划项。」</p>
 </section>
 
 <section id="sec6" class="card">
@@ -426,7 +426,7 @@ const messages = [
   <a class="doc-nav-btn hidden" href="#">下一篇 →</a>
 </nav>
 
-<footer>全栈技术栈详解 · LLM应用开发_RAG与FunctionCalling【标准】 · 基于简历项目实战编写</footer>
+<footer>全栈技术知识库 · LLM应用开发_RAG与FunctionCalling【标准】 · 基于实战经验编写</footer>
 <button id="backTop" type="button" aria-label="回到顶部">↑</button>
 <script>
 (function () {

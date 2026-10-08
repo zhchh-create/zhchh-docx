@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>接口安全_JWT与鉴权【标准】｜全栈技术栈详解</title>
+<title>接口安全_JWT与鉴权【标准】｜全栈技术知识库</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%231d4ed8'/%3E%3Crect x='3' y='4' width='10' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='7' width='7' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='10' width='9' height='2' rx='1' fill='%23fff'/%3E%3C/svg%3E">
 <style>
 :root{
@@ -147,7 +147,7 @@ section.card li strong{color:var(--ink)}
       <span class="badge std">标准</span>
       <span class="meta">定位：无状态登录态——把"你是谁"签名进 token，服务端免存 Session</span>
     </div>
-    <p class="hero-desc">前后端分离后，服务端不再靠 Cookie+Session 记住登录态，而是下发一个 JWT 令牌，前端每次请求带上、服务端验签放行。本页讲清 JWT 的三段结构与签名原理、它与传统 Session 的取舍、访问令牌+刷新令牌+黑名单的完整登录态设计，并以 DCP-RMP 的登录与 RBAC 权限落地收尾。</p>
+    <p class="hero-desc">前后端分离后，服务端不再靠 Cookie+Session 记住登录态，而是下发一个 JWT 令牌，前端每次请求带上、服务端验签放行。本页讲清 JWT 的三段结构与签名原理、它与传统 Session 的取舍、访问令牌+刷新令牌+黑名单的完整登录态设计，并以 业务系统 的登录与 RBAC 权限落地收尾。</p>
   </div>
 </header>
 <nav class="doc-nav top" aria-label="文档导航">
@@ -163,7 +163,7 @@ section.card li strong{color:var(--ink)}
     <li><a href="#sec2">核心概念</a></li>
     <li><a href="#sec3">工作原理与流程</a></li>
     <li><a href="#sec4">核心语法与 API 要点</a></li>
-    <li><a href="#sec5">实战项目经验（真实项目落地）</a></li>
+    <li><a href="#sec5">实战项目经验（实战落地）</a></li>
     <li><a href="#sec6">易错点与面试重点</a></li>
     <li><a href="#sec7">学习资源与参考</a></li>
   </ol>
@@ -211,7 +211,7 @@ section.card li strong{color:var(--ink)}
   <p class="lead"><b>一句话定位</b>：认证解决"你是谁"（JWT 干的事），授权解决"你能做什么"（拿到角色后用 RBAC 判断）。</p>
   <ul>
     <li><strong>JWT 管认证</strong>：登录后签发 token 证明身份。</li>
-    <li><strong>RBAC 管授权</strong>：本项目群是用户→角色→权限点，拿到 token 里的角色后再判断能否访问某接口/数据。</li>
+    <li><strong>RBAC 管授权</strong>：本套技术栈是用户→角色→权限点，拿到 token 里的角色后再判断能否访问某接口/数据。</li>
   </ul>
   <h3>2.2 JWT 的三段结构</h3>
   <p class="lead"><b>一句话定位</b>：一个 JWT 形如 <code>xxxxx.yyyyy.zzzzz</code>——Header 算法、Payload 声明、Signature 签名。</p>
@@ -333,10 +333,10 @@ public Result&lt;Void&gt; delete(@PathVariable Long id) { ... }</code></pre>
 </section>
 
 <section id="sec5" class="card">
-  <h2><span class="num">5</span>实战项目经验（真实项目落地）</h2>
+  <h2><span class="num">5</span>实战项目经验（实战落地）</h2>
 
   <h3>1 项目背景</h3>
-  <p class="lead"><b>一句话定位</b>：DCP-RMP 前后端分离，登录态用 JWT，接口经拦截器校验令牌，再按角色做 RBAC 权限。</p>
+  <p class="lead"><b>一句话定位</b>：业务系统 前后端分离，登录态用 JWT，接口经拦截器校验令牌，再按角色做 RBAC 权限。</p>
   <ul><li><strong>业务量级</strong>：多用户/多团队协作，登录后访问需求与评审接口。</li></ul>
   <h3>2 我的角色与职责</h3>
   <ul><li><strong>分工</strong>：实现登录签发 JWT、拦截器校验、登出/刷新与接口级权限控制。</li></ul>
@@ -369,7 +369,7 @@ public Result&lt;Void&gt; delete(@PathVariable Long id) { ... }</code></pre>
   <h3>9 复盘与可复用经验</h3>
   <ul><li><strong>无状态要补失效</strong>：JWT + Redis 黑名单是标准组合。</li><li><strong>密钥与时效</strong>：密钥外置、access 短时效。</li></ul>
   <h3>10 面试讲法</h3>
-  <p class="key-sentence">"DCP-RMP 我用 JWT + 拦截器做登录态，access 短时效配 Redis 黑名单解决 JWT 登出失效问题，再叠 RBAC 做接口级权限。"</p>
+  <p class="key-sentence">"业务系统 我用 JWT + 拦截器做登录态，access 短时效配 Redis 黑名单解决 JWT 登出失效问题，再叠 RBAC 做接口级权限。"</p>
 
 <section id="sec6" class="card">
   <h2><span class="num">6</span>易错点与面试重点</h2>
@@ -426,7 +426,7 @@ public Result&lt;Void&gt; delete(@PathVariable Long id) { ... }</code></pre>
   <a class="doc-nav-btn home" href="../index.html">⌂ 返回首页</a>
   <a class="doc-nav-btn" href="../07_后端开发/11_SpringCloud微服务与网关【标准】.html">下一篇 →</a>
 </nav>
-<footer>全栈技术栈详解 · 接口安全_JWT与鉴权【标准】 · 基于简历项目实战编写</footer>
+<footer>全栈技术知识库 · 接口安全_JWT与鉴权【标准】 · 基于实战经验编写</footer>
 <button id="backTop" type="button" aria-label="回到顶部">↑</button>
 <script>
 (function () {

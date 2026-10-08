@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>前端E2E测试_Playwright与Cypress【标准】｜全栈技术栈详解</title>
+<title>前端E2E测试_Playwright与Cypress【标准】｜全栈技术知识库</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%231d4ed8'/%3E%3Crect x='3' y='4' width='10' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='7' width='7' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='10' width='9' height='2' rx='1' fill='%23fff'/%3E%3C/svg%3E">
 <style>
 :root{
@@ -147,7 +147,7 @@ section.card li strong{color:var(--ink)}
       <span class="badge std">标准</span>
       <span class="meta">定位：端到端测试分层、选择器策略、自动等待与 CI 集成——与 Jest/Vitest 单测互补</span>
     </div>
-    <p class="hero-desc">单元测试测的是"函数/组件内部对不对"，E2E（End-to-End）测的是"用户从打开页面到完成任务，整条链路通不通"。Playwright 与 Cypress 是当前两大主流 E2E 框架，能真实启动浏览器、模拟点击输入、断言页面最终状态。本页讲测试金字塔里 E2E 的位置、选择器与自动等待策略、CI 并行，并以 DCP-RMP 的测试实践说明：单测我们已经写了，E2E 处于规划/学习阶段——以及为什么要补这一层。</p>
+    <p class="hero-desc">单元测试测的是"函数/组件内部对不对"，E2E（End-to-End）测的是"用户从打开页面到完成任务，整条链路通不通"。Playwright 与 Cypress 是当前两大主流 E2E 框架，能真实启动浏览器、模拟点击输入、断言页面最终状态。本页讲测试金字塔里 E2E 的位置、选择器与自动等待策略、CI 并行，并以 业务系统 的测试实践说明：单测我们已经写了，E2E 处于规划/学习阶段——以及为什么要补这一层。</p>
   </div>
 </header>
 
@@ -181,7 +181,7 @@ section.card li strong{color:var(--ink)}
     <ul>
       <li><strong>它抓得到</strong>：登录后跳错页、表单提交后列表没刷新、权限路由走错这类"跨模块"回归。</li>
       <li><strong>代价</strong>：比单测慢、脆（依赖真实浏览器与网络），所以只覆盖关键主流程，不追求全覆盖。</li>
-      <li><strong>本项目定位</strong>：DCP-RMP 已有 Jest/Vitest 单测（见该页），E2E 是我们规划要补的下一层，目前以学习与试点为主。</li>
+      <li><strong>本项目定位</strong>：业务系统 已有 Jest/Vitest 单测（见该页），E2E 是我们规划要补的下一层，目前以学习与试点为主。</li>
     </ul>
     <div class="diagram">
       <svg viewBox="0 0 800 240" role="img" aria-label="测试金字塔分层与 E2E 位置示意图">
@@ -353,7 +353,7 @@ test('登录后能看到需求列表', async ({ page }) =&gt; {
 
   <section id="sec5" class="card">
     <h2><span class="num">5</span>实战项目经验（自学 + 自建 Demo）</h2>
-    <div class="warn-box"><strong>说明</strong>：本节是自学 + 自建 Demo，非企业项目。DCP-RMP 已有单测（Jest/Vitest），E2E 在那里只是规划/试点、未大规模铺开；下面是我用 Playwright 自建的冒烟 demo，用于亲手跑通 E2E 主流程。</div>
+    <div class="warn-box"><strong>说明</strong>：本节是自学 + 自建 Demo，非生产环境项目。业务系统 已有单测（Jest/Vitest），E2E 在那里只是规划/试点、未大规模铺开；下面是我用 Playwright 自建的冒烟 demo，用于亲手跑通 E2E 主流程。</div>
 
     <h3>5.1 自学背景与动机</h3>
     <p class="lead"><b>一句话定位</b>：补"单测碰不到的跨模块主流程回归"这层缺口——登录鉴权后跳路由、状态流转后列表刷新这类。</p>
@@ -384,10 +384,10 @@ test('登录后能看到需求列表', async ({ page }) =&gt; {
     <ul><li><span class="tag-point">要点</span>能用 Playwright 写一条稳定的冒烟主流程，选器解耦到 data-testid、失败留 Trace；可复现：<code>npm i -D @playwright/test</code> → 写上面用例 → <code>npx playwright test</code>。</li></ul>
 
     <h3>5.6 与真实项目的差异（诚实说明）</h3>
-    <p>DCP-RMP 里 E2E 只是规划/试点、未大规模铺开——E2E 慢且要维护，我们保持克制只守主流程；本 demo 是我为跑通 E2E 自建的，未上生产 CI、无多浏览器矩阵。正确分层是"单测测逻辑、E2E 测主流程"，不拿 E2E 覆盖组件内部边界。</p>
+    <p>业务系统 里 E2E 只是规划/试点、未大规模铺开——E2E 慢且要维护，我们保持克制只守主流程；本 demo 是我为跑通 E2E 自建的，未上生产 CI、无多浏览器矩阵。正确分层是"单测测逻辑、E2E 测主流程"，不拿 E2E 覆盖组件内部边界。</p>
 
     <h3>5.7 面试讲法（一句话抓手）</h3>
-    <p class="key-sentence">一句话抓手："我用 Playwright 自建过登录→新建→列表断言的冒烟 demo，把选器解耦到 data-testid、靠 retries+Trace 解决 flaky；真实项目里 E2E 是 DCP-RMP 单测之上的规划/试点，只守主流程不贪多。"</p>
+    <p class="key-sentence">一句话抓手："我用 Playwright 自建过登录→新建→列表断言的冒烟 demo，把选器解耦到 data-testid、靠 retries+Trace 解决 flaky；真实项目里 E2E 是 业务系统 单测之上的规划/试点，只守主流程不贪多。"</p>
   </section>
 
   <section id="sec6" class="card">
@@ -422,7 +422,7 @@ test('登录后能看到需求列表', async ({ page }) =&gt; {
   <a class="doc-nav-btn" href="../07_后端开发/01_Java基础【标准】.html">下一篇 →</a>
 </nav>
 
-<footer>全栈技术栈详解 · 前端 E2E 测试：Playwright 与 Cypress · 基于简历项目实战编写</footer>
+<footer>全栈技术知识库 · 前端 E2E 测试：Playwright 与 Cypress · 基于实战经验编写</footer>
 <button id="backTop" type="button" aria-label="回到顶部">↑</button>
 <script>
 (function () {

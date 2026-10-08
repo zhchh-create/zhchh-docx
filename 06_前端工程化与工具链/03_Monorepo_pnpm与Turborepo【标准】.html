@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Monorepo_pnpm与Turborepo【标准】｜全栈技术栈详解</title>
+<title>Monorepo_pnpm与Turborepo【标准】｜全栈技术知识库</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%231d4ed8'/%3E%3Crect x='3' y='4' width='10' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='7' width='7' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='10' width='9' height='2' rx='1' fill='%23fff'/%3E%3C/svg%3E">
 <style>
 :root{
@@ -147,7 +147,7 @@ section.card li strong{color:var(--ink)}
       <span class="badge std">标准</span>
       <span class="meta">定位：一个仓库管多应用多包——用 workspace 协议复用依赖、用缓存加速任务</span>
     </div>
-    <p class="hero-desc">Monorepo 把多个相关应用与共享包放进同一个仓库统一管理。pnpm workspace 负责"怎么组织包与链接依赖"，解决幽灵依赖与安装速度；Turborepo 负责"怎么编排与缓存跨包任务"。本页讲清这两者的分工与 workspace 协议，并以 DCP-RMP（web 主应用/drawio/工作流多应用 + 5 个公共包）这条真实 monorepo 结构收尾。</p>
+    <p class="hero-desc">Monorepo 把多个相关应用与共享包放进同一个仓库统一管理。pnpm workspace 负责"怎么组织包与链接依赖"，解决幽灵依赖与安装速度；Turborepo 负责"怎么编排与缓存跨包任务"。本页讲清这两者的分工与 workspace 协议，并以 业务系统（web 主应用/drawio/工作流多应用 + 5 个公共包）这条真实 monorepo 结构收尾。</p>
   </div>
 </header>
 <nav class="doc-nav top" aria-label="文档导航">
@@ -163,7 +163,7 @@ section.card li strong{color:var(--ink)}
     <li><a href="#sec2">核心概念</a></li>
     <li><a href="#sec3">工作原理与流程</a></li>
     <li><a href="#sec4">核心语法与配置要点</a></li>
-    <li><a href="#sec5">实战项目经验（真实项目落地）</a></li>
+    <li><a href="#sec5">实战项目经验（实战落地）</a></li>
     <li><a href="#sec6">易错点与面试重点</a></li>
     <li><a href="#sec7">学习资源与参考</a></li>
   </ol>
@@ -181,7 +181,7 @@ section.card li strong{color:var(--ink)}
   <ul>
     <li><strong>收益</strong>：一个 PR 里一起改、一起测试、一起发版，版本天然一致。</li>
     <li><strong>代价</strong>：仓库变大、需要工具保证"一个包的改动不意外破坏别的包"。</li>
-    <li><strong>本项目</strong>：DCP-RMP 正是 monorepo——web 主应用、drawio、工作流多个应用，共享 API 客户端/通用组件/表单设计器渲染器/DOCX 预览/富文本等公共包。</li>
+    <li><strong>本项目</strong>：业务系统 正是 monorepo——web 主应用、drawio、工作流多个应用，共享 API 客户端/通用组件/表单设计器渲染器/DOCX 预览/富文本等公共包。</li>
   </ul>
   <div class="diagram">
     <svg viewBox="0 0 800 180" role="img" aria-label="Monorepo与Polyrepo对比图">
@@ -216,7 +216,7 @@ section.card li strong{color:var(--ink)}
           <path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/>
         </marker>
       </defs>
-      <text x="400" y="22" text-anchor="middle" font-size="14" font-weight="700" fill="#1f2937">DCP-RMP monorepo 结构（示意）</text>
+      <text x="400" y="22" text-anchor="middle" font-size="14" font-weight="700" fill="#1f2937">业务系统 monorepo 结构（示意）</text>
       <rect x="40" y="45" width="200" height="200" rx="10" fill="#eff6ff" stroke="#2563eb"/>
       <text x="140" y="66" text-anchor="middle" font-size="13" font-weight="700" fill="#1d4ed8">apps/（应用）</text>
       <rect x="60" y="80" width="160" height="30" rx="6" fill="#dbeafe" stroke="#2563eb"/>
@@ -244,7 +244,7 @@ section.card li strong{color:var(--ink)}
       <line x1="240" y1="95" x2="316" y2="95" stroke="#64748b" stroke-dasharray="4,3" marker-end="url(#arr)"/>
       <text x="400" y="265" text-anchor="middle" font-size="12.5" fill="#6b7280">apps 通过 workspace 协议引用 packages；packages 之间也可互相引用。</text>
     </svg>
-    <p class="diagram-caption">图 1 DCP-RMP monorepo 的 apps/packages 双层结构（示意）</p>
+    <p class="diagram-caption">图 1 业务系统 monorepo 的 apps/packages 双层结构（示意）</p>
   </div>
 </section>
 
@@ -366,9 +366,9 @@ section.card li strong{color:var(--ink)}
 </section>
 
 <section id="sec5" class="card">
-  <h2><span class="num">5</span>实战项目经验（真实项目落地）</h2>
+  <h2><span class="num">5</span>实战项目经验（实战落地）</h2>
 
-  <h3>5.1 项目背景：DCP-RMP 多应用 + 公共包</h3>
+  <h3>5.1 项目背景：业务系统 多应用 + 公共包</h3>
   <p class="lead"><b>一句话定位</b>：前端不是单个应用，而是多应用加一批要被复用的公共包，需要一个仓库管好并让公共包改动即时生效。</p>
   <ul>
     <li><strong>应用</strong>：web 主应用、drawio、工作流。</li>
@@ -421,7 +421,7 @@ turbo run build --filter=@rmp/web</code></pre>
   </ul>
 
   <h3>5.10 面试讲法（一句话抓手）</h3>
-  <p class="key-sentence">一句话抓手："我在 DCP-RMP 用 pnpm workspace + Turborepo 把 web/drawio/工作流三个应用和五个公共包管起来，靠 workspace:* 协议让改公共包即时生效，靠 turbo 缓存把重复 build 从全量压到缓存命中秒级。"</p>
+  <p class="key-sentence">一句话抓手："我在 业务系统 用 pnpm workspace + Turborepo 把 web/drawio/工作流三个应用和五个公共包管起来，靠 workspace:* 协议让改公共包即时生效，靠 turbo 缓存把重复 build 从全量压到缓存命中秒级。"</p>
 </section>
 
 <section id="sec6" class="card">
@@ -474,7 +474,7 @@ turbo run build --filter=@rmp/web</code></pre>
   <a class="doc-nav-btn home" href="../index.html">⌂ 返回首页</a>
   <a class="doc-nav-btn" href="../06_前端工程化与工具链/04_前端性能优化_懒加载与虚拟列表【深入】.html">下一篇 →</a>
 </nav>
-<footer>全栈技术栈详解 · Monorepo_pnpm与Turborepo【标准】 · 基于简历项目实战编写</footer>
+<footer>全栈技术知识库 · Monorepo_pnpm与Turborepo【标准】 · 基于实战经验编写</footer>
 <button id="backTop" type="button" aria-label="回到顶部">↑</button>
 <script>
 (function () {

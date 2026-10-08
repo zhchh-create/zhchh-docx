@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Canvas与SVG【深入】｜全栈技术栈详解</title>
+<title>Canvas与SVG【深入】｜全栈技术知识库</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%231d4ed8'/%3E%3Crect x='3' y='4' width='10' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='7' width='7' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='10' width='9' height='2' rx='1' fill='%23fff'/%3E%3C/svg%3E">
 <style>
 :root{
@@ -147,7 +147,7 @@ section.card li strong{color:var(--ink)}
       <span class="badge deep">深入</span>
       <span class="meta">定位：浏览器两大绘图体系——位图逐帧绘制 vs 矢量 DOM 描述</span>
     </div>
-    <p class="hero-desc">Canvas 是一块"位图画布"，靠 JS 逐帧往像素里画；SVG 是"矢量 XML"，每个图形都是一个 DOM 节点。本页讲透两者的渲染模型、高清屏适配（devicePixelRatio）、绘制状态栈，以及最关键的工程问题：什么场景选 Canvas、什么场景选 SVG。案例取自 WebRTC 播放器的 Canvas 画面绘制、一体化开发平台的 Diff 高亮版本对比——这两个项目恰好踩在两种技术的边界上。</p>
+    <p class="hero-desc">Canvas 是一块"位图画布"，靠 JS 逐帧往像素里画；SVG 是"矢量 XML"，每个图形都是一个 DOM 节点。本页讲透两者的渲染模型、高清屏适配（devicePixelRatio）、绘制状态栈，以及最关键的工程问题：什么场景选 Canvas、什么场景选 SVG。案例取自 WebRTC 播放器的 Canvas 画面绘制、低代码开发平台的 Diff 高亮版本对比——这两个项目恰好踩在两种技术的边界上。</p>
   </div>
 </header>
 <nav class="doc-nav top" aria-label="文档导航">
@@ -398,13 +398,13 @@ canvas.addEventListener('click', (e) =&gt; {
 </section>
 
 <section id="sec5" class="card">
-  <h2><span class="num">5</span>实战项目经验（真实项目落地）</h2>
+  <h2><span class="num">5</span>实战项目经验（实战落地）</h2>
 
   <h3>5.1 项目背景</h3>
-  <p class="lead"><b>一句话定位</b>：两处 Canvas 实战——WebRTC 播放器把视频帧画到 Canvas 做叠加，一体化平台用 diff + Canvas 高亮版本对比。</p>
+  <p class="lead"><b>一句话定位</b>：两处 Canvas 实战——WebRTC 播放器把视频帧画到 Canvas 做叠加，低代码平台用 diff + Canvas 高亮版本对比。</p>
   <ul>
     <li><strong>场景一</strong>：WebRTC 无插件播放器（Vue2+Janus+Canvas，2020-2022）去 ActiveX 化，多路同屏需在视频上叠水印/时间戳。</li>
-    <li><strong>场景二</strong>：一体化开发平台（Vue3+G6+ElementUI，2022-）流程/配置的版本对比，并排高亮新增/删除/修改节点。</li>
+    <li><strong>场景二</strong>：低代码开发平台（Vue3+G6+ElementUI，2022-）流程/配置的版本对比，并排高亮新增/删除/修改节点。</li>
   </ul>
 
   <h3>5.2 我的角色与职责</h3>
@@ -416,7 +416,7 @@ canvas.addEventListener('click', (e) =&gt; {
   <h3>5.3 技术栈</h3>
   <ul>
     <li><strong>播放器</strong>：Vue2 + Janus + WebRTC + Canvas + rAF。</li>
-    <li><strong>一体化平台</strong>：Vue3 + G6（图可视化）+ ElementUI + diff 算法。</li>
+    <li><strong>低代码平台</strong>：Vue3 + G6（图可视化）+ ElementUI + diff 算法。</li>
   </ul>
 
   <h3>5.4 落地设计</h3>
@@ -477,7 +477,7 @@ function paintDiffOverlay(ctx, diff) {
   <ul>
     <li><strong>契约先行</strong>：与后端定版本快照节点数据结构（id + data），diff 才能按 id 对齐。</li>
     <li><strong>联调协商</strong>：diff 假阳性问题，与产品确认"哪些字段算真改动"，收敛比较口径。</li>
-    <li><strong>排期</strong>：先做播放器 Canvas 上屏，再做一体化平台版本对比。</li>
+    <li><strong>排期</strong>：先做播放器 Canvas 上屏，再做低代码平台版本对比。</li>
   </ul>
 
   <h3>5.9 复盘与可复用经验</h3>
@@ -558,7 +558,7 @@ function paintDiffOverlay(ctx, diff) {
   <a class="doc-nav-btn home" href="../index.html">⌂ 返回首页</a>
   <a class="doc-nav-btn" href="../01_前端基础/06_浏览器原理与渲染机制【标准】.html">下一篇 →</a>
 </nav>
-<footer>全栈技术栈详解 · Canvas与SVG【深入】 · 基于简历项目实战编写</footer>
+<footer>全栈技术知识库 · Canvas与SVG【深入】 · 基于实战经验编写</footer>
 <button id="backTop" type="button" aria-label="回到顶部">↑</button>
 <script>
 (function () {

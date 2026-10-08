@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>全栈技术栈详解 · 资料库总览</title>
+<title>全栈技术知识库 · 资料库总览</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230f766e'/%3E%3Ctext x='32' y='44' font-size='34' font-weight='bold' text-anchor='middle' fill='white' font-family='Arial'%3E栈%3C/text%3E%3C/svg%3E">
 <style>
   :root{
@@ -116,7 +116,7 @@
 
 <div class="topbar">
   <div class="inner">
-    <div class="brand"><span class="logo">栈</span>全栈技术栈详解 <small>· 简历复习资料库</small></div>
+    <div class="brand"><span class="logo">栈</span>全栈技术知识库 <small>· Full-Stack Tech Notes</small></div>
     <div class="search">
       <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       <input id="q" type="text" placeholder="搜索技术点 / 项目 / 关键词…" autocomplete="off">
@@ -132,9 +132,9 @@
 
 <header class="hero">
   <div class="wrap">
-    <span class="kicker">● 面向 10 年+ 全栈工程师 · 求职 / 面试复习</span>
-    <h1>全栈技术栈详解<span class="grad"> · 资料库总览</span></h1>
-    <p class="sub">85 个技术点、每篇自包含 HTML、图示为内联 SVG（离线可看、零外部依赖）。深度严格对应简历熟悉程度：深入=熟练掌握 · 标准=熟悉 · 基础=了解/经验。</p>
+    <span class="kicker">● 全栈工程师 · 技术体系梳理</span>
+    <h1>全栈技术知识库<span class="grad"> · 系统总览</span></h1>
+    <p class="sub">85 个技术点、每篇自包含 HTML、图示为内联 SVG（离线可看、零外部依赖）。深度分级：深入=熟练掌握 · 标准=熟悉 · 基础=了解。</p>
     <div class="stats" id="stats"></div>
   </div>
 </header>
@@ -157,15 +157,14 @@
     <h3>使用与阅读建议</h3>
     <ol>
       <li><b>直接打开：</b>任一 HTML 双击即读，零外部依赖（图示为内联 SVG，字体/样式内联，断网可看）；代码块带「复制」按钮。</li>
-      <li><b>复习路径：</b>按「前端基础 → 框架与状态 → 数据可视化 → 实时通信 → 工具库 → 工程化 → 后端 → 数据库 → DevOps → 研发流程与 AI」顺序，每目录先读【深入】篇建立深度，再快速过【标准】/【基础】篇补广度。</li>
-      <li><b>面试前重点：</b>优先精读【深入】篇的「使用案例」与「易错点/面试重点」两节（含真实坑：全量 <code>setOption</code> 卡顿改 merge 局部更新、MyBatis <code>#{}</code> 与 <code>${}</code> 注入风险、Redisson 锁续期与看门狗等）。简历未主导的技术（GoJS、Oracle、Docker/K8s/Jenkins、React 等）各篇已如实标注定位，面试回答保持一致口径。</li>
-      <li><b>配套资料：</b><code>_模板/00_编写规范与模板说明.md</code> 为全库编写规范，扩展新技术点可照其结构续写。</li>
+      <li><b>学习路径：</b>按「前端基础 → 框架与状态 → 数据可视化 → 实时通信 → 工具库 → 工程化 → 后端 → 数据库 → DevOps → 研发流程与 AI」顺序，每目录先读【深入】篇建立深度，再快速过【标准】/【基础】篇补广度。</li>
+      <li><b>重点章节：</b>优先精读【深入】篇的「实战经验」与「易错点/面试重点」两节（含真实踩坑：全量 <code>setOption</code> 卡顿改 merge 局部更新、MyBatis <code>#{}</code> 与 <code>${}</code> 注入风险、Redisson 锁续期与看门狗等）。</li>
     </ol>
   </div>
 </main>
 
 <footer>
-  《全栈技术栈详解》· 85 篇技术点 + 本索引 · 全部页面经桌面与移动端渲染校验，零外部依赖。
+  《全栈技术知识库》· 85 篇技术点 + 本索引 · 全部页面经桌面与移动端渲染校验，零外部依赖。
 </footer>
 
 <button id="toTop" title="回到顶部">↑</button>
@@ -190,30 +189,30 @@ const ITEMS = [
 {c:0,f:"01_HTML5与CSS3【深入】.html",d:"deep",n:"01_HTML5与CSS3【深入】",p:"表现层地基：语义化标记、盒模型、BFC/层叠上下文、现代布局与动画，含大屏多分辨率适配",j:"电力大屏项目群（iClean 通用 Grid/Tree/Dialog 插件）"},
 {c:0,f:"02_JavaScript核心【深入】.html",d:"deep",n:"02_JavaScript核心【深入】",p:"语言本体：类型系统、作用域与闭包、原型链、this 绑定规则，逐条对应真实踩坑",j:"iClean 智能监控、大屏分布式数据聚合"},
 {c:0,f:"03_JavaScript进阶_事件循环与异步【深入】.html",d:"deep",n:"03_JavaScript进阶_事件循环与异步【深入】",p:"事件循环、微任务/宏任务、Promise 全流程，解析异步时序类面试题",j:"变电 2.0 高频刷新、WebRTC 信令流程"},
-{c:0,f:"04_TypeScript【深入】.html",d:"deep",n:"04_TypeScript【深入】",p:"类型系统：类型推导、泛型、条件类型、工程化配置，类型即文档",j:"DCP-RMP 自动生成类型化 API 客户端"},
+{c:0,f:"04_TypeScript【深入】.html",d:"deep",n:"04_TypeScript【深入】",p:"类型系统：类型推导、泛型、条件类型、工程化配置，类型即文档",j:"业务系统 自动生成类型化 API 客户端"},
 {c:0,f:"05_Canvas与SVG【深入】.html",d:"deep",n:"05_Canvas与SVG【深入】",p:"两套绘图 API 的架构差异、性能边界与选型，含 Diff 高亮实战",j:"WebRTC 播放器 Canvas 渲染、一体化版本对比"},
 {c:0,f:"06_浏览器原理与渲染机制【标准】.html",d:"std",n:"06_浏览器原理与渲染机制【标准】",p:"多进程架构、导航、渲染流水线、性能指标与长任务排查",j:"大屏高频刷新卡顿定位"},
-{c:0,f:"07_HTTP与跨域请求【标准】.html",d:"std",n:"07_HTTP与跨域请求【标准】",p:"HTTP 语义、缓存策略、CORS 与常见跨域方案，含网关转发实测",j:"DCP-RMP 联调、WebRTC 信令服务"},
+{c:0,f:"07_HTTP与跨域请求【标准】.html",d:"std",n:"07_HTTP与跨域请求【标准】",p:"HTTP 语义、缓存策略、CORS 与常见跨域方案，含网关转发实测",j:"业务系统 联调、WebRTC 信令服务"},
 {c:0,f:"08_响应式布局_Flex与Grid【标准】.html",d:"std",n:"08_响应式布局_Flex与Grid【标准】",p:"rem 适配、媒体查询、Flex/Grid 布局体系的取舍与组合",j:"大屏项目群多分辨率"},
 {c:0,f:"09_前端安全_XSS与CSRF【基础】.html",d:"base",n:"09_前端安全_XSS与CSRF【基础】",p:"两类攻击的原理、危害面与防御基线，富文本场景专项",j:"低代码平台富文本组件清洗"},
 {c:0,f:"10_Tailwind_CSS原子化【标准】.html",d:"std",n:"10_Tailwind_CSS原子化【标准】",p:"原子化 CSS 体系、utility 类、与 Bootstrap/手写 CSS 的演进对比与工程化取舍",j:"低代码平台组件样式体系（评估/规划）"},
 // 02 前端框架与状态管理
-{c:1,f:"01_Vue框架【标准】.html",d:"std",n:"01_Vue框架【标准】",p:"响应式、模板编译、生命周期、组件通信的完整认知框架",j:"源启、低代码平台、一体化开发平台"},
-{c:1,f:"02_Vue3组合式API与响应式原理【深入】.html",d:"deep",n:"02_Vue3组合式API与响应式原理【深入】",p:"Proxy 响应式源码级拆解、effect 调度、组合式设计动机",j:"DCP-RMP 表单设计器/渲染器"},
-{c:1,f:"03_状态管理_Vuex与Pinia【标准】.html",d:"std",n:"03_状态管理_Vuex与Pinia【标准】",p:"集中式状态管理的演进、设计差异与选型依据",j:"源启（Vuex）、DCP-RMP（Pinia）"},
+{c:1,f:"01_Vue框架【标准】.html",d:"std",n:"01_Vue框架【标准】",p:"响应式、模板编译、生命周期、组件通信的完整认知框架",j:"数据编排平台、低代码平台、低代码开发平台"},
+{c:1,f:"02_Vue3组合式API与响应式原理【深入】.html",d:"deep",n:"02_Vue3组合式API与响应式原理【深入】",p:"Proxy 响应式源码级拆解、effect 调度、组合式设计动机",j:"业务系统 表单设计器/渲染器"},
+{c:1,f:"03_状态管理_Vuex与Pinia【标准】.html",d:"std",n:"03_状态管理_Vuex与Pinia【标准】",p:"集中式状态管理的演进、设计差异与选型依据",j:"数据编排平台（Vuex）、业务系统（Pinia）"},
 {c:1,f:"04_React与Hooks【基础】.html",d:"base",n:"04_React与Hooks【基础】",p:"以对比视角理解 React 心智模型与 Hooks 规则",j:"以 Vue 项目为主，如实定位为对比认知"},
 {c:1,f:"05_微前端架构_Qiankun【标准】.html",d:"std",n:"05_微前端架构_Qiankun【标准】",p:"基座/子应用、JS 沙箱与样式隔离、独立部署的完整链路",j:"变电 2.0 整合 5+ 子应用、WebRTC 播放器子应用化"},
-{c:1,f:"06_ElementUI与ElementPlus【标准】.html",d:"std",n:"06_ElementUI与ElementPlus【标准】",p:"组件体系、二次封装、主题定制与工程化引入",j:"源启、低代码平台、DCP-RMP"},
-{c:1,f:"07_组件设计模式与插槽机制【标准】.html",d:"std",n:"07_组件设计模式与插槽机制【标准】",p:"props/emit/slot/provide-inject，配置驱动渲染的通用组件设计",j:"源启 CommonSlot 通用动态组件渲染容器"},
+{c:1,f:"06_ElementUI与ElementPlus【标准】.html",d:"std",n:"06_ElementUI与ElementPlus【标准】",p:"组件体系、二次封装、主题定制与工程化引入",j:"数据编排平台、低代码平台、业务系统"},
+{c:1,f:"07_组件设计模式与插槽机制【标准】.html",d:"std",n:"07_组件设计模式与插槽机制【标准】",p:"props/emit/slot/provide-inject，配置驱动渲染的通用组件设计",j:"数据编排平台 通用物料插槽 通用动态组件渲染容器"},
 {c:1,f:"08_jQuery与Bootstrap【深入】.html",d:"deep",n:"08_jQuery与Bootstrap【深入】",p:"链式调用、事件委托、插件模式与栅格体系，历史项目兜底能力",j:"iClean（jQuery 通用插件库）"},
-{c:1,f:"09_Nuxt3与SSR_SSG【标准】.html",d:"std",n:"09_Nuxt3与SSR_SSG【标准】",p:"SSR/SSG/同构、SSR 数据获取、SEO 与首屏，与纯 SPA(Vite) 的取舍",j:"DCP-RMP（Vite SPA）SSR 取舍评估"},
+{c:1,f:"09_Nuxt3与SSR_SSG【标准】.html",d:"std",n:"09_Nuxt3与SSR_SSG【标准】",p:"SSR/SSG/同构、SSR 数据获取、SEO 与首屏，与纯 SPA(Vite) 的取舍",j:"业务系统（Vite SPA）SSR 取舍评估"},
 {c:1,f:"10_微信小程序与uni-app【标准】.html",d:"std",n:"10_微信小程序与uni-app【标准】",p:"双线程架构、uni-app 跨端原理、与 Vue 的映射与发布链路",j:"规划中的经营类小程序（进行中/规划）"},
 // 03 数据可视化
 {c:2,f:"01_ECharts【深入】.html",d:"deep",n:"01_ECharts【深入】",p:"全库金标准：option 配置引擎、渲染管线、merge 增量更新、大数据渲染，含横向选型对比",j:"大屏实时告警热力图、变电 2.0 高频负荷监测"},
-{c:2,f:"02_AntV_G6【深入】.html",d:"deep",n:"02_AntV_G6【深入】",p:"图（graph）数据模型、布局算法、交互与性能调优",j:"源启、一体化开发平台流程编辑器"},
+{c:2,f:"02_AntV_G6【深入】.html",d:"deep",n:"02_AntV_G6【深入】",p:"图（graph）数据模型、布局算法、交互与性能调优",j:"数据编排平台、低代码开发平台流程编辑器"},
 {c:2,f:"03_GoJS【深入】.html",d:"deep",n:"03_GoJS【深入】",p:"数据绑定/模板/事务栈与图编辑能力，如实写为选型评估对比",j:"流程编辑类项目选型评估（诚实定位）"},
 {c:2,f:"04_Three.js_3D可视化【深入】.html",d:"deep",n:"04_Three.js_3D可视化【深入】",p:"场景图、相机、渲染循环与万级数据点优化",j:"电力大屏 3D 场景万级数据点稳定渲染"},
-{c:2,f:"05_可视化性能优化与大数据渲染【深入】.html",d:"deep",n:"05_可视化性能优化与大数据渲染【深入】",p:"分层渲染、增量更新、虚拟化、帧预算与大数据降级策略",j:"一体化开发平台千节点虚拟渲染"},
+{c:2,f:"05_可视化性能优化与大数据渲染【深入】.html",d:"deep",n:"05_可视化性能优化与大数据渲染【深入】",p:"分层渲染、增量更新、虚拟化、帧预算与大数据降级策略",j:"低代码开发平台千节点虚拟渲染"},
 {c:2,f:"06_可视化技术选型与原理【标准】.html",d:"std",n:"06_可视化技术选型与原理【标准】",p:"SVG/Canvas/WebGL 原理边界与选型矩阵",j:"项目群可视化选型决策"},
 // 04 实时通信
 {c:3,f:"01_WebRTC【深入】.html",d:"deep",n:"01_WebRTC【深入】",p:"PeerConnection/SDP/ICE 信令全流程、低延迟播放与多路同屏",j:"WebRTC 无插件播放器（去 ActiveX）"},
@@ -221,45 +220,45 @@ const ITEMS = [
 {c:3,f:"03_音视频基础与流媒体协议【标准】.html",d:"std",n:"03_音视频基础与流媒体协议【标准】",p:"编码/封装/传输分层、延迟构成与协议对照",j:"播放器低延迟配置调优"},
 {c:3,f:"04_WebSocket通用实时通信【基础】.html",d:"base",n:"04_WebSocket通用实时通信【基础】",p:"握手、帧、心跳/重连、与 WebRTC 信令的关系",j:"WebRTC/Janus 信令链路"},
 // 05 前端常用工具库
-{c:4,f:"01_Axios【深入】.html",d:"deep",n:"01_Axios【深入】",p:"拦截器链、取消请求、并发与适配器原理，含自动生成客户端配合",j:"DCP-RMP API 客户端自动生成"},
-{c:4,f:"02_vxe_table表格【深入】.html",d:"deep",n:"02_vxe_table表格【深入】",p:"虚拟滚动、自定义渲染、单元格编辑与大数据表格方案",j:"源启大表格数据展示"},
-{c:4,f:"03_JsPlumb连线【深入】.html",d:"deep",n:"03_JsPlumb连线【深入】",p:"Endpoint/Connector 模型、拖拽连线与模型序列化",j:"源启 G6+JsPlumb 拖拽编排连线"},
-{c:4,f:"04_Monaco与CodeMirror编辑器【深入】.html",d:"deep",n:"04_Monaco与CodeMirror编辑器【深入】",p:"语言服务、架构差异与编辑器嵌入工程化",j:"源启（Monaco）、低代码平台（CodeMirror）"},
+{c:4,f:"01_Axios【深入】.html",d:"deep",n:"01_Axios【深入】",p:"拦截器链、取消请求、并发与适配器原理，含自动生成客户端配合",j:"业务系统 API 客户端自动生成"},
+{c:4,f:"02_vxe_table表格【深入】.html",d:"deep",n:"02_vxe_table表格【深入】",p:"虚拟滚动、自定义渲染、单元格编辑与大数据表格方案",j:"数据编排平台大表格数据展示"},
+{c:4,f:"03_JsPlumb连线【深入】.html",d:"deep",n:"03_JsPlumb连线【深入】",p:"Endpoint/Connector 模型、拖拽连线与模型序列化",j:"数据编排平台 G6+JsPlumb 拖拽编排连线"},
+{c:4,f:"04_Monaco与CodeMirror编辑器【深入】.html",d:"deep",n:"04_Monaco与CodeMirror编辑器【深入】",p:"语言服务、架构差异与编辑器嵌入工程化",j:"数据编排平台（Monaco）、低代码平台（CodeMirror）"},
 {c:4,f:"05_ZTree树组件【深入】.html",d:"deep",n:"05_ZTree树组件【深入】",p:"大节点懒加载、勾选联动、性能边界与异步树工程实践",j:"变电 2.0 大节点树懒加载"},
 {c:4,f:"06_vue_draggable与v-code-diff【标准】.html",d:"std",n:"06_vue_draggable与v-code-diff【标准】",p:"拖拽布局组件与代码 Diff 展示组件的接入要点",j:"低代码平台拖拽布局、一体化版本对比"},
-{c:4,f:"07_VueUse组合式工具库【标准】.html",d:"std",n:"07_VueUse组合式工具库【标准】",p:"组合式复用 hooks 体系、常用函数、与手写 composable 的关系",j:"DCP-RMP 组合式实践（自写 useTable 类 hooks）"},
+{c:4,f:"07_VueUse组合式工具库【标准】.html",d:"std",n:"07_VueUse组合式工具库【标准】",p:"组合式复用 hooks 体系、常用函数、与手写 composable 的关系",j:"业务系统 组合式实践（自写 useTable 类 hooks）"},
 // 06 前端工程化与工具链
-{c:5,f:"01_Webpack【标准】.html",d:"std",n:"01_Webpack【标准】",p:"依赖图、loader/plugin 机制、分包与构建优化",j:"源启、低代码平台构建体系"},
-{c:5,f:"02_Vite【标准】.html",d:"std",n:"02_Vite【标准】",p:"dev server 预构建、原生 ESM、构建产出的取舍",j:"DCP-RMP（Vite 工程）"},
-{c:5,f:"03_Monorepo_pnpm与Turborepo【标准】.html",d:"std",n:"03_Monorepo_pnpm与Turborepo【标准】",p:"workspace 依赖管理、任务编排与增量缓存",j:"DCP-RMP（web/drawio/工作流多应用 + 公共包）"},
-{c:5,f:"04_前端性能优化_懒加载与虚拟列表【深入】.html",d:"deep",n:"04_前端性能优化_懒加载与虚拟列表【深入】",p:"懒加载体系、虚拟列表窗口原理与长列表性能模型",j:"一体化开发平台千节点虚拟渲染"},
+{c:5,f:"01_Webpack【标准】.html",d:"std",n:"01_Webpack【标准】",p:"依赖图、loader/plugin 机制、分包与构建优化",j:"数据编排平台、低代码平台构建体系"},
+{c:5,f:"02_Vite【标准】.html",d:"std",n:"02_Vite【标准】",p:"dev server 预构建、原生 ESM、构建产出的取舍",j:"业务系统（Vite 工程）"},
+{c:5,f:"03_Monorepo_pnpm与Turborepo【标准】.html",d:"std",n:"03_Monorepo_pnpm与Turborepo【标准】",p:"workspace 依赖管理、任务编排与增量缓存",j:"业务系统（web/drawio/工作流多应用 + 公共包）"},
+{c:5,f:"04_前端性能优化_懒加载与虚拟列表【深入】.html",d:"deep",n:"04_前端性能优化_懒加载与虚拟列表【深入】",p:"懒加载体系、虚拟列表窗口原理与长列表性能模型",j:"低代码开发平台千节点虚拟渲染"},
 {c:5,f:"05_Git版本控制【标准】.html",d:"std",n:"05_Git版本控制【标准】",p:"对象模型、分支策略、冲突解决与团队协作流",j:"各项目日常协作"},
 {c:5,f:"06_ESLint与Prettier代码规范【标准】.html",d:"std",n:"06_ESLint与Prettier代码规范【标准】",p:"静态检查与格式化的分工、配置落地与团队推广",j:"低代码平台（ESLint+Prettier 规范）"},
-{c:5,f:"07_前端测试_Jest与Vitest【标准】.html",d:"std",n:"07_前端测试_Jest与Vitest【标准】",p:"测试分层、断言与工具选型对比",j:"DCP-RMP 组件/逻辑单测"},
-{c:5,f:"08_npm与包管理【基础】.html",d:"base",n:"08_npm与包管理【基础】",p:"语义版本、lockfile、registry 与依赖陷阱",j:"DCP-RMP（pnpm workspace）"},
-{c:5,f:"09_前端E2E测试_Playwright与Cypress【标准】.html",d:"std",n:"09_前端E2E测试_Playwright与Cypress【标准】",p:"E2E 测试分层、选择器策略、断言与 CI 集成，与单测互补",j:"DCP-RMP 测试体系（规划/试点）"},
+{c:5,f:"07_前端测试_Jest与Vitest【标准】.html",d:"std",n:"07_前端测试_Jest与Vitest【标准】",p:"测试分层、断言与工具选型对比",j:"业务系统 组件/逻辑单测"},
+{c:5,f:"08_npm与包管理【基础】.html",d:"base",n:"08_npm与包管理【基础】",p:"语义版本、lockfile、registry 与依赖陷阱",j:"业务系统（pnpm workspace）"},
+{c:5,f:"09_前端E2E测试_Playwright与Cypress【标准】.html",d:"std",n:"09_前端E2E测试_Playwright与Cypress【标准】",p:"E2E 测试分层、选择器策略、断言与 CI 集成，与单测互补",j:"业务系统 测试体系（规划/试点）"},
 // 07 后端开发
-{c:6,f:"01_Java基础【标准】.html",d:"std",n:"01_Java基础【标准】",p:"集合框架、泛型、函数式与异常体系的面试要点",j:"DCP-RMP（Java 17）"},
+{c:6,f:"01_Java基础【标准】.html",d:"std",n:"01_Java基础【标准】",p:"集合框架、泛型、函数式与异常体系的面试要点",j:"业务系统（Java 17）"},
 {c:6,f:"02_Java并发与JVM【标准】.html",d:"std",n:"02_Java并发与JVM【标准】",p:"线程池、内存模型、垃圾回收与调优参数",j:"大屏分布式数据聚合服务"},
-{c:6,f:"03_Spring核心_IOC与AOP【深入】.html",d:"deep",n:"03_Spring核心_IOC与AOP【深入】",p:"Bean 生命周期、动态代理、切面原理与事务集成",j:"DCP-RMP、源启后端"},
-{c:6,f:"04_SpringBoot框架【标准】.html",d:"std",n:"04_SpringBoot框架【标准】",p:"自动配置、Starter、内嵌容器与多环境",j:"DCP-RMP、源启（SpringBoot 3）"},
+{c:6,f:"03_Spring核心_IOC与AOP【深入】.html",d:"deep",n:"03_Spring核心_IOC与AOP【深入】",p:"Bean 生命周期、动态代理、切面原理与事务集成",j:"业务系统、数据编排平台后端"},
+{c:6,f:"04_SpringBoot框架【标准】.html",d:"std",n:"04_SpringBoot框架【标准】",p:"自动配置、Starter、内嵌容器与多环境",j:"业务系统、数据编排平台（SpringBoot 3）"},
 {c:6,f:"05_SSH框架【基础】.html",d:"base",n:"05_SSH框架【基础】",p:"Struts2/Spring/Hibernate 组合的演进与退役原因",j:"早期历史项目（诚实定位）"},
-{c:6,f:"06_MyBatis持久层【深入】.html",d:"deep",n:"06_MyBatis持久层【深入】",p:"SqlSession/Executor、动态 SQL、一级/二级缓存与 #{} 防注入",j:"源启、DCP-RMP 持久层"},
+{c:6,f:"06_MyBatis持久层【深入】.html",d:"deep",n:"06_MyBatis持久层【深入】",p:"SqlSession/Executor、动态 SQL、一级/二级缓存与 #{} 防注入",j:"数据编排平台、业务系统 持久层"},
 {c:6,f:"07_Tomcat与Jetty服务器【基础】.html",d:"base",n:"07_Tomcat与Jetty服务器【基础】",p:"连接器/线程池、内嵌与外置部署的取舍",j:"SpringBoot 部署运维"},
-{c:6,f:"08_Swagger与OpenAPI接口契约【标准】.html",d:"std",n:"08_Swagger与OpenAPI接口契约【标准】",p:"契约先行、接口文档自动化与客户端代码生成链路",j:"DCP-RMP 亮点（自动生成接口客户端）"},
-{c:6,f:"09_RESTful_API设计【标准】.html",d:"std",n:"09_RESTful_API设计【标准】",p:"资源建模、状态码、版本与错误结构设计",j:"DCP-RMP、源启 API 设计"},
-{c:6,f:"10_接口安全_JWT与鉴权【标准】.html",d:"std",n:"10_接口安全_JWT与鉴权【标准】",p:"JWT 结构、拦截器鉴权、RBAC 与刷新策略",j:"DCP-RMP 接口安全"},
+{c:6,f:"08_Swagger与OpenAPI接口契约【标准】.html",d:"std",n:"08_Swagger与OpenAPI接口契约【标准】",p:"契约先行、接口文档自动化与客户端代码生成链路",j:"业务系统 亮点（自动生成接口客户端）"},
+{c:6,f:"09_RESTful_API设计【标准】.html",d:"std",n:"09_RESTful_API设计【标准】",p:"资源建模、状态码、版本与错误结构设计",j:"业务系统、数据编排平台 API 设计"},
+{c:6,f:"10_接口安全_JWT与鉴权【标准】.html",d:"std",n:"10_接口安全_JWT与鉴权【标准】",p:"JWT 结构、拦截器鉴权、RBAC 与刷新策略",j:"业务系统 接口安全"},
 {c:6,f:"11_SpringCloud微服务与网关【标准】.html",d:"std",n:"11_SpringCloud微服务与网关【标准】",p:"注册发现(Nacos)、网关、负载、Feign、配置中心，与单体架构取舍",j:"单体演进评估（学习/评估）"},
 {c:6,f:"12_消息队列_Kafka与RabbitMQ【标准】.html",d:"std",n:"12_消息队列_Kafka与RabbitMQ【标准】",p:"两类 MQ 模型、可靠投递/消费、死信与削峰场景",j:"大屏告警削峰规划（学习/评估）"},
-{c:6,f:"13_SpringSecurity与OAuth2【标准】.html",d:"std",n:"13_SpringSecurity与OAuth2【标准】",p:"过滤器链、认证授权模型、JWT/OAuth2/SSO 与现有拦截器关系",j:"DCP-RMP JWT 拦截器演进对比"},
-{c:6,f:"14_MyBatisPlus与SpringDataJPA【基础】.html",d:"base",n:"14_MyBatisPlus与SpringDataJPA【基础】",p:"两类 ORM 便捷化能力对比、与原生 MyBatis 的关系与选型",j:"DCP-RMP/源启（原生 MyBatis）选型对比"},
+{c:6,f:"13_SpringSecurity与OAuth2【标准】.html",d:"std",n:"13_SpringSecurity与OAuth2【标准】",p:"过滤器链、认证授权模型、JWT/OAuth2/SSO 与现有拦截器关系",j:"业务系统 JWT 拦截器演进对比"},
+{c:6,f:"14_MyBatisPlus与SpringDataJPA【基础】.html",d:"base",n:"14_MyBatisPlus与SpringDataJPA【基础】",p:"两类 ORM 便捷化能力对比、与原生 MyBatis 的关系与选型",j:"业务系统/数据编排平台（原生 MyBatis）选型对比"},
 // 08 数据库与建模
-{c:7,f:"01_MySQL【深入】.html",d:"deep",n:"01_MySQL【深入】",p:"InnoDB 架构、B+ 树索引、执行计划与表设计规范",j:"DCP-RMP、源启业务库"},
+{c:7,f:"01_MySQL【深入】.html",d:"deep",n:"01_MySQL【深入】",p:"InnoDB 架构、B+ 树索引、执行计划与表设计规范",j:"业务系统、数据编排平台业务库"},
 {c:7,f:"02_MySQL进阶_索引与SQL优化【深入】.html",d:"deep",n:"02_MySQL进阶_索引与SQL优化【深入】",p:"最左前缀、覆盖索引、深分页与慢 SQL 优化实战",j:"大屏告警高频查询优化"},
 {c:7,f:"03_MySQL事务与锁【标准】.html",d:"std",n:"03_MySQL事务与锁【标准】",p:"ACID、隔离级别、MVCC 与锁/死锁排查",j:"需求平台状态流转一致性"},
-{c:7,f:"04_Oracle【深入】.html",d:"deep",n:"04_Oracle【深入】",p:"架构、undo/redo、与 MySQL 差异对照（如实标注简历未列 Oracle 项目）",j:"以接触/评估经历诚实定位"},
-{c:7,f:"05_Redis缓存【标准】.html",d:"std",n:"05_Redis缓存【标准】",p:"数据结构、过期策略、持久化与使用场景",j:"DCP-RMP 缓存层"},
-{c:7,f:"06_Redis进阶_缓存策略与分布式锁【深入】.html",d:"deep",n:"06_Redis进阶_缓存策略与分布式锁【深入】",p:"缓存穿透/击穿/雪崩、Redisson 分布式锁原理与一致性",j:"DCP-RMP（Redisson）"},
+{c:7,f:"04_Oracle【深入】.html",d:"deep",n:"04_Oracle【深入】",p:"架构、undo/redo、与 MySQL 差异对照（如实标注未涉及 Oracle 项目）",j:"以接触/评估经历诚实定位"},
+{c:7,f:"05_Redis缓存【标准】.html",d:"std",n:"05_Redis缓存【标准】",p:"数据结构、过期策略、持久化与使用场景",j:"业务系统 缓存层"},
+{c:7,f:"06_Redis进阶_缓存策略与分布式锁【深入】.html",d:"deep",n:"06_Redis进阶_缓存策略与分布式锁【深入】",p:"缓存穿透/击穿/雪崩、Redisson 分布式锁原理与一致性",j:"业务系统（Redisson）"},
 {c:7,f:"07_数据库高可用与分库分表【标准】.html",d:"std",n:"07_数据库高可用与分库分表【标准】",p:"主从复制、读写分离、分片策略与评估模型",j:"通用架构 + 大屏数据归档实践"},
 {c:7,f:"08_PowerDesigner数据库建模【基础】.html",d:"base",n:"08_PowerDesigner数据库建模【基础】",p:"概念/逻辑/物理模型三级建模与正向/逆向工程",j:"需求平台早期建模"},
 {c:7,f:"09_Elasticsearch搜索引擎【标准】.html",d:"std",n:"09_Elasticsearch搜索引擎【标准】",p:"倒排索引、分词、聚合分析、与 MySQL 配合的检索架构",j:"告警/日志检索规划（学习/评估）"},
@@ -280,7 +279,7 @@ const ITEMS = [
 {c:9,f:"02_AI辅助开发_Cursor与Codex【深入】.html",d:"deep",n:"02_AI辅助开发_Cursor与Codex【深入】",p:"AI 编码工作流、提示词组织、Codex 自动化与局限边界",j:"本人 AI 辅助开发实践（编码/调试/评审）"},
 {c:9,f:"03_大模型应用_ChatGPT与Claude【标准】.html",d:"std",n:"03_大模型应用_ChatGPT与Claude【标准】",p:"代码生成、解释、评审与多轮澄清的实用技法",j:"本人实践（含 DeepSeek）"},
 {c:9,f:"04_代码评审与协作流程【标准】.html",d:"std",n:"04_代码评审与协作流程【标准】",p:"评审关注点、流程规范与工具落地",j:"团队协作流程"},
-{c:9,f:"05_LLM应用开发_RAG与FunctionCalling【标准】.html",d:"std",n:"05_LLM应用开发_RAG与FunctionCalling【标准】",p:"API 接入、RAG 检索增强、Function Calling 工具调用、提示词工程化",j:"本人 AI 辅助开发 + DCP-RMP 集成 AI（规划）"}
+{c:9,f:"05_LLM应用开发_RAG与FunctionCalling【标准】.html",d:"std",n:"05_LLM应用开发_RAG与FunctionCalling【标准】",p:"API 接入、RAG 检索增强、Function Calling 工具调用、提示词工程化",j:"本人 AI 辅助开发 + 业务系统 集成 AI（规划）"}
 ];
 
 /* ========== 渲染 ========== */

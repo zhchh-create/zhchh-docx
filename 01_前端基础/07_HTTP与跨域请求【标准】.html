@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HTTP与跨域请求【标准】｜全栈技术栈详解</title>
+<title>HTTP与跨域请求【标准】｜全栈技术知识库</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%231d4ed8'/%3E%3Crect x='3' y='4' width='10' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='7' width='7' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='10' width='9' height='2' rx='1' fill='%23fff'/%3E%3C/svg%3E">
 <style>
 :root{
@@ -147,7 +147,7 @@ section.card li strong{color:var(--ink)}
       <span class="badge std">标准</span>
       <span class="meta">定位：前后端数据通道——HTTP 协议报文、同源策略、CORS 与代理方案</span>
     </div>
-    <p class="hero-desc">前端几乎所有数据都走 HTTP。本页讲清请求/响应报文结构、状态码、浏览器同源策略、CORS 预检机制，以及工程上最常用的跨域解法（开发态 Vite proxy、生产态网关）。案例取自 DCP-RMP 的前后端联调与 Token 鉴权，以及 WebRTC 项目"信令走 HTTP、媒体走 UDP"的分层设计。</p>
+    <p class="hero-desc">前端几乎所有数据都走 HTTP。本页讲清请求/响应报文结构、状态码、浏览器同源策略、CORS 预检机制，以及工程上最常用的跨域解法（开发态 Vite proxy、生产态网关）。案例取自 业务系统 的前后端联调与 Token 鉴权，以及 WebRTC 项目"信令走 HTTP、媒体走 UDP"的分层设计。</p>
   </div>
 </header>
 <nav class="doc-nav top" aria-label="文档导航">
@@ -242,7 +242,7 @@ section.card li strong{color:var(--ink)}
     <li><strong>前端</strong>：<code>fetch(...,{credentials:'include'})</code> 或 axios <code>withCredentials:true</code>。</li>
     <li><strong>后端</strong>：CORS 头要 <code>Access-Control-Allow-Credentials:true</code>，且 <code>Allow-Origin</code> 必须是具体源、不能写 <code>*</code>。</li>
   </ul>
-  <p class="key-sentence"><span class="tag-point">实践</span>DCP-RMP 用 Bearer Token 放 <code>Authorization</code> 头，不依赖 Cookie，绕开了这层。</p>
+  <p class="key-sentence"><span class="tag-point">实践</span>业务系统 用 Bearer Token 放 <code>Authorization</code> 头，不依赖 Cookie，绕开了这层。</p>
 </section>
 
 <section id="sec3" class="card">
@@ -346,12 +346,12 @@ export default {
 </section>
 
 <section id="sec5" class="card">
-  <h2><span class="num">5</span>实战项目经验（真实项目落地）</h2>
+  <h2><span class="num">5</span>实战项目经验（实战落地）</h2>
 
   <h3>5.1 项目背景</h3>
-  <p class="lead"><b>一句话定位</b>：DCP-RMP 前后端分离跨域联调 + Token 鉴权；以及 WebRTC 信令走 HTTP、媒体走 UDP 的分层。</p>
+  <p class="lead"><b>一句话定位</b>：业务系统 前后端分离跨域联调 + Token 鉴权；以及 WebRTC 信令走 HTTP、媒体走 UDP 的分层。</p>
   <ul>
-    <li><strong>DCP-RMP</strong>：前端 Vite 跑 <code>localhost:5173</code>，后端 SpringBoot 在 <code>:8080</code>，跨域且需登录态。</li>
+    <li><strong>业务系统</strong>：前端 Vite 跑 <code>localhost:5173</code>，后端 SpringBoot 在 <code>:8080</code>，跨域且需登录态。</li>
     <li><strong>WebRTC 播放器</strong>：建连协商（SDP/ICE）走 HTTP，音视频媒体走 SRTP/UDP。</li>
   </ul>
 
@@ -415,7 +415,7 @@ api.interceptors.response.use(
   </ul>
 
   <h3>5.10 面试讲法</h3>
-  <p class="key-sentence"><span class="tag-point">抓手</span>用 Vite proxy + axios 拦截器统一解决 DCP-RMP 跨域与 Token 鉴权，并讲清 WebRTC 信令走 HTTP、媒体走 UDP 的分层。</p>
+  <p class="key-sentence"><span class="tag-point">抓手</span>用 Vite proxy + axios 拦截器统一解决 业务系统 跨域与 Token 鉴权，并讲清 WebRTC 信令走 HTTP、媒体走 UDP 的分层。</p>
 </section>
 
 <section id="sec6" class="card">
@@ -476,7 +476,7 @@ api.interceptors.response.use(
   <a class="doc-nav-btn home" href="../index.html">⌂ 返回首页</a>
   <a class="doc-nav-btn" href="../01_前端基础/08_响应式布局_Flex与Grid【标准】.html">下一篇 →</a>
 </nav>
-<footer>全栈技术栈详解 · HTTP与跨域请求【标准】 · 基于简历项目实战编写</footer>
+<footer>全栈技术知识库 · HTTP与跨域请求【标准】 · 基于实战经验编写</footer>
 <button id="backTop" type="button" aria-label="回到顶部">↑</button>
 <script>
 (function () {

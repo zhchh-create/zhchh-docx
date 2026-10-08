@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AntV G6【深入】｜全栈技术栈详解</title>
+<title>AntV G6【深入】｜全栈技术知识库</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%231d4ed8'/%3E%3Crect x='3' y='4' width='10' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='7' width='7' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='10' width='9' height='2' rx='1' fill='%23fff'/%3E%3C/svg%3E">
 <style>
 :root{
@@ -147,7 +147,7 @@ section.card li strong{color:var(--ink)}
       <span class="badge deep">深入</span>
       <span class="meta">定位：图（Graph）可视化引擎——节点/边的关系网络与流程编排</span>
     </div>
-    <p class="hero-desc">G6 是蚂蚁集团 AntV 团队开源的图可视化引擎（本页示例基于 v4 API；v5 已重构、API 不兼容），专治"节点 + 连线"这类图数据：流程图、组织架构、依赖网络、关系图谱。它把图数据模型（nodes/edges/combo）、布局算法、交互行为、插件收敛进一个 <code>Graph</code> 实例。本项目群用它做后端设计平台的拖拽编排与一体化开发平台的可视化流程编辑器，本页讲透数据模型、布局、交互模式与大图性能，并诚实说明它与 JsPlumb、GoJS 的分工取舍。</p>
+    <p class="hero-desc">G6 是蚂蚁集团 AntV 团队开源的图可视化引擎（本页示例基于 v4 API；v5 已重构、API 不兼容），专治"节点 + 连线"这类图数据：流程图、组织架构、依赖网络、关系图谱。它把图数据模型（nodes/edges/combo）、布局算法、交互行为、插件收敛进一个 <code>Graph</code> 实例。本套技术栈用它做后端设计平台的拖拽编排与低代码开发平台的可视化流程编辑器，本页讲透数据模型、布局、交互模式与大图性能，并诚实说明它与 JsPlumb、GoJS 的分工取舍。</p>
   </div>
 </header>
 <nav class="doc-nav top" aria-label="文档导航">
@@ -163,7 +163,7 @@ section.card li strong{color:var(--ink)}
     <li><a href="#sec2">核心概念</a></li>
     <li><a href="#sec3">工作原理与流程</a></li>
     <li><a href="#sec4">核心语法与 API 要点</a></li>
-    <li><a href="#sec5">实战项目经验（真实项目落地）</a></li>
+    <li><a href="#sec5">实战项目经验（实战落地）</a></li>
     <li><a href="#sec6">易错点与面试重点</a></li>
     <li><a href="#sec7">学习资源与参考</a></li>
   </ol>
@@ -211,7 +211,7 @@ section.card li strong{color:var(--ink)}
       <text x="686" y="95" text-anchor="middle" font-size="11.5" fill="#475569">小地图/网格 + on事件回调</text>
       <text x="400" y="145" text-anchor="middle" font-size="13" fill="#475569">业务层只给数据与规则；G6 负责"摆位、绘制、可交互、可序列化"。</text>
       <text x="400" y="167" text-anchor="middle" font-size="13" fill="#475569">更新图 = 改数据后 graph.render() 或 graph.updateItem()，引擎做增量 diff。</text>
-      <text x="400" y="205" text-anchor="middle" font-size="12.5" fill="#6b7280">项目定位：源启拖拽编排（G6 主画布 + JsPlumb 补连线细节）；一体化平台流程编辑器（G6 主）。</text>
+      <text x="400" y="205" text-anchor="middle" font-size="12.5" fill="#6b7280">项目定位：数据编排平台拖拽编排（G6 主画布 + JsPlumb 补连线细节）；低代码平台流程编辑器（G6 主）。</text>
     </svg>
     <p class="diagram-caption">图 1 G6 在图可视化链路中的位置（示意）</p>
   </div>
@@ -361,7 +361,7 @@ section.card li strong{color:var(--ink)}
       <text x="450" y="148" font-size="12" fill="#065f46">· 增量更新 updateItem/addItem，不全量 render</text>
       <text x="450" y="172" font-size="12" fill="#065f46">· 视口外节点/边不渲染（视口裁剪）</text>
       <text x="450" y="196" font-size="12" fill="#065f46">· 折叠 combo + 按需展开，懒加载子图</text>
-      <text x="400" y="248" text-anchor="middle" font-size="12.5" fill="#6b7280">一体化开发平台千节点流程：dagre 布局 + canvas + 增量更新 + combo 折叠，帧率稳定在可交互范围。</text>
+      <text x="400" y="248" text-anchor="middle" font-size="12.5" fill="#6b7280">低代码开发平台千节点流程：dagre 布局 + canvas + 增量更新 + combo 折叠，帧率稳定在可交互范围。</text>
     </svg>
     <p class="diagram-caption">图 3 大图渲染的瓶颈与优化策略（示意）</p>
   </div>
@@ -440,13 +440,13 @@ graph.read(savedData);              // 直接读取并渲染（不重排，保�
 </section>
 
 <section id="sec5" class="card">
-  <h2><span class="num">5</span>实战项目经验（真实项目落地）</h2>
+  <h2><span class="num">5</span>实战项目经验（实战落地）</h2>
 
   <h3>5.1 项目背景（业务量级/场景）</h3>
-  <p class="lead"><b>一句话定位</b>：两个平台都要可视化编排——源启画后端数据流，一体化平台画审批流程。</p>
+  <p class="lead"><b>一句话定位</b>：两个平台都要可视化编排——数据编排平台画后端数据流，低代码平台画审批流程。</p>
   <ul>
-    <li><strong>源启</strong>：后端设计平台（Vue2+ElementUI+Vuex），拖出数据源/处理/输出节点并连线表达数据流向，节点是带配置表单的 Vue 组件。</li>
-    <li><strong>一体化平台</strong>：流程编辑器（Vue3+Vuex+G6），节点上千，需拖拽编排、动态规则校验、历史回溯与版本对比。</li>
+    <li><strong>数据编排平台</strong>：后端设计平台（Vue2+ElementUI+Vuex），拖出数据源/处理/输出节点并连线表达数据流向，节点是带配置表单的 Vue 组件。</li>
+    <li><strong>低代码平台</strong>：流程编辑器（Vue3+Vuex+G6），节点上千，需拖拽编排、动态规则校验、历史回溯与版本对比。</li>
   </ul>
 
   <h3>5.2 我的角色与职责</h3>
@@ -458,8 +458,8 @@ graph.read(savedData);              // 直接读取并渲染（不重排，保�
 
   <h3>5.3 技术栈</h3>
   <ul>
-    <li><strong>源启</strong>：Vue2 + ElementUI + Vuex + G6 + JsPlumb + vxe-table + Monaco。</li>
-    <li><strong>一体化平台</strong>：Vue3 + Vuex + G6，沉淀流程校验/历史回溯/版本对比组件库。</li>
+    <li><strong>数据编排平台</strong>：Vue2 + ElementUI + Vuex + G6 + JsPlumb + vxe-table + Monaco。</li>
+    <li><strong>低代码平台</strong>：Vue3 + Vuex + G6，沉淀流程校验/历史回溯/版本对比组件库。</li>
   </ul>
 
   <h3>5.4 落地设计（关键选型理由）</h3>
@@ -467,7 +467,7 @@ graph.read(savedData);              // 直接读取并渲染（不重排，保�
   <ul>
     <li><strong>分工</strong>：G6 管画布缩放/小地图/整体布局；端口级锚点吸附交给 JsPlumb（为 DOM 连线设计）。</li>
     <li><strong>布局</strong>：选 <code>dagre</code> 一次性分层，不用力导向（千节点每次交互重算会卡）。</li>
-    <li><strong>渲染</strong>：一体化平台切 canvas 渲染层 + Minimap/Grid/History 插件。</li>
+    <li><strong>渲染</strong>：低代码平台切 canvas 渲染层 + Minimap/Grid/History 插件。</li>
   </ul>
 
   <h3>5.5 关键实现要点</h3>
@@ -498,7 +498,7 @@ graph.on('node:dragend', () =&gt; validateFlow(graph));   // 拖完触发规则�
 
   <h3>5.7 量化成果</h3>
   <ul>
-    <li><strong>规模</strong>：一体化平台支持上千节点流程流畅拖拽（估算），违规连线实时拦截。</li>
+    <li><strong>规模</strong>：低代码平台支持上千节点流程流畅拖拽（估算），违规连线实时拦截。</li>
     <li><strong>复用</strong>：沉淀流程校验/历史回溯/版本对比组件库，复用于后续流程类需求。</li>
   </ul>
 
@@ -585,7 +585,7 @@ graph.on('node:dragend', () =&gt; validateFlow(graph));   // 拖完触发规则�
   <a class="doc-nav-btn home" href="../index.html">⌂ 返回首页</a>
   <a class="doc-nav-btn" href="../03_数据可视化/03_GoJS【深入】.html">下一篇 →</a>
 </nav>
-<footer>全栈技术栈详解 · AntV G6【深入】 · 基于简历项目实战编写</footer>
+<footer>全栈技术知识库 · AntV G6【深入】 · 基于实战经验编写</footer>
 <button id="backTop" type="button" aria-label="回到顶部">↑</button>
 <script>
 (function () {

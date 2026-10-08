@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>状态管理：Vuex与Pinia【标准】｜全栈技术栈详解</title>
+<title>状态管理：Vuex与Pinia【标准】｜全栈技术知识库</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%231d4ed8'/%3E%3Crect x='3' y='4' width='10' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='7' width='7' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='10' width='9' height='2' rx='1' fill='%23fff'/%3E%3C/svg%3E">
 <style>
 :root{
@@ -147,7 +147,7 @@ section.card li strong{color:var(--ink)}
       <span class="badge std">标准</span>
       <span class="meta">定位：跨组件共享状态——集中式 store 与单向数据流</span>
     </div>
-    <p class="hero-desc">当多个不相关的组件要共享同一份状态（登录态、用户信息、全局配置），靠 props 层层传递和事件往上抛会非常痛苦。Vuex/Pinia 提供一个全局 store：状态集中存放、修改走约定的通道。本页讲清它们的单向数据流、Vuex 的 modules 组织，以及 Pinia 作为 Vue 官方新一代的差异与迁移要点。案例来自源启（Vuex modules）与 DCP-RMP（Pinia setup 风格）。</p>
+    <p class="hero-desc">当多个不相关的组件要共享同一份状态（登录态、用户信息、全局配置），靠 props 层层传递和事件往上抛会非常痛苦。Vuex/Pinia 提供一个全局 store：状态集中存放、修改走约定的通道。本页讲清它们的单向数据流、Vuex 的 modules 组织，以及 Pinia 作为 Vue 官方新一代的差异与迁移要点。案例来自数据编排平台（Vuex modules）与 业务系统（Pinia setup 风格）。</p>
   </div>
 </header>
 <nav class="doc-nav top" aria-label="文档导航">
@@ -173,7 +173,7 @@ section.card li strong{color:var(--ink)}
 <section id="sec1" class="card">
   <h2><span class="num">1</span>技术点概览</h2>
   <p><strong>是什么</strong>：Vuex 与 Pinia 都是 Vue 的<strong>集中式状态管理库</strong>。它们把应用的共享状态存进一个单一 store，所有组件都能读写，并通过约定的修改方式（mutation/action）让"状态怎么变"可追踪、可调试。Vuex 是 Vue2 时代的标准方案，Pinia 是 Vue 官方在 Vue3 时代推荐的新一代——去掉了 mutation、更轻、TS 原生、支持组合式写法。</p>
-  <p><strong>解决什么问题</strong>：跨层级/跨兄弟组件共享状态。没有 store 时，登录态要从 App 一层层 props 传到深层组件，改又要一层层 emit 上来，即"props drilling"。store 把它拎到全局，谁用谁取。本技术栈源启用 Vuex 组织大应用，DCP-RMP 迁到 Pinia。</p>
+  <p><strong>解决什么问题</strong>：跨层级/跨兄弟组件共享状态。没有 store 时，登录态要从 App 一层层 props 传到深层组件，改又要一层层 emit 上来，即"props drilling"。store 把它拎到全局，谁用谁取。本技术栈数据编排平台用 Vuex 组织大应用，业务系统 迁到 Pinia。</p>
   <div class="diagram">
     <svg viewBox="0 0 800 230" role="img" aria-label="集中式状态管理单向数据流示意图">
       <defs>
@@ -271,7 +271,7 @@ section.card li strong{color:var(--ink)}
 
 <section id="sec4" class="card">
   <h2><span class="num">4</span>核心语法与 API 要点</h2>
-  <h3>4.1 Vuex module 写法（源启所用）</h3>
+  <h3>4.1 Vuex module 写法（数据编排平台所用）</h3>
 <pre class="code" data-lang="js"><code>// store/modules/user.js
 export default {
   namespaced: true,
@@ -289,7 +289,7 @@ export default {
     }
   }
 };</code></pre>
-  <h3>4.2 Pinia setup 写法（DCP-RMP 所用）</h3>
+  <h3>4.2 Pinia setup 写法（业务系统 所用）</h3>
 <pre class="code" data-lang="ts"><code>// stores/user.ts
 export const useUserStore = defineStore('user', () =&gt; {
   const token = ref('');
@@ -341,13 +341,13 @@ export const useUserStore = defineStore('user', () =&gt; {
 </section>
 
 <section id="sec5" class="card">
-  <h2><span class="num">5</span>实战项目经验（真实项目落地）</h2>
+  <h2><span class="num">5</span>实战项目经验（实战落地）</h2>
 
   <h3>5.1 项目背景</h3>
-  <p class="lead"><b>一句话定位</b>：源启（Vue2）用 Vuex modules 管大型后台状态，DCP-RMP（Vue3+TS）用 Pinia 重写——亲历两套状态管理的组织与迁移。</p>
+  <p class="lead"><b>一句话定位</b>：数据编排平台（Vue2）用 Vuex modules 管大型后台状态，业务系统（Vue3+TS）用 Pinia 重写——亲历两套状态管理的组织与迁移。</p>
   <ul>
-    <li><strong>源启</strong>：Vue2+ElementUI 大型后台，登录态/菜单/需求数据。</li>
-    <li><strong>DCP-RMP</strong>：Vue3+TS+Pinia，store 按业务拆分、setup 风格。</li>
+    <li><strong>数据编排平台</strong>：Vue2+ElementUI 大型后台，登录态/菜单/需求数据。</li>
+    <li><strong>业务系统</strong>：Vue3+TS+Pinia，store 按业务拆分、setup 风格。</li>
   </ul>
 
   <h3>5.2 我的角色与职责</h3>
@@ -358,7 +358,7 @@ export const useUserStore = defineStore('user', () =&gt; {
 
   <h3>5.3 技术栈</h3>
   <ul>
-    <li>源启：Vue2 + Vuex（namespaced modules）；DCP-RMP：Vue3 + Pinia（setup 风格 + storeToRefs）。</li>
+    <li>数据编排平台：Vue2 + Vuex（namespaced modules）；业务系统：Vue3 + Pinia（setup 风格 + storeToRefs）。</li>
   </ul>
 
   <h3>5.4 落地设计</h3>
@@ -443,7 +443,7 @@ function onLogin() { userStore.login(form); }        // action 直接调</code><
   <h3>官方文档</h3>
   <ul>
     <li>Pinia 官方文档（中文，Vue 官方推荐）：<a href="https://pinia.vuejs.org/zh/" rel="noopener">pinia.vuejs.org/zh</a></li>
-    <li>Vuex 官方文档（源启所用版本）：<a href="https://vuex.vuejs.org/zh/" rel="noopener">vuex.vuejs.org/zh</a></li>
+    <li>Vuex 官方文档（数据编排平台所用版本）：<a href="https://vuex.vuejs.org/zh/" rel="noopener">vuex.vuejs.org/zh</a></li>
   </ul>
   <h3>概念参考</h3>
   <ul>
@@ -458,7 +458,7 @@ function onLogin() { userStore.login(form); }        // action 直接调</code><
   <a class="doc-nav-btn home" href="../index.html">⌂ 返回首页</a>
   <a class="doc-nav-btn" href="../02_前端框架与状态管理/04_React与Hooks【基础】.html">下一篇 →</a>
 </nav>
-<footer>全栈技术栈详解 · 状态管理：Vuex与Pinia【标准】 · 基于简历项目实战编写</footer>
+<footer>全栈技术知识库 · 状态管理：Vuex与Pinia【标准】 · 基于实战经验编写</footer>
 <button id="backTop" type="button" aria-label="回到顶部">↑</button>
 <script>
 (function () {

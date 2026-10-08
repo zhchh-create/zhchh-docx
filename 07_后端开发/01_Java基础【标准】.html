@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Java基础【标准】｜全栈技术栈详解</title>
+<title>Java基础【标准】｜全栈技术知识库</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%231d4ed8'/%3E%3Crect x='3' y='4' width='10' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='7' width='7' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='10' width='9' height='2' rx='1' fill='%23fff'/%3E%3C/svg%3E">
 <style>
 :root{
@@ -147,7 +147,7 @@ section.card li strong{color:var(--ink)}
       <span class="badge std">标准</span>
       <span class="meta">定位：后端业务开发的母语——语法、集合、泛型、函数式、异常与 IO</span>
     </div>
-    <p class="hero-desc">Java 是一门编译为字节码、跑在 JVM 上的静态强类型语言。本页以 DCP-RMP（Spring Boot 3 + Java 17）日常开发为背景，讲清集合框架、泛型与类型擦除、函数式 Stream、异常体系与 try-with-resources、以及 Java 17 的现代语法（record/sealed/var），重点落在"每天都在写、却最容易写错"的那一层。</p>
+    <p class="hero-desc">Java 是一门编译为字节码、跑在 JVM 上的静态强类型语言。本页以 业务系统（Spring Boot 3 + Java 17）日常开发为背景，讲清集合框架、泛型与类型擦除、函数式 Stream、异常体系与 try-with-resources、以及 Java 17 的现代语法（record/sealed/var），重点落在"每天都在写、却最容易写错"的那一层。</p>
   </div>
 </header>
 <nav class="doc-nav top" aria-label="文档导航">
@@ -163,7 +163,7 @@ section.card li strong{color:var(--ink)}
     <li><a href="#sec2">核心概念</a></li>
     <li><a href="#sec3">工作原理与流程</a></li>
     <li><a href="#sec4">核心语法与 API 要点</a></li>
-    <li><a href="#sec5">实战项目经验（真实项目落地）</a></li>
+    <li><a href="#sec5">实战项目经验（实战落地）</a></li>
     <li><a href="#sec6">易错点与面试重点</a></li>
     <li><a href="#sec7">学习资源与参考</a></li>
   </ol>
@@ -172,7 +172,7 @@ section.card li strong{color:var(--ink)}
 
 <section id="sec1" class="card">
   <h2><span class="num">1</span>技术点概览</h2>
-  <p class="lead"><b>一句话定位</b>：Java = 编译成字节码、跑在 JVM 上的静态强类型语言；本项目群用 <strong>Java 17 LTS</strong>（Spring Boot 3 的硬性基线）。</p>
+  <p class="lead"><b>一句话定位</b>：Java = 编译成字节码、跑在 JVM 上的静态强类型语言；本套技术栈用 <strong>Java 17 LTS</strong>（Spring Boot 3 的硬性基线）。</p>
   <ul>
     <li><strong>怎么跑起来</strong>：源码 <code>.java</code> 经 <code>javac</code> 编译成平台无关的<strong>字节码</strong> <code>.class</code>，再由各系统的 JVM 解释 + JIT 即时编译执行。</li>
     <li><strong>它解决什么</strong>：编译期类型检查在上线前挡住一大类错误；内存交给 GC，业务开发者不用手动 free；"一次编写到处运行"让同一套服务在开发机/测试服务器/容器里一致运行。</li>
@@ -203,7 +203,7 @@ section.card li strong{color:var(--ink)}
       <line x1="370" y1="209" x2="426" y2="209" stroke="#64748b" marker-end="url(#arr)"/>
       <text x="400" y="245" text-anchor="middle" font-size="12.5" fill="#6b7280">本页聚焦 Service 层日常：怎么写集合、怎么用 Stream、怎么处理异常与资源。</text>
     </svg>
-    <p class="diagram-caption">图 1 Java 在 DCP-RMP 分层架构中的位置（示意）</p>
+    <p class="diagram-caption">图 1 Java 在 业务系统 分层架构中的位置（示意）</p>
   </div>
 </section>
 
@@ -389,10 +389,10 @@ public class BizException extends RuntimeException {
 </section>
 
 <section id="sec5" class="card">
-  <h2><span class="num">5</span>实战项目经验（真实项目落地）</h2>
+  <h2><span class="num">5</span>实战项目经验（实战落地）</h2>
 
   <h3>1 项目背景</h3>
-  <p class="lead"><b>一句话定位</b>：DCP-RMP（需求管理平台）后端是 SpringBoot 3 + Java 17 的单体服务，Java 语法特性贯穿日常每个接口的编写。</p>
+  <p class="lead"><b>一句话定位</b>：业务系统（需求管理平台）后端是 SpringBoot 3 + Java 17 的单体服务，Java 语法特性贯穿日常每个接口的编写。</p>
   <ul>
     <li><strong>业务量级</strong>：需求/团队/工作流/AI 集成多模块，服务端日均处理数百次需求流转与评审操作（估算）。</li>
     <li><strong>为什么是 Java 17</strong>：团队 2026 年新项目直接选 LTS，用 record、switch 模式匹配、var、Stream 简化样板代码。</li>
@@ -436,7 +436,7 @@ if (req == null) throw new BizException("需求不存在", 40004);</code></pre>
     <li><strong>不可变优先</strong>：DTO 用 record，减少可变状态。</li>
   </ul>
   <h3>10 面试讲法</h3>
-  <p class="key-sentence">"DCP-RMP 后端用 Java 17，我用 record 简化 DTO、Stream 做分组聚合，并把异常统一到全局处理器，踩过自动拆箱 NPE 后养成了空安全习惯。"</p>
+  <p class="key-sentence">"业务系统 后端用 Java 17，我用 record 简化 DTO、Stream 做分组聚合，并把异常统一到全局处理器，踩过自动拆箱 NPE 后养成了空安全习惯。"</p>
 
 <section id="sec6" class="card">
   <h2><span class="num">6</span>易错点与面试重点</h2>
@@ -504,7 +504,7 @@ if (req == null) throw new BizException("需求不存在", 40004);</code></pre>
   <a class="doc-nav-btn home" href="../index.html">⌂ 返回首页</a>
   <a class="doc-nav-btn" href="../07_后端开发/02_Java并发与JVM【标准】.html">下一篇 →</a>
 </nav>
-<footer>全栈技术栈详解 · Java基础【标准】 · 基于简历项目实战编写</footer>
+<footer>全栈技术知识库 · Java基础【标准】 · 基于实战经验编写</footer>
 <button id="backTop" type="button" aria-label="回到顶部">↑</button>
 <script>
 (function () {

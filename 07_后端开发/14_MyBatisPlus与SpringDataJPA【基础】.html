@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MyBatisPlus与SpringDataJPA【基础】｜全栈技术栈详解</title>
+<title>MyBatisPlus与SpringDataJPA【基础】｜全栈技术知识库</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%231d4ed8'/%3E%3Crect x='3' y='4' width='10' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='7' width='7' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='10' width='9' height='2' rx='1' fill='%23fff'/%3E%3C/svg%3E">
 <style>
 :root{
@@ -138,7 +138,7 @@ section.card li strong{color:var(--ink)}
       <span class="badge basic">基础</span>
       <span class="meta">定位：给原生 MyBatis/JPA 套一层"零 SQL 单表 CRUD"的便捷封装</span>
     </div>
-    <p class="hero-desc">本人 DCP-RMP、源启后端用的是原生 MyBatis（写 XML/注解 SQL、动态 SQL、分页）。原生 MyBatis 灵活、SQL 可控，但"按 id 查一条、按条件列表、插一条"这种重复劳动每次都要写。MyBatis-Plus 在 MyBatis 之上加一层"继承一个接口就自带 CRUD"；Spring Data JPA 则是另一套路线——以对象模型为准、几乎不写 SQL。本页讲清这两类便捷 ORM 与原生 MyBatis 的关系和选型，诚实说明本人项目仍以原生 MyBatis 为主。</p>
+    <p class="hero-desc">本人 业务系统、数据编排平台后端用的是原生 MyBatis（写 XML/注解 SQL、动态 SQL、分页）。原生 MyBatis 灵活、SQL 可控，但"按 id 查一条、按条件列表、插一条"这种重复劳动每次都要写。MyBatis-Plus 在 MyBatis 之上加一层"继承一个接口就自带 CRUD"；Spring Data JPA 则是另一套路线——以对象模型为准、几乎不写 SQL。本页讲清这两类便捷 ORM 与原生 MyBatis 的关系和选型，诚实说明本人项目仍以原生 MyBatis 为主。</p>
   </div>
 </header>
 
@@ -155,7 +155,7 @@ section.card li strong{color:var(--ink)}
     <li><a href="#sec2">核心概念</a></li>
     <li><a href="#sec3">工作原理与流程</a></li>
     <li><a href="#sec4">核心语法与 API 要点</a></li>
-    <li><a href="#sec5">实战项目经验（真实项目落地）</a></li>
+    <li><a href="#sec5">实战项目经验（实战落地）</a></li>
     <li><a href="#sec6">易错点与面试重点</a></li>
     <li><a href="#sec7">学习资源与参考</a></li>
   </ol>
@@ -167,7 +167,7 @@ section.card li strong{color:var(--ink)}
     <ul>
       <li><strong>MyBatis-Plus（MP）</strong>：国产，MyBatis 的增强而非替代；单表 CRUD 零 SQL，复杂查询仍写原生 SQL/XML。</li>
       <li><strong>Spring Data JPA</strong>：JPA（Hibernate 实现）的 Spring 封装；按方法名推导 SQL、以对象为中心，复杂查询用 JPQL/Example。</li>
-      <li><span class="tag-point">要点</span><strong>本人现状</strong>：源启/DCP-RMP 用原生 MyBatis；MP 与 JPA 均为选型对比与学习，未在生产替换。</li>
+      <li><span class="tag-point">要点</span><strong>本人现状</strong>：数据编排平台/业务系统 用原生 MyBatis；MP 与 JPA 均为选型对比与学习，未在生产替换。</li>
     </ul>
     <table>
       <colgroup><col style="width:18%"><col style="width:27%"><col style="width:27%"><col style="width:28%"></colgroup>
@@ -302,10 +302,10 @@ List&lt;Req&gt; list = reqMapper.selectList(
   </section>
 
   <section id="sec5" class="card">
-  <h2><span class="num">5</span>实战项目经验（真实项目落地）</h2>
+  <h2><span class="num">5</span>实战项目经验（实战落地）</h2>
 
   <h3>1 项目背景</h3>
-  <p class="lead"><b>一句话定位</b>：DCP-RMP 与源启持久层用原生 MyBatis；本节基于真实 MyBatis 实践，做 MyBatis-Plus / JPA 的选型对比。</p>
+  <p class="lead"><b>一句话定位</b>：业务系统 与数据编排平台持久层用原生 MyBatis；本节基于真实 MyBatis 实践，做 MyBatis-Plus / JPA 的选型对比。</p>
   <ul><li><strong>业务量级</strong>：大量单表 CRUD + 部分复杂多表/动态 SQL。</li></ul>
   <h3>2 我的角色与职责</h3>
   <ul><li><strong>分工</strong>：写原生 MyBatis Mapper/XML；评估新模块是否改用 MyBatis-Plus 减少样板。</li></ul>
@@ -334,7 +334,7 @@ public interface ReqMapper extends BaseMapper&lt;Req&gt; { }</code></pre>
   <h3>9 复盘与可复用经验</h3>
   <ul><li><strong>便捷 ORM 只接管单表</strong>：复杂 SQL 永远保留手写。</li><li><strong>选型看 SQL 控制力需求</strong>。</li></ul>
   <h3>10 面试讲法</h3>
-  <p class="key-sentence">"DCP-RMP/源启用原生 MyBatis，我做过 MP 与 JPA 的选型：保留复杂 SQL 控制力，单表 CRUD 才交给 MP，不盲目全自动。"</p>
+  <p class="key-sentence">"业务系统/数据编排平台用原生 MyBatis，我做过 MP 与 JPA 的选型：保留复杂 SQL 控制力，单表 CRUD 才交给 MP，不盲目全自动。"</p>
 
 <section id="sec6" class="card">
     <h2><span class="num">6</span>易错点与面试重点</h2>
@@ -416,7 +416,7 @@ public interface ReqMapper extends BaseMapper&lt;Req&gt; { }</code></pre>
   <a class="doc-nav-btn" href="../08_数据库与建模/01_MySQL【深入】.html">下一篇 →</a>
 </nav>
 
-<footer>全栈技术栈详解 · MyBatisPlus与SpringDataJPA【基础】 · 基于简历项目实战编写</footer>
+<footer>全栈技术知识库 · MyBatisPlus与SpringDataJPA【基础】 · 基于实战经验编写</footer>
 <button id="backTop" type="button" aria-label="回到顶部">↑</button>
 <script>
 (function () {

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ElementUI与ElementPlus【标准】｜全栈技术栈详解</title>
+<title>ElementUI与ElementPlus【标准】｜全栈技术知识库</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%231d4ed8'/%3E%3Crect x='3' y='4' width='10' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='7' width='7' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='10' width='9' height='2' rx='1' fill='%23fff'/%3E%3C/svg%3E">
 <style>
 :root{
@@ -147,7 +147,7 @@ section.card li strong{color:var(--ink)}
       <span class="badge std">标准</span>
       <span class="meta">定位：桌面端后台组件库——ElementUI(Vue2) 与 ElementPlus(Vue3)</span>
     </div>
-    <p class="hero-desc">ElementUI 与 ElementPlus 是中后台最常用的 Vue 组件库：表格、表单、弹窗、菜单开箱即用，保证整个产品 UI 一致。ElementUI 服务 Vue2，ElementPlus 服务 Vue3。本页讲清按需引入、二次封装、主题定制，以及两者差异。案例来自源启（ElementUI 封装与按需引入）与 DCP-RMP（ElementPlus 表单设计器组件封装、主题定制）。</p>
+    <p class="hero-desc">ElementUI 与 ElementPlus 是中后台最常用的 Vue 组件库：表格、表单、弹窗、菜单开箱即用，保证整个产品 UI 一致。ElementUI 服务 Vue2，ElementPlus 服务 Vue3。本页讲清按需引入、二次封装、主题定制，以及两者差异。案例来自数据编排平台（ElementUI 封装与按需引入）与 业务系统（ElementPlus 表单设计器组件封装、主题定制）。</p>
   </div>
 </header>
 <nav class="doc-nav top" aria-label="文档导航">
@@ -172,7 +172,7 @@ section.card li strong{color:var(--ink)}
 
 <section id="sec1" class="card">
   <h2><span class="num">1</span>技术点概览</h2>
-  <p><strong>是什么</strong>：ElementUI / ElementPlus 是饿了么团队出品的 Vue 桌面端组件库，提供表单、表格、弹窗、导航、消息提示等几十个组件。ElementUI 对应 Vue2，ElementPlus 对应 Vue3。本技术栈的后台系统几乎都基于它：源启（Vue2+ElementUI）、DCP-RMP（Vue3+ElementPlus）。</p>
+  <p><strong>是什么</strong>：ElementUI / ElementPlus 是饿了么团队出品的 Vue 桌面端组件库，提供表单、表格、弹窗、导航、消息提示等几十个组件。ElementUI 对应 Vue2，ElementPlus 对应 Vue3。本技术栈的后台系统几乎都基于它：数据编排平台（Vue2+ElementUI）、业务系统（Vue3+ElementPlus）。</p>
   <p><strong>解决什么问题</strong>：自己造表格/表单/分页成本高、体验不统一。组件库让后台开发从"写控件"变成"拼控件"，同时保证交互与视觉一致。工程上还要解决两个问题：按需引入（减小打包体积）、二次封装（统一业务组件口径）。</p>
   <div class="diagram">
     <svg viewBox="0 0 800 220" role="img" aria-label="组件库按需引入与二次封装层次示意图">
@@ -208,7 +208,7 @@ section.card li strong{color:var(--ink)}
   <p class="lead"><b>一句话定位</b>：把分页/序号列/loading/空态等通用模式封装成业务组件，业务页只传配置。</p>
   <ul>
     <li><strong>动因</strong>：直接用原生 el-table，每个页面都要重复写分页、序号列、loading、空态。</li>
-    <li><strong>实践</strong>：封装成 <code>CommonTable</code>，业务页只传 columns 和接口；DCP-RMP 表单设计器就是基于 ElementPlus 控件再封装一层。</li>
+    <li><strong>实践</strong>：封装成 <code>CommonTable</code>，业务页只传 columns 和接口；业务系统 表单设计器就是基于 ElementPlus 控件再封装一层。</li>
   </ul>
   <h3>2.3 主题定制</h3>
   <p class="lead"><b>一句话定位</b>：Element 的颜色/圆角/字号基于变量，覆盖主色即可整站换肤。</p>
@@ -237,18 +237,18 @@ section.card li strong{color:var(--ink)}
       <text x="205" y="75" text-anchor="middle" font-size="12.5" font-weight="700" fill="#b91c1c">ElementUI（Vue2）</text>
       <text x="50" y="100" font-size="11" fill="#475569">图标：icon="edit" 属性写法</text>
       <text x="50" y="122" font-size="11" fill="#475569">消息：this.$message() 全局挂载</text>
-      <text x="50" y="145" font-size="11" font-weight="600" fill="#64748b">源启项目在用</text>
+      <text x="50" y="145" font-size="11" font-weight="600" fill="#64748b">数据编排平台项目在用</text>
 
       <!-- ElementPlus -->
       <rect x="420" y="50" width="350" height="110" rx="8" fill="#f0fdf4" stroke="#047857"/>
       <text x="595" y="75" text-anchor="middle" font-size="12.5" font-weight="700" fill="#047857">ElementPlus（Vue3）</text>
       <text x="440" y="100" font-size="11" fill="#475569">图标：&lt;Edit /&gt; 组件插槽写法</text>
       <text x="440" y="122" font-size="11" fill="#475569">消息：import { ElMessage } 显式导入</text>
-      <text x="440" y="145" font-size="11" font-weight="600" fill="#64748b">DCP-RMP 项目在用</text>
+      <text x="440" y="145" font-size="11" font-weight="600" fill="#64748b">业务系统 项目在用</text>
     </svg>
     <p class="diagram-caption">图 3 ElementUI vs ElementPlus（示意）</p>
   </div>
-  <p class="key-sentence"><span class="tag-point">对应</span>源启用 ElementUI（Vue2），DCP-RMP 用 ElementPlus（Vue3）。</p>
+  <p class="key-sentence"><span class="tag-point">对应</span>数据编排平台用 ElementUI（Vue2），业务系统 用 ElementPlus（Vue3）。</p>
 </section>
 
 <section id="sec3" class="card">
@@ -281,7 +281,7 @@ section.card li strong{color:var(--ink)}
 
 <section id="sec4" class="card">
   <h2><span class="num">4</span>核心语法与 API 要点</h2>
-  <h3>4.1 按需注册（Vue2 源启所用）</h3>
+  <h3>4.1 按需注册（Vue2 数据编排平台所用）</h3>
 <pre class="code" data-lang="js"><code>import Vue from 'vue';
 import { Button, Table, TableColumn, Pagination, Dialog, Form, FormItem } from 'element-ui';
 Vue.use(Button); Vue.use(Table); Vue.use(Pagination); // 只注册用到的
@@ -293,7 +293,7 @@ import 'element-ui/lib/theme-chalk/index.css';         // 样式按需另配</co
   &lt;el-table-column v-for="c in columns" :key="c.prop" :label="c.label" :prop="c.prop" /&gt;
 &lt;/el-table&gt;
 &lt;el-pagination layout="prev, pager, next" :total="total" @current-change="onPage" /&gt;</code></pre>
-  <h3>4.3 ElementPlus 主题定制（DCP-RMP 所用）</h3>
+  <h3>4.3 ElementPlus 主题定制（业务系统 所用）</h3>
 <pre class="code" data-lang="css"><code>/* 覆盖全局 CSS 变量即可换主色 */
 :root {
   --el-color-primary: #1d4ed8;   /* 品牌蓝 */
@@ -302,13 +302,13 @@ import 'element-ui/lib/theme-chalk/index.css';         // 样式按需另配</co
 </section>
 
 <section id="sec5" class="card">
-  <h2><span class="num">5</span>实战项目经验（真实项目落地）</h2>
+  <h2><span class="num">5</span>实战项目经验（实战落地）</h2>
 
   <h3>5.1 项目背景</h3>
-  <p class="lead"><b>一句话定位</b>：源启（Vue2+ElementUI）大量列表页复用表格/分页/查询；DCP-RMP（Vue3+ElementPlus）做按 schema 渲染的表单设计器并定制品牌主题。</p>
+  <p class="lead"><b>一句话定位</b>：数据编排平台（Vue2+ElementUI）大量列表页复用表格/分页/查询；业务系统（Vue3+ElementPlus）做按 schema 渲染的表单设计器并定制品牌主题。</p>
   <ul>
-    <li><strong>源启</strong>：列表页高频重复表格+分页+查询，需统一业务口径。</li>
-    <li><strong>DCP-RMP</strong>：表单设计器按字段类型渲染 ElementPlus 控件，整站品牌色定制。</li>
+    <li><strong>数据编排平台</strong>：列表页高频重复表格+分页+查询，需统一业务口径。</li>
+    <li><strong>业务系统</strong>：表单设计器按字段类型渲染 ElementPlus 控件，整站品牌色定制。</li>
   </ul>
 
   <h3>5.2 我的角色与职责</h3>
@@ -319,7 +319,7 @@ import 'element-ui/lib/theme-chalk/index.css';         // 样式按需另配</co
 
   <h3>5.3 技术栈</h3>
   <ul>
-    <li>源启：Vue2 + ElementUI（按需引入）；DCP-RMP：Vue3 + ElementPlus（CSS 变量主题 + schema 渲染）。</li>
+    <li>数据编排平台：Vue2 + ElementUI（按需引入）；业务系统：Vue3 + ElementPlus（CSS 变量主题 + schema 渲染）。</li>
   </ul>
 
   <h3>5.4 落地设计</h3>
@@ -341,7 +341,7 @@ import 'element-ui/lib/theme-chalk/index.css';         // 样式按需另配</co
 
   <h3>5.6 真实问题与解法</h3>
   <ul>
-    <li><strong>全量引入包大</strong>：源启早期全量引入首屏包大，改按需引入后明显改善。</li>
+    <li><strong>全量引入包大</strong>：数据编排平台早期全量引入首屏包大，改按需引入后明显改善。</li>
     <li><strong>API 迁移差异</strong>：ElementPlus 迁移时 icon 从属性变插槽、<code>this.$message</code> 变 <code>ElMessage</code> 导入，逐页改。</li>
     <li><strong>select options 异步</strong>：options 未到就渲染致下拉为空；等数据到再渲染或加 loading。</li>
     <li><strong>派生色没同步</strong>：只改主色，hover/active 派生色没同步按钮 hover 仍旧蓝；用 CSS 变量派生体系一起覆盖。</li>
@@ -366,7 +366,7 @@ import 'element-ui/lib/theme-chalk/index.css';         // 样式按需另配</co
   </ul>
 
   <h3>5.10 面试讲法</h3>
-  <p class="key-sentence"><span class="tag-point">抓手</span>用按需引入 + CommonTable 封装统一源启列表口径，并在 DCP-RMP 用 schema 驱动 ElementPlus 表单渲染，踩平了跨版本 API 迁移与派生色不同步。</p>
+  <p class="key-sentence"><span class="tag-point">抓手</span>用按需引入 + CommonTable 封装统一数据编排平台列表口径，并在 业务系统 用 schema 驱动 ElementPlus 表单渲染，踩平了跨版本 API 迁移与派生色不同步。</p>
 </section>
 
 <section id="sec6" class="card">
@@ -403,8 +403,8 @@ import 'element-ui/lib/theme-chalk/index.css';         // 样式按需另配</co
   <h2><span class="num">7</span>学习资源与参考</h2>
   <h3>官方文档</h3>
   <ul>
-    <li>Element Plus 官方文档（Vue3，DCP-RMP 所用）：<a href="https://element-plus.org/zh-CN/" rel="noopener">element-plus.org/zh-CN</a></li>
-    <li>Element UI 官方文档（Vue2，源启所用）：<a href="https://element.eleme.cn/#/zh-CN" rel="noopener">element.eleme.cn</a></li>
+    <li>Element Plus 官方文档（Vue3，业务系统 所用）：<a href="https://element-plus.org/zh-CN/" rel="noopener">element-plus.org/zh-CN</a></li>
+    <li>Element UI 官方文档（Vue2，数据编排平台所用）：<a href="https://element.eleme.cn/#/zh-CN" rel="noopener">element.eleme.cn</a></li>
   </ul>
   <h3>主题与定制</h3>
   <ul>
@@ -419,7 +419,7 @@ import 'element-ui/lib/theme-chalk/index.css';         // 样式按需另配</co
   <a class="doc-nav-btn home" href="../index.html">⌂ 返回首页</a>
   <a class="doc-nav-btn" href="../02_前端框架与状态管理/07_组件设计模式与插槽机制【标准】.html">下一篇 →</a>
 </nav>
-<footer>全栈技术栈详解 · ElementUI与ElementPlus【标准】 · 基于简历项目实战编写</footer>
+<footer>全栈技术知识库 · ElementUI与ElementPlus【标准】 · 基于实战经验编写</footer>
 <button id="backTop" type="button" aria-label="回到顶部">↑</button>
 <script>
 (function () {

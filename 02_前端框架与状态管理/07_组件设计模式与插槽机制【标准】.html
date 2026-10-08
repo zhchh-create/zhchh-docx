@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>组件设计模式与插槽机制【标准】｜全栈技术栈详解</title>
+<title>组件设计模式与插槽机制【标准】｜全栈技术知识库</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%231d4ed8'/%3E%3Crect x='3' y='4' width='10' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='7' width='7' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='10' width='9' height='2' rx='1' fill='%23fff'/%3E%3C/svg%3E">
 <style>
 :root{
@@ -147,7 +147,7 @@ section.card li strong{color:var(--ink)}
       <span class="badge std">标准</span>
       <span class="meta">定位：组件通信四件套——props / emit / slot / provide-inject 的取舍</span>
     </div>
-    <p class="hero-desc">组件化的核心问题是"组件之间怎么配合"：父子传数据用 props、向父级发事件用 emit、留内容口子用 slot、跨层级共享用 provide/inject。选对方式，组件才既复用又灵活。本页讲清四种通信方式的适用场景与取舍，落到源启 CommonSlot 通用动态组件渲染容器——用 slot 与 render 函数实现配置驱动渲染，这是低代码平台的底层能力。</p>
+    <p class="hero-desc">组件化的核心问题是"组件之间怎么配合"：父子传数据用 props、向父级发事件用 emit、留内容口子用 slot、跨层级共享用 provide/inject。选对方式，组件才既复用又灵活。本页讲清四种通信方式的适用场景与取舍，落到数据编排平台 通用物料插槽 通用动态组件渲染容器——用 slot 与 render 函数实现配置驱动渲染，这是低代码平台的底层能力。</p>
   </div>
 </header>
 <nav class="doc-nav top" aria-label="文档导航">
@@ -173,7 +173,7 @@ section.card li strong{color:var(--ink)}
 <section id="sec1" class="card">
   <h2><span class="num">1</span>技术点概览</h2>
   <p><strong>是什么</strong>：组件设计模式指组件之间如何传数据、传内容、传事件。Vue 提供四件套：<strong>props</strong>（父→子传数据，单向）、<strong>emit</strong>（子→父发事件）、<strong>slot</strong>（父把内容插进子组件的占位）、<strong>provide/inject</strong>（祖先→后代跨层级注入）。再配合 <code>&lt;component :is&gt;</code> 动态组件，就能做到"配置驱动渲染"。</p>
-  <p><strong>解决什么问题</strong>：组件复用的灵活性。一个通用组件（弹窗、表格、容器）要适应不同业务，不能把内容写死——就得留 slot 口子、通过 props 配行为。本技术栈源启的 CommonSlot 就是把"渲染哪个组件、传什么属性、绑什么事件"全部配置化，是低代码平台动态物料渲染的核心。</p>
+  <p><strong>解决什么问题</strong>：组件复用的灵活性。一个通用组件（弹窗、表格、容器）要适应不同业务，不能把内容写死——就得留 slot 口子、通过 props 配行为。本技术栈数据编排平台的 通用物料插槽 就是把"渲染哪个组件、传什么属性、绑什么事件"全部配置化，是低代码平台动态物料渲染的核心。</p>
   <div class="diagram">
     <svg viewBox="0 0 800 240" role="img" aria-label="Vue 组件通信四件套关系示意图">
       <defs>
@@ -234,7 +234,7 @@ section.card li strong{color:var(--ink)}
     <li><strong>动态组件</strong>：<code>&lt;component :is="compName"&gt;</code> 根据变量选哪个组件渲染。</li>
     <li><strong>render 函数</strong>：用 JS 描述渲染结果，比模板更灵活。</li>
   </ul>
-  <p class="key-sentence"><span class="tag-point">核心</span>一份配置描述"用哪个组件、什么 props、绑什么事件"，运行时用动态组件/render 渲染——这就是 CommonSlot 容器。</p>
+  <p class="key-sentence"><span class="tag-point">核心</span>一份配置描述"用哪个组件、什么 props、绑什么事件"，运行时用动态组件/render 渲染——这就是 通用物料插槽 容器。</p>
 </section>
 
 <section id="sec3" class="card">
@@ -254,7 +254,7 @@ section.card li strong{color:var(--ink)}
       <text x="140" y="124" text-anchor="middle" font-size="11" fill="#475569">props:{...}, on:{...} }</text>
       <line x1="240" y1="100" x2="330" y2="100" stroke="#64748b" marker-end="url(#arra)"/>
       <rect x="334" y="60" width="180" height="80" rx="8" fill="#eff6ff" stroke="#2563eb"/>
-      <text x="424" y="92" text-anchor="middle" font-size="12.5" font-weight="600" fill="#1d4ed8">CommonSlot 容器</text>
+      <text x="424" y="92" text-anchor="middle" font-size="12.5" font-weight="600" fill="#1d4ed8">通用物料插槽 容器</text>
       <text x="424" y="112" text-anchor="middle" font-size="11" fill="#475569">解析配置</text>
       <text x="424" y="130" text-anchor="middle" font-size="11" fill="#475569">:is / render</text>
       <line x1="514" y1="100" x2="604" y2="100" stroke="#64748b" marker-end="url(#arra)"/>
@@ -285,7 +285,7 @@ export default { props: { title: String, item: Object } }
   &lt;template #default="{ row }"&gt;{{ row.name }} &lt;b&gt;{{ row.status }}&lt;/b&gt;&lt;/template&gt;
 &lt;/MyList&gt;</code></pre>
   <h3>4.3 动态组件配置驱动</h3>
-<pre class="code" data-lang="vue"><code>&lt;!-- CommonSlot：根据配置动态渲染 --&gt;
+<pre class="code" data-lang="vue"><code>&lt;!-- 通用物料插槽：根据配置动态渲染 --&gt;
 &lt;component
   :is="resolveComp(config.comp)"
   v-bind="config.props"
@@ -340,17 +340,17 @@ export default { props: { title: String, item: Object } }
 </section>
 
 <section id="sec5" class="card">
-  <h2><span class="num">5</span>实战项目经验（真实项目落地）</h2>
+  <h2><span class="num">5</span>实战项目经验（实战落地）</h2>
 
   <h3>5.1 项目背景</h3>
-  <p class="lead"><b>一句话定位</b>：源启/低代码平台需要一个通用容器——传入一段配置（用哪个组件、传什么属性、绑什么事件、插什么内容）就渲染出对应物料。</p>
+  <p class="lead"><b>一句话定位</b>：数据编排平台/低代码平台需要一个通用容器——传入一段配置（用哪个组件、传什么属性、绑什么事件、插什么内容）就渲染出对应物料。</p>
   <ul>
-    <li><strong>业务场景</strong>：设计器里物料拖拽后，靠这个 CommonSlot 渲染预览。</li>
+    <li><strong>业务场景</strong>：设计器里物料拖拽后，靠这个 通用物料插槽 渲染预览。</li>
   </ul>
 
   <h3>5.2 我的角色与职责</h3>
   <ul>
-    <li><strong>角色</strong>：前端开发，负责 CommonSlot 配置驱动渲染容器的设计与落地。</li>
+    <li><strong>角色</strong>：前端开发，负责 通用物料插槽 配置驱动渲染容器的设计与落地。</li>
     <li><strong>团队与分工</strong>：前端若干（估算）；我做这个动态渲染容器，设计器/渲染器共用。</li>
   </ul>
 
@@ -401,7 +401,7 @@ const registry = { 'el-button': ElButton, 'search-panel': SearchPanel };
   </ul>
 
   <h3>5.10 面试讲法</h3>
-  <p class="key-sentence"><span class="tag-point">抓手</span>用 &lt;component :is&gt; + v-bind/v-on + 具名插槽做了一个配置驱动渲染容器 CommonSlot，把物料从写死组件变成可描述配置，并踩平了事件命名与递归 key 这几个动态渲染坑。</p>
+  <p class="key-sentence"><span class="tag-point">抓手</span>用 &lt;component :is&gt; + v-bind/v-on + 具名插槽做了一个配置驱动渲染容器 通用物料插槽，把物料从写死组件变成可描述配置，并踩平了事件命名与递归 key 这几个动态渲染坑。</p>
 </section>
 
 <section id="sec6" class="card">
@@ -454,7 +454,7 @@ const registry = { 'el-button': ElButton, 'search-panel': SearchPanel };
   <a class="doc-nav-btn home" href="../index.html">⌂ 返回首页</a>
   <a class="doc-nav-btn" href="../02_前端框架与状态管理/08_jQuery与Bootstrap【深入】.html">下一篇 →</a>
 </nav>
-<footer>全栈技术栈详解 · 组件设计模式与插槽机制【标准】 · 基于简历项目实战编写</footer>
+<footer>全栈技术知识库 · 组件设计模式与插槽机制【标准】 · 基于实战经验编写</footer>
 <button id="backTop" type="button" aria-label="回到顶部">↑</button>
 <script>
 (function () {

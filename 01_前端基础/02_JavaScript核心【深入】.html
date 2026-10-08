@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JavaScript核心【深入】｜全栈技术栈详解</title>
+<title>JavaScript核心【深入】｜全栈技术知识库</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%231d4ed8'/%3E%3Crect x='3' y='4' width='10' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='7' width='7' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='10' width='9' height='2' rx='1' fill='%23fff'/%3E%3C/svg%3E">
 <style>
 :root{
@@ -237,7 +237,7 @@ section.card li strong{color:var(--ink)}
       <text x="295" y="122" font-size="11" fill="#475569">DOM 操作：还是手动写</text>
       <text x="295" y="144" font-size="11" fill="#475569">模块：ESM import/export</text>
       <text x="295" y="175" font-size="11" font-weight="600" fill="#1d4ed8">特点：类型安全、重构友好</text>
-      <text x="295" y="195" font-size="11" fill="#64748b">后期项目（DCP-RMP）</text>
+      <text x="295" y="195" font-size="11" fill="#64748b">后期项目（业务系统）</text>
       <text x="295" y="220" font-size="10.5" fill="#047857">错误前移到编译期，大型项目必备</text>
 
       <!-- 框架封装 -->
@@ -253,7 +253,7 @@ section.card li strong{color:var(--ink)}
     <p class="diagram-caption">图 从原生 JS 到框架封装的三层演进（示意）</p>
   </div>
   <ul>
-    <li><strong>原生 ES vs TypeScript</strong>：TS 不改变运行时，它在编译期把类型擦除成普通 JS。原生 JS 的动态性是"灵活但把错误推迟到运行期"，TS 把这部分风险前移到编译期。本项目群早期（iClean、大屏）全是原生 JS + jQuery，后期 DCP-RMP 全面切到 TS——迁移的收益正是"大型公共包与 API 客户端不再靠人肉契约"（见 TypeScript 页）。</li>
+    <li><strong>原生 ES vs TypeScript</strong>：TS 不改变运行时，它在编译期把类型擦除成普通 JS。原生 JS 的动态性是"灵活但把错误推迟到运行期"，TS 把这部分风险前移到编译期。本套技术栈早期（iClean、大屏）全是原生 JS + jQuery，后期 业务系统 全面切到 TS——迁移的收益正是"大型公共包与 API 客户端不再靠人肉契约"（见 TypeScript 页）。</li>
     <li><strong>命令式操作 DOM vs 框架声明式渲染</strong>：jQuery/原生时代，状态与 DOM 的同步全靠手写（改 <code>.text()</code>、<code>.html()</code>），一旦状态分支多就极易漏改。Vue/React 用"数据驱动视图"接管了这层映射，代价是要接受框架的响应式模型。理解原生 JS 仍然必要：框架编译产物、虚拟 DOM diff、插件底层最终都是原生 JS。</li>
     <li><strong>CommonJS vs ESM 模块</strong>：早期大屏 Webpack 项目用 CommonJS（<code>require</code>，运行时动态加载、值拷贝），现代 Vite/Node 用 ESM（<code>import/export</code>，编译期静态分析、活绑定、可 tree-shaking）。工程选型上，新代码一律 ESM，老代码靠工具兼容。</li>
   </ul>
@@ -314,7 +314,7 @@ section.card li strong{color:var(--ink)}
     <li><strong>ESM（import/export）</strong>：编译期静态确定导入导出，支持 tree-shaking；绑定是活的（导出值变，导入方跟着变）；模块只执行一次、形成单例。</li>
     <li><strong>CommonJS（require/module.exports）</strong>：运行时动态加载；对<strong>原始类型</strong>导出的是值拷贝（首次 require 时快照，导出方重新赋值不影响导入方），对<strong>对象/数组</strong>仍是共享引用（导入方修改其属性会同步回导出方）。</li>
   </ul>
-  <p class="pit-sentence"><span class="tag-pit">坑</span>老 CommonJS 构建里"改了导出对象的字段页面没更新"，往往就是值拷贝/活绑定的差异所致；大屏老项目走 CJS，DCP-RMP 走 ESM。</p>
+  <p class="pit-sentence"><span class="tag-pit">坑</span>老 CommonJS 构建里"改了导出对象的字段页面没更新"，往往就是值拷贝/活绑定的差异所致；大屏老项目走 CJS，业务系统 走 ESM。</p>
   <h3>2.8 垃圾回收与内存管理（Garbage Collection）</h3>
   <p class="lead"><b>一句话定位</b>：V8 靠"可达性"决定回收，前端内存泄漏几乎都是"本该不可达却仍被引用"。</p>
   <ul>
@@ -473,7 +473,7 @@ const total = rows.reduce((sum, r) => sum + r.level, 0);
 </section>
 
 <section id="sec5" class="card">
-  <h2><span class="num">5</span>实战项目经验（真实项目落地）</h2>
+  <h2><span class="num">5</span>实战项目经验（实战落地）</h2>
 
   <h3>5.1 项目背景</h3>
   <p class="lead"><b>一句话定位</b>：电力大屏项目群 iClean 智能监控——把多个变电站的摄像头画面、光跟踪算法框选结果、设备状态聚到一屏展示。</p>
@@ -641,7 +641,7 @@ Grid.prototype.sortBy = function (key) {
   <a class="doc-nav-btn home" href="../index.html">⌂ 返回首页</a>
   <a class="doc-nav-btn" href="../01_前端基础/03_JavaScript进阶_事件循环与异步【深入】.html">下一篇 →</a>
 </nav>
-<footer>全栈技术栈详解 · JavaScript核心【深入】 · 基于简历项目实战编写</footer>
+<footer>全栈技术知识库 · JavaScript核心【深入】 · 基于实战经验编写</footer>
 <button id="backTop" type="button" aria-label="回到顶部">↑</button>
 <script>
 (function () {

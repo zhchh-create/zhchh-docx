@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Redis进阶_缓存策略与分布式锁【深入】｜全栈技术栈详解</title>
+<title>Redis进阶_缓存策略与分布式锁【深入】｜全栈技术知识库</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%231d4ed8'/%3E%3Crect x='3' y='4' width='10' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='7' width='7' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='10' width='9' height='2' rx='1' fill='%23fff'/%3E%3C/svg%3E">
 <style>
 :root{
@@ -147,7 +147,7 @@ section.card li strong{color:var(--ink)}
       <span class="badge deep">深入</span>
       <span class="meta">定位：缓存三大问题的应对，与用 Redis 实现可靠的分布式锁</span>
     </div>
-    <p class="hero-desc">上一页讲了缓存基础。这一页专攻两个进阶主题：一是缓存的三大事故——穿透、击穿、雪崩怎么防；二是多实例部署下怎么用 Redis 做分布式锁。重点讲 DCP-RMP 实际用的 Redisson：它怎么靠 Lua 脚本保证加锁原子、看门狗怎么自动续期、和手写 setnx 锁差在哪，以及可重入锁、公平锁、红锁怎么取舍。</p>
+    <p class="hero-desc">上一页讲了缓存基础。这一页专攻两个进阶主题：一是缓存的三大事故——穿透、击穿、雪崩怎么防；二是多实例部署下怎么用 Redis 做分布式锁。重点讲 业务系统 实际用的 Redisson：它怎么靠 Lua 脚本保证加锁原子、看门狗怎么自动续期、和手写 setnx 锁差在哪，以及可重入锁、公平锁、红锁怎么取舍。</p>
   </div>
 </header>
 <nav class="doc-nav top" aria-label="文档导航">
@@ -163,7 +163,7 @@ section.card li strong{color:var(--ink)}
     <li><a href="#sec2">核心概念</a></li>
     <li><a href="#sec3">工作原理与流程</a></li>
     <li><a href="#sec4">核心语法与 API 要点</a></li>
-    <li><a href="#sec5">实战项目经验（真实项目落地）</a></li>
+    <li><a href="#sec5">实战项目经验（实战落地）</a></li>
     <li><a href="#sec6">易错点与面试重点</a></li>
     <li><a href="#sec7">学习资源与参考</a></li>
   </ol>
@@ -388,10 +388,10 @@ RLock lock = redisson.getLock("lock:build:" + key);
 </section>
 
 <section id="sec5" class="card">
-  <h2><span class="num">5</span>实战项目经验（真实项目落地）</h2>
+  <h2><span class="num">5</span>实战项目经验（实战落地）</h2>
 
   <h3>1 项目背景</h3>
-  <p class="lead"><b>一句话定位</b>：DCP-RMP 需求并发操作（如同一需求被多人同时处理、幂等提交）需要分布式锁保证一致性，用 Redisson。</p>
+  <p class="lead"><b>一句话定位</b>：业务系统 需求并发操作（如同一需求被多人同时处理、幂等提交）需要分布式锁保证一致性，用 Redisson。</p>
   <ul><li><strong>业务量级</strong>：后端虽为单体部署多实例时，临界区操作必须跨实例互斥（估算多实例）。</li></ul>
   <h3>2 我的角色与职责</h3>
   <ul><li><strong>分工</strong>：用 Redisson 实现可重入分布式锁，处理需求并发提交与接口幂等。</li></ul>
@@ -427,7 +427,7 @@ try {
   <h3>9 复盘与可复用经验</h3>
   <ul><li><strong>用成熟客户端</strong>：Redisson 而非手写 setnx，续期/可重入都解决了。</li><li><strong>锁内要短</strong>。</li></ul>
   <h3>10 面试讲法</h3>
-  <p class="key-sentence">"DCP-RMP 我用 Redisson 按需求 id 加可重入锁、靠看门狗续期保证并发一致性，踩过手写 setnx 不释放和误删别人锁的坑，所以一律用成熟客户端。"</p>
+  <p class="key-sentence">"业务系统 我用 Redisson 按需求 id 加可重入锁、靠看门狗续期保证并发一致性，踩过手写 setnx 不释放和误删别人锁的坑，所以一律用成熟客户端。"</p>
 
 <section id="sec6" class="card">
   <h2><span class="num">6</span>易错点与面试重点</h2>
@@ -488,7 +488,7 @@ try {
   <a class="doc-nav-btn home" href="../index.html">⌂ 返回首页</a>
   <a class="doc-nav-btn" href="../08_数据库与建模/07_数据库高可用与分库分表【标准】.html">下一篇 →</a>
 </nav>
-<footer>全栈技术栈详解 · Redis进阶_缓存策略与分布式锁【深入】 · 基于简历项目实战编写</footer>
+<footer>全栈技术知识库 · Redis进阶_缓存策略与分布式锁【深入】 · 基于实战经验编写</footer>
 <button id="backTop" type="button" aria-label="回到顶部">↑</button>
 <script>
 (function () {

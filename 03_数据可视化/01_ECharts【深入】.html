@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ECharts【深入】｜全栈技术栈详解</title>
+<title>ECharts【深入】｜全栈技术知识库</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%231d4ed8'/%3E%3Crect x='3' y='4' width='10' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='7' width='7' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='10' width='9' height='2' rx='1' fill='%23fff'/%3E%3C/svg%3E">
 <style>
 :root{
@@ -147,7 +147,7 @@ section.card li strong{color:var(--ink)}
       <span class="badge deep">深入</span>
       <span class="meta">定位：配置式图表引擎——一份 option 描述一切，Canvas/SVG 双渲染</span>
     </div>
-    <p class="hero-desc">ECharts 是 Apache 顶级开源项目（现独立为 apache/echarts，6.x 为当前主线——6.0 于 2025-07 GA，5.x 为上一代维护线），用一份声明式 <code>option</code> 对象描述坐标系、系列、组件与交互，引擎负责把它变成可交互动画图表。本页从渲染管线、setOption 的 merge 机制讲到大数据渲染的层与增量策略，再以电力大屏实时告警热力图、变电 2.0 高频负荷监测两个真实项目落地，最后给出全量刷新卡顿这类高频面试坑。</p>
+    <p class="hero-desc">ECharts 是 Apache 顶级开源项目（现独立为 apache/echarts，6.x 为当前主线——6.0 于 2025-07 GA，5.x 为上一代维护线），用一份声明式 <code>option</code> 对象描述坐标系、系列、组件与交互，引擎负责把它变成可交互动画图表。本页从渲染管线、setOption 的 merge 机制讲到大数据渲染的层与增量策略，再以电力大屏实时告警热力图、变电 2.0 高频负荷监测两个实战落地，最后给出全量刷新卡顿这类高频面试坑。</p>
   </div>
 </header>
 <nav class="doc-nav top" aria-label="文档导航">
@@ -163,7 +163,7 @@ section.card li strong{color:var(--ink)}
     <li><a href="#sec2">核心概念</a></li>
     <li><a href="#sec3">工作原理与流程</a></li>
     <li><a href="#sec4">核心语法与 API 要点</a></li>
-    <li><a href="#sec5">实战项目经验（真实项目落地）</a></li>
+    <li><a href="#sec5">实战项目经验（实战落地）</a></li>
     <li><a href="#sec6">易错点与面试重点</a></li>
     <li><a href="#sec7">学习资源与参考</a></li>
   </ol>
@@ -212,7 +212,7 @@ section.card li strong{color:var(--ink)}
       <text x="691" y="90" text-anchor="middle" font-size="11.5" fill="#475569">像素上屏 + 事件</text>
       <text x="400" y="140" text-anchor="middle" font-size="13" fill="#475569">业务代码只产出 option；引擎把"声明"编译成"图形 + 动画 + 交互"。</text>
       <text x="400" y="162" text-anchor="middle" font-size="13" fill="#475569">更新图表 = 改 option 再 setOption，引擎做增量 merge 而非整图重画。</text>
-      <text x="400" y="196" text-anchor="middle" font-size="12.5" fill="#6b7280">本项目群定位：电力大屏图表主力（告警热力图、负荷曲线），高频刷新靠 merge + large 模式撑住帧率。</text>
+      <text x="400" y="196" text-anchor="middle" font-size="12.5" fill="#6b7280">本套技术栈定位：电力大屏图表主力（告警热力图、负荷曲线），高频刷新靠 merge + large 模式撑住帧率。</text>
     </svg>
     <p class="diagram-caption">图 1 ECharts 在可视化链路中的位置（示意）</p>
   </div>
@@ -477,7 +477,7 @@ chart.on('datazoom', function () { /* 拖缩放后刷新明细表格 */ });</cod
 </section>
 
 <section id="sec5" class="card">
-  <h2><span class="num">5</span>实战项目经验（真实项目落地）</h2>
+  <h2><span class="num">5</span>实战项目经验（实战落地）</h2>
 
   <h3>5.1 项目背景（业务量级/场景）</h3>
   <p class="lead"><b>一句话定位</b>：电力大屏项目群（2016-2022）把大量实时遥测数据铺到值班大屏，要求一眼定位越限。</p>
@@ -635,7 +635,7 @@ window.__POWERED_BY_QIANKUN__ &amp;&amp; (unmount =&gt; chart.dispose());</code>
   <a class="doc-nav-btn home" href="../index.html">⌂ 返回首页</a>
   <a class="doc-nav-btn" href="../03_数据可视化/02_AntV_G6【深入】.html">下一篇 →</a>
 </nav>
-<footer>全栈技术栈详解 · ECharts【深入】 · 基于简历项目实战编写</footer>
+<footer>全栈技术知识库 · ECharts【深入】 · 基于实战经验编写</footer>
 <button id="backTop" type="button" aria-label="回到顶部">↑</button>
 <script>
 (function () {

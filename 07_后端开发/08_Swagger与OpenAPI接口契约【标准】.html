@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Swagger与OpenAPI接口契约【标准】｜全栈技术栈详解</title>
+<title>Swagger与OpenAPI接口契约【标准】｜全栈技术知识库</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%231d4ed8'/%3E%3Crect x='3' y='4' width='10' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='7' width='7' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='10' width='9' height='2' rx='1' fill='%23fff'/%3E%3C/svg%3E">
 <style>
 :root{
@@ -147,7 +147,7 @@ section.card li strong{color:var(--ink)}
       <span class="badge std">标准</span>
       <span class="meta">定位：前后端之间的"接口合同"——文档即代码，还能生成客户端</span>
     </div>
-    <p class="hero-desc">接口文档过时、前后端联调扯皮，是每个全栈都踩过的坑。OpenAPI 是描述 REST 接口的开放规范，Swagger/springdoc 是生成文档的工具；更进一步，OpenAPI 文档可以直接生成 TypeScript 类型化的 API 客户端。本页以 DCP-RMP 的真实落地为重点：后端注解自动产出 OpenAPI 文档，再据此生成 TS 客户端代码，把"联调靠对文档"变成"类型对了就能调"。</p>
+    <p class="hero-desc">接口文档过时、前后端联调扯皮，是每个全栈都踩过的坑。OpenAPI 是描述 REST 接口的开放规范，Swagger/springdoc 是生成文档的工具；更进一步，OpenAPI 文档可以直接生成 TypeScript 类型化的 API 客户端。本页以 业务系统 的真实落地为重点：后端注解自动产出 OpenAPI 文档，再据此生成 TS 客户端代码，把"联调靠对文档"变成"类型对了就能调"。</p>
   </div>
 </header>
 <nav class="doc-nav top" aria-label="文档导航">
@@ -163,7 +163,7 @@ section.card li strong{color:var(--ink)}
     <li><a href="#sec2">核心概念</a></li>
     <li><a href="#sec3">工作原理与流程</a></li>
     <li><a href="#sec4">核心语法与 API 要点</a></li>
-    <li><a href="#sec5">实战项目经验（真实项目落地）</a></li>
+    <li><a href="#sec5">实战项目经验（实战落地）</a></li>
     <li><a href="#sec6">易错点与面试重点</a></li>
     <li><a href="#sec7">学习资源与参考</a></li>
   </ol>
@@ -344,14 +344,14 @@ openapi-generator-cli generate \
   -i openapi.yaml \
   -g typescript-axios \
   -o packages/api-client/src/generated</code></pre>
-  <div class="note">DCP-RMP 是 pnpm workspace + Turborepo Monorepo，生成的客户端正好作为公共包（packages/api-client）供 web 主应用与其他子应用引用——这是"契约即公共包"的标准做法。</div>
+  <div class="note">业务系统 是 pnpm workspace + Turborepo Monorepo，生成的客户端正好作为公共包（packages/api-client）供 web 主应用与其他子应用引用——这是"契约即公共包"的标准做法。</div>
 </section>
 
 <section id="sec5" class="card">
-  <h2><span class="num">5</span>实战项目经验（真实项目落地）</h2>
+  <h2><span class="num">5</span>实战项目经验（实战落地）</h2>
 
   <h3>1 项目背景</h3>
-  <p class="lead"><b>一句话定位</b>：DCP-RMP 是前后端分离 + Monorepo（pnpm workspace），后端 SpringBoot 用 Swagger/OpenAPI 自动产出接口文档，并据此生成前端 TS 接口客户端。</p>
+  <p class="lead"><b>一句话定位</b>：业务系统 是前后端分离 + Monorepo（pnpm workspace），后端 SpringBoot 用 Swagger/OpenAPI 自动产出接口文档，并据此生成前端 TS 接口客户端。</p>
   <ul><li><strong>业务量级</strong>：需求/团队/工作流接口数十个，前后端分离下接口字段多、联调频繁（估算）。</li></ul>
   <h3>2 我的角色与职责</h3>
   <ul><li><strong>分工</strong>：后端写接口与注解、产出 OpenAPI 文档；牵头把文档接到前端自动生成 TS 客户端的流水线。</li></ul>
@@ -390,7 +390,7 @@ npx openapi-typescript http://localhost:8080/v3/api-docs -o src/api/schema.ts</c
     <li><strong>响应包装要建模</strong>：统一 Result/PageVO 必须在 schema 里体现。</li>
   </ul>
   <h3>10 面试讲法</h3>
-  <p class="key-sentence">"DCP-RMP 我把 OpenAPI 文档自动生成 TS 客户端接到 Monorepo 里，契约先行让前后端并行开发，联调字段对齐的沟通基本消失。"</p>
+  <p class="key-sentence">"业务系统 我把 OpenAPI 文档自动生成 TS 客户端接到 Monorepo 里，契约先行让前后端并行开发，联调字段对齐的沟通基本消失。"</p>
 
 <section id="sec6" class="card">
   <h2><span class="num">6</span>易错点与面试重点</h2>
@@ -448,7 +448,7 @@ npx openapi-typescript http://localhost:8080/v3/api-docs -o src/api/schema.ts</c
   <a class="doc-nav-btn home" href="../index.html">⌂ 返回首页</a>
   <a class="doc-nav-btn" href="../07_后端开发/09_RESTful_API设计【标准】.html">下一篇 →</a>
 </nav>
-<footer>全栈技术栈详解 · Swagger与OpenAPI接口契约【标准】 · 基于简历项目实战编写</footer>
+<footer>全栈技术知识库 · Swagger与OpenAPI接口契约【标准】 · 基于实战经验编写</footer>
 <button id="backTop" type="button" aria-label="回到顶部">↑</button>
 <script>
 (function () {

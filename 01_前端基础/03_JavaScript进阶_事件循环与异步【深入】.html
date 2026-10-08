@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JavaScript进阶：事件循环与异步【深入】｜全栈技术栈详解</title>
+<title>JavaScript进阶：事件循环与异步【深入】｜全栈技术知识库</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%231d4ed8'/%3E%3Crect x='3' y='4' width='10' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='7' width='7' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='10' width='9' height='2' rx='1' fill='%23fff'/%3E%3C/svg%3E">
 <style>
 :root{
@@ -147,7 +147,7 @@ section.card li strong{color:var(--ink)}
       <span class="badge deep">深入</span>
       <span class="meta">定位：单线程语言如何不被阻塞——事件循环、宏微任务、Promise/async-await 的执行时序</span>
     </div>
-    <p class="hero-desc">浏览器 JS 是单线程的，却能同时处理网络请求、定时器、UI 事件、音视频回调而不卡死页面，靠的就是事件循环（Event Loop）这套调度模型。本页讲透宏任务/微任务的优先级、Promise 状态机、async/await 的底层时序，再落到大屏高频刷新节流、源启 API 并发、WebRTC 信令与媒体回调三类真实异步时序问题。输出顺序题与"为什么 setTimeout(fn,0) 不立即执行"是本页面试主线。</p>
+    <p class="hero-desc">浏览器 JS 是单线程的，却能同时处理网络请求、定时器、UI 事件、音视频回调而不卡死页面，靠的就是事件循环（Event Loop）这套调度模型。本页讲透宏任务/微任务的优先级、Promise 状态机、async/await 的底层时序，再落到大屏高频刷新节流、数据编排平台 API 并发、WebRTC 信令与媒体回调三类真实异步时序问题。输出顺序题与"为什么 setTimeout(fn,0) 不立即执行"是本页面试主线。</p>
   </div>
 </header>
 <nav class="doc-nav top" aria-label="文档导航">
@@ -263,7 +263,7 @@ section.card li strong{color:var(--ink)}
     <li><strong>Promise.race</strong>：取最先落定的（常用于超时竞速）。</li>
     <li><strong>Promise.any</strong>：取最先成功的（一个成功即成功）。</li>
   </ul>
-  <p>大屏批量拉设备状态、源启批量查节点元数据，就是这些组合器的典型场景。取消请求则用 <code>AbortController</code>：把 <code>signal</code> 传给 <code>fetch(url,{signal})</code>，再配合 <code>Promise.race</code> 与定时器做"超时即 abort"，避免过期响应污染状态。</p>
+  <p>大屏批量拉设备状态、数据编排平台批量查节点元数据，就是这些组合器的典型场景。取消请求则用 <code>AbortController</code>：把 <code>signal</code> 传给 <code>fetch(url,{signal})</code>，再配合 <code>Promise.race</code> 与定时器做"超时即 abort"，避免过期响应污染状态。</p>
   <h3>2.8 定时器为何不准（Timer Throttling）</h3>
   <p class="lead"><b>一句话定位</b>：setTimeout 不是精确计时，浏览器为省电会主动拉长后台页的回调间隔。</p>
   <ul>
@@ -384,7 +384,7 @@ async function loadAll() {
   };
 }</code></pre>
   <h3>4.4 并发池：限制同时在跑的请求数</h3>
-<pre class="code" data-lang="js"><code>// 源启要批量查 50 个节点元数据，但并发太高会压垮后端
+<pre class="code" data-lang="js"><code>// 数据编排平台要批量查 50 个节点元数据，但并发太高会压垮后端
 async function poolLimit(urls, limit, fn) {
   const results = [];
   const executing = new Set();
@@ -414,7 +414,7 @@ function throttle(fn, interval) {
 </section>
 
 <section id="sec5" class="card">
-  <h2><span class="num">5</span>实战项目经验（真实项目落地）</h2>
+  <h2><span class="num">5</span>实战项目经验（实战落地）</h2>
 
   <h3>5.1 项目背景</h3>
   <p class="lead"><b>一句话定位</b>：两个真实场景正面撞上事件循环——大屏高频遥测刷新，和 WebRTC 播放器的信令/媒体异步时序。</p>
@@ -526,7 +526,7 @@ async function startPlay(streamId) {
     <li><strong>现象</strong>：<code>arr.forEach(async x =&gt; await fn(x))</code> 以为串行，实际并发跑完。</li>
     <li><strong>正解</strong>：串行用 <code>for...of</code> + await；并发用 <code>Promise.all(arr.map(fn))</code>。</li>
   </ul>
-  <p class="pit-sentence"><span class="tag-pit">真坑</span>这是源启批量查节点时踩过的。</p>
+  <p class="pit-sentence"><span class="tag-pit">真坑</span>这是数据编排平台批量查节点时踩过的。</p>
   <h3>6.4 Promise.all 一个失败全挂</h3>
   <p class="lead"><b>一句话定位</b>：批量上报一条失败就整体 reject，成功结果也拿不到——该用 allSettled。</p>
   <ul>
@@ -576,7 +576,7 @@ async function startPlay(streamId) {
   <a class="doc-nav-btn home" href="../index.html">⌂ 返回首页</a>
   <a class="doc-nav-btn" href="../01_前端基础/04_TypeScript【深入】.html">下一篇 →</a>
 </nav>
-<footer>全栈技术栈详解 · JavaScript进阶：事件循环与异步【深入】 · 基于简历项目实战编写</footer>
+<footer>全栈技术知识库 · JavaScript进阶：事件循环与异步【深入】 · 基于实战经验编写</footer>
 <button id="backTop" type="button" aria-label="回到顶部">↑</button>
 <script>
 (function () {

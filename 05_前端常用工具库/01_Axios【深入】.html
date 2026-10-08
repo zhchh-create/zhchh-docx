@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Axios【深入】｜全栈技术栈详解</title>
+<title>Axios【深入】｜全栈技术知识库</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%231d4ed8'/%3E%3Crect x='3' y='4' width='10' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='7' width='7' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='10' width='9' height='2' rx='1' fill='%23fff'/%3E%3C/svg%3E">
 <style>
 :root{
@@ -147,7 +147,7 @@ section.card li strong{color:var(--ink)}
       <span class="badge deep">深入</span>
       <span class="meta">定位：Promise 化的 HTTP 客户端——拦截器链 + 适配器 + 取消请求</span>
     </div>
-    <p class="hero-desc">Axios 是基于 Promise 的 HTTP 客户端，同时跑在浏览器（XHR/fetch）与 Node（http）。它的工程价值在拦截器链：请求发出前统一注入鉴权头、响应回来后统一处理错误与 loading，业务接口只写业务。DCP-RMP 用 OpenAPI 自动生成类型化 API 客户端，底层就建立在 Axios 实例与拦截器之上。本页讲透拦截器执行链、取消请求、适配器与并发，并给出自动客户端 + 拦截器的真实落地。</p>
+    <p class="hero-desc">Axios 是基于 Promise 的 HTTP 客户端，同时跑在浏览器（XHR/fetch）与 Node（http）。它的工程价值在拦截器链：请求发出前统一注入鉴权头、响应回来后统一处理错误与 loading，业务接口只写业务。业务系统 用 OpenAPI 自动生成类型化 API 客户端，底层就建立在 Axios 实例与拦截器之上。本页讲透拦截器执行链、取消请求、适配器与并发，并给出自动客户端 + 拦截器的真实落地。</p>
   </div>
 </header>
 <nav class="doc-nav top" aria-label="文档导航">
@@ -163,7 +163,7 @@ section.card li strong{color:var(--ink)}
     <li><a href="#sec2">核心概念</a></li>
     <li><a href="#sec3">工作原理与流程</a></li>
     <li><a href="#sec4">核心语法与 API 要点</a></li>
-    <li><a href="#sec5">实战项目经验（真实项目落地）</a></li>
+    <li><a href="#sec5">实战项目经验（实战落地）</a></li>
     <li><a href="#sec6">易错点与面试重点</a></li>
     <li><a href="#sec7">学习资源与参考</a></li>
   </ol>
@@ -210,7 +210,7 @@ section.card li strong{color:var(--ink)}
       <line x1="716" y1="81" x2="744" y2="81" stroke="#64748b" marker-end="url(#arr)"/>
       <text x="400" y="150" text-anchor="middle" font-size="13" fill="#475569">业务调用 → 请求拦截器（改 config）→ 适配器 → 响应拦截器（处理 data/error）→ 业务拿到结果。</text>
       <text x="400" y="172" text-anchor="middle" font-size="13" fill="#475569">横切逻辑（鉴权/错误/loading）全在拦截器，业务接口保持纯净。</text>
-      <text x="400" y="206" text-anchor="middle" font-size="12.5" fill="#6b7280">项目定位：DCP-RMP 自动生成 API 客户端底层，源启/DCP-RMP 全项目统一走 Axios 实例。</text>
+      <text x="400" y="206" text-anchor="middle" font-size="12.5" fill="#6b7280">项目定位：业务系统 自动生成 API 客户端底层，数据编排平台/业务系统 全项目统一走 Axios 实例。</text>
     </svg>
     <p class="diagram-caption">图 1 Axios 拦截器在请求链路中的位置（示意）</p>
   </div>
@@ -374,10 +374,10 @@ controller.abort();</code></pre>
 </section>
 
 <section id="sec5" class="card">
-  <h2><span class="num">5</span>实战项目经验（真实项目落地）</h2>
+  <h2><span class="num">5</span>实战项目经验（实战落地）</h2>
 
   <h3>5.1 项目背景（业务量级/场景）</h3>
-  <p class="lead"><b>一句话定位</b>：DCP-RMP 后端接口由 Swagger/OpenAPI 描述，前端要类型安全且横切逻辑统一。</p>
+  <p class="lead"><b>一句话定位</b>：业务系统 后端接口由 Swagger/OpenAPI 描述，前端要类型安全且横切逻辑统一。</p>
   <ul>
     <li><strong>场景</strong>：需求管理平台（Vue3+TS+Vite+Monorepo+SpringBoot），接口数量多，不能逐接口手写样板。</li>
   </ul>
@@ -443,7 +443,7 @@ http.interceptors.response.use(
   </ul>
 
   <h3>5.10 面试讲法</h3>
-  <p class="key-sentence"><span class="tag-key">抓手</span>「DCP-RMP 用 OpenAPI 自动生成类型安全客户端，底层一个共享 Axios 实例，请求/响应拦截器收口 JWT、错误分流、loading 计数与取消请求。」</p>
+  <p class="key-sentence"><span class="tag-key">抓手</span>「业务系统 用 OpenAPI 自动生成类型安全客户端，底层一个共享 Axios 实例，请求/响应拦截器收口 JWT、错误分流、loading 计数与取消请求。」</p>
 </section>
 
 <section id="sec6" class="card">
@@ -502,7 +502,7 @@ http.interceptors.response.use(
   <a class="doc-nav-btn home" href="../index.html">⌂ 返回首页</a>
   <a class="doc-nav-btn" href="../05_前端常用工具库/02_vxe_table表格【深入】.html">下一篇 →</a>
 </nav>
-<footer>全栈技术栈详解 · Axios【深入】 · 基于简历项目实战编写</footer>
+<footer>全栈技术知识库 · Axios【深入】 · 基于实战经验编写</footer>
 <button id="backTop" type="button" aria-label="回到顶部">↑</button>
 <script>
 (function () {

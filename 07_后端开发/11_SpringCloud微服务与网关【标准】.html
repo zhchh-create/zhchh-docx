@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SpringCloud微服务与网关【标准】｜全栈技术栈详解</title>
+<title>SpringCloud微服务与网关【标准】｜全栈技术知识库</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%231d4ed8'/%3E%3Crect x='3' y='4' width='10' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='7' width='7' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='10' width='9' height='2' rx='1' fill='%23fff'/%3E%3C/svg%3E">
 <style>
 :root{
@@ -138,7 +138,7 @@ section.card li strong{color:var(--ink)}
       <span class="badge std">标准</span>
       <span class="meta">定位：服务拆分后，靠注册发现、统一网关、声明式调用把一堆小服务串成一个系统</span>
     </div>
-    <p class="hero-desc">单体应用打成一个 war 包部署时，接口直接调方法；拆成多个独立部署的服务后，服务在哪台机器、端口多少、挂了怎么切、配置怎么统一管理，这些问题单体时代都不存在。Spring Cloud 用"注册中心 + 网关 + 负载 + 声明式调用 + 配置中心"这一整套组件把这些工程问题标准化。本页讲清各组件的分工与请求链路，并诚实说明本人项目（DCP-RMP/源启）仍以 SpringBoot 单体为主，本页为演进方向的学习与选型评估。</p>
+    <p class="hero-desc">单体应用打成一个 war 包部署时，接口直接调方法；拆成多个独立部署的服务后，服务在哪台机器、端口多少、挂了怎么切、配置怎么统一管理，这些问题单体时代都不存在。Spring Cloud 用"注册中心 + 网关 + 负载 + 声明式调用 + 配置中心"这一整套组件把这些工程问题标准化。本页讲清各组件的分工与请求链路，并诚实说明本人项目（业务系统/数据编排平台）仍以 SpringBoot 单体为主，本页为演进方向的学习与选型评估。</p>
   </div>
 </header>
 
@@ -166,7 +166,7 @@ section.card li strong{color:var(--ink)}
     <p class="lead"><b>一句话定位</b>：Spring Cloud 是一套微服务治理工具箱——服务注册发现、统一入口网关、客户端负载、声明式 HTTP 调用、集中配置，让"拆成多个小服务"在工程上可运维。</p>
     <ul>
       <li><strong>解决什么问题</strong>：单体拆服务后，服务地址动态变化、跨服务调用、鉴权与限流横切逻辑散落各处、配置分散难管理——这些是微服务的"分布式复杂性"。</li>
-      <li><strong>在本技术栈的位置</strong>：本人 DCP-RMP/源启均为 SpringBoot 单体 + Monorepo 前端；微服务是业务量/团队规模上来后的演进方向，本页为学习与选型评估，非已落地履历。</li>
+      <li><strong>在本技术栈的位置</strong>：本人 业务系统/数据编排平台均为 SpringBoot 单体 + Monorepo 前端；微服务是业务量/团队规模上来后的演进方向，本页为学习与选型评估，非已落地履历。</li>
       <li><strong>与 SpringBoot 的关系</strong>：SpringBoot 解决"如何快速起一个服务"，SpringCloud 解决"几十个服务之间如何协作"；版本对齐（SpringBoot 3.x 对应 Spring Cloud 2022.x/2023.x）是第一步坑。</li>
     </ul>
     <div class="diagram">
@@ -330,7 +330,7 @@ TeamVO team = teamClient.getTeam(req.getTeamId());</code></pre>
   <section id="sec5" class="card">
   <h2><span class="num">5</span>实战项目经验（自学 + 自建 Demo）</h2>
 
-  <div class="warn-box"><b>定位说明：</b>本人简历项目（DCP-RMP、源启）后端均为 SpringBoot 单体，未实际拆分微服务。本节为本地三服务自学 demo 与"单体向微服务演进"评估，非企业项目履历。</div>
+  <div class="warn-box"><b>定位说明：</b>实际项目（业务系统、数据编排平台）后端均为 SpringBoot 单体，未实际拆分微服务。本节为本地三服务自学 demo 与"单体向微服务演进"评估，非生产环境项目。</div>
   <h3>1 自学背景与动机</h3>
   <p class="lead"><b>一句话定位</b>：补"单体拆成微服务后注册发现、网关、声明式调用怎么串"的链路认知。</p>
   <ul><li><strong>缺口</strong>：一直写单体，不清楚 Nacos 注册、Gateway 路由、Feign 互调的真实链路。</li></ul>
@@ -360,9 +360,9 @@ public interface AClient {
   <h3>5 成果</h3>
   <ul><li>本地跑通注册→路由→Feign 互调，能用一句话讲清一次请求经过网关、注册中心、服务提供者的完整路径。</li></ul>
   <h3>6 与真实项目的差异</h3>
-  <ul><li>单机 demo 无高可用、无配置中心灰度、无链路追踪；对 DCP-RMP 的评估结论是"现阶段单体 + 模块化即可，微服务是技术储备"。</li></ul>
+  <ul><li>单机 demo 无高可用、无配置中心灰度、无链路追踪；对 业务系统 的评估结论是"现阶段单体 + 模块化即可，微服务是技术储备"。</li></ul>
   <h3>7 面试讲法</h3>
-  <p class="key-sentence">"我用 Nacos+Gateway+Feign 本地搭过最小微服务闭环，理解注册发现与路由链路；同时能讲清为什么我评估 DCP-RMP 现阶段不该过早拆微服务。"</p>
+  <p class="key-sentence">"我用 Nacos+Gateway+Feign 本地搭过最小微服务闭环，理解注册发现与路由链路；同时能讲清为什么我评估 业务系统 现阶段不该过早拆微服务。"</p>
 
 <section id="sec6" class="card">
     <h2><span class="num">6</span>易错点与面试重点</h2>
@@ -415,7 +415,7 @@ public interface AClient {
   <a class="doc-nav-btn" href="../07_后端开发/12_消息队列_Kafka与RabbitMQ【标准】.html">下一篇 →</a>
 </nav>
 
-<footer>全栈技术栈详解 · SpringCloud微服务与网关【标准】 · 基于简历项目实战编写</footer>
+<footer>全栈技术知识库 · SpringCloud微服务与网关【标准】 · 基于实战经验编写</footer>
 <button id="backTop" type="button" aria-label="回到顶部">↑</button>
 <script>
 (function () {

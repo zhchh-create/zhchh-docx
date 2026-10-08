@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vue3组合式API与响应式原理【深入】｜全栈技术栈详解</title>
+<title>Vue3组合式API与响应式原理【深入】｜全栈技术知识库</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%231d4ed8'/%3E%3Crect x='3' y='4' width='10' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='7' width='7' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='10' width='9' height='2' rx='1' fill='%23fff'/%3E%3C/svg%3E">
 <style>
 :root{
@@ -147,7 +147,7 @@ section.card li strong{color:var(--ink)}
       <span class="badge deep">深入</span>
       <span class="meta">定位：Vue3 的两大升级——组合式逻辑复用 + Proxy 响应式源码级机制</span>
     </div>
-    <p class="hero-desc">Vue3 带来两件大事：用 Proxy 重写响应式（替代 Vue2 的 Object.defineProperty），以及组合式 API（Composition API）让逻辑按关注点聚合、可抽成 composable 复用。本页从源码级讲透 track/trigger 依赖收集、ref/reactive/computed 的关系、为什么组件更新是异步的，再落到 DCP-RMP 表单设计器/渲染器的 composable 实战。这是 Vue 面试的深水区。</p>
+    <p class="hero-desc">Vue3 带来两件大事：用 Proxy 重写响应式（替代 Vue2 的 Object.defineProperty），以及组合式 API（Composition API）让逻辑按关注点聚合、可抽成 composable 复用。本页从源码级讲透 track/trigger 依赖收集、ref/reactive/computed 的关系、为什么组件更新是异步的，再落到 业务系统 表单设计器/渲染器的 composable 实战。这是 Vue 面试的深水区。</p>
   </div>
 </header>
 <nav class="doc-nav top" aria-label="文档导航">
@@ -234,7 +234,7 @@ section.card li strong{color:var(--ink)}
   </div>
   <ul>
     <li><strong>逻辑组织</strong>：选项式按"选项类型"分块（data 一块、methods 一块），同一功能被拆散；组合式按"功能"聚合，一个功能的 ref/computed/函数写在一起。组件越大，组合式越好维护。</li>
-    <li><strong>复用方式</strong>：选项式靠 mixins（命名冲突、来源不清）；组合式靠 composable 函数（显式导入、类型清晰）。这是 DCP-RMP 把表单逻辑抽成公共 composable 的原因。</li>
+    <li><strong>复用方式</strong>：选项式靠 mixins（命名冲突、来源不清）；组合式靠 composable 函数（显式导入、类型清晰）。这是 业务系统 把表单逻辑抽成公共 composable 的原因。</li>
     <li><strong>响应式底层</strong>：defineProperty 逐属性劫持、检测不到增删；Proxy 整对象代理、增删自动追踪。理解这个差异，才知道 Vue2 的 <code>Vue.set</code> 在 Vue3 为什么消失了。</li>
   </ul>
 </section>
@@ -315,7 +315,7 @@ section.card li strong{color:var(--ink)}
   <p class="lead"><b>一句话定位</b>：把一组响应式状态与逻辑封装成函数返回，多组件 import 复用——Vue3 逻辑复用的标准答案。</p>
   <ul>
     <li><strong>优势</strong>：比 mixin 清晰（来源明确、无命名冲突）、比 renderless 组件直接。</li>
-    <li><strong>实践</strong>：DCP-RMP 的表单逻辑、请求 loading 状态都是 composable。</li>
+    <li><strong>实践</strong>：业务系统 的表单逻辑、请求 loading 状态都是 composable。</li>
   </ul>
 </section>
 
@@ -422,10 +422,10 @@ function reactive(target) {
 </section>
 
 <section id="sec5" class="card">
-  <h2><span class="num">5</span>实战项目经验（真实项目落地）</h2>
+  <h2><span class="num">5</span>实战项目经验（实战落地）</h2>
 
   <h3>5.1 项目背景</h3>
-  <p class="lead"><b>一句话定位</b>：DCP-RMP（Vue3+TS+Pinia）的表单设计器/渲染器要共享同一套字段元数据逻辑，Pinia store 也建立在 ref/reactive 之上。</p>
+  <p class="lead"><b>一句话定位</b>：业务系统（Vue3+TS+Pinia）的表单设计器/渲染器要共享同一套字段元数据逻辑，Pinia store 也建立在 ref/reactive 之上。</p>
   <ul>
     <li><strong>业务场景</strong>：设计态拖拽改字段、渲染态按 schema 生成表单，两端逻辑必须同源。</li>
   </ul>
@@ -564,7 +564,7 @@ export const useUserStore = defineStore('user', () =&gt; {
   <a class="doc-nav-btn home" href="../index.html">⌂ 返回首页</a>
   <a class="doc-nav-btn" href="../02_前端框架与状态管理/03_状态管理_Vuex与Pinia【标准】.html">下一篇 →</a>
 </nav>
-<footer>全栈技术栈详解 · Vue3组合式API与响应式原理【深入】 · 基于简历项目实战编写</footer>
+<footer>全栈技术知识库 · Vue3组合式API与响应式原理【深入】 · 基于实战经验编写</footer>
 <button id="backTop" type="button" aria-label="回到顶部">↑</button>
 <script>
 (function () {

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TypeScript【深入】｜全栈技术栈详解</title>
+<title>TypeScript【深入】｜全栈技术知识库</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%231d4ed8'/%3E%3Crect x='3' y='4' width='10' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='7' width='7' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='10' width='9' height='2' rx='1' fill='%23fff'/%3E%3C/svg%3E">
 <style>
 :root{
@@ -147,7 +147,7 @@ section.card li strong{color:var(--ink)}
       <span class="badge deep">深入</span>
       <span class="meta">定位：给 JS 加一层编译期静态类型——把运行期错误前移到写代码时</span>
     </div>
-    <p class="hero-desc">TypeScript 在 JS 之上加了一套静态类型系统，编译时做类型检查、运行时产出纯 JS。本页讲透类型推导、interface/type、泛型、类型收窄与工具类型，并以 DCP-RMP 的真实做法为主线：用 Swagger/OpenAPI 自动生成类型化 API 客户端、在 pnpm Monorepo 里共享公共包类型。理解"类型在编译后被擦除"，就理解了 TS 不增加运行时成本、也不做运行时校验。</p>
+    <p class="hero-desc">TypeScript 在 JS 之上加了一套静态类型系统，编译时做类型检查、运行时产出纯 JS。本页讲透类型推导、interface/type、泛型、类型收窄与工具类型，并以 业务系统 的真实做法为主线：用 Swagger/OpenAPI 自动生成类型化 API 客户端、在 pnpm Monorepo 里共享公共包类型。理解"类型在编译后被擦除"，就理解了 TS 不增加运行时成本、也不做运行时校验。</p>
   </div>
 </header>
 <nav class="doc-nav top" aria-label="文档导航">
@@ -175,7 +175,7 @@ section.card li strong{color:var(--ink)}
   <h3>是什么</h3>
   <p>TypeScript（TS）是 JavaScript 的超集：任何合法 JS 都是合法 TS，但 TS 多了<strong>类型注解与类型系统</strong>。它由 Microsoft 维护，编译后产出可在任意环境运行的纯 JS——类型在编译阶段被完全擦除（type erasure），运行时不存在任何类型检查。TS 用的是<strong>结构化类型系统</strong>（structural typing）：两个类型只要结构（成员）一致就互相兼容，不看名字是否相同——这点与 Java/C# 的名义类型系统（nominal）根本不同。它不是"新语言"，而是"带检查的 JS 开发流程"。</p>
   <h3>解决什么问题</h3>
-  <p>JS 的动态性把类型错误推迟到运行期：字段名拼错、后端返回结构变了、调用方传错参数，都要等用户操作触发才暴露。TS 把这些问题前移到<strong>写代码的那一刻</strong>：编辑器实时标红、编译失败、重构时全局重命名不会漏改。对多人协作的大型工程（DCP-RMP 的 Monorepo 公共包），类型本身就是<strong>可执行的接口文档</strong>——调用方不需要翻后端文档，鼠标悬停就知道参数和返回值。</p>
+  <p>JS 的动态性把类型错误推迟到运行期：字段名拼错、后端返回结构变了、调用方传错参数，都要等用户操作触发才暴露。TS 把这些问题前移到<strong>写代码的那一刻</strong>：编辑器实时标红、编译失败、重构时全局重命名不会漏改。对多人协作的大型工程（业务系统 的 Monorepo 公共包），类型本身就是<strong>可执行的接口文档</strong>——调用方不需要翻后端文档，鼠标悬停就知道参数和返回值。</p>
   <div class="diagram">
     <svg viewBox="0 0 800 230" role="img" aria-label="TypeScript 编译流水线与类型擦除示意图">
       <defs>
@@ -232,7 +232,7 @@ section.card li strong{color:var(--ink)}
     <p class="diagram-caption">图 2 TS 的收益与代价（示意）</p>
   </div>
   <ul>
-    <li><strong>手写类型 vs OpenAPI 生成</strong>：手写 DTO 类型维护成本高、极易与后端漂移。DCP-RMP 用 Swagger/OpenAPI 在 CI 里<strong>自动生成</strong>类型化客户端，后端改接口前端类型自动跟上——这是大型工程用 TS 收益最大的姿势（见案例 1）。</li>
+    <li><strong>手写类型 vs OpenAPI 生成</strong>：手写 DTO 类型维护成本高、极易与后端漂移。业务系统 用 Swagger/OpenAPI 在 CI 里<strong>自动生成</strong>类型化客户端，后端改接口前端类型自动跟上——这是大型工程用 TS 收益最大的姿势（见案例 1）。</li>
     <li><strong>结构化 vs 名义类型</strong>：TS 按结构兼容，意味着两个长得一样的 interface 天然互认。好处是"鸭子类型"灵活，坏处是可能"结构撞了但语义不同"被误兼容——关键处要靠 brand 或精确类型区分。</li>
     <li><strong>strict 全开 vs 部分关闭</strong>：关闭 <code>strictNullChecks</code> 等于放弃 TS 一半的价值（null 检查是最常抓出线上 bug 的地方）。新项目一律 <code>strict: true</code>，老项目逐步开启。</li>
   </ul>
@@ -300,7 +300,7 @@ section.card li strong{color:var(--ink)}
     <li><strong>典型形态</strong>：<code>Array&lt;T&gt;</code>、<code>useState&lt;T&gt;</code>、泛型 API 请求 <code>request&lt;T&gt;(url): Promise&lt;T&gt;</code>。</li>
     <li><strong>价值</strong>：同一份逻辑既能复用又保留类型安全。</li>
   </ul>
-  <p class="key-sentence"><span class="tag-point">要点</span>这正是 DCP-RMP API 客户端的核心：底层只有一个 <code>request</code>，上层每个接口指定自己的返回类型。</p>
+  <p class="key-sentence"><span class="tag-point">要点</span>这正是 业务系统 API 客户端的核心：底层只有一个 <code>request</code>，上层每个接口指定自己的返回类型。</p>
   <h3>2.6 类型收窄（Narrowing）</h3>
   <p class="lead"><b>一句话定位</b>：在某个分支里把宽类型缩成精确类型，是 TS 类型安全的执行机制。</p>
   <ul>
@@ -414,10 +414,10 @@ function identity&lt;T extends string | number&gt;(x: T): T { return x; }  // �
 </section>
 
 <section id="sec5" class="card">
-  <h2><span class="num">5</span>实战项目经验（真实项目落地）</h2>
+  <h2><span class="num">5</span>实战项目经验（实战落地）</h2>
 
   <h3>5.1 项目背景</h3>
-  <p class="lead"><b>一句话定位</b>：DCP-RMP 需求管理平台（Vue3+TS+Vite+Pinia）对接 SpringBoot3，接口几十个，手写 DTO 导致前后端字段漂移。</p>
+  <p class="lead"><b>一句话定位</b>：业务系统 需求管理平台（Vue3+TS+Vite+Pinia）对接 SpringBoot3，接口几十个，手写 DTO 导致前后端字段漂移。</p>
   <ul>
     <li><strong>业务场景</strong>：需求/任务全生命周期管理，前后端分离，接口多且变动频繁。</li>
     <li><strong>架构</strong>：pnpm workspace + Turborepo Monorepo，含 web 主应用、drawio、工作流子应用与公共包。</li>
@@ -571,7 +571,7 @@ export function renderForm&lt;T&gt;(fields: FieldMeta&lt;T&gt;[]): T { /* ... */
   <a class="doc-nav-btn home" href="../index.html">⌂ 返回首页</a>
   <a class="doc-nav-btn" href="../01_前端基础/05_Canvas与SVG【深入】.html">下一篇 →</a>
 </nav>
-<footer>全栈技术栈详解 · TypeScript【深入】 · 基于简历项目实战编写</footer>
+<footer>全栈技术知识库 · TypeScript【深入】 · 基于实战经验编写</footer>
 <button id="backTop" type="button" aria-label="回到顶部">↑</button>
 <script>
 (function () {

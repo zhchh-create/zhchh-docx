@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>npm与包管理【基础】｜全栈技术栈详解</title>
+<title>npm与包管理【基础】｜全栈技术知识库</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%231d4ed8'/%3E%3Crect x='3' y='4' width='10' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='7' width='7' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='10' width='9' height='2' rx='1' fill='%23fff'/%3E%3C/svg%3E">
 <style>
 :root{
@@ -147,7 +147,7 @@ section.card li strong{color:var(--ink)}
       <span class="badge basic">基础</span>
       <span class="meta">定位：包管理入门——package.json、lockfile、语义化版本与 registry</span>
     </div>
-    <p class="hero-desc">包管理是前端工程的地基：你写的每一行 import 都靠它把第三方代码拉到本地。本页入门讲清四件事——package.json 声明依赖、lockfile 锁定版本、语义化版本（^/~）是什么意思、registry 镜像怎么配，并以 DCP-RMP 用 pnpm workspace 管理依赖收尾（Monorepo 深入见前页）。</p>
+    <p class="hero-desc">包管理是前端工程的地基：你写的每一行 import 都靠它把第三方代码拉到本地。本页入门讲清四件事——package.json 声明依赖、lockfile 锁定版本、语义化版本（^/~）是什么意思、registry 镜像怎么配，并以 业务系统 用 pnpm workspace 管理依赖收尾（Monorepo 深入见前页）。</p>
   </div>
 </header>
 <nav class="doc-nav top" aria-label="文档导航">
@@ -163,7 +163,7 @@ section.card li strong{color:var(--ink)}
     <li><a href="#sec2">核心概念</a></li>
     <li><a href="#sec3">工作原理与流程</a></li>
     <li><a href="#sec4">核心命令与配置要点</a></li>
-    <li><a href="#sec5">实战项目经验（真实项目落地）</a></li>
+    <li><a href="#sec5">实战项目经验（实战落地）</a></li>
     <li><a href="#sec6">易错点与面试重点</a></li>
     <li><a href="#sec7">学习资源与参考</a></li>
   </ol>
@@ -175,7 +175,7 @@ section.card li strong{color:var(--ink)}
   <p><strong>是什么</strong>：npm（Node Package Manager）是 Node 生态默认包管理器：</p>
   <ul>
     <li><strong>作用</strong>：从 registry（包仓库）下载别人写好的代码，装到本地 node_modules，并记录在 package.json 里。</li>
-    <li><strong>同类工具</strong>：pnpm、yarn。本项目群主用 pnpm（更快、更省磁盘，见 Monorepo 页），但三者概念互通。</li>
+    <li><strong>同类工具</strong>：pnpm、yarn。本套技术栈主用 pnpm（更快、更省磁盘，见 Monorepo 页），但三者概念互通。</li>
   </ul>
   <p><strong>解决什么问题</strong>：没有包管理时，用一个库要手动下载源码、拷进项目、再处理它又依赖别的库的嵌套关系——这就是"依赖地狱"。包管理器自动解析"你要的包 + 它要的包 + 版本兼容"，一行 <code>install</code> 全装好。</p>
   <div class="diagram">
@@ -347,11 +347,11 @@ pnpm remove vue             # 卸载</code></pre>
 </section>
 
 <section id="sec5" class="card">
-  <h2><span class="num">5</span>实战项目经验（真实项目落地）</h2>
+  <h2><span class="num">5</span>实战项目经验（实战落地）</h2>
 
-  <h3>5.1 项目背景：DCP-RMP monorepo 的依赖统一管理</h3>
+  <h3>5.1 项目背景：业务系统 monorepo 的依赖统一管理</h3>
   <p class="lead"><b>一句话定位</b>：多应用+多公共包的 monorepo，依赖要跨应用统一、版本不漂移。</p>
-  <ul><li><strong>项目</strong>：DCP-RMP（web 主应用 + drawio + 工作流 + 5 个公共包，结构见 Monorepo 页）。</li></ul>
+  <ul><li><strong>项目</strong>：业务系统（web 主应用 + drawio + 工作流 + 5 个公共包，结构见 Monorepo 页）。</li></ul>
 
   <h3>5.2 我的角色与职责</h3>
   <ul><li><strong>分工</strong>：我负责 pnpm workspace 依赖管理、lockfile 与镜像配置落地。</li></ul>
@@ -390,7 +390,7 @@ pnpm install</code></pre>
   </ul>
 
   <h3>5.10 面试讲法（一句话抓手）</h3>
-  <p class="key-sentence">一句话抓手："我在 DCP-RMP 用 pnpm workspace 一条命令装整个 monorepo，靠 lockfile 保证团队版本一致、overrides 锁定 vue 大版本，踩过 lockfile 没提交导致同事装出不同版本的坑。"</p>
+  <p class="key-sentence">一句话抓手："我在 业务系统 用 pnpm workspace 一条命令装整个 monorepo，靠 lockfile 保证团队版本一致、overrides 锁定 vue 大版本，踩过 lockfile 没提交导致同事装出不同版本的坑。"</p>
 </section>
 
 <section id="sec6" class="card">
@@ -439,7 +439,7 @@ pnpm install</code></pre>
   <a class="doc-nav-btn home" href="../index.html">⌂ 返回首页</a>
   <a class="doc-nav-btn" href="../06_前端工程化与工具链/09_前端E2E测试_Playwright与Cypress【标准】.html">下一篇 →</a>
 </nav>
-<footer>全栈技术栈详解 · npm与包管理【基础】 · 基于简历项目实战编写</footer>
+<footer>全栈技术知识库 · npm与包管理【基础】 · 基于实战经验编写</footer>
 <button id="backTop" type="button" aria-label="回到顶部">↑</button>
 <script>
 (function () {
