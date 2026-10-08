@@ -1,3 +1,6 @@
 ﻿_sec5_work/
 _shots/
 _模板/
+**/_shots/
+.DS_Store
+Thumbs.db
