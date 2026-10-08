@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSE服务器推送 - 全栈技术知识库</title>
+<link rel="stylesheet" href="../glossary/glossary.css">
+<style>
+:root {
+  --accent:#1d4ed8;--accent2:#0e7490;--warn:#b45309;--ok:#047857;--danger:#b91c1c;
+  --ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--card:#ffffff;
+  --deep:#7c3aed;--std:#0e7490;--base:#64748b;
+  --deep-bg:#ede9fe;--std-bg:#cffafe;--base-bg:#f1f5f9;
+  --deep-ink:#5b21b6;--std-ink:#155e75;--base-ink:#475569;
+  --radius:12px;--shadow:0 1px 3px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;color:var(--ink);line-height:1.7;background:#f8fafc;padding-bottom:60px}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.container{max-width:900px;margin:0 auto;padding:0 20px}
+.hero{background:linear-gradient(135deg,#1e293b 0%,#0f172a 100%);color:#fff;padding:40px 0 30px;margin-bottom:30px}
+.hero h1{font-size:28px;margin-bottom:10px}
+.hero .depth-tag{display:inline-block;background:var(--std);color:#fff;padding:3px 12px;border-radius:20px;font-size:13px;margin-bottom:15px}
+.hero .desc{color:#cbd5e1;font-size:15px;line-height:1.8}
+.back{color:#94a3b8;font-size:14px;margin-bottom:20px;display:inline-block}
+h2{font-size:22px;margin:35px 0 15px;padding-bottom:10px;border-bottom:2px solid var(--line)}
+h3{font-size:17px;margin:25px 0 12px;color:var(--accent)}
+p{margin:10px 0;font-size:15px;color:#334155}
+ul,ol{margin:10px 0 10px 25px;font-size:15px;color:#334155}
+li{margin:6px 0}
+.diagram{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin:20px 0;text-align:center}
+.diagram-caption{font-size:13px;color:var(--muted);margin-top:10px}
+.key-point{background:#eff6ff;border-left:4px solid var(--accent);padding:15px 20px;border-radius:0 8px 8px 0;margin:20px 0}
+.warn-box{background:#fffbeb;border-left:4px solid var(--warn);padding:15px 20px;border-radius:0 8px 8px 0;margin:20px 0;font-size:14px}
+code{background:#f1f5f9;padding:2px 6px;border-radius:4px;font-size:14px;color:#0f766e}
+.toc{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin:20px 0}
+.toc h3{margin-top:0;color:var(--ink)}
+.toc ul{list-style:none;margin-left:0}
+.toc li{margin:8px 0}
+</style>
+</head>
+<body>
+<div class="hero">
+<div class="container">
+<a href="../index.html" class="back">← 返回首页</a>
+<span class="depth-tag">标准</span>
+<h1>SSE服务器推送</h1>
+<p class="desc">EventSource、单向推送、自动重连、与WebSocket对比</p>
+</div>
+</div>
+
+<div class="container">
+
+<div class="toc">
+<h3>目录</h3>
+<ul>
+<li>1. 核心概念与定位</li>
+<li>2. 工作原理与架构</li>
+<li>3. 实战要点</li>
+<li>4. 常见问题与易错点</li>
+</ul>
+</div>
+
+<h2>1. 核心概念与定位</h2>
+<p>本节介绍 SSE服务器推送 的核心概念、适用场景与在技术栈中的定位。</p>
+<p>（内容待补充）</p>
+
+<div class="diagram">
+<svg width="600" height="200" viewBox="0 0 600 200">
+<rect x="50" y="60" width="120" height="60" rx="8" fill="#dbeafe" stroke="#1d4ed8" stroke-width="2"/>
+<text x="110" y="95" text-anchor="middle" font-size="14" fill="#1e293b">输入</text>
+<line x1="170" y1="90" x2="230" y2="90" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="230" y="60" width="140" height="60" rx="8" fill="#cffafe" stroke="#0e7490" stroke-width="2"/>
+<text x="300" y="95" text-anchor="middle" font-size="14" fill="#1e293b">核心处理</text>
+<line x1="370" y1="90" x2="430" y2="90" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="430" y="60" width="120" height="60" rx="8" fill="#d1fae5" stroke="#047857" stroke-width="2"/>
+<text x="490" y="95" text-anchor="middle" font-size="14" fill="#1e293b">输出</text>
+<defs>
+<marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+<polygon points="0 0, 10 3.5, 0 7" fill="#64748b"/>
+</marker>
+</defs>
+</svg>
+<p class="diagram-caption">图：SSE服务器推送 核心流程示意</p>
+</div>
+
+<h2>2. 工作原理与架构</h2>
+<p>本节深入讲解 SSE服务器推送 的工作原理、内部架构与关键机制。</p>
+<p>（内容待补充）</p>
+
+<h2>3. 实战要点</h2>
+<div class="key-point">
+<b>实战要点：</b>
+<ul>
+<li>关键配置与最佳实践</li>
+<li>性能优化建议</li>
+<li>常见场景的实现方案</li>
+</ul>
+</div>
+
+<h2>4. 常见问题与易错点</h2>
+<div class="warn-box">
+<b>注意：</b>
+<ul>
+<li>常见踩坑点与规避方法</li>
+<li>版本差异与兼容性问题</li>
+<li>生产环境注意事项</li>
+</ul>
+</div>
+
+</div>
+
+<div id="glossary-modal"></div>
+<script src="../glossary/glossary-data.js"></script>
+<script src="../glossary/glossary.js"></script>
+</body>
+</html>
