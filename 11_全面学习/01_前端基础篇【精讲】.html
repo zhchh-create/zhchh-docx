@@ -63,10 +63,14 @@ footer{text-align:center;padding:30px 20px;color:var(--muted);font-size:13px;bor
   </div>
 </header>
 
-<nav class="doc-nav">
-  <a class="doc-nav-btn" href="../index.html">← 返回首页</a>
-  <a class="doc-nav-btn home" href="../index.html">⌂ 知识库</a>
+<nav class="doc-nav top" aria-label="文档导航">
+  <a class="doc-nav-btn hidden" href="#">← 上一篇</a>
+  <a class="doc-nav-btn home" href="../index.html">⌂ 返回首页</a>
+  <a class="doc-nav-btn" href="./02_前端框架篇【精讲】.html">02_前端框架篇 →</a>
 </nav>
+
+
+
 
 <div class="container">
 
@@ -106,6 +110,13 @@ footer{text-align:center;padding:30px 20px;color:var(--muted);font-size:13px;bor
     <h2>文章标题</h2>
     <time>2024-01-01</time>
   </header>
+
+<nav class="doc-nav top" aria-label="文档导航">
+  <a class="doc-nav-btn hidden" href="#">← 上一篇</a>
+  <a class="doc-nav-btn home" href="../index.html">⌂ 返回首页</a>
+  <a class="doc-nav-btn" href="./02_前端框架篇【精讲】.html">02_前端框架篇 →</a>
+</nav>
+
   <section>
     <p>正文内容...</p>
   </section>
@@ -338,6 +349,13 @@ app.use((req, res, next) => {
 </main>
 
 </div>
+
+
+<nav class="doc-nav bottom">
+  <a class="doc-nav-btn hidden" href="#">← 上一篇</a>
+  <a class="doc-nav-btn home" href="../index.html">⌂ 返回首页</a>
+  <a class="doc-nav-btn" href="./02_前端框架篇【精讲】.html">02_前端框架篇 →</a>
+</nav>
 
 <footer>
   全栈技术知识库 · 全面学习系列 · 系统化技术精讲
