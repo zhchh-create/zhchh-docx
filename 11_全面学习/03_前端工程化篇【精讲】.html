@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>前端工程化篇 - 全面学习 - 全栈技术知识库</title>
+<link rel="stylesheet" href="../glossary/glossary.css">
+<style>
+:root {
+  --accent:#1d4ed8;--accent2:#0e7490;--warn:#b45309;--ok:#047857;--danger:#b91c1c;
+  --ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--card:#ffffff;
+  --radius:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;color:var(--ink);line-height:1.8;background:#f8fafc}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.container{max-width:900px;margin:0 auto;padding:0 20px}
+header.hero{background:linear-gradient(135deg,#1e293b 0%,#0f172a 100%);color:#fff;padding:40px 0 30px;margin-bottom:20px}
+.breadcrumb{font-size:13px;color:#94a3b8;margin-bottom:10px}
+h1{font-size:28px;margin-bottom:15px}
+.hero-desc{color:#cbd5e1;font-size:15px;line-height:1.8;max-width:760px}
+.doc-nav{display:flex;justify-content:space-between;max-width:900px;margin:0 auto 20px;padding:0 20px;gap:10px;flex-wrap:wrap}
+.doc-nav-btn{font-size:13px;color:var(--muted);text-decoration:none;padding:6px 12px;border:1px solid var(--line);border-radius:6px;background:#fff}
+.doc-nav-btn:hover{border-color:var(--accent);color:var(--accent)}
+.doc-nav-btn.home{font-weight:600}
+nav.toc{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin-bottom:20px}
+nav.toc h2{font-size:16px;margin-bottom:12px;color:var(--ink);border:none;padding:0}
+nav.toc ol{margin-left:20px;color:var(--muted);font-size:14px}
+nav.toc li{margin:6px 0}
+nav.toc a{color:var(--muted);text-decoration:none}
+nav.toc a:hover{color:var(--accent)}
+section.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:25px;margin-bottom:20px}
+section.card h2{font-size:20px;margin-bottom:15px;padding-bottom:10px;border-bottom:2px solid var(--line);display:flex;align-items:center;gap:10px}
+section.card h2 .num{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:14px}
+section.card h3{font-size:17px;margin:25px 0 10px;color:var(--accent)}
+section.card h4{font-size:15px;margin:18px 0 8px;color:var(--ink)}
+section.card p{margin:10px 0;font-size:15px;color:#334155}
+section.card ul,section.card ol{margin:10px 0 10px 25px;font-size:15px;color:#334155}
+section.card li{margin:6px 0}
+.lead{background:#f8fafc;padding:12px 16px;border-radius:8px;font-size:14px;margin:15px 0}
+.diagram{background:#fafafa;border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin:20px 0;text-align:center;overflow-x:auto}
+.diagram-caption{font-size:13px;color:var(--muted);margin-top:10px}
+.key-sentence{background:#eff6ff;border-left:4px solid var(--accent);padding:12px 16px;border-radius:0 8px 8px 0;margin:15px 0;font-size:14px}
+.warn-box{background:#fffbeb;border-left:4px solid var(--warn);padding:12px 16px;border-radius:0 8px 8px 0;margin:15px 0;font-size:14px}
+code{background:#f1f5f9;padding:2px 6px;border-radius:4px;font-size:14px;color:#0f766e}
+pre{background:#1e293b;color:#e2e8f0;padding:16px;border-radius:8px;overflow-x:auto;font-size:13px;line-height:1.6;margin:15px 0}
+pre code{background:none;color:inherit;padding:0}
+.topic{background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:18px;margin:15px 0}
+.topic h4{margin-top:0;color:var(--accent)}
+.read-more{font-size:13px;color:var(--muted);margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
+footer{text-align:center;padding:30px 20px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);margin-top:40px}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="container">
+    <p class="breadcrumb">全面学习 · 全栈技术精讲</p>
+    <h1>前端工程化篇</h1>
+    <p class="hero-desc">前端工程化的核心工具链：构建工具、版本控制、代码规范、性能优化。工程化不是为了炫技，而是为了提升团队协作效率和代码质量。</p>
+  </div>
+</header>
+
+<nav class="doc-nav">
+  <a class="doc-nav-btn" href="../index.html">← 返回首页</a>
+  <a class="doc-nav-btn home" href="../index.html">⌂ 知识库</a>
+</nav>
+
+<div class="container">
+
+<nav class="toc">
+  <h2>本页目录</h2>
+  <ol>
+    <li><a href="#sec1">本篇概览</a></li>
+    <li><a href="#sec2">核心技术点精讲</a></li>
+    <li><a href="#sec3">知识图谱</a></li>
+    <li><a href="#sec4">常见误区与实战要点</a></li>
+    <li><a href="#sec5">深入学习导航</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<section id="sec1" class="card">
+  <h2><span class="num">1</span>本篇概览</h2>
+  <p>前端工程化的核心工具链：构建工具、版本控制、代码规范、性能优化。工程化不是为了炫技，而是为了提升团队协作效率和代码质量。</p>
+  <p>本篇覆盖 4 个核心技术点，每个技术点给出精华总结、关键代码示例和流程图，帮助你快速建立知识体系。需要深入的内容可以跳转到对应的详细文章。</p>
+</section>
+
+<section id="sec2" class="card">
+  <h2><span class="num">2</span>核心技术点精讲</h2>
+  
+<div class="topic">
+  <h4>构建工具 Vite/Webpack</h4>
+  <p class="lead">构建工具把源码（ES模块、JSX、TS、CSS）打包成浏览器能跑的静态资源。Vite 是现代选择，开发快、配置简单。</p>
+  <ul>
+    <li>Webpack：依赖图 + loader + plugin，生态成熟但配置复杂</li>
+    <li>Vite：原生 ESM 开发服务器，构建用 Rollup</li>
+    <li>核心概念：入口、输出、loader（转译）、plugin（扩展）</li>
+  </ul>
+  <pre><code>// vite.config.js
+export default defineConfig({
+  plugins: [vue()],
+  resolve: {
+    alias: {
+      '@': '/src'
+    }
+  },
+  server: {
+    port: 3000,
+    proxy: {
+      '/api': 'http://localhost:8080'
+    }
+  }
+});</code></pre>
+  <div class="diagram">
+    <svg width="650" height="180" viewBox="0 0 650 180"><defs>
+  <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+    <path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/>
+  </marker>
+</defs>
+<rect x="30" y="60" width="110" height="60" rx="8" fill="#dbeafe" stroke="#1d4ed8"/><text x="85" y="85" text-anchor="middle" font-size="13">源码文件</text><text x="85" y="105" text-anchor="middle" font-size="11">.vue/.ts/.css</text>
+<line x1="140" y1="90" x2="180" y2="90" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/>
+<rect x="180" y="60" width="120" height="60" rx="8" fill="#cffafe" stroke="#0e7490"/><text x="240" y="85" text-anchor="middle" font-size="13">构建工具</text><text x="240" y="105" text-anchor="middle" font-size="11">转译/打包/优化</text>
+<line x1="300" y1="90" x2="340" y2="90" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/>
+<rect x="340" y="60" width="120" height="60" rx="8" fill="#fef3c7" stroke="#b45309"/><text x="400" y="85" text-anchor="middle" font-size="13">输出产物</text><text x="400" y="105" text-anchor="middle" font-size="11">.js/.css/.html</text>
+<line x1="460" y1="90" x2="500" y2="90" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/>
+<rect x="500" y="60" width="120" height="60" rx="8" fill="#d1fae5" stroke="#047857"/><text x="560" y="85" text-anchor="middle" font-size="13">浏览器</text><text x="560" y="105" text-anchor="middle" font-size="11">运行页面</text>
+<text x="325" y="155" text-anchor="middle" font-size="12" fill="#64748b">把不能直接跑的源码，打包成浏览器能执行的静态资源</text>
+</svg>
+    <p class="diagram-caption">构建工具 Vite/Webpack 流程图</p>
+  </div>
+  <div class="read-more">深入阅读 → <a href="../06_前端工程化与工具链/02_Vite【标准】.html">Vite标准篇</a></div>
+</div>
+
+<div class="topic">
+  <h4>Git 版本控制</h4>
+  <p class="lead">Git 是分布式版本控制系统。核心是：每次提交都是一棵可追溯的快照，分支是指向提交的轻量指针。</p>
+  <ul>
+    <li>工作区 → 暂存区 → 本地仓库：add/commit 流程</li>
+    <li>分支：轻量指针，切分支很快</li>
+    <li>合并：merge（保留历史）vs rebase（变基，线性历史）</li>
+    <li>团队协作：feature 分支 → PR → 代码评审 → 合并主干</li>
+  </ul>
+  <pre><code># 常用工作流
+git checkout -b feature/login  # 新建分支
+git add .                       # 暂存
+git commit -m 'feat: 登录功能'   # 提交
+git push origin feature/login  # 推送
+# 提 PR，评审通过后合并</code></pre>
+  <div class="read-more">深入阅读 → <a href="../06_前端工程化与工具链/05_Git版本控制【标准】.html">Git标准篇</a></div>
+</div>
+
+<div class="topic">
+  <h4>代码规范 ESLint + Prettier</h4>
+  <p class="lead">ESLint 管代码质量（有没有错误），Prettier 管代码格式（好不好看）。两者配合，统一团队风格。</p>
+  <ul>
+    <li>ESLint：静态检查，发现潜在 bug 和坏味道</li>
+    <li>Prettier：格式化工具，统一缩进/引号/分号</li>
+    <li>配合方式：ESLint 负责质量，Prettier 负责格式，不冲突</li>
+    <li>提交时自动检查：husky + lint-staged</li>
+  </ul>
+  <pre><code>// .eslintrc.js
+module.exports = {
+  extends: [
+    'eslint:recommended',
+    'plugin:vue/vue3-recommended',
+    '@vue/eslint-config-prettier'
+  ],
+  rules: {
+    'vue/multi-word-component-names': 'off'
+  }
+};</code></pre>
+  <div class="read-more">深入阅读 → <a href="../06_前端工程化与工具链/06_ESLint与Prettier代码规范【标准】.html">ESLint+Prettier篇</a></div>
+</div>
+
+<div class="topic">
+  <h4>前端性能优化</h4>
+  <p class="lead">性能优化核心是：减少加载体积、减少渲染次数、提升响应速度。</p>
+  <ul>
+    <li>加载优化：代码分割、懒加载、Tree Shaking、压缩</li>
+    <li>渲染优化：虚拟列表、懒加载、避免重排重绘</li>
+    <li>缓存策略：hash 文件名 + 长缓存、HTML 不缓存</li>
+    <li>监控：Web Vitals（LCP/FID/CLS）</li>
+  </ul>
+  <pre><code>// 路由懒加载
+const UserProfile = () => import("./views/UserProfile.vue");
+
+// 虚拟列表：只渲染可视区域的项
+<VirtualList
+  :items="largeData"
+  :item-height="50"
+  :height="400"
+/></code></pre>
+  <div class="diagram">
+    <svg width="600" height="180" viewBox="0 0 600 180"><defs>
+  <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+    <path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/>
+  </marker>
+</defs>
+<rect x="50" y="60" width="120" height="60" rx="8" fill="#dbeafe" stroke="#1d4ed8"/><text x="110" y="85" text-anchor="middle" font-size="13">加载优化</text><text x="110" y="105" text-anchor="middle" font-size="11">体积/速度</text>
+<rect x="240" y="60" width="120" height="60" rx="8" fill="#cffafe" stroke="#0e7490"/><text x="300" y="85" text-anchor="middle" font-size="13">渲染优化</text><text x="300" y="105" text-anchor="middle" font-size="11">流畅/帧率</text>
+<rect x="430" y="60" width="120" height="60" rx="8" fill="#d1fae5" stroke="#047857"/><text x="490" y="85" text-anchor="middle" font-size="13">缓存策略</text><text x="490" y="105" text-anchor="middle" font-size="11">重复访问</text>
+<text x="300" y="150" text-anchor="middle" font-size="12" fill="#64748b">三个方向：加载快、渲染顺、重复访问更快</text>
+</svg>
+    <p class="diagram-caption">前端性能优化 流程图</p>
+  </div>
+  <div class="read-more">深入阅读 → <a href="../06_前端工程化与工具链/04_前端性能优化_懒加载与虚拟列表【深入】.html">性能优化深入篇</a></div>
+</div>
+
+</section>
+
+<section id="sec3" class="card">
+  <h2><span class="num">3</span>知识图谱</h2>
+  <div class="diagram">
+    <svg width="700" height="250" viewBox="0 0 700 250"><defs>
+  <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+    <path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/>
+  </marker>
+</defs>
+<rect x="250" y="20" width="200" height="45" rx="8" fill="#1e293b"/><text x="350" y="48" text-anchor="middle" font-size="14" fill="#fff">前端工程化</text>
+<line x1="250" y1="65" x2="150" y2="100" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/>
+<line x1="350" y1="65" x2="350" y2="100" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/>
+<line x1="450" y1="65" x2="550" y2="100" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/>
+<rect x="70" y="100" width="160" height="40" rx="6" fill="#dbeafe" stroke="#1d4ed8"/><text x="150" y="125" text-anchor="middle" font-size="13">构建工具</text>
+<rect x="270" y="100" width="160" height="40" rx="6" fill="#cffafe" stroke="#0e7490"/><text x="350" y="125" text-anchor="middle" font-size="13">协作规范</text>
+<rect x="470" y="100" width="160" height="40" rx="6" fill="#d1fae5" stroke="#047857"/><text x="550" y="125" text-anchor="middle" font-size="13">质量保障</text>
+<line x1="150" y1="140" x2="150" y2="170" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+<line x1="350" y1="140" x2="350" y2="170" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+<line x1="550" y1="140" x2="550" y2="170" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+<rect x="70" y="170" width="160" height="35" rx="6" fill="#f1f5f9" stroke="#64748b"/><text x="150" y="192" text-anchor="middle" font-size="12">Vite/Webpack</text>
+<rect x="270" y="170" width="160" height="35" rx="6" fill="#f1f5f9" stroke="#64748b"/><text x="350" y="192" text-anchor="middle" font-size="12">Git+ESLint+Prettier</text>
+<rect x="470" y="170" width="160" height="35" rx="6" fill="#f1f5f9" stroke="#64748b"/><text x="550" y="192" text-anchor="middle" font-size="12">测试+性能优化</text>
+</svg>
+    <p class="diagram-caption">本篇技术点关系图谱</p>
+  </div>
+</section>
+
+<section id="sec4" class="card">
+  <h2><span class="num">4</span>常见误区与实战要点</h2>
+  <div class="warn-box">
+    <b>常见误区：</b>
+    <ul>
+      <li>工程化配置写了一堆，但团队没人遵守，等于白配</li>
+<li>Git 分支管理混乱，所有人都往 main 上提交</li>
+<li>性能优化只做表面，没测真实数据</li>
+<li>ESLint 规则太严，开发体验差，大家直接关掉</li>
+
+    </ul>
+  </div>
+</section>
+
+<section id="sec5" class="card">
+  <h2><span class="num">5</span>深入学习导航</h2>
+  <p>以下是本篇相关的深入学习文章，需要细节时可以跳转阅读：</p>
+  <ul>
+    <li><a href="../06_前端工程化与工具链/02_Vite【标准】.html">Vite标准篇</a></li>
+<li><a href="../06_前端工程化与工具链/05_Git版本控制【标准】.html">Git标准篇</a></li>
+<li><a href="../06_前端工程化与工具链/06_ESLint与Prettier代码规范【标准】.html">ESLint+Prettier篇</a></li>
+<li><a href="../06_前端工程化与工具链/04_前端性能优化_懒加载与虚拟列表【深入】.html">性能优化深入篇</a></li>
+
+  </ul>
+</section>
+
+</main>
+
+</div>
+
+<footer>
+  全栈技术知识库 · 全面学习系列 · 系统化技术精讲
+</footer>
+
+<div id="glossary-modal"></div>
+<script src="../glossary/glossary-data.js"></script>
+<script src="../glossary/glossary.js"></script>
+</body>
+</html>

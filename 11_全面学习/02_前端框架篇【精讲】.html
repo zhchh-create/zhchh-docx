@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>前端框架篇 - 全面学习 - 全栈技术知识库</title>
+<link rel="stylesheet" href="../glossary/glossary.css">
+<style>
+:root {
+  --accent:#1d4ed8;--accent2:#0e7490;--warn:#b45309;--ok:#047857;--danger:#b91c1c;
+  --ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--card:#ffffff;
+  --deep:#7c3aed;--std:#0e7490;--base:#64748b;
+  --radius:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;color:var(--ink);line-height:1.8;background:#f8fafc}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.container{max-width:900px;margin:0 auto;padding:0 20px}
+header.hero{background:linear-gradient(135deg,#1e293b 0%,#0f172a 100%);color:#fff;padding:40px 0 30px;margin-bottom:20px}
+.breadcrumb{font-size:13px;color:#94a3b8;margin-bottom:10px}
+h1{font-size:28px;margin-bottom:15px}
+.hero-desc{color:#cbd5e1;font-size:15px;line-height:1.8;max-width:760px}
+.doc-nav{display:flex;justify-content:space-between;max-width:900px;margin:0 auto 20px;padding:0 20px;gap:10px;flex-wrap:wrap}
+.doc-nav-btn{font-size:13px;color:var(--muted);text-decoration:none;padding:6px 12px;border:1px solid var(--line);border-radius:6px;background:#fff}
+.doc-nav-btn:hover{border-color:var(--accent);color:var(--accent)}
+.doc-nav-btn.home{font-weight:600}
+nav.toc{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin-bottom:20px}
+nav.toc h2{font-size:16px;margin-bottom:12px;color:var(--ink);border:none;padding:0}
+nav.toc ol{margin-left:20px;color:var(--muted);font-size:14px}
+nav.toc li{margin:6px 0}
+nav.toc a{color:var(--muted);text-decoration:none}
+nav.toc a:hover{color:var(--accent)}
+section.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:25px;margin-bottom:20px}
+section.card h2{font-size:20px;margin-bottom:15px;padding-bottom:10px;border-bottom:2px solid var(--line);display:flex;align-items:center;gap:10px}
+section.card h2 .num{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:14px}
+section.card h3{font-size:17px;margin:25px 0 10px;color:var(--accent)}
+section.card h4{font-size:15px;margin:18px 0 8px;color:var(--ink)}
+section.card p{margin:10px 0;font-size:15px;color:#334155}
+section.card ul,section.card ol{margin:10px 0 10px 25px;font-size:15px;color:#334155}
+section.card li{margin:6px 0}
+.lead{background:#f8fafc;padding:12px 16px;border-radius:8px;font-size:14px;margin:15px 0}
+.diagram{background:#fafafa;border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin:20px 0;text-align:center;overflow-x:auto}
+.diagram-caption{font-size:13px;color:var(--muted);margin-top:10px}
+.key-sentence{background:#eff6ff;border-left:4px solid var(--accent);padding:12px 16px;border-radius:0 8px 8px 0;margin:15px 0;font-size:14px}
+.warn-box{background:#fffbeb;border-left:4px solid var(--warn);padding:12px 16px;border-radius:0 8px 8px 0;margin:15px 0;font-size:14px}
+code{background:#f1f5f9;padding:2px 6px;border-radius:4px;font-size:14px;color:#0f766e}
+pre{background:#1e293b;color:#e2e8f0;padding:16px;border-radius:8px;overflow-x:auto;font-size:13px;line-height:1.6;margin:15px 0}
+pre code{background:none;color:inherit;padding:0}
+.topic{background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:18px;margin:15px 0}
+.topic h4{margin-top:0;color:var(--accent)}
+.read-more{font-size:13px;color:var(--muted);margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
+footer{text-align:center;padding:30px 20px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);margin-top:40px}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="container">
+    <p class="breadcrumb">全面学习 · 全栈技术精讲</p>
+    <h1>前端框架篇</h1>
+    <p class="hero-desc">前端框架的核心概念：Vue响应式原理、组件化通信、状态管理、React Hooks、微前端架构。掌握这些框架的底层心智模型，才能用得好、改得快。</p>
+  </div>
+</header>
+
+<nav class="doc-nav">
+  <a class="doc-nav-btn" href="../index.html">← 返回首页</a>
+  <a class="doc-nav-btn home" href="../index.html">⌂ 知识库</a>
+</nav>
+
+<div class="container">
+
+<nav class="toc">
+  <h2>本页目录</h2>
+  <ol>
+    <li><a href="#sec1">本篇概览</a></li>
+    <li><a href="#sec2">核心技术点精讲</a></li>
+    <li><a href="#sec3">知识图谱</a></li>
+    <li><a href="#sec4">常见误区与实战要点</a></li>
+    <li><a href="#sec5">深入学习导航</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<section id="sec1" class="card">
+  <h2><span class="num">1</span>本篇概览</h2>
+  <p>前端框架的核心概念：Vue响应式原理、组件化通信、状态管理、React Hooks、微前端架构。掌握这些框架的底层心智模型，才能用得好、改得快。</p>
+  <p>本篇覆盖 5 个核心技术点，每个技术点给出精华总结、关键代码示例和流程图，帮助你快速建立知识体系。需要深入的内容可以跳转到对应的详细文章。</p>
+</section>
+
+<section id="sec2" class="card">
+  <h2><span class="num">2</span>核心技术点精讲</h2>
+  
+<div class="topic">
+  <h4>Vue 响应式原理</h4>
+  <p class="lead">Vue 用数据驱动视图：你只改数据，框架负责更新界面。Vue2 用 Object.defineProperty，Vue3 用 Proxy。</p>
+  <ul>
+    <li>响应式：数据变化自动触发视图更新</li>
+    <li>Vue2：Object.defineProperty 劫持属性 getter/setter</li>
+    <li>Vue3：Proxy 代理整个对象，支持数组和新增属性</li>
+    <li>模板编译：把模板编译成 render 函数</li>
+  </ul>
+  <pre><code>const state = reactive({
+  count: 0,
+  user: { name: '张三' }
+});
+
+// 自动追踪依赖，变化自动更新视图
+state.count++;
+state.user.name = '李四';</code></pre>
+  <div class="diagram">
+    <svg width="600" height="180" viewBox="0 0 600 180"><defs>
+  <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+    <path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/>
+  </marker>
+</defs>
+<rect x="50" y="60" width="120" height="60" rx="8" fill="#dbeafe" stroke="#1d4ed8"/><text x="110" y="85" text-anchor="middle" font-size="13">数据(state)</text>
+<line x1="170" y1="90" x2="230" y2="90" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/>
+<rect x="230" y="60" width="140" height="60" rx="8" fill="#cffafe" stroke="#0e7490"/><text x="300" y="85" text-anchor="middle" font-size="13">响应式系统</text><text x="300" y="105" text-anchor="middle" font-size="11">依赖收集/派发更新</text>
+<line x1="370" y1="90" x2="430" y2="90" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/>
+<rect x="430" y="60" width="120" height="60" rx="8" fill="#d1fae5" stroke="#047857"/><text x="490" y="85" text-anchor="middle" font-size="13">视图(DOM)</text>
+<text x="300" y="150" text-anchor="middle" font-size="12" fill="#64748b">数据变 → 自动更新视图，不用手动操作DOM</text>
+</svg>
+    <p class="diagram-caption">Vue 响应式原理 流程图</p>
+  </div>
+  <div class="read-more">深入阅读 → <a href="../02_前端框架与状态管理/01_Vue框架【标准】.html">Vue框架标准篇</a></div>
+</div>
+
+<div class="topic">
+  <h4>组件化与通信</h4>
+  <p class="lead">组件是 Vue 的核心组织方式：把页面拆成独立、可复用的组件，通过 props/emit/store 通信。</p>
+  <ul>
+    <li>props：父传子，单向数据流</li>
+    <li>emit：子传父，触发事件</li>
+    <li>provide/inject：跨层级传值</li>
+    <li>vuex/pinia：全局状态管理</li>
+  </ul>
+  <pre><code><!-- 父组件 -->
+<ChildComponent 
+  :title="pageTitle" 
+  @update="handleUpdate"
+/>
+
+<!-- 子组件 -->
+<script setup>
+const props = defineProps(["title"]);
+const emit = defineEmits(["update"]);
+const onClick = () => emit("update", newData);
+</script></code></pre>
+  <div class="diagram">
+    <svg width="500" height="160" viewBox="0 0 500 160"><defs>
+  <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+    <path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/>
+  </marker>
+</defs>
+<rect x="180" y="20" width="140" height="45" rx="8" fill="#1e293b"/><text x="250" y="48" text-anchor="middle" font-size="13" fill="#fff">父组件</text>
+<line x1="200" y1="65" x2="120" y2="100" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/>
+<line x1="300" y1="65" x2="380" y2="100" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/>
+<text x="140" y="85" text-anchor="middle" font-size="11" fill="#0e7490">props↓</text>
+<text x="360" y="85" text-anchor="middle" font-size="11" fill="#b45309">emit↑</text>
+<rect x="50" y="100" width="140" height="40" rx="6" fill="#dbeafe" stroke="#1d4ed8"/><text x="120" y="125" text-anchor="middle" font-size="12">子组件A</text>
+<rect x="310" y="100" width="140" height="40" rx="6" fill="#cffafe" stroke="#0e7490"/><text x="380" y="125" text-anchor="middle" font-size="12">子组件B</text>
+</svg>
+    <p class="diagram-caption">组件化与通信 流程图</p>
+  </div>
+  <div class="read-more">深入阅读 → <a href="../02_前端框架与状态管理/01_Vue框架【标准】.html">Vue组件篇</a></div>
+</div>
+
+<div class="topic">
+  <h4>状态管理 Pinia</h4>
+  <p class="lead">Pinia 是 Vue 官方推荐的状态管理库，替代 Vuex。简单、类型安全、支持组合式 API。</p>
+  <ul>
+    <li>Store 是一个独立的状态容器</li>
+    <li>state：状态数据</li>
+    <li>getters：计算属性，派生状态</li>
+    <li>actions：修改状态的方法</li>
+  </ul>
+  <pre><code>// stores/user.js
+import { defineStore } from "pinia"
+
+export const useUserStore = defineStore("user", () => {
+  const user = ref(null);
+  const isLogin = computed(() => !!user.value);
+  
+  function login(userData) {
+    user.value = userData;
+  }
+  
+  return { user, isLogin, login };
+});
+
+// 组件中使用
+const userStore = useUserStore();
+userStore.login({ name: "张三" });</code></pre>
+  <div class="read-more">深入阅读 → <a href="../02_前端框架与状态管理/03_状态管理_Vuex与Pinia【标准】.html">Pinia状态管理篇</a></div>
+</div>
+
+<div class="topic">
+  <h4>React Hooks</h4>
+  <p class="lead">React 用 Hooks 让函数组件也能拥有状态和生命周期。核心是 useState/useEffect/useMemo。</p>
+  <ul>
+    <li>useState：组件状态</li>
+    <li>useEffect：副作用，模拟生命周期</li>
+    <li>useMemo/useCallback：性能优化，缓存计算结果</li>
+    <li>自定义 Hook：复用状态逻辑</li>
+  </ul>
+  <pre><code>function Counter() {
+  const [count, setCount] = useState(0);
+  
+  useEffect(() => {
+    document.title = `Count: ${count}`;
+  }, [count]); // 依赖count变化时执行
+  
+  return (
+    <button onClick={() => setCount(count + 1)}>
+      点击了 {count} 次
+    </button>
+  );
+}</code></pre>
+  <div class="read-more">深入阅读 → <a href="../02_前端框架与状态管理/04_React与Hooks【基础】.html">React Hooks篇</a></div>
+</div>
+
+<div class="topic">
+  <h4>微前端架构</h4>
+  <p class="lead">微前端是把大型应用拆成多个独立的子应用，每个子应用可以独立开发、独立部署、独立技术栈。</p>
+  <ul>
+    <li>基座应用：管理子应用加载、路由切换</li>
+    <li>子应用：独立开发、独立部署</li>
+    <li>JS 沙箱：隔离全局变量，避免污染</li>
+    <li>样式隔离：避免子应用样式互相影响</li>
+  </ul>
+  <pre><code>// 基座应用注册子应用
+registerApp([
+  {
+    name: "app1",
+    entry: "//localhost:3001",
+    container: "#sub-container",
+    activeRule: "/app1"
+  },
+  {
+    name: "app2",
+    entry: "//localhost:3002",
+    container: "#sub-container",
+    activeRule: "/app2"
+  }
+]);</code></pre>
+  <div class="diagram">
+    <svg width="600" height="200" viewBox="0 0 600 200"><defs>
+  <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+    <path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/>
+  </marker>
+</defs>
+<rect x="200" y="20" width="200" height="45" rx="8" fill="#1e293b"/><text x="300" y="48" text-anchor="middle" font-size="14" fill="#fff">基座应用</text>
+<line x1="150" y1="65" x2="100" y2="100" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/>
+<line x1="300" y1="65" x2="300" y2="100" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/>
+<line x1="450" y1="65" x2="500" y2="100" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/>
+<rect x="30" y="100" width="140" height="50" rx="6" fill="#dbeafe" stroke="#1d4ed8"/><text x="100" y="122" text-anchor="middle" font-size="12">子应用A</text><text x="100" y="140" text-anchor="middle" font-size="10">独立部署</text>
+<rect x="230" y="100" width="140" height="50" rx="6" fill="#cffafe" stroke="#0e7490"/><text x="300" y="122" text-anchor="middle" font-size="12">子应用B</text><text x="300" y="140" text-anchor="middle" font-size="10">独立部署</text>
+<rect x="430" y="100" width="140" height="50" rx="6" fill="#d1fae5" stroke="#047857"/><text x="500" y="122" text-anchor="middle" font-size="12">子应用C</text><text x="500" y="140" text-anchor="middle" font-size="10">独立部署</text>
+<text x="300" y="180" text-anchor="middle" font-size="12" fill="#64748b">每个子应用独立开发、独立部署、可不同技术栈</text>
+</svg>
+    <p class="diagram-caption">微前端架构 流程图</p>
+  </div>
+  <div class="read-more">深入阅读 → <a href="../02_前端框架与状态管理/05_微前端架构_Qiankun【标准】.html">微前端Qiankun篇</a></div>
+</div>
+
+</section>
+
+<section id="sec3" class="card">
+  <h2><span class="num">3</span>知识图谱</h2>
+  <div class="diagram">
+    <svg width="700" height="250" viewBox="0 0 700 250"><defs>
+  <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+    <path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/>
+  </marker>
+</defs>
+<rect x="250" y="20" width="200" height="45" rx="8" fill="#1e293b"/><text x="350" y="48" text-anchor="middle" font-size="14" fill="#fff">前端框架</text>
+<line x1="250" y1="65" x2="150" y2="100" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/>
+<line x1="350" y1="65" x2="350" y2="100" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/>
+<line x1="450" y1="65" x2="550" y2="100" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/>
+<rect x="70" y="100" width="160" height="40" rx="6" fill="#dbeafe" stroke="#1d4ed8"/><text x="150" y="125" text-anchor="middle" font-size="13">Vue生态</text>
+<rect x="270" y="100" width="160" height="40" rx="6" fill="#cffafe" stroke="#0e7490"/><text x="350" y="125" text-anchor="middle" font-size="13">React生态</text>
+<rect x="470" y="100" width="160" height="40" rx="6" fill="#d1fae5" stroke="#047857"/><text x="550" y="125" text-anchor="middle" font-size="13">架构模式</text>
+<line x1="150" y1="140" x2="150" y2="170" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+<line x1="350" y1="140" x2="350" y2="170" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+<line x1="550" y1="140" x2="550" y2="170" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+<rect x="70" y="170" width="160" height="35" rx="6" fill="#f1f5f9" stroke="#64748b"/><text x="150" y="192" text-anchor="middle" font-size="12">响应式+组件+Pinia</text>
+<rect x="270" y="170" width="160" height="35" rx="6" fill="#f1f5f9" stroke="#64748b"/><text x="350" y="192" text-anchor="middle" font-size="12">Hooks+状态管理</text>
+<rect x="470" y="170" width="160" height="35" rx="6" fill="#f1f5f9" stroke="#64748b"/><text x="550" y="192" text-anchor="middle" font-size="12">微前端+SSR</text>
+</svg>
+    <p class="diagram-caption">本篇技术点关系图谱</p>
+  </div>
+</section>
+
+<section id="sec4" class="card">
+  <h2><span class="num">4</span>常见误区与实战要点</h2>
+  <div class="warn-box">
+    <b>常见误区：</b>
+    <ul>
+      <li>把状态都放在全局 store，导致状态混乱，难以追踪</li>
+<li>React useEffect 依赖数组写错，导致无限循环</li>
+<li>组件通信层级太深，props 一层层传，变成 props drilling</li>
+<li>微前端上了但没用好，反而增加了复杂度</li>
+
+    </ul>
+  </div>
+</section>
+
+<section id="sec5" class="card">
+  <h2><span class="num">5</span>深入学习导航</h2>
+  <p>以下是本篇相关的深入学习文章，需要细节时可以跳转阅读：</p>
+  <ul>
+    <li><a href="../02_前端框架与状态管理/01_Vue框架【标准】.html">Vue框架标准篇</a></li>
+<li><a href="../02_前端框架与状态管理/03_状态管理_Vuex与Pinia【标准】.html">Pinia状态管理篇</a></li>
+<li><a href="../02_前端框架与状态管理/04_React与Hooks【基础】.html">React Hooks篇</a></li>
+<li><a href="../02_前端框架与状态管理/05_微前端架构_Qiankun【标准】.html">微前端Qiankun篇</a></li>
+
+  </ul>
+</section>
+
+</main>
+
+</div>
+
+<footer>
+  全栈技术知识库 · 全面学习系列 · 系统化技术精讲
+</footer>
+
+<div id="glossary-modal"></div>
+<script src="../glossary/glossary-data.js"></script>
+<script src="../glossary/glossary.js"></script>
+</body>
+</html>

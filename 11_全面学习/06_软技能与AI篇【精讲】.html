@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>软技能与AI篇 - 全面学习 - 全栈技术知识库</title>
+<link rel="stylesheet" href="../glossary/glossary.css">
+<style>
+:root {
+  --accent:#1d4ed8;--accent2:#0e7490;--warn:#b45309;--ok:#047857;--danger:#b91c1c;
+  --ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--card:#ffffff;
+  --radius:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;color:var(--ink);line-height:1.8;background:#f8fafc}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.container{max-width:900px;margin:0 auto;padding:0 20px}
+header.hero{background:linear-gradient(135deg,#1e293b 0%,#0f172a 100%);color:#fff;padding:40px 0 30px;margin-bottom:20px}
+.breadcrumb{font-size:13px;color:#94a3b8;margin-bottom:10px}
+h1{font-size:28px;margin-bottom:15px}
+.hero-desc{color:#cbd5e1;font-size:15px;line-height:1.8;max-width:760px}
+.doc-nav{display:flex;justify-content:space-between;max-width:900px;margin:0 auto 20px;padding:0 20px;gap:10px;flex-wrap:wrap}
+.doc-nav-btn{font-size:13px;color:var(--muted);text-decoration:none;padding:6px 12px;border:1px solid var(--line);border-radius:6px;background:#fff}
+.doc-nav-btn:hover{border-color:var(--accent);color:var(--accent)}
+.doc-nav-btn.home{font-weight:600}
+nav.toc{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin-bottom:20px}
+nav.toc h2{font-size:16px;margin-bottom:12px;color:var(--ink);border:none;padding:0}
+nav.toc ol{margin-left:20px;color:var(--muted);font-size:14px}
+nav.toc li{margin:6px 0}
+nav.toc a{color:var(--muted);text-decoration:none}
+nav.toc a:hover{color:var(--accent)}
+section.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:25px;margin-bottom:20px}
+section.card h2{font-size:20px;margin-bottom:15px;padding-bottom:10px;border-bottom:2px solid var(--line);display:flex;align-items:center;gap:10px}
+section.card h2 .num{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:14px}
+section.card h3{font-size:17px;margin:25px 0 10px;color:var(--accent)}
+section.card h4{font-size:15px;margin:18px 0 8px;color:var(--ink)}
+section.card p{margin:10px 0;font-size:15px;color:#334155}
+section.card ul,section.card ol{margin:10px 0 10px 25px;font-size:15px;color:#334155}
+section.card li{margin:6px 0}
+.lead{background:#f8fafc;padding:12px 16px;border-radius:8px;font-size:14px;margin:15px 0}
+.diagram{background:#fafafa;border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin:20px 0;text-align:center;overflow-x:auto}
+.diagram-caption{font-size:13px;color:var(--muted);margin-top:10px}
+.key-sentence{background:#eff6ff;border-left:4px solid var(--accent);padding:12px 16px;border-radius:0 8px 8px 0;margin:15px 0;font-size:14px}
+.warn-box{background:#fffbeb;border-left:4px solid var(--warn);padding:12px 16px;border-radius:0 8px 8px 0;margin:15px 0;font-size:14px}
+code{background:#f1f5f9;padding:2px 6px;border-radius:4px;font-size:14px;color:#0f766e}
+pre{background:#1e293b;color:#e2e8f0;padding:16px;border-radius:8px;overflow-x:auto;font-size:13px;line-height:1.6;margin:15px 0}
+pre code{background:none;color:inherit;padding:0}
+.topic{background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:18px;margin:15px 0}
+.topic h4{margin-top:0;color:var(--accent)}
+.read-more{font-size:13px;color:var(--muted);margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
+footer{text-align:center;padding:30px 20px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);margin-top:40px}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="container">
+    <p class="breadcrumb">全面学习 · 全栈技术精讲</p>
+    <h1>软技能与AI篇</h1>
+    <p class="hero-desc">成为好程序员不止是写代码：代码设计、调试能力、AI 工具使用、团队协作。技术之外的软技能，决定了你能走多远。</p>
+  </div>
+</header>
+
+<nav class="doc-nav">
+  <a class="doc-nav-btn" href="../index.html">← 返回首页</a>
+  <a class="doc-nav-btn home" href="../index.html">⌂ 知识库</a>
+</nav>
+
+<div class="container">
+
+<nav class="toc">
+  <h2>本页目录</h2>
+  <ol>
+    <li><a href="#sec1">本篇概览</a></li>
+    <li><a href="#sec2">核心技术点精讲</a></li>
+    <li><a href="#sec3">知识图谱</a></li>
+    <li><a href="#sec4">常见误区与实战要点</a></li>
+    <li><a href="#sec5">深入学习导航</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<section id="sec1" class="card">
+  <h2><span class="num">1</span>本篇概览</h2>
+  <p>成为好程序员不止是写代码：代码设计、调试能力、AI 工具使用、团队协作。技术之外的软技能，决定了你能走多远。</p>
+  <p>本篇覆盖 4 个核心技术点，每个技术点给出精华总结、关键代码示例和流程图，帮助你快速建立知识体系。需要深入的内容可以跳转到对应的详细文章。</p>
+</section>
+
+<section id="sec2" class="card">
+  <h2><span class="num">2</span>核心技术点精讲</h2>
+  
+<div class="topic">
+  <h4>代码设计原则</h4>
+  <p class="lead">好代码不是能跑就行，是要易读、易改、易测试。SOLID 原则是经典指导。</p>
+  <ul>
+    <li>单一职责：一个类只做一件事</li>
+    <li>开闭原则：对扩展开放，对修改关闭</li>
+    <li>依赖倒置：依赖抽象，不依赖具体实现</li>
+    <li>迪米特法则：最少知识，减少耦合</li>
+  </ul>
+  <pre><code>// 不好的写法：一个类管所有事
+class OrderService {
+  void createOrder() {}
+  void sendEmail() {}
+  void saveToDb() {}
+}
+
+// 好的写法：拆分职责
+class OrderService {
+  void createOrder() {}
+}
+class EmailService {
+  void send() {}
+}
+class OrderRepository {
+  void save() {}
+}</code></pre>
+  <div class="diagram">
+    <svg width="650" height="180" viewBox="0 0 650 180"><defs>
+  <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+    <path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/>
+  </marker>
+</defs>
+<rect x="50" y="60" width="120" height="60" rx="8" fill="#dbeafe" stroke="#1d4ed8"/><text x="110" y="85" text-anchor="middle" font-size="13">低耦合</text><text x="110" y="105" text-anchor="middle" font-size="11">改一处不影响全局</text>
+<rect x="265" y="60" width="120" height="60" rx="8" fill="#cffafe" stroke="#0e7490"/><text x="325" y="85" text-anchor="middle" font-size="13">高内聚</text><text x="325" y="105" text-anchor="middle" font-size="11">相关的放一起</text>
+<rect x="480" y="60" width="120" height="60" rx="8" fill="#d1fae5" stroke="#047857"/><text x="540" y="85" text-anchor="middle" font-size="13">易测试</text><text x="540" y="105" text-anchor="middle" font-size="11">单独模块好测</text>
+<text x="325" y="155" text-anchor="middle" font-size="12" fill="#64748b">好代码的三个目标：低耦合、高内聚、易测试</text>
+</svg>
+    <p class="diagram-caption">代码设计原则 流程图</p>
+  </div>
+  <div class="read-more">深入阅读 → <a href="../10_研发与AI/07_代码设计原则与SOLID【标准】.html">代码设计原则篇</a></div>
+</div>
+
+<div class="topic">
+  <h4>调试技巧</h4>
+  <p class="lead">调试是程序员的核心能力。不是只会 console.log，而是有系统地定位问题。</p>
+  <ul>
+    <li>二分法：注释一半代码，缩小范围</li>
+    <li>看报错：先看错误堆栈，从最后一行往上找</li>
+    <li>断点调试：用调试器一步步跑，看变量变化</li>
+    <li>复现：先稳定复现，再谈修复</li>
+  </ul>
+  <pre><code>// 调试示例：打印关键变量
+function processData(data) {
+  console.log("输入数据:", data); // 先看输入对不对
+  
+  const result = step1(data);
+  console.log("step1 输出:", result); // 再看中间步骤
+  
+  return step2(result);
+}</code></pre>
+  <div class="read-more">深入阅读 → <a href="../10_研发与AI/14_调试技巧与排查思路【标准】.html">调试技巧篇</a></div>
+</div>
+
+<div class="topic">
+  <h4>AI 辅助编程</h4>
+  <p class="lead">AI 编程工具不是替代你，是提升效率。会用 AI 的程序员，产能翻倍。</p>
+  <ul>
+    <li>代码补全：Copilot/Tabnine 自动补全重复代码</li>
+    <li>代码解释：看不懂的代码丢给 AI 解释</li>
+    <li>生成测试：让 AI 帮你写单元测试</li>
+    <li>重构建议：AI 指出坏味道，给优化方案</li>
+  </ul>
+  <pre><code># 提示词示例：让AI帮你写测试
+"""
+请为下面这个函数写单元测试：
+
+function add(a, b) {
+  return a + b;
+}
+
+要求：
+1. 正常情况测试
+2. 边界情况测试
+3. 异常情况测试
+"""
+
+# AI 会输出完整的测试代码</code></pre>
+  <div class="diagram">
+    <svg width="600" height="180" viewBox="0 0 600 180"><defs>
+  <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+    <path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/>
+  </marker>
+</defs>
+<rect x="30" y="60" width="120" height="60" rx="8" fill="#dbeafe" stroke="#1d4ed8"/><text x="90" y="85" text-anchor="middle" font-size="13">需求描述</text><text x="90" y="105" text-anchor="middle" font-size="11">你要做什么</text>
+<line x1="150" y1="90" x2="190" y2="90" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/>
+<rect x="190" y="60" width="120" height="60" rx="8" fill="#cffafe" stroke="#0e7490"/><text x="250" y="85" text-anchor="middle" font-size="13">AI 生成</text><text x="250" y="105" text-anchor="middle" font-size="11">代码/方案</text>
+<line x1="310" y1="90" x2="350" y2="90" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/>
+<rect x="350" y="60" width="120" height="60" rx="8" fill="#fef3c7" stroke="#b45309"/><text x="410" y="85" text-anchor="middle" font-size="13">你审查修改</text><text x="410" y="105" text-anchor="middle" font-size="11">不是直接复制</text>
+<line x1="470" y1="90" x2="510" y2="90" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/>
+<rect x="510" y="60" width="80" height="60" rx="8" fill="#d1fae5" stroke="#047857"/><text x="550" y="85" text-anchor="middle" font-size="13">完成</text>
+<text x="300" y="155" text-anchor="middle" font-size="12" fill="#64748b">AI 是助手，你才是负责人：生成 → 审查 → 修改 → 使用</text>
+</svg>
+    <p class="diagram-caption">AI 辅助编程 流程图</p>
+  </div>
+  <div class="read-more">深入阅读 → <a href="../10_研发与AI/11_AI辅助编程_Copilot与Cursor【标准】.html">AI辅助编程篇</a></div>
+</div>
+
+<div class="topic">
+  <h4>团队协作与文档</h4>
+  <p class="lead">代码是写给人看的，顺便能跑就行。好的文档和沟通，团队效率翻倍。</p>
+  <ul>
+    <li>README：项目说明，新人 5 分钟看懂怎么跑起来</li>
+    <li>注释：为什么这么做，而不是做了什么</li>
+    <li>PR 描述：改了什么、为什么改、怎么测的</li>
+    <li>会议：少开会，开就有结论、有行动项</li>
+  </ul>
+  <pre><code># 好的 README 结构
+# 项目名
+一句话说清楚这是什么
+
+## 快速开始
+怎么安装、怎么跑起来
+
+## 目录结构
+每个文件夹是干嘛的
+
+## 常见问题
+踩过的坑汇总
+
+## 贡献指南
+怎么提 PR、代码规范</code></pre>
+  <div class="read-more">深入阅读 → <a href="../10_研发与AI/15_团队协作与文档规范【标准】.html">团队协作篇</a></div>
+</div>
+
+</section>
+
+<section id="sec3" class="card">
+  <h2><span class="num">3</span>知识图谱</h2>
+  <div class="diagram">
+    <svg width="700" height="250" viewBox="0 0 700 250"><defs>
+  <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+    <path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/>
+  </marker>
+</defs>
+<rect x="250" y="20" width="200" height="45" rx="8" fill="#1e293b"/><text x="350" y="48" text-anchor="middle" font-size="14" fill="#fff">软技能与AI</text>
+<line x1="250" y1="65" x2="150" y2="100" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/>
+<line x1="350" y1="65" x2="350" y2="100" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/>
+<line x1="450" y1="65" x2="550" y2="100" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/>
+<rect x="70" y="100" width="160" height="40" rx="6" fill="#dbeafe" stroke="#1d4ed8"/><text x="150" y="125" text-anchor="middle" font-size="13">代码质量</text>
+<rect x="270" y="100" width="160" height="40" rx="6" fill="#cffafe" stroke="#0e7490"/><text x="350" y="125" text-anchor="middle" font-size="13">问题解决</text>
+<rect x="470" y="100" width="160" height="40" rx="6" fill="#d1fae5" stroke="#047857"/><text x="550" y="125" text-anchor="middle" font-size="13">效率工具</text>
+<line x1="150" y1="140" x2="150" y2="170" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+<line x1="350" y1="140" x2="350" y2="170" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+<line x1="550" y1="140" x2="550" y2="170" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+<rect x="70" y="170" width="160" height="35" rx="6" fill="#f1f5f9" stroke="#64748b"/><text x="150" y="192" text-anchor="middle" font-size="12">设计原则/代码规范</text>
+<rect x="270" y="170" width="160" height="35" rx="6" fill="#f1f5f9" stroke="#64748b"/><text x="350" y="192" text-anchor="middle" font-size="12">调试/排错思路</text>
+<rect x="470" y="170" width="160" height="35" rx="6" fill="#f1f5f9" stroke="#64748b"/><text x="550" y="192" text-anchor="middle" font-size="12">AI编程/文档协作</text>
+</svg>
+    <p class="diagram-caption">本篇技术点关系图谱</p>
+  </div>
+</section>
+
+<section id="sec4" class="card">
+  <h2><span class="num">4</span>常见误区与实战要点</h2>
+  <div class="warn-box">
+    <b>常见误区：</b>
+    <ul>
+      <li>学了一堆设计原则，到处用，过度设计</li>
+<li>调试只会 console.log，不会用调试器</li>
+<li>AI 生成的代码直接复制粘贴，也不看有没有错</li>
+<li>代码写了就完事，不写文档，三个月后自己都看不懂</li>
+
+    </ul>
+  </div>
+</section>
+
+<section id="sec5" class="card">
+  <h2><span class="num">5</span>深入学习导航</h2>
+  <p>以下是本篇相关的深入学习文章，需要细节时可以跳转阅读：</p>
+  <ul>
+    <li><a href="../10_研发与AI/07_代码设计原则与SOLID【标准】.html">代码设计原则篇</a></li>
+<li><a href="../10_研发与AI/14_调试技巧与排查思路【标准】.html">调试技巧篇</a></li>
+<li><a href="../10_研发与AI/11_AI辅助编程_Copilot与Cursor【标准】.html">AI辅助编程篇</a></li>
+<li><a href="../10_研发与AI/15_团队协作与文档规范【标准】.html">团队协作篇</a></li>
+
+  </ul>
+</section>
+
+</main>
+
+</div>
+
+<footer>
+  全栈技术知识库 · 全面学习系列 · 系统化技术精讲
+</footer>
+
+<div id="glossary-modal"></div>
+<script src="../glossary/glossary-data.js"></script>
+<script src="../glossary/glossary.js"></script>
+</body>
+</html>

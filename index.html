@@ -172,7 +172,7 @@
   <div class="wrap">
     <span class="kicker">● 全栈工程师 · 技术体系梳理</span>
     <h1>全栈技术知识库<span class="grad"> · 系统总览</span></h1>
-    <p class="sub">85 个技术点、每篇自包含 HTML、图示为内联 SVG（离线可看、零外部依赖）。深度分级：深入=熟练掌握 · 标准=熟悉 · 基础=了解。</p>
+    <p class="sub">100 个技术点、每篇自包含 HTML、图示为内联 SVG（离线可看、零外部依赖）。深度分级：深入=熟练掌握 · 标准=熟悉 · 基础=了解。</p>
     <div class="stats" id="stats"></div>
     <p style="margin-top:16px;"><a href="https://github.com/zhchh-create/zhchh-docx" target="_blank" style="color:var(--accent);text-decoration:none;border:1px solid var(--accent);padding:6px 14px;border-radius:6px;font-size:14px;">⭐ GitHub 仓库 · 查看源码</a></p>
   </div>
@@ -202,7 +202,7 @@
 </main>
 
 <footer>
-  《全栈技术知识库》· 85 篇技术点 + 本索引 · 全部页面经桌面与移动端渲染校验，零外部依赖。
+  《全栈技术知识库》· 100 篇技术点 + 本索引 · 全部页面经桌面与移动端渲染校验，零外部依赖。
   <br><a href="https://github.com/zhchh-create/zhchh-docx" target="_blank" style="color:var(--muted);">GitHub 仓库</a>
 </footer>
 
@@ -220,17 +220,12 @@ const CATS = [
   {id:"07",title:"后端开发",sub:"Java · Spring · 接口",pre:"07_后端开发/"},
   {id:"08",title:"数据库与建模",sub:"MySQL · Oracle · Redis",pre:"08_数据库与建模/"},
   {id:"09",title:"DevOps 部署与运维",sub:"Nginx · 容器 · 远程管理",pre:"09_DevOps部署与运维/"},
-  {id:"10",title:"研发流程与 AI 辅助",sub:"敏捷 · AI 编码 · 协作",pre:"10_研发流程与AI辅助/"}
+  {id:"10",title:"研发流程与 AI 辅助",sub:"敏捷 · AI 编码 · 协作",pre:"10_研发流程与AI辅助/"},
+  {id:"11",title:"全面学习",sub:"体系化精讲 · 从入门到精通",pre:"11_全面学习/"}
 ];
 const D = {deep:"深入",std:"标准",base:"基础"};
 const ITEMS = [
   // 01 前端基础
-{c:0,f:"11_JavaScript入门_语法与DOM【基础】.html",d:"base",n:"JavaScript入门：语法与DOM操作",p:"变量/类型/函数/条件循环、DOM选择与事件绑定，前端入门第一课",j:"所有前端项目基础"},
-{c:0,f:"12_TypeScript入门_基础类型与配置【基础】.html",d:"base",n:"TypeScript入门：基础类型与配置",p:"基础类型、接口、泛型入门、tsconfig配置，从JS到TS的平滑过渡",j:"业务系统类型化"},
-{c:0,f:"13_CSS预处理器_Sass_Less【标准】.html",d:"std",n:"CSS预处理器：Sass/Less",p:"变量/嵌套/mixin/继承，CSS工程化的核心能力与编译流程",j:"大型项目样式体系"},
-{c:0,f:"14_ES模块化_ESM与CommonJS【基础】.html",d:"base",n:"ES模块化与ESM/CommonJS",p:"import/export、模块作用域、两种规范差异与互操作",j:"所有现代项目"},
-{c:0,f:"15_前端错误监控_Sentry【标准】.html",d:"std",n:"前端错误监控与Sentry",p:"错误捕获、Source Map还原、面包屑追踪、性能监控接入",j:"生产环境稳定性保障"},
-{c:0,f:"16_PWA渐进式Web应用【标准】.html",d:"std",n:"PWA渐进式Web应用",p:"Service Worker、离线缓存、添加到桌面、推送通知",j:"离线可用与类App体验"},
 {c:0,f:"01_HTML5与CSS3【深入】.html",d:"deep",n:"01_HTML5与CSS3【深入】",p:"表现层地基：语义化标记、盒模型、BFC/层叠上下文、现代布局与动画，含大屏多分辨率适配",j:"数据可视化大屏项目（智能监控大屏 通用 Grid/Tree/Dialog 插件）"},
 {c:0,f:"08_响应式布局_Flex与Grid【标准】.html",d:"std",n:"08_响应式布局_Flex与Grid【标准】",p:"rem 适配、媒体查询、Flex/Grid 布局体系的取舍与组合",j:"数据可视化大屏项目多分辨率"},
 {c:0,f:"02_JavaScript核心【深入】.html",d:"deep",n:"02_JavaScript核心【深入】",p:"语言本体：类型系统、作用域与闭包、原型链、this 绑定规则，逐条对应真实踩坑",j:"智能监控大屏 智能监控、大屏分布式数据聚合"},
@@ -242,11 +237,6 @@ const ITEMS = [
 {c:0,f:"09_前端安全_XSS与CSRF【基础】.html",d:"base",n:"09_前端安全_XSS与CSRF【基础】",p:"两类攻击的原理、危害面与防御基线，富文本场景专项",j:"低代码平台富文本组件清洗"},
 {c:0,f:"10_Tailwind_CSS原子化【标准】.html",d:"std",n:"10_Tailwind_CSS原子化【标准】",p:"原子化 CSS 体系、utility 类、与 Bootstrap/手写 CSS 的演进对比与工程化取舍",j:"低代码平台组件样式体系（评估/规划）"},
   // 02 前端框架与状态管理
-{c:1,f:"11_Vue_Router路由管理【标准】.html",d:"std",n:"Vue Router路由管理",p:"路由配置/嵌套路由/导航守卫/动态路由与懒加载",j:"所有SPA项目"},
-{c:1,f:"12_React状态管理_Redux_Zustand【深入】.html",d:"deep",n:"React状态管理：Redux/Zustand",p:"Redux单向数据流、中间件、Zustand轻量方案与选型",j:"React生态状态管理"},
-{c:1,f:"13_Next.js与React_SSR_SSG【标准】.html",d:"std",n:"Next.js与React SSR/SSG",p:"页面路由、SSR数据获取、SSG静态生成、与Nuxt的对照",j:"React生态SSR方案"},
-{c:1,f:"14_Ant_Design组件库【标准】.html",d:"std",n:"Ant Design组件库",p:"组件体系、主题定制、ProComponents企业级组件",j:"React生态UI标配"},
-{c:1,f:"15_表单处理与验证_VeeValidate【标准】.html",d:"std",n:"表单处理与验证：VeeValidate",p:"表单状态管理、校验规则、异步校验、自定义校验器",j:"业务系统表单"},
 {c:1,f:"01_Vue框架【标准】.html",d:"std",n:"01_Vue框架【标准】",p:"响应式、模板编译、生命周期、组件通信的完整认知框架",j:"数据编排平台、低代码平台、低代码开发平台"},
 {c:1,f:"07_组件设计模式与插槽机制【标准】.html",d:"std",n:"07_组件设计模式与插槽机制【标准】",p:"props/emit/slot/provide-inject，配置驱动渲染的通用组件设计",j:"数据编排平台 通用物料插槽 通用动态组件渲染容器"},
 {c:1,f:"02_Vue3组合式API与响应式原理【深入】.html",d:"deep",n:"02_Vue3组合式API与响应式原理【深入】",p:"Proxy 响应式源码级拆解、effect 调度、组合式设计动机",j:"业务系统 表单设计器/渲染器"},
@@ -259,9 +249,6 @@ const ITEMS = [
 {c:1,f:"10_微信小程序与uni-app【标准】.html",d:"std",n:"10_微信小程序与uni-app【标准】",p:"双线程架构、uni-app 跨端原理、与 Vue 的映射与发布链路",j:"规划中的经营类小程序（进行中/规划）"},
   // 03 前端工程化与工具链
 {c:2,f:"10_Babel转译与Polyfill【标准】.html",d:"std",n:"Babel转译与Polyfill",p:"预设/插件、语法降级、core-js按需Polyfill、浏览器兼容",j:"ES6+兼容"},
-{c:2,f:"11_Web_Vitals与性能监控【标准】.html",d:"std",n:"Web Vitals与性能监控",p:"LCP/FID/CLS核心指标、测量方法与优化路径",j:"用户体验质量"},
-{c:2,f:"12_环境变量与多环境配置【基础】.html",d:"base",n:"环境变量与多环境配置",p:"dev/prod/staging环境区分、.env文件、变量注入与构建",j:"多环境部署"},
-{c:2,f:"13_前端构建优化进阶【深入】.html",d:"deep",n:"前端构建优化进阶",p:"代码分割、Tree Shaking、缓存策略、构建速度优化",j:"大型项目构建"},
 {c:2,f:"08_npm与包管理【基础】.html",d:"base",n:"08_npm与包管理【基础】",p:"语义版本、lockfile、registry 与依赖陷阱",j:"业务系统（pnpm workspace）"},
 {c:2,f:"05_Git版本控制【标准】.html",d:"std",n:"05_Git版本控制【标准】",p:"对象模型、分支策略、冲突解决与团队协作流",j:"各项目日常协作"},
 {c:2,f:"01_Webpack【标准】.html",d:"std",n:"01_Webpack【标准】",p:"依赖图、loader/plugin 机制、分包与构建优化",j:"数据编排平台、低代码平台构建体系"},
@@ -275,8 +262,6 @@ const ITEMS = [
 {c:3,f:"08_Lodash工具函数库【标准】.html",d:"std",n:"Lodash工具函数库",p:"防抖节流/深拷贝/分组/嵌套取值，常用工具函数与原理",j:"日常开发必备"},
 {c:3,f:"09_Day.js时间处理【标准】.html",d:"std",n:"Day.js时间处理",p:"格式化/解析/加减/相对时间、本地化与时区",j:"日期时间展示"},
 {c:3,f:"10_文件上传与图片处理【标准】.html",d:"std",n:"文件上传与图片处理",p:"分片上传/断点续传、图片压缩/裁剪/预览",j:"附件/头像场景"},
-{c:3,f:"11_地图组件_高德_百度地图【标准】.html",d:"std",n:"地图组件：高德/百度地图",p:"地图初始化/标记点/弹窗/路线规划与逆地理编码",j:"GIS大屏/位置服务"},
-{c:3,f:"12_日期时间选择器组件【基础】.html",d:"base",n:"日期时间选择器组件",p:"DatePicker/RangePicker、禁用日期、快捷选项",j:"表单常用组件"},
 {c:3,f:"01_Axios【深入】.html",d:"deep",n:"01_Axios【深入】",p:"拦截器链、取消请求、并发与适配器原理，含自动生成客户端配合",j:"业务系统 API 客户端自动生成"},
 {c:3,f:"07_VueUse组合式工具库【标准】.html",d:"std",n:"07_VueUse组合式工具库【标准】",p:"组合式复用 hooks 体系、常用函数、与手写 composable 的关系",j:"业务系统 组合式实践（自写 useTable 类 hooks）"},
 {c:3,f:"02_vxe_table表格【深入】.html",d:"deep",n:"02_vxe_table表格【深入】",p:"虚拟滚动、自定义渲染、单元格编辑与大数据表格方案",j:"数据编排平台大表格数据展示"},
@@ -303,26 +288,17 @@ const ITEMS = [
 {c:5,f:"01_WebRTC【深入】.html",d:"deep",n:"01_WebRTC【深入】",p:"PeerConnection/SDP/ICE 信令全流程、低延迟播放与多路同屏",j:"WebRTC 无插件播放器（去 ActiveX）"},
 {c:5,f:"02_Janus网关【深入】.html",d:"deep",n:"02_Janus网关【深入】",p:"SFU 架构、插件机制、信令与浏览器接入链路",j:"WebRTC 播放器项目（Janus 网关）"},
   // 07 后端开发
-{c:6,f:"15_Node.js与Express入门【基础】.html",d:"base",n:"Node.js与Express入门",p:"事件循环/模块/Express路由中间件，JS栈后端入门",j:"前端全栈"},
-{c:6,f:"16_NestJS企业级框架【进阶】.html",d:"std",n:"NestJS企业级框架",p:"模块化/依赖注入/装饰器/守卫拦截器，TypeScript后端",j:"中大型Node项目"},
-{c:6,f:"17_任务调度_Quartz_XXL-Job【标准】.html",d:"std",n:"任务调度：Quartz/XXL-Job",p:"定时任务/分片广播/失败重试/任务日志",j:"定时报表/数据同步"},
-{c:6,f:"18_日志体系_Logback_ELK【标准】.html",d:"std",n:"日志体系：Logback/ELK",p:"日志级别/滚动策略/MDC链路追踪/结构化日志",j:"后端排查必备"},
 {c:6,f:"01_Java基础【标准】.html",d:"std",n:"01_Java基础【标准】",p:"集合框架、泛型、函数式与异常体系的面试要点",j:"业务系统（Java 17）"},
 {c:6,f:"02_Java并发与JVM【标准】.html",d:"std",n:"02_Java并发与JVM【标准】",p:"线程池、内存模型、垃圾回收与调优参数",j:"大屏分布式数据聚合服务"},
 {c:6,f:"03_Spring核心_IOC与AOP【深入】.html",d:"deep",n:"03_Spring核心_IOC与AOP【深入】",p:"Bean 生命周期、动态代理、切面原理与事务集成",j:"业务系统、数据编排平台后端"},
 {c:6,f:"04_SpringBoot框架【标准】.html",d:"std",n:"04_SpringBoot框架【标准】",p:"自动配置、Starter、内嵌容器与多环境",j:"业务系统、数据编排平台（SpringBoot 3）"},
 {c:6,f:"06_MyBatis持久层【深入】.html",d:"deep",n:"06_MyBatis持久层【深入】",p:"SqlSession/Executor、动态 SQL、一级/二级缓存与 #{} 防注入",j:"数据编排平台、业务系统 持久层"},
-{c:6,f:"14_MyBatisPlus与SpringDataJPA【基础】.html",d:"base",n:"14_MyBatisPlus与SpringDataJPA【基础】",p:"两类 ORM 便捷化能力对比、与原生 MyBatis 的关系与选型",j:"业务系统/数据编排平台（原生 MyBatis）选型对比"},
 {c:6,f:"07_Tomcat与Jetty服务器【基础】.html",d:"base",n:"07_Tomcat与Jetty服务器【基础】",p:"连接器/线程池、内嵌与外置部署的取舍",j:"SpringBoot 部署运维"},
 {c:6,f:"09_RESTful_API设计【标准】.html",d:"std",n:"09_RESTful_API设计【标准】",p:"资源建模、状态码、版本与错误结构设计",j:"业务系统、数据编排平台 API 设计"},
 {c:6,f:"08_Swagger与OpenAPI接口契约【标准】.html",d:"std",n:"08_Swagger与OpenAPI接口契约【标准】",p:"契约先行、接口文档自动化与客户端代码生成链路",j:"业务系统 亮点（自动生成接口客户端）"},
 {c:6,f:"10_接口安全_JWT与鉴权【标准】.html",d:"std",n:"10_接口安全_JWT与鉴权【标准】",p:"JWT 结构、拦截器鉴权、RBAC 与刷新策略",j:"业务系统 接口安全"},
-{c:6,f:"13_SpringSecurity与OAuth2【标准】.html",d:"std",n:"13_SpringSecurity与OAuth2【标准】",p:"过滤器链、认证授权模型、JWT/OAuth2/SSO 与现有拦截器关系",j:"业务系统 JWT 拦截器演进对比"},
-{c:6,f:"11_SpringCloud微服务与网关【标准】.html",d:"std",n:"11_SpringCloud微服务与网关【标准】",p:"注册发现(Nacos)、网关、负载、Feign、配置中心，与单体架构取舍",j:"单体演进评估（学习/评估）"},
-{c:6,f:"12_消息队列_Kafka与RabbitMQ【标准】.html",d:"std",n:"12_消息队列_Kafka与RabbitMQ【标准】",p:"两类 MQ 模型、可靠投递/消费、死信与削峰场景",j:"大屏告警削峰规划（学习/评估）"},
 {c:6,f:"05_SSH框架【基础】.html",d:"base",n:"05_SSH框架【基础】",p:"Struts2/Spring/Hibernate 组合的演进与退役原因",j:"早期历史项目（诚实定位）"},
   // 08 数据库与建模
-{c:7,f:"12_数据库连接池与读写分离【标准】.html",d:"std",n:"数据库连接池与读写分离",p:"HikariCP原理、主从读写分离配置、动态数据源",j:"高并发数据库"},
 {c:7,f:"01_MySQL【深入】.html",d:"deep",n:"01_MySQL【深入】",p:"InnoDB 架构、B+ 树索引、执行计划与表设计规范",j:"业务系统、数据编排平台业务库"},
 {c:7,f:"02_MySQL进阶_索引与SQL优化【深入】.html",d:"deep",n:"02_MySQL进阶_索引与SQL优化【深入】",p:"最左前缀、覆盖索引、深分页与慢 SQL 优化实战",j:"大屏告警高频查询优化"},
 {c:7,f:"03_MySQL事务与锁【标准】.html",d:"std",n:"03_MySQL事务与锁【标准】",p:"ACID、隔离级别、MVCC 与锁/死锁排查",j:"需求平台状态流转一致性"},
@@ -336,9 +312,6 @@ const ITEMS = [
 {c:7,f:"11_ClickHouse_OLAP分析【标准】.html",d:"std",n:"11_ClickHouse_OLAP分析【标准】",p:"列式存储、向量化执行、大屏/告警海量数据聚合",j:"大屏告警海量聚合（规划）"},
   // 09 DevOps部署与运维
 {c:8,f:"10_Docker_Compose多容器编排【标准】.html",d:"std",n:"Docker Compose多容器编排",p:"多服务编排/网络/数据卷/一键启动环境",j:"本地开发/测试环境"},
-{c:8,f:"11_SSL证书与HTTPS配置【标准】.html",d:"std",n:"SSL证书与HTTPS配置",p:"证书申请/Nginx配置/HTTP跳转/证书续期",j:"上线必备"},
-{c:8,f:"12_域名解析与DNS配置【基础】.html",d:"base",n:"域名解析与DNS配置",p:"A记录/CNAME/泛解析/CDN接入",j:"域名上线"},
-{c:8,f:"13_日志收集_ELK_Loki【标准】.html",d:"std",n:"日志收集：ELK/Loki",p:"日志采集/索引/查询/可视化面板",j:"分布式日志排查"},
 {c:8,f:"05_Linux基础与常用命令【标准】.html",d:"std",n:"05_Linux基础与常用命令【标准】",p:"进程、日志、端口、权限与磁盘排查命令集",j:"服务器日常运维"},
 {c:8,f:"06_Shell脚本【基础】.html",d:"base",n:"06_Shell脚本【基础】",p:"脚本语法、定时任务与常用运维脚本",j:"部署与日志清理脚本"},
 {c:8,f:"07_Xshell与WinSCP远程管理【深入】.html",d:"deep",n:"07_Xshell与WinSCP远程管理【深入】",p:"SSH 通道、六步握手、端口转发隧道与文件同步",j:"电力现场服务器远程运维"},
@@ -355,7 +328,14 @@ const ITEMS = [
 {c:9,f:"04_代码评审与协作流程【标准】.html",d:"std",n:"04_代码评审与协作流程【标准】",p:"评审关注点、流程规范与工具落地",j:"团队协作流程"},
 {c:9,f:"03_大模型应用_ChatGPT与Claude【标准】.html",d:"std",n:"03_大模型应用_ChatGPT与Claude【标准】",p:"代码生成、解释、评审与多轮澄清的实用技法",j:"本人实践（含 DeepSeek）"},
 {c:9,f:"02_AI辅助开发_Cursor与Codex【深入】.html",d:"deep",n:"02_AI辅助开发_Cursor与Codex【深入】",p:"AI 编码工作流、提示词组织、Codex 自动化与局限边界",j:"本人 AI 辅助开发实践（编码/调试/评审）"},
-{c:9,f:"05_LLM应用开发_RAG与FunctionCalling【标准】.html",d:"std",n:"05_LLM应用开发_RAG与FunctionCalling【标准】",p:"API 接入、RAG 检索增强、Function Calling 工具调用、提示词工程化",j:"本人 AI 辅助开发 + 业务系统 集成 AI（规划）"}
+{c:9,f:"05_LLM应用开发_RAG与FunctionCalling【标准】.html",d:"std",n:"05_LLM应用开发_RAG与FunctionCalling【标准】",p:"API 接入、RAG 检索增强、Function Calling 工具调用、提示词工程化",j:"本人 AI 辅助开发 + 业务系统 集成 AI（规划）"},
+  // 11 全面学习
+  {c:10,f:"01_前端基础篇【精讲】.html",d:"std",n:"前端基础篇【精讲】",p:"HTML/CSS/JS/TS/HTTP 体系化精讲，含代码示例与流程图",j:"前端入门到进阶"},
+  {c:10,f:"02_前端框架篇【精讲】.html",d:"std",n:"前端框架篇【精讲】",p:"Vue/React/状态管理/微前端 核心概念精讲",j:"框架选型与深入理解"},
+  {c:10,f:"03_前端工程化篇【精讲】.html",d:"std",n:"前端工程化篇【精讲】",p:"构建工具/Git/代码规范/性能优化 工程化体系",j:"团队效率与质量保障"},
+  {c:10,f:"04_后端开发篇【精讲】.html",d:"std",n:"后端开发篇【精讲】",p:"Java/Spring/MyBatis/接口安全 后端核心体系",j:"后端开发入门"},
+  {c:10,f:"05_数据与运维篇【精讲】.html",d:"std",n:"数据与运维篇【精讲】",p:"MySQL/Redis/Docker/CI-CD 数据与运维体系",j:"部署与数据管理"},
+  {c:10,f:"06_软技能与AI篇【精讲】.html",d:"std",n:"软技能与AI篇【精讲】",p:"代码设计/调试技巧/AI编程/团队协作 软技能体系",j:"程序员成长进阶"}
 ];
 
 /* ========== 渲染 ========== */
