@@ -127,27 +127,76 @@ section.card li strong{color:var(--ink)}
   .lead{padding:8px 10px;font-size:14.5px}
 }
 
-/* ===== 左侧目录树（桌面端） ===== */
+
+}
+
+
+/* ===== 左侧目录树样式（覆盖原来的） ===== */
 @media(min-width:1024px){
   nav.toc {
-    position: fixed;
+    position: fixed !important;
     left: 20px;
     top: 80px;
-    width: 220px;
+    width: 240px;
     max-height: calc(100vh - 100px);
     overflow-y: auto;
     background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 16px;
     z-index: 60;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+  }
+  nav.toc h2 {
+    font-size: 14px !important;
+    color: #1e293b;
+    margin: 0 0 12px 0 !important;
+    padding: 0 0 8px 0 !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+    font-weight: 600 !important;
+    background: transparent !important;
+    border-radius: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    line-height: normal !important;
+  }
+  nav.toc ol {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    columns: 1 !important;
+    column-count: 1 !important;
+  }
+  nav.toc ol li {
+    margin: 6px 0 !important;
+    break-inside: avoid !important;
+  }
+  nav.toc ol li a {
+    display: block !important;
+    padding: 6px 10px !important;
+    color: #64748b !important;
+    text-decoration: none !important;
+    font-size: 13px !important;
+    line-height: 1.4 !important;
+    border-radius: 6px !important;
+    transition: all .15s !important;
+    background: transparent !important;
+    border: none !important;
+    font-weight: normal !important;
+  }
+  nav.toc ol li a:hover {
+    background: #eff6ff !important;
+    color: #1d4ed8 !important;
   }
   .container {
-    margin-left: 260px !important;
-    max-width: calc(100% - 280px) !important;
+    margin-left: 280px !important;
+    max-width: calc(100% - 300px) !important;
   }
 }
 @media(max-width:1023px){
   nav.toc {
-    position: static;
-    width: auto;
+    position: static !important;
+    width: auto !important;
   }
 }
 
