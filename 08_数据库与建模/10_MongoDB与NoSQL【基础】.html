@@ -126,6 +126,31 @@ section.card li strong{color:var(--ink)}
   section.card h4{font-size:15.5px;margin:20px 0 8px}
   .lead{padding:8px 10px;font-size:14.5px}
 }
+
+/* ===== 左侧目录树（桌面端） ===== */
+@media(min-width:1024px){
+  nav.toc {
+    position: fixed;
+    left: 20px;
+    top: 80px;
+    width: 220px;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+    background: #fff;
+    z-index: 60;
+  }
+  .container {
+    margin-left: 260px !important;
+    max-width: calc(100% - 280px) !important;
+  }
+}
+@media(max-width:1023px){
+  nav.toc {
+    position: static;
+    width: auto;
+  }
+}
+
 </style>
 <link rel="stylesheet" href="../glossary/glossary.css">
 </head>
