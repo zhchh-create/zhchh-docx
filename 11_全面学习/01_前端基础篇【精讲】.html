@@ -1,22 +1,55 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>前端基础篇 - 全面学习 - 全栈技术知识库</title>
+<link rel="stylesheet" href="../glossary/glossary.css">
 <style>
 :root {
   --accent:#1d4ed8;--accent2:#0e7490;--warn:#b45309;--ok:#047857;--danger:#b91c1c;
   --ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--card:#ffffff;
+  --deep:#7c3aed;--std:#0e7490;--base:#64748b;
   --radius:12px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;color:var(--ink);line-height:1.8;background:#f8fafc}
 a{color:var(--accent);text-decoration:none}
 a:hover{text-decoration:underline}
+.container{max-width:900px;margin:0 auto;padding:0 20px}
+header.hero{background:linear-gradient(135deg,#1e293b 0%,#0f172a 100%);color:#fff;padding:40px 0 30px;margin-bottom:20px}
+.breadcrumb{font-size:13px;color:#94a3b8;margin-bottom:10px}
+h1{font-size:28px;margin-bottom:15px}
+.hero-desc{color:#cbd5e1;font-size:15px;line-height:1.8;max-width:760px}
+nav.toc{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin-bottom:20px}
+nav.toc h2{font-size:16px;margin-bottom:12px;color:var(--ink);border:none;padding:0}
+nav.toc ol{margin-left:20px;color:var(--muted);font-size:14px}
+nav.toc li{margin:6px 0}
+nav.toc a{color:var(--muted);text-decoration:none}
+nav.toc a:hover{color:var(--accent)}
+section.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:25px;margin-bottom:20px}
+section.card h2{font-size:20px;margin-bottom:15px;padding-bottom:10px;border-bottom:2px solid var(--line);display:flex;align-items:center;gap:10px}
+section.card h2 .num{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:14px}
+section.card h3{font-size:17px;margin:25px 0 10px;color:var(--accent)}
+section.card h4{font-size:15px;margin:18px 0 8px;color:var(--ink)}
+section.card p{margin:10px 0;font-size:15px;color:#334155}
+section.card ul,section.card ol{margin:10px 0 10px 25px;font-size:15px;color:#334155}
+section.card li{margin:6px 0}
+.lead{background:#f8fafc;padding:12px 16px;border-radius:8px;font-size:14px;margin:15px 0}
+.diagram{background:#fafafa;border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin:20px 0;text-align:center;overflow-x:auto}
+.diagram-caption{font-size:13px;color:var(--muted);margin-top:10px}
+.key-sentence{background:#eff6ff;border-left:4px solid var(--accent);padding:12px 16px;border-radius:0 8px 8px 0;margin:15px 0;font-size:14px}
+.warn-box{background:#fffbeb;border-left:4px solid var(--warn);padding:12px 16px;border-radius:0 8px 8px 0;margin:15px 0;font-size:14px}
+code{background:#f1f5f9;padding:2px 6px;border-radius:4px;font-size:14px;color:#0f766e}
+pre{background:#1e293b;color:#e2e8f0;padding:16px;border-radius:8px;overflow-x:auto;font-size:13px;line-height:1.6;margin:15px 0}
+pre code{background:none;color:inherit;padding:0}
+.topic{background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:18px;margin:15px 0}
+.topic h4{margin-top:0;color:var(--accent)}
+.read-more{font-size:13px;color:var(--muted);margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
+footer{text-align:center;padding:30px 20px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);margin-top:40px}
 
-/* ===== 顶部导航 ===== */
-.doc-nav{display:flex;justify-content:space-between;align-items:center;gap:8px;max-width:1200px;margin:0 auto;padding:10px 20px}
+/* ===== 全库统一导航 ===== */
+.doc-nav{display:flex;justify-content:space-between;align-items:center;gap:8px;max-width:980px;margin:0 auto;padding:10px 20px}
 .doc-nav.top{position:sticky;top:0;z-index:70;background:#fff;border-bottom:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(15,23,42,.08)}
 .doc-nav.bottom{border-top:1px solid #e2e8f0;padding-top:16px;padding-bottom:16px;margin-top:8px}
 .doc-nav-btn{color:#1d4ed8;text-decoration:none;font-size:14px;font-weight:600;line-height:1;padding:7px 12px;border:1px solid #e2e8f0;border-radius:8px;background:#fff;white-space:nowrap;transition:border-color .15s,background .15s}
@@ -24,1060 +57,558 @@ a.doc-nav-btn:hover{border-color:#1d4ed8;background:#dbeafe}
 .doc-nav-btn.home{color:#475569}
 .doc-nav-btn.home:hover{color:#1d4ed8}
 .doc-nav-btn.hidden{visibility:hidden}
+@media(max-width:640px){.doc-nav{gap:6px;padding-left:14px;padding-right:14px}.doc-nav-btn{font-size:13px;padding:6px 9px}}
 
-/* ===== 布局：左侧目录树 + 右侧内容 ===== */
-.layout{display:flex;max-width:1200px;margin:0 auto;gap:24px;padding:20px}
-.sidebar{width:260px;flex-shrink:0;position:sticky;top:60px;align-self:flex-start;max-height:calc(100vh - 80px);overflow-y:auto;background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:16px}
-.sidebar h3{font-size:14px;color:var(--ink);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
-.toc-tree{list-style:none;font-size:13px}
-.toc-tree li{margin:4px 0}
-.toc-tree .l1{font-weight:600;color:var(--ink);margin-top:10px}
-.toc-tree .l2{padding-left:16px;color:var(--muted)}
-.toc-tree a{color:var(--muted);text-decoration:none;display:block;padding:3px 6px;border-radius:4px;line-height:1.4}
-.toc-tree a:hover{background:#eff6ff;color:var(--accent)}
-.toc-tree .l1>a{color:var(--ink);font-weight:600}
+/* ===== 层级标签 ===== */
+.level-tag{display:inline-block;font-size:12px;font-weight:600;padding:2px 8px;border-radius:10px;margin-left:8px;vertical-align:middle}
+.level-base{background:#d1fae5;color:#047857;border:1px solid #6ee7b7}
+.level-std{background:#dbeafe;color:#1d4ed8;border:1px solid #93c5fd}
+.level-deep{background:#fee2e2;color:#b91c1c;border:1px solid #fca5a5}
 
-.main-content{flex:1;min-width:0}
-
-/* ===== 卡片样式 ===== */
-section.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:28px;margin-bottom:20px;scroll-margin-top:70px}
-section.card h2{font-size:22px;margin-bottom:16px;padding-bottom:12px;border-bottom:2px solid var(--line);display:flex;align-items:center;gap:10px}
-section.card h2 .num{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:15px}
-section.card h3{font-size:18px;margin:24px 0 12px;color:var(--accent);padding-left:10px;border-left:4px solid var(--accent)}
-section.card h4{font-size:15px;margin:18px 0 8px;color:var(--ink)}
-section.card p{margin:10px 0;font-size:14.5px;color:#334155}
-section.card ul,section.card ol{margin:10px 0 10px 25px;font-size:14.5px;color:#334155}
-section.card li{margin:6px 0}
-
-.lead{background:#f8fafc;padding:12px 16px;border-radius:8px;font-size:14px;margin:15px 0;color:var(--muted)}
-.diagram{background:#fafafa;border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin:20px 0;text-align:center;overflow-x:auto}
-.diagram-caption{font-size:13px;color:var(--muted);margin-top:10px}
-.key-sentence{background:#eff6ff;border-left:4px solid var(--accent);padding:12px 16px;border-radius:0 8px 8px 0;margin:15px 0;font-size:14px}
-.warn-box{background:#fffbeb;border-left:4px solid var(--warn);padding:12px 16px;border-radius:0 8px 8px 0;margin:15px 0;font-size:14px}
-
-code{background:#f1f5f9;padding:2px 6px;border-radius:4px;font-size:13.5px;color:#0f766e}
-pre{background:#1e293b;color:#e2e8f0;padding:16px;border-radius:8px;overflow-x:auto;font-size:13px;line-height:1.6;margin:15px 0}
-pre code{background:none;color:inherit;padding:0}
-
-.topic{background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:18px;margin:15px 0}
-.topic h4{margin-top:0;color:var(--accent)}
-
-footer{text-align:center;padding:30px 20px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);margin-top:40px}
-
-/* ===== Prism 深色主题 ===== */
+/* ===== 全库统一 Prism 深色主题 ===== */
 code[class*=language-],pre[class*=language-]{color:#f8f8f2;background:0 0;text-shadow:0 1px rgba(0,0,0,.3);font-family:Consolas,Monaco,'Andale Mono','Ubuntu Mono',monospace;font-size:1em;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{padding:1em;margin:.5em 0;overflow:auto;border-radius:.3em}:not(pre)>code[class*=language-],pre[class*=language-]{background:#272822}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal}.token.cdata,.token.comment,.token.doctype,.token.prolog{color:#8292a2}.token.punctuation{color:#f8f8f2}.token.namespace{opacity:.7}.token.constant,.token.deleted,.token.property,.token.symbol,.token.tag{color:#f92672}.token.boolean,.token.number{color:#ae81ff}.token.attr-name,.token.builtin,.token.char,.token.inserted,.token.selector,.token.string{color:#a6e22e}.language-css .token.string,.style .token.string,.token.entity,.token.operator,.token.url,.token.variable{color:#f8f8f2}.token.atrule,.token.attr-value,.token.class-name,.token.function{color:#e6db74}.token.keyword{color:#66d9ef}.token.important,.token.regex{color:#fd971f}.token.bold,.token.important{font-weight:700}.token.italic{font-style:italic}.token.entity{cursor:help}
-
-/* ===== 移动端适配 ===== */
-@media(max-width:900px){
-  .layout{flex-direction:column}
-  .sidebar{width:100%;position:static;max-height:none}
-}
+pre.code code[class*=language-]{background:transparent;text-shadow:none;font-family:var(--mono);font-size:inherit;padding:0;line-height:inherit;color:inherit;white-space:inherit}
 </style>
 </head>
 <body>
 
+<header class="hero">
+  <div class="container">
+    <p class="breadcrumb">全面学习 · 全栈技术精讲</p>
+    <h1>前端基础篇</h1>
+    <p class="hero-desc">前端开发的完整知识体系，按「基础 → 标准 → 深入」三个层级递进：先掌握入门必备概念，再熟练日常开发常用技能，最后深入理解底层原理。这是所有前端技术的地基。</p>
+  </div>
+</header>
 <nav class="doc-nav top" aria-label="文档导航">
   <a class="doc-nav-btn hidden" href="#">← 上一篇</a>
   <a class="doc-nav-btn home" href="../index.html">⌂ 返回首页</a>
   <a class="doc-nav-btn" href="./02_前端框架篇【精讲】.html">02_前端框架篇 →</a>
 </nav>
 
-<div class="layout">
+<div class="container">
 
-<!-- 左侧目录树 -->
-<aside class="sidebar">
-  <h3>📚 本节目录</h3>
-  <ul class="toc-tree">
-    <li class="l1"><a href="#sec1">一、HTML 基础</a></li>
-    <li class="l2"><a href="#html-structure">1.1 文档结构</a></li>
-    <li class="l2"><a href="#html-semantic">1.2 语义化标签</a></li>
-    <li class="l2"><a href="#html-form">1.3 表单元素</a></li>
-    <li class="l2"><a href="#html-media">1.4 媒体标签</a></li>
-    <li class="l2"><a href="#html-meta">1.5 Meta与SEO</a></li>
+<nav class="toc">
+  <h2>本页目录</h2>
+  <ol>
+    <li><a href="#sec1">本篇概览与学习路径</a></li>
+    <li><a href="#sec2">基础层 · 入门必备</a></li>
+    <li><a href="#sec3">标准层 · 日常开发</a></li>
+    <li><a href="#sec4">深入层 · 原理进阶</a></li>
+    <li><a href="#sec5">知识图谱</a></li>
+    <li><a href="#sec6">常见误区与实战要点</a></li>
+    <li><a href="#sec7">深入学习导航</a></li>
+  </ol>
+</nav>
 
-    <li class="l1"><a href="#sec2">二、CSS 核心</a></li>
-    <li class="l2"><a href="#css-selector">2.1 选择器与优先级</a></li>
-    <li class="l2"><a href="#css-box">2.2 盒模型</a></li>
-    <li class="l2"><a href="#css-position">2.3 定位机制</a></li>
-    <li class="l2"><a href="#css-flexbox">2.4 Flexbox布局</a></li>
-    <li class="l2"><a href="#css-grid">2.5 Grid网格</a></li>
-    <li class="l2"><a href="#css-center">2.6 居中方案</a></li>
-    <li class="l2"><a href="#css-responsive">2.7 响应式设计</a></li>
-    <li class="l2"><a href="#css-anim">2.8 动画与过渡</a></li>
+<main>
 
-    <li class="l1"><a href="#sec3">三、JavaScript 核心</a></li>
-    <li class="l2"><a href="#js-type">3.1 数据类型</a></li>
-    <li class="l2"><a href="#js-scope">3.2 作用域与闭包</a></li>
-    <li class="l2"><a href="#js-this">3.3 this指向</a></li>
-    <li class="l2"><a href="#js-proto">3.4 原型链</a></li>
-    <li class="l2"><a href="#js-eventloop">3.5 事件循环</a></li>
-    <li class="l2"><a href="#js-promise">3.6 Promise与异步</a></li>
-
-    <li class="l1"><a href="#sec4">四、DOM/BOM</a></li>
-    <li class="l2"><a href="#dom-event">4.1 事件机制</a></li>
-    <li class="l2"><a href="#dom-storage">4.2 存储方案</a></li>
-    <li class="l2"><a href="#dom-reflow">4.3 重排重绘</a></li>
-
-    <li class="l1"><a href="#sec5">五、HTTP 网络</a></li>
-    <li class="l2"><a href="#http-model">5.1 请求响应模型</a></li>
-    <li class="l2"><a href="#http-status">5.2 状态码</a></li>
-    <li class="l2"><a href="#http-cors">5.3 跨域CORS</a></li>
-
-    <li class="l1"><a href="#sec6">六、TypeScript</a></li>
-    <li class="l2"><a href="#ts-base">6.1 基础类型与接口</a></li>
-    <li class="l2"><a href="#ts-generic">6.2 泛型</a></li>
-  </ul>
-</aside>
-
-<!-- 右侧内容 -->
-<main class="main-content">
-
-<!-- ===== 一、HTML ===== -->
+<!-- ===== 概览 ===== -->
 <section id="sec1" class="card">
-  <h2><span class="num">1</span>HTML 基础与语义化</h2>
+  <h2><span class="num">1</span>本篇概览与学习路径</h2>
+  <p>本篇按照<strong>从易到难、从用到原理</strong>的顺序，把前端基础知识分成三个层级：</p>
 
-  <div id="html-structure" class="topic">
-    <h4>1.1 HTML文档结构</h4>
-    <p>一个标准HTML文档的骨架，浏览器从上到下逐层解析渲染。</p>
+  <div class="diagram">
+    <svg width="700" height="180" viewBox="0 0 700 180">
+      <defs>
+        <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+          <path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/>
+        </marker>
+      </defs>
+      <rect x="50" y="60" width="180" height="60" rx="8" fill="#d1fae5" stroke="#047857" stroke-width="2"/>
+      <text x="140" y="85" text-anchor="middle" font-size="14" fill="#065f46">基础层</text>
+      <text x="140" y="105" text-anchor="middle" font-size="11" fill="#047857">入门必备 · 看懂页面</text>
+      <line x1="230" y1="90" x2="280" y2="90" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/>
+      <rect x="280" y="60" width="180" height="60" rx="8" fill="#dbeafe" stroke="#1d4ed8" stroke-width="2"/>
+      <text x="370" y="85" text-anchor="middle" font-size="14" fill="#1e40af">标准层</text>
+      <text x="370" y="105" text-anchor="middle" font-size="11" fill="#1d4ed8">日常开发 · 写业务代码</text>
+      <line x1="460" y1="90" x2="510" y2="90" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/>
+      <rect x="510" y="60" width="160" height="60" rx="8" fill="#fee2e2" stroke="#b91c1c" stroke-width="2"/>
+      <text x="590" y="85" text-anchor="middle" font-size="14" fill="#991b1b">深入层</text>
+      <text x="590" y="105" text-anchor="middle" font-size="11" fill="#b91c1c">原理进阶 · 排查问题</text>
+    </svg>
+    <p class="diagram-caption">前端基础学习路径：三层递进</p>
+  </div>
 
-    <div class="diagram">
-      <svg width="500" height="280" viewBox="0 0 500 280">
-        <rect x="150" y="10" width="200" height="35" rx="6" fill="#1e293b"/>
-        <text x="250" y="33" text-anchor="middle" fill="white" font-size="13">&lt;!DOCTYPE html&gt;</text>
-        <line x1="250" y1="45" x2="250" y2="60" stroke="#64748b" stroke-width="2"/>
-        <rect x="120" y="60" width="260" height="35" rx="6" fill="#3b82f6"/>
-        <text x="250" y="83" text-anchor="middle" fill="white" font-size="13">&lt;html&gt; 根标签</text>
-        <line x1="200" y1="95" x2="200" y2="110" stroke="#64748b" stroke-width="2"/>
-        <line x1="300" y1="95" x2="300" y2="110" stroke="#64748b" stroke-width="2"/>
-        <rect x="100" y="110" width="180" height="35" rx="6" fill="#0e7490"/>
-        <text x="190" y="133" text-anchor="middle" fill="white" font-size="13">&lt;head&gt; 元信息</text>
-        <rect x="280" y="110" width="180" height="35" rx="6" fill="#047857"/>
-        <text x="370" y="133" text-anchor="middle" fill="white" font-size="13">&lt;body&gt; 页面内容</text>
-        <line x1="190" y1="145" x2="190" y2="165" stroke="#64748b" stroke-width="2"/>
-        <line x1="370" y1="145" x2="370" y2="165" stroke="#64748b" stroke-width="2"/>
-        <rect x="110" y="165" width="160" height="28" rx="4" fill="#e0f2fe" stroke="#0e7490"/>
-        <text x="190" y="184" text-anchor="middle" font-size="11">meta/title/style</text>
-        <rect x="290" y="165" width="160" height="28" rx="4" fill="#d1fae5" stroke="#047857"/>
-        <text x="370" y="184" text-anchor="middle" font-size="11">header/main/footer</text>
-        <line x1="370" y1="193" x2="370" y2="215" stroke="#64748b" stroke-width="2"/>
-        <rect x="310" y="215" width="120" height="25" rx="4" fill="#fff7ed" stroke="#b45309"/>
-        <text x="370" y="232" text-anchor="middle" font-size="11">script脚本</text>
-      </svg>
-      <p class="diagram-caption">HTML文档树结构</p>
-    </div>
+  <div class="key-sentence">
+    💡 学习建议：先把基础层全部搞懂，能写出静态页面；再练标准层，能独立完成业务需求；最后研究深入层，理解为什么这么写，遇到bug能定位。
+  </div>
+</section>
 
+<!-- ===== 基础层 ===== -->
+<section id="sec2" class="card">
+  <h2><span class="num">2</span>基础层 · 入门必备 <span class="level-tag level-base">基础</span></h2>
+  <p>这一层是前端入门的最低要求，看完就能写出第一个网页。</p>
+
+  <!-- HTML基础 -->
+  <div class="topic">
+    <h4>2.1 HTML 文档结构 <span class="level-tag level-base">基础</span></h4>
+    <p class="lead">HTML 是网页的骨架，浏览器从上到下解析标签，渲染出页面。</p>
+    <ul>
+      <li><strong>DOCTYPE</strong>：声明HTML版本，告诉浏览器用标准模式渲染</li>
+      <li><strong>head</strong>：元信息，不显示在页面上（编码、标题、CSS、SEO）</li>
+      <li><strong>body</strong>：页面所有可见内容都写在这里</li>
+      <li><strong>标签成对</strong>：开始标签&lt;div&gt;和结束标签&lt;/div&gt；空标签如&lt;img&gt;&lt;br&gt;不需要闭合</li>
+    </ul>
     <pre><code class="language-markup">&lt;!DOCTYPE html&gt;
 &lt;html lang="zh-CN"&gt;
 &lt;head&gt;
   &lt;meta charset="UTF-8"&gt;
-  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
-  &lt;title&gt;页面标题&lt;/title&gt;
-  &lt;link rel="stylesheet" href="style.css"&gt;
+  &lt;title&gt;我的第一个页面&lt;/title&gt;
 &lt;/head&gt;
 &lt;body&gt;
-  &lt;header&gt;头部&lt;/header&gt;
-  &lt;main&gt;主体内容&lt;/main&gt;
-  &lt;footer&gt;底部&lt;/footer&gt;
-  &lt;script src="app.js"&gt;&lt;/script&gt;
+  &lt;h1&gt;Hello World&lt;/h1&gt;
+  &lt;p&gt;这是我的第一个网页&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;</code></pre>
-  </div>
-
-  <div id="html-semantic" class="topic">
-    <h4>1.2 语义化标签</h4>
-    <p>用正确的标签表达内容含义，而不是全用div+css。</p>
-
     <div class="diagram">
-      <svg width="550" height="220" viewBox="0 0 550 220">
-        <rect x="20" y="10" width="510" height="35" rx="4" fill="#dbeafe" stroke="#1d4ed8"/>
-        <text x="275" y="33" text-anchor="middle" font-size="13" fill="#1e40af">&lt;header&gt; 网站头部：logo、导航、搜索</text>
-        <rect x="20" y="55" width="120" height="140" rx="4" fill="#fef3c7" stroke="#b45309"/>
-        <text x="80" y="130" text-anchor="middle" font-size="12" fill="#92400e">&lt;aside&gt;侧边栏</text>
-        <rect x="155" y="55" width="255" height="140" rx="4" fill="#d1fae5" stroke="#047857"/>
-        <text x="282" y="100" text-anchor="middle" font-size="12" fill="#065f46">&lt;main&gt; 主体内容区</text>
-        <rect x="170" y="115" width="225" height="65" rx="4" fill="#ecfdf5" stroke="#10b981"/>
-        <text x="282" y="140" text-anchor="middle" font-size="11" fill="#047857">&lt;article&gt; 独立文章/卡片</text>
-        <text x="282" y="160" text-anchor="middle" font-size="11" fill="#047857">&lt;section&gt; 章节分区</text>
-        <rect x="425" y="55" width="105" height="140" rx="4" fill="#fce7f3" stroke="#be185d"/>
-        <text x="477" y="130" text-anchor="middle" font-size="12" fill="#9d174d">&lt;nav&gt;导航菜单</text>
-        <rect x="20" y="200" width="510" height="15" rx="4" fill="#e2e8f0"/>
+      <svg width="500" height="220" viewBox="0 0 500 220">
+        <rect x="150" y="10" width="200" height="30" rx="4" fill="#1e293b"/>
+        <text x="250" y="30" text-anchor="middle" fill="white" font-size="12">&lt;!DOCTYPE html&gt;</text>
+        <line x1="250" y1="40" x2="250" y2="55" stroke="#64748b" stroke-width="1.5"/>
+        <rect x="120" y="55" width="260" height="30" rx="4" fill="#3b82f6"/>
+        <text x="250" y="75" text-anchor="middle" fill="white" font-size="12">&lt;html&gt; 根标签</text>
+        <line x1="200" y1="85" x2="200" y2="100" stroke="#64748b" stroke-width="1.5"/>
+        <line x1="300" y1="85" x2="300" y2="100" stroke="#64748b" stroke-width="1.5"/>
+        <rect x="100" y="100" width="180" height="30" rx="4" fill="#0e7490"/>
+        <text x="190" y="120" text-anchor="middle" fill="white" font-size="12">&lt;head&gt; 元信息</text>
+        <rect x="280" y="100" width="180" height="30" rx="4" fill="#047857"/>
+        <text x="370" y="120" text-anchor="middle" fill="white" font-size="12">&lt;body&gt; 页面内容</text>
+        <line x1="370" y1="130" x2="370" y2="155" stroke="#64748b" stroke-width="1.5"/>
+        <rect x="310" y="155" width="120" height="25" rx="4" fill="#d1fae5"/>
+        <text x="370" y="172" text-anchor="middle" font-size="11">h1 / p / div</text>
       </svg>
-      <p class="diagram-caption">常见语义标签布局示意</p>
+      <p class="diagram-caption">HTML文档树结构</p>
     </div>
+    <div class="read-more">深入阅读 → <a href="../01_前端基础/01_HTML5与CSS3【深入】.html">HTML5与CSS3深入篇</a></div>
+  </div>
 
+  <!-- CSS基础 -->
+  <div class="topic">
+    <h4>2.2 CSS 选择器与基本样式 <span class="level-tag level-base">基础</span></h4>
+    <p class="lead">CSS 给HTML化妆：选择器找到元素，然后设置样式属性。</p>
     <ul>
-      <li><strong>header</strong>：页面或区块的头部</li>
-      <li><strong>nav</strong>：导航链接容器</li>
-      <li><strong>main</strong>：页面主体内容（每页唯一）</li>
-      <li><strong>article</strong>：独立完整的内容单元（文章、博客、卡片）</li>
-      <li><strong>section</strong>：文档中的一个章节</li>
-      <li><strong>aside</strong>：侧边栏、相关内容</li>
-      <li><strong>footer</strong>：页面或区块的底部</li>
+      <li><strong>标签选择器</strong>：div { } 选中所有div</li>
+      <li><strong>类选择器</strong>：.box { } 选中class="box"的元素（最常用）</li>
+      <li><strong>ID选择器</strong>：#header { } 选中id="header"的元素（全局唯一）</li>
+      <li><strong>常用属性</strong>：color文字颜色、font-size字号、background背景、margin外边距、padding内边距</li>
     </ul>
+    <pre><code class="language-css">/* 选择页面上的元素 */
+h1 {
+  color: #1d4ed8;      /* 文字颜色蓝色 */
+  font-size: 28px;    /* 字号28像素 */
+  text-align: center; /* 文字居中 */
+}
 
-    <div class="key-sentence">
-      ✅ 语义化好处：SEO更好、无障碍读屏友好、代码可读性高、失去CSS后仍有结构。
-    </div>
+.card {
+  background: white;  /* 背景白色 */
+  padding: 20px;      /* 内边距20px */
+  border-radius: 8px; /* 圆角 */
+}</code></pre>
+    <div class="read-more">深入阅读 → <a href="../01_前端基础/01_HTML5与CSS3【深入】.html">HTML5与CSS3深入篇</a></div>
   </div>
 
-  <div id="html-form" class="topic">
-    <h4>1.3 表单元素</h4>
-    <pre><code class="language-markup">&lt;form action="/api/login" method="POST"&gt;
-  &lt;!-- 文本输入 --&gt;
-  &lt;input type="text" name="username" placeholder="用户名" required&gt;
-  
-  &lt;!-- 密码 --&gt;
-  &lt;input type="password" name="pwd" minlength="6"&gt;
-  
-  &lt;!-- 邮箱/手机号 --&gt;
-  &lt;input type="email" name="email"&gt;
-  &lt;input type="tel" name="phone"&gt;
-  
-  &lt;!-- 数字选择 --&gt;
-  &lt;input type="number" name="age" min="0" max="120"&gt;
-  
-  &lt;!-- 日期选择 --&gt;
-  &lt;input type="date" name="birthday"&gt;
-  
-  &lt;!-- 复选框 --&gt;
-  &lt;label&gt;&lt;input type="checkbox" name="remember"&gt; 记住我&lt;/label&gt;
-  
-  &lt;!-- 单选 --&gt;
-  &lt;label&gt;&lt;input type="radio" name="gender" value="male"&gt; 男&lt;/label&gt;
-  &lt;label&gt;&lt;input type="radio" name="gender" value="female"&gt; 女&lt;/label&gt;
-  
-  &lt;!-- 下拉选择 --&gt;
-  &lt;select name="city"&gt;
-    &lt;option value="bj"&gt;北京&lt;/option&gt;
-    &lt;option value="sh"&gt;上海&lt;/option&gt;
-  &lt;/select&gt;
-  
-  &lt;button type="submit"&gt;登录&lt;/button&gt;
-&lt;/form&gt;</code></pre>
-  </div>
+  <!-- JS基础 -->
+  <div class="topic">
+    <h4>2.3 JavaScript 变量与数据类型 <span class="level-tag level-base">基础</span></h4>
+    <p class="lead">JS 让网页动起来：存数据、做判断、处理交互。</p>
+    <ul>
+      <li><strong>声明变量</strong>：let 声明可变变量，const 声明常量（推荐默认用const）</li>
+      <li><strong>基本类型</strong>：数字number、字符串string、布尔boolean（true/false）</li>
+      <li><strong>打印调试</strong>：console.log() 在控制台输出</li>
+      <li><strong>注释</strong>：// 单行注释，/* 多行注释 */</li>
+    </ul>
+    <pre><code class="language-javascript">// 声明变量
+const name = '张三';    // 字符串，用引号包起来
+let age = 25;           // 数字，不用引号
+const isStudent = true; // 布尔值：true 或 false
 
-  <div id="html-media" class="topic">
-    <h4>1.4 媒体标签</h4>
-    <pre><code class="language-markup">&lt;!-- 图片：alt是无障碍必需的 --&gt;
-&lt;img src="logo.png" alt="网站Logo" width="120" height="40"&gt;
+// 打印
+console.log('姓名：', name);
+console.log('年龄：', age);
 
-&lt;!-- 视频：预加载、自动播放、控件 --&gt;
-&lt;video src="demo.mp4" controls preload="metadata"&gt;
-  您的浏览器不支持视频播放
-&lt;/video&gt;
-
-&lt;!-- 音频 --&gt;
-&lt;audio src="bgm.mp3" controls loop&gt;&lt;/audio&gt;
-
-&lt;!-- 响应式图片：不同屏幕用不同图 --&gt;
-&lt;picture&gt;
-  &lt;source media="(max-width:600px)" srcset="small.jpg"&gt;
-  &lt;source media="(min-width:601px)" srcset="large.jpg"&gt;
-  &lt;img src="default.jpg" alt="示例"&gt;
-&lt;/picture&gt;</code></pre>
-  </div>
-
-  <div id="html-meta" class="topic">
-    <h4>1.5 Meta标签与SEO</h4>
-    <pre><code class="language-markup">&lt;!-- 字符编码 --&gt;
-&lt;meta charset="UTF-8"&gt;
-
-&lt;!-- 移动端适配 --&gt;
-&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
-
-&lt;!-- SEO：页面描述 --&gt;
-&lt;meta name="description" content="这是一个全栈技术知识库，包含前端、后端、运维等技术详解"&gt;
-
-&lt;!-- SEO：关键词 --&gt;
-&lt;meta name="keywords" content="前端,JavaScript,React,Vue,全栈,技术"&gt;
-
-&lt;!-- 社交分享卡片 --&gt;
-&lt;meta property="og:title" content="全栈技术知识库"&gt;
-&lt;meta property="og:description" content="系统化的全栈技术学习笔记"&gt;
-&lt;meta property="og:image" content="/cover.jpg"&gt;</code></pre>
+// 简单运算
+age = age + 1;
+console.log('明年：', age);</code></pre>
+    <div class="read-more">深入阅读 → <a href="../01_前端基础/02_JavaScript核心【深入】.html">JavaScript核心深入篇</a></div>
   </div>
 </section>
 
-<!-- ===== 二、CSS ===== -->
-<section id="sec2" class="card">
-  <h2><span class="num">2</span>CSS 核心布局与样式</h2>
+<!-- ===== 标准层 ===== -->
+<section id="sec3" class="card">
+  <h2><span class="num">3</span>标准层 · 日常开发 <span class="level-tag level-std">标准</span></h2>
+  <p>这一层是实际工作中每天都要用的技能，掌握后就能独立写业务页面。</p>
 
-  <div id="css-selector" class="topic">
-    <h4>2.1 选择器与优先级</h4>
-
-    <div class="diagram">
-      <svg width="450" height="180" viewBox="0 0 450 180">
-        <rect x="20" y="20" width="410" height="30" rx="4" fill="#fee2e2" stroke="#b91c1c"/>
-        <text x="225" y="40" text-anchor="middle" font-size="13" fill="#991b1b">!important  &gt;  内联样式  &gt;  ID选择器  &gt;  类/伪类/属性  &gt;  标签选择器  &gt;  通配符</text>
-        <rect x="60" y="80" width="80" height="35" rx="4" fill="#fecaca"/>
-        <text x="100" y="102" text-anchor="middle" font-size="12">1000+</text>
-        <rect x="160" y="80" width="80" height="35" rx="4" fill="#fed7aa"/>
-        <text x="200" y="102" text-anchor="middle" font-size="12">100</text>
-        <rect x="260" y="80" width="80" height="35" rx="4" fill="#fef3c7"/>
-        <text x="300" y="102" text-anchor="middle" font-size="12">10</text>
-        <rect x="360" y="80" width="60" height="35" rx="4" fill="#d1fae5"/>
-        <text x="390" y="102" text-anchor="middle" font-size="12">1</text>
-        <text x="225" y="150" text-anchor="middle" font-size="12" fill="#64748b">优先级从左到右递减，同优先级后写的覆盖先写的</text>
-      </svg>
-      <p class="diagram-caption">CSS优先级层级</p>
-    </div>
-
-    <pre><code class="language-css">/* 常用选择器 */
-* {}                    /* 通配符 */
-div {}                  /* 标签选择器 */
-.box {}                 /* 类选择器 */
-#header {}              /* ID选择器 */
-.box p {}               /* 后代选择器 */
-.box > p {}             /* 直接子元素 */
-.box + p {}             /* 相邻兄弟 */
-.box:hover {}           /* 伪类 */
-.box::before {}         /* 伪元素 */
-[type="text"] {}        /* 属性选择器 */
-.box1, .box2 {}         /* 分组 */</code></pre>
-  </div>
-
-  <div id="css-box" class="topic">
-    <h4>2.2 盒模型</h4>
-
-    <div class="diagram">
-      <svg width="400" height="260" viewBox="0 0 400 260">
-        <rect x="20" y="20" width="360" height="220" rx="4" fill="#fee2e2" stroke="#b91c1c"/>
-        <text x="200" y="40" text-anchor="middle" font-size="12" fill="#991b1b">margin 外边距</text>
-        <rect x="50" y="55" width="300" height="170" rx="4" fill="#fef3c7" stroke="#b45309"/>
-        <text x="200" y="75" text-anchor="middle" font-size="12" fill="#92400e">border 边框</text>
-        <rect x="80" y="90" width="240" height="120" rx="4" fill="#dbeafe" stroke="#1d4ed8"/>
-        <text x="200" y="110" text-anchor="middle" font-size="12" fill="#1e40af">padding 内边距</text>
-        <rect x="110" y="125" width="180" height="70" rx="4" fill="#d1fae5" stroke="#047857"/>
-        <text x="200" y="165" text-anchor="middle" font-size="13" fill="#065f46">content 内容</text>
-      </svg>
-      <p class="diagram-caption">标准盒模型（box-sizing: content-box）</p>
-    </div>
-
-    <pre><code class="language-css">/* 两种盒模型 */
-.box {
-  /* 默认：宽高只算content，padding和border会撑大盒子 */
-  box-sizing: content-box;
-  
-  /* 推荐：宽高包含content+padding+border，计算更直观 */
-  box-sizing: border-box;
-}</code></pre>
-
-    <div class="key-sentence">
-      💡 现代项目一般全局设置 <code>* { box-sizing: border-box; }</code>，布局计算更省心。
-    </div>
-  </div>
-
-  <div id="css-position" class="topic">
-    <h4>2.3 定位机制</h4>
+  <!-- CSS布局 -->
+  <div class="topic">
+    <h4>3.1 Flexbox 弹性布局 <span class="level-tag level-std">标准</span></h4>
+    <p class="lead">Flex 是一维布局方案，用来处理一行或一列的排列对齐，替代传统的float hack。</p>
     <ul>
-      <li><strong>static</strong>：默认，正常文档流</li>
-      <li><strong>relative</strong>：相对定位，相对于自己原来的位置偏移，不脱离文档流</li>
-      <li><strong>absolute</strong>：绝对定位，相对于最近的非static父元素定位，脱离文档流</li>
-      <li><strong>fixed</strong>：固定定位，相对于浏览器窗口，滚动不移动</li>
-      <li><strong>sticky</strong>：粘性定位，滚动到阈值后固定（吸顶效果）</li>
+      <li><strong>容器设置 display:flex</strong>：开启弹性布局</li>
+      <li><strong>主轴对齐 justify-content</strong>：flex-start左对齐 / center居中 / space-between两端对齐</li>
+      <li><strong>交叉轴对齐 align-items</strong>：stretch拉伸 / center居中 / flex-start顶对齐</li>
+      <li><strong>间距 gap</strong>：子元素之间的间距，不用margin了</li>
     </ul>
-
-    <pre><code class="language-css">/* 吸顶导航 */
-.sticky-nav {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-/* 悬浮返回顶部 */
-.back-top {
-  position: fixed;
-  right: 20px;
-  bottom: 20px;
-}</code></pre>
-  </div>
-
-  <div id="css-flexbox" class="topic">
-    <h4>2.4 Flexbox 弹性布局</h4>
-
-    <div class="diagram">
-      <svg width="500" height="200" viewBox="0 0 500 200">
-        <rect x="20" y="30" width="460" height="120" rx="6" fill="#f0f9ff" stroke="#0284c7"/>
-        <text x="250" y="55" text-anchor="middle" font-size="13" fill="#0369a1">display: flex  弹性容器</text>
-        
-        <rect x="50" y="80" width="80" height="50" rx="4" fill="#bfdbfe" stroke="#1d4ed8"/>
-        <text x="90" y="110" text-anchor="middle" font-size="12">item1</text>
-        
-        <rect x="170" y="80" width="80" height="50" rx="4" fill="#bfdbfe" stroke="#1d4ed8"/>
-        <text x="210" y="110" text-anchor="middle" font-size="12">item2</text>
-        
-        <rect x="290" y="80" width="80" height="50" rx="4" fill="#bfdbfe" stroke="#1d4ed8"/>
-        <text x="330" y="110" text-anchor="middle" font-size="12">item3</text>
-        
-        <line x1="50" y1="155" x2="370" y2="155" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/>
-        <text x="210" y="175" text-anchor="middle" font-size="12" fill="#64748b">主轴（flex-direction: row）</text>
-        <defs><marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/></marker></defs>
-      </svg>
-      <p class="diagram-caption">Flex布局主轴方向</p>
-    </div>
-
     <pre><code class="language-css">.container {
   display: flex;
-  
-  /* 主轴方向 */
-  flex-direction: row; /* row / row-reverse / column / column-reverse */
-  
-  /* 主轴对齐 */
-  justify-content: flex-start; /* flex-start / center / flex-end / space-between / space-around */
-  
-  /* 交叉轴对齐 */
-  align-items: stretch; /* flex-start / center / flex-end / stretch */
-  
-  /* 多行时行间距 */
-  align-content: center;
+  justify-content: space-between; /* 两端对齐 */
+  align-items: center;            /* 垂直居中 */
+  gap: 16px;                       /* 子元素间距16px */
 }
 
 .item {
-  flex: 1; /* 占剩余空间比例 */
-  flex-shrink: 0; /* 不收缩 */
+  flex: 1; /* 占剩余空间的比例 */
 }</code></pre>
+    <div class="diagram">
+      <svg width="550" height="160" viewBox="0 0 550 160">
+        <rect x="20" y="40" width="510" height="80" rx="6" fill="#f0f9ff" stroke="#0284c7"/>
+        <text x="275" y="60" text-anchor="middle" font-size="12" fill="#0369a1">display: flex 容器</text>
+        <rect x="40" y="70" width="80" height="40" rx="4" fill="#bfdbfe" stroke="#1d4ed8"/>
+        <text x="80" y="95" text-anchor="middle" font-size="12">item1</text>
+        <rect x="235" y="70" width="80" height="40" rx="4" fill="#bfdbfe" stroke="#1d4ed8"/>
+        <text x="275" y="95" text-anchor="middle" font-size="12">item2</text>
+        <rect x="430" y="70" width="80" height="40" rx="4" fill="#bfdbfe" stroke="#1d4ed8"/>
+        <text x="470" y="95" text-anchor="middle" font-size="12">item3</text>
+      </svg>
+      <p class="diagram-caption">Flexbox主轴方向排列</p>
+    </div>
+    <div class="read-more">深入阅读 → <a href="../01_前端基础/01_HTML5与CSS3【深入】.html">CSS布局深入篇</a></div>
   </div>
 
-  <div id="css-grid" class="topic">
-    <h4>2.5 Grid 网格布局</h4>
-    <pre><code class="language-css">.container {
-  display: grid;
+  <!-- DOM操作 -->
+  <div class="topic">
+    <h4>3.2 DOM 操作与事件绑定 <span class="level-tag level-std">标准</span></h4>
+    <p class="lead">JS 通过DOM API操作页面元素：找到元素、改内容、绑事件。</p>
+    <ul>
+      <li><strong>找元素</strong>：document.querySelector('.box') 或 getElementById</li>
+      <li><strong>改内容</strong>：element.textContent = '新文字'，element.style.color = 'red'</li>
+      <li><strong>绑事件</strong>：element.addEventListener('click', 处理函数)</li>
+      <li><strong>事件对象 e</strong>：拿到鼠标位置、按键信息等</li>
+    </ul>
+    <pre><code class="language-javascript">// 找到按钮
+const btn = document.querySelector('#submitBtn');
+
+// 绑定点击事件
+btn.addEventListener('click', function(e) {
+  console.log('按钮被点击了');
   
-  /* 定义列：3列，每列1fr */
-  grid-template-columns: 1fr 1fr 1fr;
-  
-  /* 行高自动 */
-  grid-auto-rows: 100px;
-  
-  /* 间距 */
-  gap: 16px;
-}
-
-/* 常用：12栅格 */
-.card {
-  grid-column: span 4; /* 占4列 */
-}</code></pre>
+  // 找到显示区域，改内容
+  const result = document.querySelector('#result');
+  result.textContent = '你好，欢迎！';
+  result.style.color = 'green';
+});</code></pre>
+    <div class="read-more">深入阅读 → <a href="../01_前端基础/02_JavaScript核心【深入】.html">DOM操作深入篇</a></div>
   </div>
 
-  <div id="css-center" class="topic">
-    <h4>2.6 居中方案大全</h4>
-    <pre><code class="language-css">/* 1. Flex居中（最常用） */
-.parent {
-  display: flex;
-  justify-content: center;  /* 水平 */
-  align-items: center;       /* 垂直 */
+  <!-- 异步请求 -->
+  <div class="topic">
+    <h4>3.3 Fetch 网络请求 <span class="level-tag level-std">标准</span></h4>
+    <p class="lead">前端通过HTTP请求从后端拿数据，Fetch是浏览器内置的请求API。</p>
+    <ul>
+      <li><strong>GET 请求</strong>：拿数据，参数放在URL里</li>
+      <li><strong>POST 请求</strong>：提交数据，参数放在请求体里</li>
+      <li><strong>async/await</strong>：用同步的写法写异步代码，比.then()更清晰</li>
+      <li><strong>错误处理</strong>：用try/catch捕获异常</li>
+    </ul>
+    <pre><code class="language-javascript">// GET 请求拿用户列表
+async function fetchUsers() {
+  try {
+    const res = await fetch('/api/users');
+    const data = await res.json(); // 解析JSON
+    console.log('用户列表：', data);
+  } catch (err) {
+    console.error('请求失败：', err);
+  }
 }
 
-/* 2. Grid居中 */
-.parent {
-  display: grid;
-  place-items: center;
-}
-
-/* 3. 绝对定位 + transform */
-.child {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
-/* 4. 文本水平居中 */
-.text {
-  text-align: center;
-  line-height: 单倍行高; /* 垂直居中单行 */
+// POST 提交表单
+async function login(username, password) {
+  const res = await fetch('/api/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username, password })
+  });
+  return res.json();
 }</code></pre>
+    <div class="read-more">深入阅读 → <a href="../01_前端基础/07_HTTP与跨域请求【标准】.html">HTTP与跨域标准篇</a></div>
   </div>
 
-  <div id="css-responsive" class="topic">
-    <h4>2.7 响应式设计</h4>
-    <pre><code class="language-css">/* 移动端优先 */
-.box {
-  width: 100%;
-  padding: 10px;
-}
+  <!-- 存储 -->
+  <div class="topic">
+    <h4>3.4 本地存储 localStorage <span class="level-tag level-std">标准</span></h4>
+    <p class="lead">把数据存在浏览器本地，刷新页面也不丢。</p>
+    <ul>
+      <li><strong>存数据</strong>：localStorage.setItem('key', 'value')</li>
+      <li><strong>取数据</strong>：localStorage.getItem('key')</li>
+      <li><strong>删数据</strong>：localStorage.removeItem('key')</li>
+      <li><strong>注意</strong>：只能存字符串，对象要先JSON.stringify</li>
+    </ul>
+    <pre><code class="language-javascript">// 存token（登录后）
+localStorage.setItem('token', 'abc123xyz');
 
-/* 平板以上 */
-@media (min-width: 768px) {
-  .box { width: 750px; }
-}
+// 取token（每次请求带上）
+const token = localStorage.getItem('token');
 
-/* 桌面以上 */
-@media (min-width: 1024px) {
-  .box { width: 960px; }
-}
+// 存对象
+const user = { name: '张三', id: 1 };
+localStorage.setItem('user', JSON.stringify(user));
 
-/* 断点参考：
-   < 768px   手机
-   768-1023  平板
-   >=1024    桌面 */</code></pre>
-  </div>
-
-  <div id="css-anim" class="topic">
-    <h4>2.8 动画与过渡</h4>
-    <pre><code class="language-css">/* 过渡：状态平滑变化 */
-.btn {
-  transition: all 0.3s ease;
-}
-.btn:hover {
-  background: #1d4ed8;
-  transform: translateY(-2px);
-}
-
-/* 关键帧动画 */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.card {
-  animation: fadeIn 0.5s ease forwards;
-}</code></pre>
+// 取对象
+const savedUser = JSON.parse(localStorage.getItem('user'));</code></pre>
+    <div class="read-more">深入阅读 → <a href="../01_前端基础/07_HTTP与跨域请求【标准】.html">浏览器存储详解</a></div>
   </div>
 </section>
 
-<!-- ===== 三、JavaScript ===== -->
-<section id="sec3" class="card">
-  <h2><span class="num">3</span>JavaScript 核心概念</h2>
+<!-- ===== 深入层 ===== -->
+<section id="sec4" class="card">
+  <h2><span class="num">4</span>深入层 · 原理进阶 <span class="level-tag level-deep">深入</span></h2>
+  <p>这一层是理解底层运行机制，遇到bug能定位、能优化性能、能写出更可靠的代码。</p>
 
-  <div id="js-type" class="topic">
-    <h4>3.1 数据类型</h4>
+  <!-- 原型链 -->
+  <div class="topic">
+    <h4>4.1 原型链与继承 <span class="level-tag level-deep">深入</span></h4>
+    <p class="lead">JS 没有类的传统继承，靠原型链实现属性查找：对象找不到属性，就沿着 __proto__ 往上找。</p>
+    <ul>
+      <li><strong>每个对象都有 __proto__</strong>：指向它的构造函数的 prototype</li>
+      <li><strong>查找规则</strong>：实例 → 构造函数.prototype → Object.prototype → null</li>
+      <li><strong>class 语法糖</strong>：ES6的class本质还是原型继承，只是写起来更像面向对象</li>
+    </ul>
+    <pre><code class="language-javascript">class Animal {
+  constructor(name) {
+    this.name = name;
+  }
+  speak() {
+    console.log(this.name + '会叫');
+  }
+}
 
+// 继承
+class Dog extends Animal {
+  speak() {
+    console.log(this.name + '汪汪汪');
+  }
+}
+
+const dog = new Dog('旺财');
+dog.speak(); // 旺财汪汪汪
+// dog本身没有speak？不对，Dog.prototype上有</code></pre>
     <div class="diagram">
-      <svg width="500" height="200" viewBox="0 0 500 200">
-        <rect x="150" y="10" width="200" height="35" rx="6" fill="#1e293b"/>
-        <text x="250" y="33" text-anchor="middle" fill="white" font-size="13">JavaScript 数据类型</text>
-        
-        <rect x="30" y="70" width="200" height="110" rx="6" fill="#dbeafe" stroke="#1d4ed8"/>
-        <text x="130" y="95" text-anchor="middle" font-size="13" fill="#1e40af">原始类型 (栈内存)</text>
-        <text x="130" y="120" text-anchor="middle" font-size="12">number / string / boolean</text>
-        <text x="130" y="140" text-anchor="middle" font-size="12">null / undefined / symbol</text>
-        <text x="130" y="160" text-anchor="middle" font-size="12">bigint</text>
-        
-        <rect x="270" y="70" width="200" height="110" rx="6" fill="#d1fae5" stroke="#047857"/>
-        <text x="370" y="95" text-anchor="middle" font-size="13" fill="#065f46">引用类型 (堆内存)</text>
-        <text x="370" y="120" text-anchor="middle" font-size="12">object / array / function</text>
-        <text x="370" y="140" text-anchor="middle" font-size="12">date / regexp / map / set</text>
-        <text x="370" y="160" text-anchor="middle" font-size="12">class实例</text>
+      <svg width="480" height="240" viewBox="0 0 480 240">
+        <rect x="140" y="10" width="200" height="35" rx="6" fill="#1e293b"/>
+        <text x="240" y="33" text-anchor="middle" fill="white" font-size="12">Object.prototype（顶层）</text>
+        <line x1="240" y1="45" x2="240" y2="65" stroke="#64748b" stroke-width="1.5" stroke-dasharray="4"/>
+        <text x="255" y="58" font-size="10" fill="#64748b">__proto__</text>
+        <rect x="140" y="65" width="200" height="35" rx="6" fill="#1d4ed8"/>
+        <text x="240" y="88" text-anchor="middle" fill="white" font-size="12">Animal.prototype</text>
+        <line x1="240" y1="100" x2="240" y2="120" stroke="#64748b" stroke-width="1.5" stroke-dasharray="4"/>
+        <rect x="140" y="120" width="200" height="35" rx="6" fill="#0e7490"/>
+        <text x="240" y="143" text-anchor="middle" fill="white" font-size="12">Dog.prototype</text>
+        <line x1="240" y1="155" x2="240" y2="175" stroke="#64748b" stroke-width="1.5" stroke-dasharray="4"/>
+        <rect x="140" y="175" width="200" height="35" rx="6" fill="#047857"/>
+        <text x="240" y="198" text-anchor="middle" fill="white" font-size="12">dog 实例</text>
       </svg>
-      <p class="diagram-caption">JS数据类型分类</p>
+      <p class="diagram-caption">原型链查找路径</p>
     </div>
-
-    <pre><code class="language-javascript">// 原始类型：赋值拷贝，存的是值
-let a = 10;
-let b = a;
-b = 20;
-console.log(a); // 10，互不影响
-
-// 引用类型：赋值拷贝的是地址，指向同一个对象
-let obj1 = { name: '张三' };
-let obj2 = obj1;
-obj2.name = '李四';
-console.log(obj1.name); // 李四，都改了
-
-// 类型判断
-typeof 123;        // 'number'
-typeof 'abc';      // 'string'
-typeof null;      // 'object' (历史bug)
-Array.isArray([]); // true</code></pre>
+    <div class="read-more">深入阅读 → <a href="../01_前端基础/02_JavaScript核心【深入】.html">JavaScript核心深入篇</a></div>
   </div>
 
-  <div id="js-scope" class="topic">
-    <h4>3.2 作用域与闭包</h4>
+  <!-- 事件循环 -->
+  <div class="topic">
+    <h4>4.2 事件循环（Event Loop）<span class="level-tag level-deep">深入</span></h4>
+    <p class="lead">JS 是单线程的，为什么能处理异步？靠事件循环：把异步任务放到队列里，等同步代码执行完再依次处理。</p>
+    <ul>
+      <li><strong>同步任务</strong>：在调用栈上立刻执行</li>
+      <li><strong>微任务</strong>：Promise.then、MutationObserver，优先级高，栈清空就立刻执行</li>
+      <li><strong>宏任务</strong>：setTimeout、setInterval、I/O，每次只取一个，然后又清空微任务队列</li>
+    </ul>
+    <pre><code class="language-javascript">console.log('1'); // 同步
 
+setTimeout(() => console.log('2'), 0); // 宏任务
+
+Promise.resolve().then(() => console.log('3')); // 微任务
+
+console.log('4'); // 同步
+
+// 输出顺序：1 → 4 → 3 → 2
+// 不是 1→4→2→3！微任务比宏任务先执行</code></pre>
     <div class="diagram">
-      <svg width="450" height="220" viewBox="0 0 450 220">
-        <rect x="20" y="10" width="410" height="200" rx="6" fill="#f0f9ff" stroke="#0284c7"/>
-        <text x="225" y="35" text-anchor="middle" font-size="13" fill="#0369a1">全局作用域</text>
-        
-        <rect x="60" y="60" width="330" height="130" rx="6" fill="#dbeafe" stroke="#1d4ed8"/>
-        <text x="225" y="85" text-anchor="middle" font-size="12" fill="#1e40af">函数作用域 outer()</text>
-        
-        <rect x="100" y="110" width="250" height="60" rx="6" fill="#bfdbfe" stroke="#2563eb"/>
-        <text x="225" y="145" text-anchor="middle" font-size="12" fill="#1d4ed8">函数作用域 inner()</text>
-        
-        <text x="225" y="200" text-anchor="middle" font-size="11" fill="#64748b">内层可以访问外层变量，外层不能访问内层（词法作用域）</text>
+      <svg width="650" height="200" viewBox="0 0 650 200">
+        <rect x="250" y="20" width="150" height="40" rx="6" fill="#1e293b"/>
+        <text x="325" y="45" text-anchor="middle" fill="white" font-size="13">调用栈 Call Stack</text>
+        <line x1="325" y1="60" x2="160" y2="90" stroke="#64748b" stroke-width="1.5"/>
+        <line x1="325" y1="60" x2="490" y2="90" stroke="#64748b" stroke-width="1.5"/>
+        <rect x="60" y="90" width="180" height="50" rx="6" fill="#d1fae5" stroke="#047857"/>
+        <text x="150" y="112" text-anchor="middle" font-size="12" fill="#065f46">微任务队列</text>
+        <text x="150" y="130" text-anchor="middle" font-size="10">Promise.then 等</text>
+        <rect x="400" y="90" width="180" height="50" rx="6" fill="#fee2e2" stroke="#b91c1c"/>
+        <text x="490" y="112" text-anchor="middle" font-size="12" fill="#991b1b">宏任务队列</text>
+        <text x="490" y="130" text-anchor="middle" font-size="10">setTimeout / I/O 等</text>
+        <text x="325" y="175" text-anchor="middle" font-size="12" fill="#64748b">每轮：栈清空 → 清空所有微任务 → 取一个宏任务 → 渲染</text>
       </svg>
-      <p class="diagram-caption">作用域链层级</p>
+      <p class="diagram-caption">事件循环执行模型</p>
     </div>
+    <div class="read-more">深入阅读 → <a href="../01_前端基础/03_JavaScript进阶_事件循环与异步【深入】.html">JS异步深入篇</a></div>
+  </div>
 
-    <pre><code class="language-javascript">// 闭包：函数 + 它能访问的外部变量
+  <!-- 闭包 -->
+  <div class="topic">
+    <h4>4.3 闭包（Closure）<span class="level-tag level-deep">深入</span></h4>
+    <p class="lead">函数 + 它能访问的外部变量 = 闭包。内部函数记住了外部作用域，即使外部函数已经执行完了。</p>
+    <ul>
+      <li><strong>核心作用</strong>：创建私有变量、函数工厂、防抖节流</li>
+      <li><strong>注意点</strong>：闭包会持有变量引用，用多了可能内存泄漏</li>
+    </ul>
+    <pre><code class="language-javascript">// 闭包实现计数器：count是私有变量，外部访问不到
 function createCounter() {
-  let count = 0;  // 私有变量，外部访问不到
+  let count = 0; // 私有
   
-  return function() {
-    count++;
-    return count;
+  return {
+    increment: () => ++count,
+    decrement: () => --count,
+    getCount: () => count
   };
 }
 
 const counter = createCounter();
-counter(); // 1
-counter(); // 2
-counter(); // 3
-// count被闭包保存在内存中，不会被回收</code></pre>
-
-    <div class="key-sentence">
-      💡 闭包用途：私有变量、函数工厂、防抖节流、柯里化。
-    </div>
+counter.increment(); // 1
+counter.increment(); // 2
+console.log(counter.getCount()); // 2
+// 外面直接访问不到count，只能通过方法操作</code></pre>
+    <div class="read-more">深入阅读 → <a href="../01_前端基础/02_JavaScript核心【深入】.html">闭包与作用域深入篇</a></div>
   </div>
 
-  <div id="js-this" class="topic">
-    <h4>3.3 this 指向规则</h4>
-
-    <pre><code class="language-javascript">// this指向谁，看函数怎么调用，不看在哪定义
-
-// 1. 全局调用：this = window（浏览器）
-function show() { console.log(this); }
-show(); // window
-
-// 2. 对象方法调用：this = 调用者
-const obj = {
-  name: '张三',
-  say() { console.log(this.name); }
-};
-obj.say(); // 张三（this是obj）
-
-// 3. call/apply/bind：手动指定this
-function greet() { console.log(this.name); }
-const person = { name: '李四' };
-greet.call(person); // 李四
-
-// 4. 箭头函数：没有自己的this，继承外层的this
-const arrow = () => console.log(this);
-// 箭头函数的this在定义时就定了，不会变</code></pre>
-  </div>
-
-  <div id="js-proto" class="topic">
-    <h4>3.4 原型与原型链</h4>
-
+  <!-- HTTP缓存 -->
+  <div class="topic">
+    <h4>4.4 浏览器缓存机制 <span class="level-tag level-deep">深入</span></h4>
+    <p class="lead">浏览器把静态资源存在本地，下次不用再下载，加快页面加载。</p>
+    <ul>
+      <li><strong>强缓存</strong>：Cache-Control / Expires，直接用本地缓存，不发请求</li>
+      <li><strong>协商缓存</strong>：ETag / Last-Modified，问服务器资源变了没，没变就返回304</li>
+      <li><strong>应用场景</strong>：JS/CSS/图片等带hash的文件用强缓存，HTML用协商缓存</li>
+    </ul>
     <div class="diagram">
-      <svg width="450" height="260" viewBox="0 0 450 260">
-        <rect x="150" y="10" width="150" height="35" rx="6" fill="#1e293b"/>
-        <text x="225" y="33" text-anchor="middle" fill="white" font-size="12">Object.prototype</text>
-        
-        <line x1="225" y1="45" x2="225" y2="65" stroke="#64748b" stroke-width="2" stroke-dasharray="4"/>
-        <text x="240" y="58" font-size="10" fill="#64748b">__proto__</text>
-        
-        <rect x="150" y="65" width="150" height="35" rx="6" fill="#1d4ed8"/>
-        <text x="225" y="88" text-anchor="middle" fill="white" font-size="12">Person.prototype</text>
-        
-        <line x1="225" y1="100" x2="225" y2="120" stroke="#64748b" stroke-width="2" stroke-dasharray="4"/>
-        
-        <rect x="150" y="120" width="150" height="35" rx="6" fill="#0e7490"/>
-        <text x="225" y="143" text-anchor="middle" fill="white" font-size="12">person1 实例</text>
-        
-        <line x1="225" y1="155" x2="225" y2="175" stroke="#64748b" stroke-width="2" stroke-dasharray="4"/>
-        
-        <rect x="150" y="175" width="150" height="35" rx="6" fill="#0e7490"/>
-        <text x="225" y="198" text-anchor="middle" fill="white" font-size="12">person2 实例</text>
-        
-        <text x="225" y="235" text-anchor="middle" font-size="11" fill="#64748b">查找属性：实例 → 原型 → 父原型 → null</text>
+      <svg width="600" height="160" viewBox="0 0 600 160">
+        <rect x="20" y="50" width="100" height="50" rx="6" fill="#dbeafe" stroke="#1d4ed8"/>
+        <text x="70" y="80" text-anchor="middle" font-size="12">浏览器</text>
+        <line x1="120" y1="75" x2="180" y2="75" stroke="#047857" stroke-width="2" marker-end="url(#arr)"/>
+        <rect x="180" y="50" width="100" height="50" rx="6" fill="#d1fae5" stroke="#047857"/>
+        <text x="230" y="80" text-anchor="middle" font-size="12">有强缓存？</text>
+        <line x1="280" y1="65" x2="350" y2="40" stroke="#047857" stroke-width="2" marker-end="url(#arr)"/>
+        <line x1="280" y1="85" x2="350" y2="110" stroke="#b45309" stroke-width="2" marker-end="url(#arr)"/>
+        <text x="310" y="50" font-size="11" fill="#047857">是</text>
+        <text x="310" y="105" font-size="11" fill="#b45309">否</text>
+        <rect x="350" y="20" width="100" height="35" rx="6" fill="#d1fae5" stroke="#047857"/>
+        <text x="400" y="42" text-anchor="middle" font-size="11">直接用本地缓存</text>
+        <rect x="350" y="95" width="100" height="35" rx="6" fill="#fef3c7" stroke="#b45309"/>
+        <text x="400" y="117" text-anchor="middle" font-size="11">发请求问服务器</text>
       </svg>
-      <p class="diagram-caption">原型链查找路径</p>
+      <p class="diagram-caption">浏览器缓存判断流程</p>
     </div>
-
-    <pre><code class="language-javascript">class Person {
-  constructor(name) {
-    this.name = name;
-  }
-  sayHi() {
-    console.log('你好，' + this.name);
-  }
-}
-
-const p1 = new Person('张三');
-p1.sayHi(); // 你好，张三
-
-// p1本身没有sayHi方法，沿着__proto__找到Person.prototype上的方法
-// 这就是原型链继承</code></pre>
-  </div>
-
-  <div id="js-eventloop" class="topic">
-    <h4>3.5 事件循环（Event Loop）</h4>
-
-    <div class="diagram">
-      <svg width="500" height="280" viewBox="0 0 500 280">
-        <rect x="180" y="10" width="140" height="40" rx="6" fill="#1e293b"/>
-        <text x="250" y="35" text-anchor="middle" fill="white" font-size="13">调用栈 Call Stack</text>
-        
-        <line x1="250" y1="50" x2="250" y2="70" stroke="#64748b" stroke-width="2"/>
-        
-        <rect x="80" y="70" width="160" height="50" rx="6" fill="#dbeafe" stroke="#1d4ed8"/>
-        <text x="160" y="92" text-anchor="middle" font-size="12" fill="#1e40af">宏任务 MacroTask</text>
-        <text x="160" y="110" text-anchor="middle" font-size="10">setTimeout / setInterval / I/O</text>
-        
-        <rect x="280" y="70" width="160" height="50" rx="6" fill="#d1fae5" stroke="#047857"/>
-        <text x="360" y="92" text-anchor="middle" font-size="12" fill="#065f46">微任务 MicroTask</text>
-        <text x="360" y="110" text-anchor="middle" font-size="10">Promise.then / MutationObserver</text>
-        
-        <line x1="160" y1="120" x2="160" y2="150" stroke="#64748b" stroke-width="2" marker-end="url(#arr2)"/>
-        <line x1="360" y1="120" x2="360" y2="150" stroke="#64748b" stroke-width="2" marker-end="url(#arr2)"/>
-        
-        <rect x="100" y="150" width="300" height="40" rx="6" fill="#fef3c7" stroke="#b45309"/>
-        <text x="250" y="175" text-anchor="middle" font-size="12" fill="#92400e">执行顺序：栈清空 → 先清空所有微任务 → 再取一个宏任务</text>
-        
-        <text x="250" y="230" text-anchor="middle" font-size="11" fill="#64748b">每轮循环：1个宏任务 → 所有微任务 → 渲染 → 下一轮</text>
-        <defs><marker id="arr2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/></marker></defs>
-      </svg>
-      <p class="diagram-caption">事件循环执行模型</p>
-    </div>
-
-    <pre><code class="language-javascript">console.log('1'); // 同步
-
-setTimeout(() => {
-  console.log('2'); // 宏任务
-}, 0);
-
-Promise.resolve().then(() => {
-  console.log('3'); // 微任务
-});
-
-console.log('4'); // 同步
-
-// 输出顺序：1 → 4 → 3 → 2</code></pre>
-  </div>
-
-  <div id="js-promise" class="topic">
-    <h4>3.6 Promise 与异步编程</h4>
-
-    <div class="diagram">
-      <svg width="450" height="160" viewBox="0 0 450 160">
-        <rect x="20" y="50" width="100" height="50" rx="6" fill="#e2e8f0" stroke="#64748b"/>
-        <text x="70" y="80" text-anchor="middle" font-size="12">Pending 进行中</text>
-        
-        <line x1="120" y1="75" x2="170" y2="45" stroke="#047857" stroke-width="2" marker-end="url(#arr3)"/>
-        <line x1="120" y1="75" x2="170" y2="105" stroke="#b91c1c" stroke-width="2" marker-end="url(#arr4)"/>
-        
-        <rect x="170" y="20" width="120" height="45" rx="6" fill="#d1fae5" stroke="#047857"/>
-        <text x="230" y="47" text-anchor="middle" font-size="12" fill="#065f46">Fulfilled 成功</text>
-        
-        <rect x="170" y="90" width="120" height="45" rx="6" fill="#fee2e2" stroke="#b91c1c"/>
-        <text x="230" y="117" text-anchor="middle" font-size="12" fill="#991b1b">Rejected 失败</text>
-        
-        <defs>
-          <marker id="arr3" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#047857"/></marker>
-          <marker id="arr4" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#b91c1c"/></marker>
-        </defs>
-      </svg>
-      <p class="diagram-caption">Promise三种状态</p>
-    </div>
-
-    <pre><code class="language-javascript">// 基本用法
-const request = new Promise((resolve, reject) => {
-  // 异步操作
-  setTimeout(() => {
-    const success = true;
-    if (success) {
-      resolve({ code: 200, data: '成功' });
-    } else {
-      reject(new Error('失败'));
-    }
-  }, 1000);
-});
-
-// 链式调用
-request
-  .then(res => { console.log(res); return res.data; })
-  .then(data => { console.log(data); })
-  .catch(err => { console.error(err); })
-  .finally(() => { console.log('结束'); });
-
-// async/await 写法（更简洁）
-async function fetchData() {
-  try {
-    const res = await request;
-    console.log(res);
-  } catch (err) {
-    console.error(err);
-  }
-}</code></pre>
+    <div class="read-more">深入阅读 → <a href="../01_前端基础/07_HTTP与跨域请求【标准】.html">HTTP缓存详解</a></div>
   </div>
 </section>
 
-<!-- ===== 四、DOM/BOM ===== -->
-<section id="sec4" class="card">
-  <h2><span class="num">4</span>DOM 操作与浏览器API</h2>
-
-  <div id="dom-event" class="topic">
-    <h4>4.1 事件机制：冒泡与捕获</h4>
-
-    <div class="diagram">
-      <svg width="450" height="240" viewBox="0 0 450 240">
-        <rect x="125" y="10" width="200" height="30" rx="4" fill="#fee2e2" stroke="#b91c1c"/>
-        <text x="225" y="30" text-anchor="middle" font-size="12">window （捕获阶段从外到内）</text>
-        
-        <rect x="125" y="50" width="200" height="30" rx="4" fill="#fecaca" stroke="#dc2626"/>
-        <text x="225" y="70" text-anchor="middle" font-size="12">document</text>
-        
-        <rect x="125" y="90" width="200" height="30" rx="4" fill="#fca5a5" stroke="#ef4444"/>
-        <text x="225" y="110" text-anchor="middle" font-size="12">div 父元素</text>
-        
-        <rect x="175" y="130" width="100" height="30" rx="4" fill="#f87171" stroke="#dc2626"/>
-        <text x="225" y="150" text-anchor="middle" font-size="12">button 目标</text>
-        
-        <rect x="125" y="170" width="200" height="30" rx="4" fill="#fca5a5" stroke="#ef4444"/>
-        <text x="225" y="190" text-anchor="middle" font-size="12">div 父元素（冒泡阶段从内到外）</text>
-        
-        <text x="225" y="225" text-anchor="middle" font-size="11" fill="#64748b">捕获：window→div→button   冒泡：button→div→window</text>
-      </svg>
-      <p class="diagram-caption">事件传播三阶段</p>
-    </div>
-
-    <pre><code class="language-javascript">// 事件委托：利用冒泡，把子元素事件绑在父元素上
-document.querySelector('#list').addEventListener('click', function(e) {
-  if (e.target.tagName === 'LI') {
-    console.log('点击了：', e.target.textContent);
-  }
-});
-
-// 阻止冒泡
-e.stopPropagation();
-
-// 阻止默认行为（如a标签跳转、表单提交）
-e.preventDefault();</code></pre>
-  </div>
-
-  <div id="dom-storage" class="topic">
-    <h4>4.2 前端存储方案对比</h4>
-
-    <div class="diagram">
-      <svg width="550" height="180" viewBox="0 0 550 180">
-        <rect x="10" y="30" width="120" height="120" rx="6" fill="#dbeafe" stroke="#1d4ed8"/>
-        <text x="70" y="55" text-anchor="middle" font-size="12" fill="#1e40af">Cookie</text>
-        <text x="70" y="80" text-anchor="middle" font-size="10">大小：4KB</text>
-        <text x="70" y="100" text-anchor="middle" font-size="10">会自动带在请求头</text>
-        <text x="70" y="120" text-anchor="middle" font-size="10">可设置过期时间</text>
-        
-        <rect x="145" y="30" width="120" height="120" rx="6" fill="#d1fae5" stroke="#047857"/>
-        <text x="205" y="55" text-anchor="middle" font-size="12" fill="#065f46">localStorage</text>
-        <text x="205" y="80" text-anchor="middle" font-size="10">大小：5MB</text>
-        <text x="205" y="100" text-anchor="middle" font-size="10">永久保存</text>
-        <text x="205" y="120" text-anchor="middle" font-size="10">不随请求发送</text>
-        
-        <rect x="280" y="30" width="120" height="120" rx="6" fill="#fef3c7" stroke="#b45309"/>
-        <text x="340" y="55" text-anchor="middle" font-size="12" fill="#92400e">sessionStorage</text>
-        <text x="340" y="80" text-anchor="middle" font-size="10">大小：5MB</text>
-        <text x="340" y="100" text-anchor="middle" font-size="10">会话级</text>
-        <text x="340" y="120" text-anchor="middle" font-size="10">关标签页就清</text>
-        
-        <rect x="415" y="30" width="125" height="120" rx="6" fill="#fce7f3" stroke="#be185d"/>
-        <text x="477" y="55" text-anchor="middle" font-size="12" fill="#9d174d">IndexedDB</text>
-        <text x="477" y="80" text-anchor="middle" font-size="10">大小：几百MB</text>
-        <text x="477" y="100" text-anchor="middle" font-size="10">NoSQL数据库</text>
-        <text x="477" y="120" text-anchor="middle" font-size="10">存结构化数据</text>
-      </svg>
-      <p class="diagram-caption">四种前端存储方案对比</p>
-    </div>
-
-    <pre><code class="language-javascript">// localStorage 用法
-localStorage.setItem('token', 'abc123');
-const token = localStorage.getItem('token');
-localStorage.removeItem('token');
-localStorage.clear(); // 清空所有
-
-// 注意：只能存字符串，对象要JSON.stringify
-localStorage.setItem('user', JSON.stringify({ name: '张三' }));</code></pre>
-  </div>
-
-  <div id="dom-reflow" class="topic">
-    <h4>4.3 重排（Reflow）与重绘（Repaint）</h4>
-
-    <div class="diagram">
-      <svg width="450" height="140" viewBox="0 0 450 140">
-        <rect x="20" y="30" width="180" height="40" rx="6" fill="#fee2e2" stroke="#b91c1c"/>
-        <text x="110" y="55" text-anchor="middle" font-size="12" fill="#991b1b">修改几何属性（宽高/位置）</text>
-        <line x1="200" y1="50" x2="240" y2="50" stroke="#64748b" stroke-width="2" marker-end="url(#arr5)"/>
-        <rect x="240" y="30" width="180" height="40" rx="6" fill="#fef3c7" stroke="#b45309"/>
-        <text x="330" y="55" text-anchor="middle" font-size="12" fill="#92400e">重排 Reflow（重新计算布局）</text>
-        
-        <rect x="20" y="90" width="180" height="40" rx="6" fill="#dbeafe" stroke="#1d4ed8"/>
-        <text x="110" y="115" text-anchor="middle" font-size="12" fill="#1e40af">修改颜色/背景（不影响布局）</text>
-        <line x1="200" y1="110" x2="240" y2="110" stroke="#64748b" stroke-width="2" marker-end="url(#arr5)"/>
-        <rect x="240" y="90" width="180" height="40" rx="6" fill="#d1fae5" stroke="#047857"/>
-        <text x="330" y="115" text-anchor="middle" font-size="12" fill="#065f46">重绘 Repaint（重新绘制像素）</text>
-        
-        <defs><marker id="arr5" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/></marker></defs>
-      </svg>
-      <p class="diagram-caption">重排与重绘触发条件</p>
-    </div>
-
-    <div class="warn-box">
-      ⚠️ 性能优化：频繁操作DOM会触发多次重排，批量修改时用 DocumentFragment 或先隐藏元素再修改。
-    </div>
-  </div>
-</section>
-
-<!-- ===== 五、HTTP ===== -->
+<!-- ===== 知识图谱 ===== -->
 <section id="sec5" class="card">
-  <h2><span class="num">5</span>HTTP 网络协议基础</h2>
-
-  <div id="http-model" class="topic">
-    <h4>5.1 请求响应模型</h4>
-
-    <div class="diagram">
-      <svg width="500" height="200" viewBox="0 0 500 200">
-        <rect x="20" y="70" width="140" height="60" rx="8" fill="#dbeafe" stroke="#1d4ed8"/>
-        <text x="90" y="95" text-anchor="middle" font-size="13" fill="#1e40af">客户端（浏览器）</text>
-        <text x="90" y="115" text-anchor="middle" font-size="11">发请求 Request</text>
-        
-        <line x1="160" y1="100" x2="320" y2="100" stroke="#047857" stroke-width="3" marker-end="url(#arr6)"/>
-        <text x="240" y="85" text-anchor="middle" font-size="12" fill="#047857">HTTP 请求</text>
-        
-        <rect x="340" y="70" width="140" height="60" rx="8" fill="#d1fae5" stroke="#047857"/>
-        <text x="410" y="95" text-anchor="middle" font-size="13" fill="#065f46">服务端（服务器）</text>
-        <text x="410" y="115" text-anchor="middle" font-size="11">处理 + 返回响应</text>
-        
-        <line x1="340" y1="130" x2="160" y2="130" stroke="#b45309" stroke-width="3" marker-end="url(#arr7)"/>
-        <text x="250" y="155" text-anchor="middle" font-size="12" fill="#92400e">HTTP Response 响应</text>
-        
-        <defs>
-          <marker id="arr6" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#047857"/></marker>
-          <marker id="arr7" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#b45309"/></marker>
-        </defs>
-      </svg>
-      <p class="diagram-caption">HTTP请求-响应模型</p>
-    </div>
-
-    <pre><code class="language-http">// 请求
-GET /api/users HTTP/1.1
-Host: example.com
-Cookie: session=abc123
-Content-Type: application/json
-
-// 响应
-HTTP/1.1 200 OK
-Content-Type: application/json
-Set-Cookie: token=xyz789
-
-{ "code": 200, "data": [...] }</code></pre>
-  </div>
-
-  <div id="http-status" class="topic">
-    <h4>5.2 常见状态码</h4>
-
-    <pre><code class="language-javascript">// 2xx 成功
-200 OK          // 请求成功
-201 Created     // 创建成功（POST新建资源）
-204 No Content // 成功但无返回内容（如删除）
-
-// 3xx 重定向
-301 Moved Permanently  // 永久重定向
-302 Found              // 临时重定向
-304 Not Modified      // 资源未修改，用缓存
-
-// 4xx 客户端错误
-400 Bad Request        // 请求参数错误
-401 Unauthorized       // 未登录/未认证
-403 Forbidden         // 已登录但无权限
-404 Not Found         // 资源不存在
-429 Too Many Requests // 请求太频繁，被限流
-
-// 5xx 服务端错误
-500 Internal Server Error // 服务器内部错误
-502 Bad Gateway           // 网关错误
-503 Service Unavailable    // 服务不可用
-504 Gateway Timeout        // 网关超时</code></pre>
-  </div>
-
-  <div id="http-cors" class="topic">
-    <h4>5.3 跨域与CORS</h4>
-    <p>浏览器的同源策略：协议+域名+端口，三者有一个不同就是跨域。</p>
-
-    <div class="diagram">
-      <svg width="450" height="120" viewBox="0 0 450 120">
-        <rect x="30" y="20" width="180" height="35" rx="4" fill="#d1fae5" stroke="#047857"/>
-        <text x="120" y="42" text-anchor="middle" font-size="12">同源：http://a.com</text>
-        
-        <rect x="240" y="20" width="180" height="35" rx="4" fill="#fee2e2" stroke="#b91c1c"/>
-        <text x="330" y="42" text-anchor="middle" font-size="12">跨域：http://api.a.com:8080</text>
-        
-        <text x="225" y="90" text-anchor="middle" font-size="12" fill="#64748b">解决方案：CORS（服务端设置响应头）/ Nginx代理 / JSONP</text>
-      </svg>
-      <p class="diagram-caption">同源策略示意</p>
-    </div>
-
-    <pre><code class="language-javascript">// 服务端设置CORS响应头
-response.setHeader('Access-Control-Allow-Origin', '*');
-response.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-response.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');</code></pre>
+  <h2><span class="num">5</span>知识图谱</h2>
+  <div class="diagram">
+    <svg width="750" height="300" viewBox="0 0 750 300">
+      <defs>
+        <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+          <path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/>
+        </marker>
+      </defs>
+      <rect x="275" y="10" width="200" height="40" rx="8" fill="#1e293b"/>
+      <text x="375" y="35" text-anchor="middle" fill="white" font-size="14">前端基础</text>
+      
+      <line x1="375" y1="50" x2="125" y2="90" stroke="#047857" stroke-width="2"/>
+      <line x1="375" y1="50" x2="375" y2="90" stroke="#1d4ed8" stroke-width="2"/>
+      <line x1="375" y1="50" x2="625" y2="90" stroke="#b91c1c" stroke-width="2"/>
+      
+      <rect x="40" y="90" width="170" height="40" rx="6" fill="#d1fae5" stroke="#047857" stroke-width="2"/>
+      <text x="125" y="115" text-anchor="middle" font-size="13" fill="#065f46">基础层</text>
+      
+      <rect x="290" y="90" width="170" height="40" rx="6" fill="#dbeafe" stroke="#1d4ed8" stroke-width="2"/>
+      <text x="375" y="115" text-anchor="middle" font-size="13" fill="#1e40af">标准层</text>
+      
+      <rect x="540" y="90" width="170" height="40" rx="6" fill="#fee2e2" stroke="#b91c1c" stroke-width="2"/>
+      <text x="625" y="115" text-anchor="middle" font-size="13" fill="#991b1b">深入层</text>
+      
+      <line x1="125" y1="130" x2="125" y2="160" stroke="#64748b" stroke-width="1.5"/>
+      <line x1="375" y1="130" x2="375" y2="160" stroke="#64748b" stroke-width="1.5"/>
+      <line x1="625" y1="130" x2="625" y2="160" stroke="#64748b" stroke-width="1.5"/>
+      
+      <rect x="50" y="160" width="150" height="30" rx="4" fill="#f0fdf4" stroke="#6ee7b7"/>
+      <text x="125" y="180" text-anchor="middle" font-size="11">HTML结构</text>
+      <rect x="50" y="195" width="150" height="30" rx="4" fill="#f0fdf4" stroke="#6ee7b7"/>
+      <text x="125" y="215" text-anchor="middle" font-size="11">CSS选择器</text>
+      <rect x="50" y="230" width="150" height="30" rx="4" fill="#f0fdf4" stroke="#6ee7b7"/>
+      <text x="125" y="250" text-anchor="middle" font-size="11">JS变量类型</text>
+      
+      <rect x="300" y="160" width="150" height="30" rx="4" fill="#eff6ff" stroke="#93c5fd"/>
+      <text x="375" y="180" text-anchor="middle" font-size="11">Flex布局</text>
+      <rect x="300" y="195" width="150" height="30" rx="4" fill="#eff6ff" stroke="#93c5fd"/>
+      <text x="375" y="215" text-anchor="middle" font-size="11">DOM与事件</text>
+      <rect x="300" y="230" width="150" height="30" rx="4" fill="#eff6ff" stroke="#93c5fd"/>
+      <text x="375" y="250" text-anchor="middle" font-size="11">Fetch请求+存储</text>
+      
+      <rect x="550" y="160" width="150" height="30" rx="4" fill="#fef2f2" stroke="#fca5a5"/>
+      <text x="625" y="180" text-anchor="middle" font-size="11">原型链继承</text>
+      <rect x="550" y="195" width="150" height="30" rx="4" fill="#fef2f2" stroke="#fca5a5"/>
+      <text x="625" y="215" text-anchor="middle" font-size="11">事件循环</text>
+      <rect x="550" y="230" width="150" height="30" rx="4" fill="#fef2f2" stroke="#fca5a5"/>
+      <text x="625" y="250" text-anchor="middle" font-size="11">闭包+缓存机制</text>
+    </svg>
+    <p class="diagram-caption">前端基础知识三层图谱</p>
   </div>
 </section>
 
-<!-- ===== 六、TypeScript ===== -->
+<!-- ===== 常见误区 ===== -->
 <section id="sec6" class="card">
-  <h2><span class="num">6</span>TypeScript 入门</h2>
-
-  <div id="ts-base" class="topic">
-    <h4>6.1 基础类型与接口</h4>
-    <pre><code class="language-typescript">// 基础类型
-let name: string = '张三';
-let age: number = 25;
-let isStudent: boolean = true;
-let hobbies: string[] = ['读书', '跑步'];
-let u: undefined = undefined;
-let n: null = null;
-
-// 接口：定义对象结构
-interface User {
-  id: number;
-  name: string;
-  age?: number;  // 可选属性
-  readonly createTime: Date;  // 只读
-}
-
-const user: User = {
-  id: 1,
-  name: '李四',
-  createTime: new Date()
-};
-
-// 函数类型
-function greet(user: User): string {
-  return `你好，${user.name}`;
-}</code></pre>
+  <h2><span class="num">6</span>常见误区与实战要点</h2>
+  <div class="warn-box">
+    <b>新手常踩的坑：</b>
+    <ul>
+      <li><strong>CSS优先级搞不清</strong>：以为后写的就一定覆盖，忽略了选择器权重（ID > 类 > 标签）</li>
+      <li><strong>闭包变量被共享</strong>：循环里用var声明变量，导致所有回调拿到的都是最后一个值</li>
+      <li><strong>异步顺序搞反</strong>：以为setTimeout(0)会马上执行，其实它是宏任务，比Promise慢</li>
+      <li><strong>跨域不知道是谁的限制</strong>：不是后端拒绝，是浏览器的同源策略拦下来了</li>
+      <li><strong>localStorage存对象不序列化</strong>：直接存对象，取出来是"[object Object]"</li>
+    </ul>
   </div>
-
-  <div id="ts-generic" class="topic">
-    <h4>6.2 泛型</h4>
-    <pre><code class="language-typescript">// 泛型：复用逻辑，类型也参数化
-function identity<T>(arg: T): T {
-  return arg;
-}
-
-identity<number>(123);   // 返回number
-identity<string>('abc');   // 返回string
-
-// 泛型接口
-interface ApiResponse<T> {
-  code: number;
-  data: T;
-  message: string;
-}
-
-// 泛型约束：要求T必须有length属性
-function getLength<T extends { length: number }>(arg: T): number {
-  return arg.length;
-}</code></pre>
-
-    <div class="key-sentence">
-      💡 TypeScript 的价值：编译时类型检查、IDE智能提示、重构更安全、代码即文档。
-    </div>
+  <div class="key-sentence">
+    ✅ 实战建议：基础层不用想太多，先照着写出来；标准层要练熟，形成肌肉记忆；深入层结合实际bug去理解，不要死背概念。
   </div>
+</section>
+
+<!-- ===== 深入导航 ===== -->
+<section id="sec7" class="card">
+  <h2><span class="num">7</span>深入学习导航</h2>
+  <p>以下是本篇相关的深入学习文章，需要细节时可以跳转阅读：</p>
+  <ul>
+    <li><a href="../01_前端基础/01_HTML5与CSS3【深入】.html">HTML5与CSS3深入篇</a> — 语义化、布局、响应式完整详解</li>
+    <li><a href="../01_前端基础/02_JavaScript核心【深入】.html">JavaScript核心深入篇</a> — 作用域、闭包、原型链完整讲解</li>
+    <li><a href="../01_前端基础/03_JavaScript进阶_事件循环与异步【深入】.html">JS异步深入篇</a> — 事件循环、Promise、async/await原理</li>
+    <li><a href="../01_前端基础/04_TypeScript【深入】.html">TypeScript深入篇</a> — 类型系统、泛型、高级类型</li>
+    <li><a href="../01_前端基础/07_HTTP与跨域请求【标准】.html">HTTP与跨域标准篇</a> — 请求模型、状态码、CORS、缓存</li>
+  </ul>
 </section>
 
 </main>
+
 </div>
 
-<nav class="doc-nav bottom" aria-label="文档导航">
+<nav class="doc-nav bottom">
   <a class="doc-nav-btn hidden" href="#">← 上一篇</a>
   <a class="doc-nav-btn home" href="../index.html">⌂ 返回首页</a>
   <a class="doc-nav-btn" href="./02_前端框架篇【精讲】.html">02_前端框架篇 →</a>
 </nav>
 
 <footer>
-  © 全栈技术知识库 · 前端基础篇精讲
+  全栈技术知识库 · 全面学习系列 · 系统化技术精讲
 </footer>
 
+<div id="glossary-modal"></div>
+<script src="../glossary/glossary-data.js"></script>
+<script src="../glossary/glossary.js"></script>
 </body>
 </html>
