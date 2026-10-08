@@ -50,10 +50,11 @@
   .stat b{display:block;font-size:30px;font-weight:800;color:#5eead4;font-variant-numeric:tabular-nums}
   .stat span{font-size:12.5px;color:#cbd5e1}
   /* 目录导航条 */
-  .dirnav{position:sticky;top:51px;z-index:80;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-  .dirnav .inner{max-width:1140px;margin:0 auto;padding:9px 22px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
-  .dirnav .inner::-webkit-scrollbar{display:none}
-  .dirnav a{flex:none;font-size:12.5px;color:var(--muted);padding:6px 12px;border-radius:8px;text-decoration:none;transition:.15s}
+  .dirnav{position:sticky;top:51px;z-index:80;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);box-shadow:0 1px 3px rgba(0,0,0,.04)}
+  .dirnav .inner{max-width:1140px;margin:0 auto;padding:9px 16px;display:flex;gap:6px;overflow-x:auto;scrollbar-width:thin}
+  .dirnav .inner::-webkit-scrollbar{height:4px}
+  .dirnav .inner::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:2px}
+  .dirnav a{flex:none;font-size:12.5px;color:var(--muted);padding:6px 12px;border-radius:8px;text-decoration:none;transition:.15s;white-space:nowrap}
   .dirnav a:hover{color:var(--accent);background:#f0fdfa}
   .dirnav a.on{color:#fff;background:var(--accent);font-weight:600}
   .dirnav .sep{flex:none;color:var(--line);line-height:2;margin:0 2px}
