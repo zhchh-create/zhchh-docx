@@ -1,0 +1,32 @@
+FILE: 07_后端开发/08_Swagger与OpenAPI接口契约【标准】.html
+DEPTH: 标准
+TOC sec5 text: 使用案例（真实项目落地）
+============================================================
+<section id="sec5" class="card">
+  <h2><span class="num">5</span>使用案例（真实项目落地）</h2>
+  <h3>案例：DCP-RMP——OpenAPI 文档自动生成 TS 接口客户端（重点亮点）</h3>
+  <p><strong>业务场景</strong>：DCP-RMP（需求管理平台，Vue3+TS+Vite + Spring Boot 3）前后端分离，且是 Monorepo。早期前端手写 axios 请求函数与 interface，后端改个字段名，前端运行时才报错，联调成本高。目标：让"后端接口"直接变成"前端类型安全的 API 调用"。</p>
+  <p><strong>落地步骤</strong>：</p>
+  <ol>
+    <li>后端引入 springdoc-openapi，给关键 Controller/DTO 加 <code>@Tag/@Operation/@Schema</code>，启动后访问 <code>/v3/api-docs.yaml</code> 拿到完整契约。</li>
+    <li>在 Monorepo 建 <code>packages/api-client</code> 公共包，用 openapi-generator 的 typescript-axios 模板把 yaml 生成成 TS 客户端（每个接口一个函数，出入参都是 TS 类型）。</li>
+    <li>把生成脚本接进 CI：后端部署后自动导出最新 yaml、重新生成客户端、提交更新，web 主应用 <code>import</code> 这个包。</li>
+    <li>前端拦截器统一加鉴权头与错误处理（生成的客户端底层是 axios，自定义实例注入 baseURL/token）。</li>
+  </ol>
+<pre class="code" data-lang="ts"><code>// 前端：直接用生成的客户端，无需手写请求
+import { RequirementsApi, Configuration } from '@dcp/api-client';
+
+const api = new RequirementsApi(new Configuration({
+    basePath: '/api',
+    accessToken: () => useUserStore().token,   // 统一注入 token
+}));
+
+// createReq 的参数与返回类型由生成器给出，字段写错 TS 直接标红
+const id = (await api.createRequirement({ title: '登录页改版' })).data;</code></pre>
+  <p><strong>效果与坑</strong>：手写请求函数与 interface 基本归零，前后端联调从"运行期对接口报错"前移到"编码期类型检查"——后端删/改一个字段，前端 import 处立刻编译标红，改动当天就同步。真实踩过的坑：</p>
+  <ul>
+    <li><span class="tag-pit">坑</span><strong>生成代码绝不能手改</strong>：机器产物下次生成会被覆盖；要定制就改模板，或在生成后的薄封装层里加。</li>
+    <li><span class="tag-pit">坑</span><strong>全量重生成导致 git diff 巨大</strong>：固定 generator 版本、只在接口变更时触发。</li>
+    <li><span class="tag-pit">坑</span><strong>统一返回包装 Result&lt;T&gt; 让类型多套一层</strong>：需在配置里把 wrapper 展平，否则前端类型多一层。</li>
+  </ul>
+</section>

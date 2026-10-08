@@ -1,0 +1,24 @@
+FILE: 08_数据库与建模/11_ClickHouse_OLAP分析【标准】.html
+DEPTH: 标准
+TOC sec5 text: 使用案例（真实项目落地）
+============================================================
+<section id="sec5" class="card">
+    <h2><span class="num">5</span>使用案例（真实项目落地）</h2>
+    <div class="warn-box">本人简历大屏项目群未实际部署 ClickHouse。本案例为海量告警数据聚合场景的规划与学习，非已上线履历。</div>
+    <h3>案例：大屏历史告警趋势聚合的架构规划</h3>
+    <p><strong>业务场景</strong>：大屏系统历史告警日积月累到亿级行，MySQL 里 group by 按天/级别出趋势图，数据量大时要扫全表、慢且影响在线业务。</p>
+    <p><strong>落地步骤（规划）</strong>：</p>
+    <ol>
+      <li><strong>定分工</strong>：MySQL 存业务明细与在线查询；历史告警明细通过定时/流式同步进 ClickHouse 做聚合分析。</li>
+      <li><strong>表设计</strong>：按 ts 建 MergeTree、按月分区，级别用 LowCardinality，排序键带 deviceId+ts。</li>
+      <li><strong>预聚合</strong>：对固定的"按天按级别趋势"建物化视图，大屏直接查预聚合结果。</li>
+      <li><strong>大屏取数</strong>：前端图表请求打到 ClickHouse 预聚合表，秒级出趋势。</li>
+    </ol>
+    <p><strong>关键代码</strong>：即 4.1 的建表与 4.2 的按天聚合 SQL。</p>
+    <p><strong>效果与坑（规划/学习）</strong>：预期把趋势图从"扫 MySQL 全表"变成"扫 ClickHouse 单列+分区裁剪"的秒级查询。梳理的坑：</p>
+    <ul>
+      <li><span class="tag-pit">坑</span><strong>高频单行写</strong>：逐条 insert 会产生大量小 part，查询变慢——必须攒批写。</li>
+      <li><span class="tag-pit">坑</span><strong>拿它当业务库</strong>：用 ClickHouse 做在线点查/更新明细，正好踩在它最弱的地方。</li>
+      <li><span class="tag-point">要点</span><strong>分区键选时间</strong>：按时间分区才能做分区裁剪和按整分区归档/删除。</li>
+    </ul>
+  </section>

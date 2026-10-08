@@ -1,0 +1,20 @@
+FILE: 07_后端开发/14_MyBatisPlus与SpringDataJPA【基础】.html
+DEPTH: 基础
+TOC sec5 text: 使用案例（真实项目落地）
+============================================================
+<section id="sec5" class="card">
+    <h2><span class="num">5</span>使用案例（真实项目落地）</h2>
+    <h3>案例：源启/DCP-RMP 单表 CRUD 若引入 MP 的收益评估</h3>
+    <p><strong>业务场景</strong>：源启（SpringBoot3+MyBatis）、DCP-RMP 里有大量"按 id 查、按条件分页列表、插一条"的标准 CRUD，原生 MyBatis 每个都要写一段 XML。</p>
+    <p><strong>落地步骤（评估）</strong>：</p>
+    <ol>
+      <li><strong>识别重复</strong>：统计发现约 60% 的 Mapper 方法是标准单表 CRUD，纯样板代码。</li>
+      <li><strong>选型</strong>：选 MyBatis-Plus 而非 JPA——因为项目复杂多表/动态 SQL 很多，不能放弃 SQL 控制权。</li>
+      <li><strong>混用</strong>：单表 CRUD 交给 BaseMapper，复杂报表查询保留原 XML，二者并存。</li>
+    </ol>
+    <p><strong>效果与坑</strong>：评估可省下大量样板 XML；但当前已稳定运行，判定"重构收益不足以推翻现有 MyBatis"，作为后续新模块的默认选择。注意点：</p>
+    <ul>
+      <li><span class="tag-pit">坑</span><strong>MP 与原生 XML 冲突</strong>：方法 id 重复会启动报错，命名要避让。</li>
+      <li><span class="tag-point">要点</span><strong>分页插件要配置</strong>：MP 分页需注册分页拦截器，否则不生效。</li>
+    </ul>
+  </section>

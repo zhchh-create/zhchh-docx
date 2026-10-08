@@ -1,0 +1,52 @@
+FILE: 07_后端开发/06_MyBatis持久层【深入】.html
+DEPTH: 深入
+TOC sec5 text: 使用案例（真实项目落地）
+============================================================
+<section id="sec5" class="card">
+  <h2><span class="num">5</span>使用案例（真实项目落地）</h2>
+
+  <h3>案例 1：源启——动态 SQL、分页与批量写入</h3>
+  <p><strong>业务场景</strong>：源启（后端设计平台，Spring Boot 3 + MyBatis + Redis）有大量"按条件查配置项列表""批量保存节点配置"的需求。需要一套查询接口同时支持按名称、类型、状态组合筛选。</p>
+  <p><strong>落地步骤</strong>：</p>
+  <ol>
+    <li>查询用 <code>&lt;where&gt;+&lt;if&gt;</code> 动态拼条件，前端传哪个条件就拼哪个。</li>
+    <li>分页用 PageHelper 插件，Service 里 <code>PageHelper.startPage(page,size)</code> 紧跟查询语句。</li>
+    <li>批量保存节点配置改成 <code>&lt;foreach&gt;</code> 多 values 一次插入，按 500 条分批。</li>
+  </ol>
+<pre class="code" data-lang="java"><code>public PageInfo&lt;ConfigItem&gt; query(ConfigQuery q) {
+    PageHelper.startPage(q.getPage(), q.getSize());   // 紧跟下一条查询
+    List&lt;ConfigItem&gt; list = configMapper.search(q);
+    return new PageInfo&lt;&gt;(list);
+}</code></pre>
+  <p><strong>效果与坑</strong>：列表查询一个接口覆盖所有组合条件，批量保存耗时从循环逐条的数秒降到几百毫秒。真实踩过的坑：</p>
+  <ul>
+    <li><span class="tag-pit">坑</span><strong>PageHelper 作用错语句</strong>：startPage 后紧跟了一句无关 count 查询——它是 ThreadLocal，必须紧贴目标查询。</li>
+    <li><span class="tag-pit">坑</span><strong>单字符 status 的 OGNL 比较</strong>：<code>status='0'</code> 时 OGNL 把它当数字比较出问题，字符串条件要写 <code>status != null and status != ''</code>。</li>
+  </ul>
+
+  <h3>案例 2：DCP-RMP——复杂查询的结果映射</h3>
+  <p><strong>业务场景</strong>：DCP-RMP 需求列表要同时带出"所属团队名称""当前处理人姓名"，是多表 join 的结果，列名与 DTO 属性不完全一致。</p>
+  <p><strong>落地步骤</strong>：</p>
+  <ol>
+    <li>写 join SQL 一次查出需求 + 团队名 + 处理人名，避免 N+1。</li>
+    <li>用 resultMap 把 join 出来的列映射到 DTO 的嵌套属性。</li>
+  </ol>
+<pre class="code" data-lang="xml"><code>&lt;resultMap id="reqVoMap" type="RequirementVO"&gt;
+  &lt;id property="id" column="id"/&gt;
+  &lt;result property="title" column="title"/&gt;
+  &lt;result property="teamName" column="team_name"/&gt;
+  &lt;result property="assigneeName" column="assignee_name"/&gt;
+&lt;/resultMap&gt;
+&lt;select id="listVo" resultMap="reqVoMap"&gt;
+  SELECT r.*, t.team_name, u.user_name AS assignee_name
+  FROM t_requirement r
+  LEFT JOIN t_team t ON r.team_id = t.id
+  LEFT JOIN t_user u ON r.assignee = u.id
+  WHERE r.status = #{status}
+&lt;/select&gt;</code></pre>
+  <p><strong>效果与坑</strong>：一次查询取完所有展示字段，避免了"循环里再查团队名"的 N+1。真实踩过的坑：</p>
+  <ul>
+    <li><span class="tag-pit">坑</span><strong>N+1</strong>：早期对每条需求再查一次团队，列表 100 行发了 101 条 SQL、打开要等两秒；改成 join 后一条搞定。</li>
+    <li><span class="tag-pit">坑</span><strong>join 后 id 列映射串了</strong>：两张表都有 <code>id</code> 列，<code>&lt;id column="id"&gt;</code> 混淆，给列起别名后解决。</li>
+  </ul>
+</section>

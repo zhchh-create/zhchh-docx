@@ -1,0 +1,20 @@
+FILE: 07_后端开发/07_Tomcat与Jetty服务器【基础】.html
+DEPTH: 基础
+TOC sec5 text: 使用案例（真实项目落地）
+============================================================
+<section id="sec5" class="card">
+  <h2><span class="num">5</span>使用案例（真实项目落地）</h2>
+  <h3>案例：大屏/平台服务的内嵌 Tomcat 部署与参数调整</h3>
+  <p><strong>业务场景</strong>：DCP-RMP 等后端服务以 Spring Boot 内嵌 Tomcat 打成 jar 部署到容器。大屏首屏会同时并发拉多个接口，需要确认容器在并发下不被打满连接、不把线程配得过大。</p>
+  <p><strong>落地步骤</strong>：</p>
+  <ol>
+    <li>用内嵌 Tomcat，<code>java -jar</code> 直接起进程，不单独装外部容器。</li>
+    <li>在 application.yml 里按容器规格定 <code>server.tomcat.threads.max</code> 与 <code>max-connections</code>，不沿用默认。</li>
+    <li>前面用 Nginx 反向代理，AJP 端口不开放。</li>
+  </ol>
+  <p><strong>效果与坑</strong>：部署单元从"war+外部容器"简化成一个进程。真实经验：</p>
+  <ul>
+    <li><span class="tag-point">要点</span><strong>盲目调大 maxThreads 适得其反</strong>：业务大量时间在等数据库（IO 密集），默认 200 在并发量级够用，调大反而增加 GC 与上下文切换。</li>
+    <li><span class="tag-pit">坑</span><strong>文件描述符上限</strong>：maxConnections 调太大但系统 ulimit 没跟上，仍会报无法 accept。</li>
+  </ul>
+</section>

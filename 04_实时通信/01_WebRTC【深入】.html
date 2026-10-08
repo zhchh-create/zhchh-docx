@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WebRTC【深入】｜全栈技术栈详解</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%231d4ed8'/%3E%3Crect x='3' y='4' width='10' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='7' width='7' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='10' width='9' height='2' rx='1' fill='%23fff'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#f4f6f9; --surface:#ffffff; --line:#e2e8f0; --line-2:#cbd5e1;
+  --ink:#1f2937; --ink-2:#475569; --ink-3:#6b7280;
+  --accent:#1d4ed8; --accent-2:#0e7490; --accent-soft:#dbeafe;
+  --warn:#b45309; --warn-soft:#fef3c7;
+  --danger:#b91c1c; --danger-soft:#fee2e2;
+  --ok:#047857; --ok-soft:#d1fae5;
+  --code-bg:#0f172a; --code-ink:#e2e8f0;
+  --radius:12px; --shadow:0 1px 3px rgba(15,23,42,.08);
+  --font:-apple-system,"Segoe UI","Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  --mono:"Cascadia Mono","JetBrains Mono",Consolas,"Courier New",monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.75 var(--font);-webkit-font-smoothing:antialiased}
+.container{max-width:980px;margin:0 auto;padding:0 20px}
+.hero{background:linear-gradient(180deg,#1e293b 0%,#0f172a 100%);color:#f8fafc;padding:44px 0 36px}
+.hero .breadcrumb{font-size:13px;color:#94a3b8;letter-spacing:.04em;margin:0 0 12px}
+.hero h1{margin:0 0 10px;font-size:30px;line-height:1.3;font-weight:700}
+.hero .meta-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.badge{display:inline-block;padding:2px 12px;border-radius:999px;font-size:13px;font-weight:600;line-height:1.6}
+.badge.deep{background:var(--danger-soft);color:var(--danger);border:1px solid #fca5a5}
+.badge.std{background:var(--accent-soft);color:var(--accent);border:1px solid #93c5fd}
+.badge.basic{background:var(--ok-soft);color:var(--ok);border:1px solid #6ee7b7}
+.hero .meta{font-size:14px;color:#cbd5e1}
+.hero-desc{max-width:860px;margin:0;font-size:15.5px;color:#cbd5e1}
+.toc{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin:24px 0}
+.toc h2{margin:0 0 12px;font-size:16px;color:var(--ink)}
+.toc ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:6px 24px;counter-reset:toc}
+.toc li{counter-increment:toc;font-size:14px}
+.toc li::before{content:counter(toc);display:inline-block;min-width:22px;height:22px;line-height:22px;text-align:center;background:var(--accent-soft);color:var(--accent);border-radius:6px;font-size:12px;font-weight:600;margin-right:8px}
+.toc a{color:var(--accent);text-decoration:none}
+.toc a:hover{text-decoration:underline}
+main{display:block;padding-bottom:40px}
+section.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:28px 34px;margin:24px 0}
+section.card h2{font-size:21px;margin:0 0 18px;padding-left:12px;border-left:4px solid var(--accent);line-height:1.4}
+section.card h2 .num{display:inline-block;min-width:30px;height:30px;line-height:30px;text-align:center;background:var(--accent);color:#fff;border-radius:8px;font-size:15px;font-weight:700;margin-right:10px;vertical-align:1px}
+section.card h3{font-size:17px;margin:26px 0 10px;color:var(--accent-2)}
+section.card h4{font-size:15px;margin:18px 0 8px}
+section.card p{margin:10px 0}
+section.card ul,section.card ol{margin:10px 0;padding-left:24px}
+section.card li{margin:6px 0}
+strong{color:var(--ink)}
+code{font-family:var(--mono);font-size:.92em;background:#eef2f7;color:#0f4c81;padding:1px 6px;border-radius:5px}
+pre.code{position:relative;background:var(--code-bg);color:var(--code-ink);border-radius:10px;padding:16px 18px;overflow-x:auto;margin:14px 0;line-height:1.65;font-size:13.5px;font-family:var(--mono)}
+pre.code::before{content:attr(data-lang);position:absolute;top:8px;right:12px;font-size:11.5px;color:#64748b;letter-spacing:.06em}
+pre.code code{background:transparent;color:inherit;padding:0;font-size:inherit}
+.code-copy{position:absolute;top:6px;right:64px;font-size:12px;color:#cbd5e1;background:#1e293b;border:1px solid #334155;border-radius:6px;padding:2px 8px;cursor:pointer}
+.code-copy:hover{color:#fff;border-color:#475569}
+table{width:100%;table-layout:fixed;border-collapse:collapse;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top;overflow-wrap:break-word}
+th{background:#f1f5f9;font-weight:600}
+tbody tr:nth-child(even){background:#f8fafc}
+.diagram{margin:20px 0}
+.diagram svg{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:10px;background:#fbfdff}
+.diagram-caption{margin:8px 0 0;text-align:center;font-size:13px;color:var(--ink-3)}
+.note{border-left:4px solid var(--accent);background:#f0f6ff;border-radius:0 8px 8px 0;padding:12px 16px;margin:14px 0;font-size:14px}
+.warn-box{border-left:4px solid var(--warn);background:var(--warn-soft);border-radius:0 8px 8px 0;padding:12px 16px;margin:14px 0;font-size:14px}
+.danger-box{border-left:4px solid var(--danger);background:var(--danger-soft);border-radius:0 8px 8px 0;padding:12px 16px;margin:14px 0;font-size:14px}
+footer{background:#1e293b;color:#94a3b8;text-align:center;font-size:13px;padding:22px 0;margin-top:8px}
+#backTop{position:fixed;right:24px;bottom:32px;width:44px;height:44px;border:none;border-radius:50%;background:var(--accent);color:#fff;font-size:18px;cursor:pointer;box-shadow:0 4px 12px rgba(29,78,216,.35);opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s;z-index:99}
+#backTop.show{opacity:1;visibility:visible}
+@media (max-width:760px){
+  .container{padding:0 14px}
+  .hero{padding:32px 0 26px}
+  .hero h1{font-size:23px}
+  .toc ol{grid-template-columns:1fr}
+  section.card{padding:20px 18px}
+  pre.code{font-size:12.5px;padding:14px 14px}
+  .code-copy{position:static;display:block;width:max-content;margin:0 0 10px auto}
+  #backTop{right:16px;bottom:20px}
+}
+
+/* ===== 全库统一导航 ===== */
+.doc-nav{display:flex;justify-content:space-between;align-items:center;gap:8px;max-width:980px;margin:0 auto;padding:10px 20px}
+.doc-nav.top{position:sticky;top:0;z-index:70;background:var(--surface);border-bottom:1px solid var(--line);box-shadow:var(--shadow)}
+.doc-nav.bottom{border-top:1px solid var(--line);padding-top:16px;padding-bottom:16px;margin-top:8px}
+.doc-nav-btn{color:var(--accent);text-decoration:none;font-size:14px;font-weight:600;line-height:1;padding:7px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);white-space:nowrap;transition:border-color .15s,background .15s}
+a.doc-nav-btn:hover{border-color:var(--accent);background:var(--accent-soft)}
+.doc-nav-btn.home{color:var(--ink-2)}
+.doc-nav-btn.home:hover{color:var(--accent)}
+.doc-nav-btn.hidden{visibility:hidden}
+@media(max-width:640px){.doc-nav{gap:6px;padding-left:14px;padding-right:14px}.doc-nav-btn{font-size:13px;padding:6px 9px}}
+
+/* ===== 全库统一 Prism 深色主题 ===== */
+code[class*=language-],pre[class*=language-]{color:#f8f8f2;background:0 0;text-shadow:0 1px rgba(0,0,0,.3);font-family:Consolas,Monaco,'Andale Mono','Ubuntu Mono',monospace;font-size:1em;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{padding:1em;margin:.5em 0;overflow:auto;border-radius:.3em}:not(pre)>code[class*=language-],pre[class*=language-]{background:#272822}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal}.token.cdata,.token.comment,.token.doctype,.token.prolog{color:#8292a2}.token.punctuation{color:#f8f8f2}.token.namespace{opacity:.7}.token.constant,.token.deleted,.token.property,.token.symbol,.token.tag{color:#f92672}.token.boolean,.token.number{color:#ae81ff}.token.attr-name,.token.builtin,.token.char,.token.inserted,.token.selector,.token.string{color:#a6e22e}.language-css .token.string,.style .token.string,.token.entity,.token.operator,.token.url,.token.variable{color:#f8f8f2}.token.atrule,.token.attr-value,.token.class-name,.token.function{color:#e6db74}.token.keyword{color:#66d9ef}.token.important,.token.regex{color:#fd971f}.token.bold,.token.important{font-weight:700}.token.italic{font-style:italic}.token.entity{cursor:help}
+/* 适配库内代码块：保留 --code-bg 深底与 --mono 字体，去除主题自带背景/阴影 */
+pre.code code[class*=language-]{background:transparent;text-shadow:none;font-family:var(--mono);font-size:inherit;padding:0;line-height:inherit;color:inherit;white-space:inherit}
+
+/* ===== 全库统一可读性排版 ===== */
+/* 正文阅读密度：行距加大、留白充足 */
+body{line-height:1.85}
+section.card{padding:34px 40px;margin:26px 0}
+section.card h2{font-size:24px;margin:0 0 22px;padding-left:14px}
+section.card h2 .num{min-width:32px;height:32px;line-height:32px;font-size:16px}
+section.card h3{font-size:19px;margin:36px 0 12px;padding-left:10px;border-left:3px solid var(--accent-2);line-height:1.45}
+section.card h4{font-size:16.5px;margin:24px 0 10px;padding-left:8px;border-left:3px solid var(--line-2);color:#334155;font-weight:600;line-height:1.45}
+section.card p{margin:12px 0}
+section.card ul,section.card ol{margin:12px 0;padding-left:26px}
+section.card li{margin:8px 0;line-height:1.8}
+section.card li>ul,section.card li>ol{margin:6px 0}
+/* 一级要点：主题色圆点/序号 */
+section.card ul>li::marker{color:var(--accent);font-size:1.05em}
+section.card ol>li::marker{color:var(--accent);font-weight:700}
+/* 二级细节：细色条 + 缩进 + 次级色 marker */
+section.card ul ul>li::marker,section.card ol ol>li::marker{color:var(--accent-2)}
+section.card ul ul,section.card ol ol,section.card ul ol,section.card ol ul{padding-left:22px;border-left:2px solid var(--line);margin-left:6px}
+/* 行内强调标签：关键术语 / 要点 / 坑 */
+.tag-key,.tag-point,.tag-pit{display:inline-block;font-size:12px;font-weight:700;line-height:1;padding:3px 8px;border-radius:5px;margin-right:6px;vertical-align:2px;white-space:nowrap}
+.tag-key{background:var(--accent-soft);color:var(--accent);border:1px solid #93c5fd}
+.tag-point{background:var(--ok-soft);color:var(--ok);border:1px solid #6ee7b7}
+.tag-pit{background:var(--warn-soft);color:var(--warn);border:1px solid #fcd34d}
+/* 强调句：结论/易错点 左侧色条 */
+.key-sentence{border-left:4px solid var(--accent);background:#f0f6ff;padding:9px 14px;margin:14px 0;border-radius:0 8px 8px 0;font-weight:600;color:var(--ink);line-height:1.8}
+.pit-sentence{border-left:4px solid var(--warn);background:var(--warn-soft);padding:9px 14px;margin:14px 0;border-radius:0 8px 8px 0;font-weight:600;color:var(--ink);line-height:1.8}
+/* 概念块「一句话定位」 */
+.lead{font-size:15.5px;color:var(--ink-2);margin:0 0 14px;padding:10px 14px;background:#f8fafc;border:1px solid var(--line);border-radius:8px;line-height:1.8}
+.lead b,.lead strong{color:var(--ink)}
+/* 长代码/长句折行保护 */
+section.card li strong{color:var(--ink)}
+@media(max-width:760px){
+  body{line-height:1.8}
+  section.card{padding:22px 18px}
+  section.card h2{font-size:21px}
+  section.card h3{font-size:17.5px;margin:28px 0 10px}
+  section.card h4{font-size:15.5px;margin:20px 0 8px}
+  .lead{padding:8px 10px;font-size:14.5px}
+}
+
+</style>
+<link rel="stylesheet" href="../glossary/glossary.css">
+</head>
+<body>
+<header class="hero">
+  <div class="container">
+    <p class="breadcrumb">技术栈详解 · 04 实时通信</p>
+    <h1>WebRTC 实时通信</h1>
+    <div class="meta-row">
+      <span class="badge deep">深入</span>
+      <span class="meta">定位：浏览器原生 P2P 实时音视频——用一套 JS API 取代插件与流媒体服务器转发</span>
+    </div>
+    <p class="hero-desc">WebRTC（Web Real-Time Communication）是 W3C/IETF 标准化的浏览器原生实时音视频框架，提供 getUserMedia 采集、RTCPeerConnection 建连、DTLS/SRTP 加密传输与 JitterBuffer 抖动缓冲，端到端延迟可压到亚秒级。本页从 PeerConnection/SDP 协商/ICE 候选讲到接收渲染与 getStats 质量统计，并以 2020-2022 年主导的 WebRTC 无插件播放器（Vue2+Janus+Canvas，把变电站监控从 ActiveX 插件迁移到浏览器原生低延迟直播）这条真实链路收尾。</p>
+  </div>
+</header>
+<nav class="doc-nav top" aria-label="文档导航">
+  <a class="doc-nav-btn" href="../03_数据可视化/06_可视化技术选型与原理【标准】.html">← 上一篇</a>
+  <a class="doc-nav-btn home" href="../index.html">⌂ 返回首页</a>
+  <a class="doc-nav-btn" href="../04_实时通信/02_Janus网关【深入】.html">下一篇 →</a>
+</nav>
+<div class="container">
+<nav class="toc" aria-label="目录">
+  <h2>本页目录</h2>
+  <ol>
+    <li><a href="#sec1">技术点概览</a></li>
+    <li><a href="#sec2">核心概念</a></li>
+    <li><a href="#sec3">工作原理与流程</a></li>
+    <li><a href="#sec4">核心语法与 API 要点</a></li>
+    <li><a href="#sec5">实战项目经验（真实项目落地）</a></li>
+    <li><a href="#sec6">易错点与面试重点</a></li>
+    <li><a href="#sec7">学习资源与参考</a></li>
+  </ol>
+</nav>
+<main>
+
+<section id="sec1" class="card">
+  <h2><span class="num">1</span>技术点概览</h2>
+  <h3>是什么</h3>
+  <p class="lead"><b>一句话定位</b>：让浏览器之间直接做实时音视频与数据传输的开源标准，2011 年 Google 开源后捐给 W3C/IETF。</p>
+  <ul>
+    <li><strong>标准化</strong>：浏览器侧 API 由 W3C <code>webrtc-pc</code> 定义，协议侧（ICE/STUN/TURN、SDP、SRTP/DTLS）由 IETF 定。</li>
+    <li><span class="tag-key">关键</span><strong>三大家族 API</strong>：<code>getUserMedia()</code>（采集摄像头/麦克风/屏幕）、<code>RTCPeerConnection</code>（建连与媒体传输）、<code>RTCDataChannel</code>（P2P 任意数据通道）。</li>
+  </ul>
+  <p class="key-sentence">关键心智模型：WebRTC 本身不含信令服务器——浏览器怎么"认识彼此、交换 SDP"要自己搭（WebSocket/HTTP 都行），WebRTC 只负责之后的媒体面。</p>
+  <h3>解决什么问题</h3>
+  <p class="lead"><b>一句话定位</b>：它消灭了浏览器端插件（Flash/ActiveX）与高延迟的流式转发。</p>
+  <ul>
+    <li><strong>过去的痛点</strong>：监控/会议/客服直播要么要求装 ActiveX 插件（IE 专属、安全告警、换机就崩），要么走 HTTP-FLV/HLS 经 CDN 转发（延迟 3-30 秒）。</li>
+    <li><strong>WebRTC 带来</strong>：浏览器直接拿到 SRTP 加密的 RTP 包，端到端延迟压到 200-500ms，无需安装任何东西。</li>
+  </ul>
+  <p class="pit-sentence">代价：它把"怎么打通 NAT、怎么协商编解码、怎么保质量"这些原本藏在流媒体服务器里的复杂度，部分暴露成了前端要懂的协议细节。</p>
+  <div class="diagram">
+    <svg viewBox="0 0 800 260" role="img" aria-label="WebRTC 在实时音视频链路中的位置示意图">
+      <defs>
+        <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+          <path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/>
+        </marker>
+      </defs>
+      <text x="400" y="22" text-anchor="middle" font-size="14" font-weight="700" fill="#1f2937">WebRTC 在实时链路中的位置（示意）</text>
+      <rect x="40" y="50" width="150" height="56" rx="8" fill="#eff6ff" stroke="#2563eb"/>
+      <text x="115" y="74" text-anchor="middle" font-size="13" font-weight="600" fill="#1d4ed8">采集/源</text>
+      <text x="115" y="92" text-anchor="middle" font-size="11.5" fill="#475569">摄像头/流媒体源</text>
+      <rect x="240" y="50" width="160" height="56" rx="8" fill="#ecfeff" stroke="#0d9488"/>
+      <text x="320" y="74" text-anchor="middle" font-size="13" font-weight="600" fill="#0e7490">媒体服务器 SFU</text>
+      <text x="320" y="92" text-anchor="middle" font-size="11.5" fill="#475569">Janus / 转发不混流</text>
+      <rect x="450" y="50" width="160" height="56" rx="8" fill="#fefce8" stroke="#d97706"/>
+      <text x="530" y="74" text-anchor="middle" font-size="13" font-weight="600" fill="#b45309">浏览器 RTCPeerConnection</text>
+      <text x="530" y="92" text-anchor="middle" font-size="11.5" fill="#475569">解密/解码/JitterBuffer</text>
+      <rect x="660" y="50" width="110" height="56" rx="8" fill="#f0fdf4" stroke="#047857"/>
+      <text x="715" y="74" text-anchor="middle" font-size="13" font-weight="600" fill="#047857">渲染</text>
+      <text x="715" y="92" text-anchor="middle" font-size="11.5" fill="#475569">video / Canvas</text>
+      <line x1="190" y1="78" x2="236" y2="78" stroke="#64748b" marker-end="url(#arr)"/>
+      <line x1="400" y1="78" x2="446" y2="78" stroke="#64748b" marker-end="url(#arr)"/>
+      <line x1="610" y1="78" x2="656" y2="78" stroke="#64748b" marker-end="url(#arr)"/>
+      <rect x="240" y="140" width="370" height="46" rx="8" fill="#f1f5f9" stroke="#64748b"/>
+      <text x="425" y="160" text-anchor="middle" font-size="12.5" font-weight="600" fill="#334155">信令通道（自研，WebRTC 不管）</text>
+      <text x="425" y="177" text-anchor="middle" font-size="11.5" fill="#475569">WebSocket/HTTP 交换 SDP 与 ICE 候选</text>
+      <line x1="530" y1="140" x2="530" y2="112" stroke="#64748b" stroke-dasharray="5,4" marker-end="url(#arr)"/>
+      <text x="400" y="220" text-anchor="middle" font-size="13" fill="#475569">本项目是"单向接收"场景：浏览器作为 answer 端，从 Janus streaming 插件拉流，不采集本端摄像头。</text>
+      <text x="400" y="240" text-anchor="middle" font-size="13" fill="#6b7280">媒体面走 SRTP 直连/经 SFU 转发；信令面走业务自己的 WebSocket。</text>
+    </svg>
+    <p class="diagram-caption">图 1 WebRTC 在"源→SFU→浏览器→渲染"链路中的位置（示意）</p>
+  </div>
+  <h3>横向对比：WebRTC 取代了什么，与 HLS/HTTP-FLV 的取舍</h3>
+  <ul>
+    <li><strong>vs ActiveX/Flash 插件方案</strong>：旧方案要求每台值班机装插件、绑定 IE、安全软件持续告警；WebRTC 是浏览器原生 API，零安装、跨浏览器、天然走 HTTPS/WSS。代价是要在浏览器侧重新实现一套播放器（本项目正是这个改造），且老内核浏览器不支持时需要保留降级。</li>
+    <li><strong>vs HLS / HTTP-FLV / RTSP-over-Web</strong>：HLS 基于分片，延迟 3-30s，胜在能走 CDN、抗弱网、播放器生态成熟；HTTP-FLV 延迟 1-3s，需要 flv.js 解封装；<strong>WebRTC 延迟 200-500ms</strong>，但要求对端是支持 WebRTC 的媒体服务器（Janus/mediasoup/SRS/WHEP），且强依赖 UDP，企业网封 UDP 时要靠 TURN 走 TCP 中继。取舍依据是"延迟是不是硬指标"——监控看回放用 HLS，实时看现场用 WebRTC。</li>
+    <li><strong>WebRTC 直连(P2P) vs 经 SFU</strong>：浏览器对浏览器是真 P2P；但监控场景是"多路源推上来、N 个浏览器同时看"，P2P 会让每路源都要和每个观看者各建一条连接，源端带宽爆炸。正确做法是中间架一台 <strong>SFU</strong>（Selective Forwarding Unit，只转发不混流），浏览器各自只和 SFU 建一条连接——这正是本项目选 Janus 的原因（见 02_Janus 网关页）。</li>
+  </ul>
+</section>
+
+<section id="sec2" class="card">
+  <h2><span class="num">2</span>核心概念</h2>
+  <h3>2.1 RTCPeerConnection（对等连接）</h3>
+  <p class="lead"><b>一句话定位</b>：WebRTC 的核心对象，抽象"一条到对端的实时连接"，本身是个严格的状态机。</p>
+  <ul>
+    <li><span class="tag-key">关键</span><strong>内部聚合四件事</strong>：本地/远端 SDP、ICE 代理（找路）、DTLS 握手（密钥协商）、SRTP 传输栈 + JitterBuffer（抖动重排）。</li>
+    <li><strong>不碰 DOM</strong>：媒体要显示，得把产出的 MediaStreamTrack 挂到 <code>&lt;video&gt;</code> 或喂给 Canvas。</li>
+    <li><strong>它是状态机</strong>：<code>new→have-local-offer→stable→have-remote-pranswer…</code>。</li>
+  </ul>
+  <p class="pit-sentence">状态乱跳（比如在 stable 之前又 createOffer）就是后续"协商失败"的根源。</p>
+  <h3>2.2 MediaStream 与 MediaStreamTrack</h3>
+  <p class="lead"><b>一句话定位</b>：MediaStream 是"一组轨"的容器，每根 Track 是一路视频或音频。</p>
+  <ul>
+    <li><strong>结构</strong>：一个视频轨 + 一个音频轨 = 一路流；Track 有 <code>kind</code>（audio/video）、<code>id</code>、<code>enabled</code>。</li>
+    <li><strong>接收侧</strong>：<code>pc.ontrack</code> 拿远端轨，赋 <code>video.srcObject = event.streams[0]</code> 即可播。</li>
+    <li><strong>本项目做法</strong>：没用 <code>&lt;video&gt;</code> 黑盒，而是把视频轨绘到 Canvas——为叠加监控 OSD（时间戳/通道名/状态字）并统一多路同屏绘制节奏。</li>
+  </ul>
+  <h3>2.3 SDP（Session Description Protocol，会话描述协议）</h3>
+  <p class="lead"><b>一句话定位</b>：SDP 不是协议而是一段纯文本描述，两端交换它就是"媒体协商"。</p>
+  <ul>
+    <li><strong>描述内容</strong>：支持哪些编解码（m=video 行的 H.264/Opus payload type）、媒体端口、加密 fingerprint、ICE 用户名密码、<code>a=rtpmap</code>/<code>a=fmtp</code>（H.264 profile-level-id）等属性。</li>
+    <li><strong>协商过程</strong>：offer 端列出自己会的，answer 端从交集里选出最终编解码与参数。</li>
+  </ul>
+  <p class="key-sentence">offer/answer 必须是"一次完整往返"才进入 stable，中途再改就要走协商更新（RENEGOTIATION）。</p>
+  <h3>2.4 ICE（Interactive Connectivity Establishment，连通性建立）</h3>
+  <p class="lead"><b>一句话定位</b>：解决"NAT 后两台机器怎么找到一条能通的路"的框架。</p>
+  <ul>
+    <li><span class="tag-key">关键</span><strong>收集候选（candidate）</strong>：主机候选（本机网卡 IP）、srflx（经 STUN 反推的公网映射）、relay（TURN 中继地址）。</li>
+    <li><strong>互发 + 打洞</strong>：候选经信令互发，对每个候选对做 STUN 连通性检查（Binding Request/Response），按优先级选第一个打通的对。</li>
+    <li><strong>兜底</strong>：对称型 NAT 直连打洞失败，回落到 TURN 中继转发。</li>
+  </ul>
+  <h3>2.5 STUN 与 TURN</h3>
+  <p class="lead"><b>一句话定位</b>：STUN 轻量反问"我公网地址是啥"，TURN 是打不通时的中继兜底。</p>
+  <ul>
+    <li><strong>STUN（RFC 5389）</strong>：浏览器发包给 STUN 服务器，回包带源 IP:Port，得知 NAT 映射地址。</li>
+    <li><strong>TURN（RFC 5766）</strong>：P2P 打不通时把媒体发到 TURN 服务器由它转发，代价是 TURN 的带宽与延迟；生产用 coturn。</li>
+    <li><strong>怎么判断走没走中继</strong>：看 selected pair 的 candidateType——<code>host/srflx</code> 是直连，<code>relay</code> 是中继。</li>
+  </ul>
+  <h3>2.6 DTLS 与 SRTP（加密层）</h3>
+  <p class="lead"><b>一句话定位</b>：WebRTC 强制加密，握手期 DTLS 协商密钥，媒体面用 SRTP 加密。</p>
+  <ul>
+    <li><strong>DTLS-SRTP</strong>：交换 SDP 时附证书指纹，先做一次 DTLS 1.2 握手协商会话密钥，再用它把 RTP 包加密成 SRTP（AES + 认证）。</li>
+    <li><strong>推论</strong>：MediaRecorder 抓包看到的是加密流，SDP 里有 fingerprint 行。</li>
+  </ul>
+  <p class="pit-sentence">时钟漂移 / 证书过期 / NAT 会话超时导致 DTLS 断，是 WebRTC"看几分钟黑一下"的高频根因，需要 ICE 重启恢复。</p>
+  <h3>2.7 信令（Signaling）</h3>
+  <p class="lead"><b>一句话定位</b>：WebRTC 规范故意不规定信令——交换 SDP/ICE 候选要应用自己搭。</p>
+  <ul>
+    <li><strong>工程惯例</strong>：几乎都用 WebSocket（实时双向）；本项目经 Janus 的 WebSocket/HTTP 发 <code>{janus:"create", ...}</code> 类 JSON。</li>
+    <li><strong>一条完整信令链</strong>：创建会话句柄（handle）→ attach 到 streaming 插件 → getoffer 生成 SDP offer → setRemoteDescription → createAnswer → 回传 answer → 逐个互传 trickle ICE candidate。</li>
+  </ul>
+  <h3>2.8 getStats（质量统计）</h3>
+  <p class="lead"><b>一句话定位</b>：唯一能在客户端定量回答"卡不卡、走没走中继、丢包多少"的接口。</p>
+  <ul>
+    <li><strong>inbound-rtp</strong>：framesReceived、freezeCount、jitter、packetsLost。</li>
+    <li><strong>candidate-pair</strong>：当前选中链路与 bytesSent/bytesReceived。</li>
+    <li><strong>track</strong>：framesDecoded、framesDropped。</li>
+  </ul>
+  <p class="key-sentence">本项目用它做质量看板与自动降级，而不是靠用户"看着卡不卡"的主观反馈。</p>
+</section>
+
+<section id="sec3" class="card">
+  <h2><span class="num">3</span>工作原理与流程</h2>
+  <h3>3.1 媒体协商时序：一次建连到底发生了什么</h3>
+  <p>以本项目"浏览器作为 answer 端，从 Janus streaming 拉流"为例。Janus 生成 offer（描述它要发的 H.264 视频轨），浏览器应答。整个协商是一次严格的问答式状态机：</p>
+  <div class="diagram">
+    <svg viewBox="0 0 800 360" role="img" aria-label="WebRTC 媒体协商与 ICE 连通性时序图">
+      <defs>
+        <marker id="arr2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+          <path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/>
+        </marker>
+      </defs>
+      <text x="400" y="22" text-anchor="middle" font-size="14" font-weight="700" fill="#1f2937">媒体协商 + ICE 建连时序（浏览器 answer 端，示意）</text>
+      <text x="120" y="52" font-size="13" font-weight="600" fill="#1d4ed8">浏览器(本端)</text>
+      <text x="400" y="52" font-size="13" font-weight="600" fill="#475569">信令/Janus(对端)</text>
+      <line x1="120" y1="60" x2="120" y2="340" stroke="#cbd5e1"/>
+      <line x1="400" y1="60" x2="400" y2="340" stroke="#cbd5e1"/>
+      <rect x="150" y="66" width="180" height="30" rx="6" fill="#eff6ff" stroke="#2563eb"/>
+      <text x="240" y="85" text-anchor="middle" font-size="11.5" fill="#1d4ed8">创建pc，createAnswer前先收offer</text>
+      <line x1="400" y1="108" x2="126" y2="108" stroke="#64748b" marker-end="url(#arr2)"/>
+      <text x="263" y="103" text-anchor="middle" font-size="11.5" fill="#b45309">① SDP offer（含指纹/编解码）</text>
+      <rect x="60" y="118" width="180" height="30" rx="6" fill="#ecfeff" stroke="#0d9488"/>
+      <text x="150" y="137" text-anchor="middle" font-size="11.5" fill="#0e7490">setRemoteDescription(offer)</text>
+      <rect x="60" y="156" width="180" height="30" rx="6" fill="#ecfeff" stroke="#0d9488"/>
+      <text x="150" y="175" text-anchor="middle" font-size="11.5" fill="#0e7490">createAnswer → setLocalDescription</text>
+      <line x1="120" y1="198" x2="396" y2="198" stroke="#64748b" marker-end="url(#arr2)"/>
+      <text x="258" y="193" text-anchor="middle" font-size="11.5" fill="#b45309">② SDP answer（回传）</text>
+      <line x1="120" y1="228" x2="396" y2="228" stroke="#64748b" stroke-dasharray="5,4" marker-end="url(#arr2)"/>
+      <text x="258" y="223" text-anchor="middle" font-size="11.5" fill="#475569">③ trickle ICE candidate（双向逐个发）</text>
+      <rect x="60" y="238" width="200" height="30" rx="6" fill="#fefce8" stroke="#d97706"/>
+      <text x="160" y="257" text-anchor="middle" font-size="11.5" fill="#b45309">ICE 连通性检查 → 选中链路</text>
+      <rect x="60" y="276" width="200" height="30" rx="6" fill="#fefce8" stroke="#d97706"/>
+      <text x="160" y="295" text-anchor="middle" font-size="11.5" fill="#b45309">DTLS 握手 → 协商 SRTP 密钥</text>
+      <rect x="60" y="314" width="200" height="30" rx="6" fill="#f0fdf4" stroke="#047857"/>
+      <text x="160" y="333" text-anchor="middle" font-size="11.5" fill="#047857">ontrack 触发，SRTP 解出帧渲染</text>
+    </svg>
+    <p class="diagram-caption">图 2 媒体协商与 ICE/DTLS 建连时序（示意）</p>
+  </div>
+  <ol>
+    <li><strong>收 offer</strong>：对端（Janus）通过信令发来 SDP offer。浏览器 <code>setRemoteDescription(offer)</code> 后，<code>pc.signalingState</code> 进入 <code>have-remote-offer</code>。</li>
+    <li><strong>生成 answer</strong>：<code>createAnswer()</code> 从 offer 与本端能力的交集里选出编解码（通常 H.264 + Opus），<code>setLocalDescription(answer)</code>，状态进入 stable。</li>
+    <li><strong>Trickle ICE</strong>：两端各自异步收集 candidate，每收集到一个就立刻经信令发给对方并 <code>addIceCandidate</code>——不必等全部收完，这是"trickle"相对"等齐再发"的延迟优化。</li>
+    <li><strong>连通性检查</strong>：ICE 代理对每个候选对发 STUN Binding，第一个双向都通的对被选中（nominated）。</li>
+    <li><strong>DTLS 握手</strong>：链路通后用 SDP 里的证书指纹做 DTLS 握手，派生出 SRTP 密钥。</li>
+    <li><strong>媒体流到达</strong>：对端开始发 SRTP 包，浏览器解密解码、进 JitterBuffer，<code>ontrack</code> 回调触发，帧挂上 video/Canvas。</li>
+  </ol>
+  <h3>3.2 一帧视频从网络到屏幕的内部流水线</h3>
+  <div class="diagram">
+    <svg viewBox="0 0 800 200" role="img" aria-label="WebRTC 接收端一帧视频的内部处理流水线">
+      <defs>
+        <marker id="arr3" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+          <path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/>
+        </marker>
+      </defs>
+      <text x="400" y="22" text-anchor="middle" font-size="14" font-weight="700" fill="#1f2937">接收端：从 UDP 包到 Canvas 上一帧（示意）</text>
+      <rect x="30" y="60" width="120" height="52" rx="7" fill="#f1f5f9" stroke="#64748b"/>
+      <text x="90" y="82" text-anchor="middle" font-size="12" fill="#334155">UDP 收包</text>
+      <text x="90" y="100" text-anchor="middle" font-size="11" fill="#475569">SRTP 加密</text>
+      <line x1="150" y1="86" x2="176" y2="86" stroke="#64748b" marker-end="url(#arr3)"/>
+      <rect x="180" y="60" width="120" height="52" rx="7" fill="#eff6ff" stroke="#2563eb"/>
+      <text x="240" y="82" text-anchor="middle" font-size="12" fill="#1d4ed8">SRTP 解密</text>
+      <text x="240" y="100" text-anchor="middle" font-size="11" fill="#475569">去重/乱序检测</text>
+      <line x1="300" y1="86" x2="326" y2="86" stroke="#64748b" marker-end="url(#arr3)"/>
+      <rect x="330" y="60" width="120" height="52" rx="7" fill="#ecfeff" stroke="#0d9488"/>
+      <text x="390" y="82" text-anchor="middle" font-size="12" fill="#0e7490">JitterBuffer</text>
+      <text x="390" y="100" text-anchor="middle" font-size="11" fill="#475569">平滑抖动/丢包重传</text>
+      <line x1="450" y1="86" x2="476" y2="86" stroke="#64748b" marker-end="url(#arr3)"/>
+      <rect x="480" y="60" width="120" height="52" rx="7" fill="#fefce8" stroke="#d97706"/>
+      <text x="540" y="82" text-anchor="middle" font-size="12" fill="#b45309">H.264 硬解码</text>
+      <text x="540" y="100" text-anchor="middle" font-size="11" fill="#475569">GPU 解码为 YUV</text>
+      <line x1="600" y1="86" x2="626" y2="86" stroke="#64748b" marker-end="url(#arr3)"/>
+      <rect x="630" y="60" width="140" height="52" rx="7" fill="#f0fdf4" stroke="#047857"/>
+      <text x="700" y="82" text-anchor="middle" font-size="12" fill="#047857">渲染上屏</text>
+      <text x="700" y="100" text-anchor="middle" font-size="11" fill="#475569">video 合成层 / Canvas</text>
+      <text x="400" y="150" text-anchor="middle" font-size="13" fill="#475569">每一跳都吃延迟：JitterBuffer 越长越抗抖动但端到端延迟越大；硬解码失败会回退软解，CPU 立刻飙升。</text>
+      <text x="400" y="172" text-anchor="middle" font-size="13" fill="#6b7280">多路同屏的 CPU 压力，主要来自解码与 Canvas 上屏，而不是网络。</text>
+    </svg>
+    <p class="diagram-caption">图 3 接收端一帧视频的处理流水线（示意）</p>
+  </ol>
+  <p>这条流水线解释了本项目两个关键现象：① <strong>"多路同屏低 CPU"</strong> 的优化点不在网络而在解码与渲染——把不需要同时满帧率显示的小窗降到 15fps、复用同一个 Canvas 上下文、避免每路都新建 video 元素，是降 CPU 的主要手段；② <strong>"花屏/绿条"</strong> 几乎都是解码问题：丢了参考帧（关键帧请求 PLI/FIR 没生效）或硬解与 H.264 profile 不匹配。</p>
+</section>
+
+<section id="sec4" class="card">
+  <h2><span class="num">4</span>核心语法与 API 要点</h2>
+  <h3>4.1 建一条接收型 PeerConnection（本项目核心写法）</h3>
+<pre class="code" data-lang="js"><code>// 接收场景：本端不发，只收 Janus 的流。方向用 direction 控制，不是靠 addTrack。
+var pc = new RTCPeerConnection({
+  iceServers: [
+    { urls: 'stun:stun.l.google.com:19302' },
+    { urls: 'turn:turn.example.com:3478', username: 'u', credential: 'p' }
+  ]
+});
+
+// 关键：声明"我这端只收不发"；若走默认 sendrecv，本端被要求发流（往往要先 getUserMedia 采集摄像头，无设备的值班机就报错/弹权限框）
+pc.addTransceiver('video', { direction: 'recvonly' });
+pc.addTransceiver('audio', { direction: 'recvonly' });
+
+// 远端轨到达：挂到 video 或喂 Canvas
+pc.addEventListener('track', function (ev) {
+  var stream = ev.streams[0] || new MediaStream([ev.track]);
+  videoEl.srcObject = stream;          // 或：drawToCanvas(ev.track, canvas)
+});
+
+// trickle ICE：候选一来就发给 Janus
+pc.addEventListener('icecandidate', function (ev) {
+  if (ev.candidate) wsSend({ janus: 'trickle', candidate: ev.candidate });
+});</code></pre>
+  <div class="note">两种写法对比：<strong>addTrack 声明发送</strong> vs <strong>addTransceiver 显式声明方向</strong>。<code>addTrack(track)</code> 需要你传入一条本端 track（通常来自 <code>getUserMedia()</code>），并把该 transceiver 协商成 <code>sendrecv</code>——它本身不采集设备，弹摄像头权限是 <code>getUserMedia()</code> 的行为；纯接收端没有可发的本地流，硬走 sendrecv 方向也对不上。正确做法是 <code>addTransceiver('video', {direction:'recvonly'})</code>，这是"只看不发"播放器的标准写法。</div>
+  <h3>4.2 answer 端的完整协商循环</h3>
+<pre class="code" data-lang="js"><code>async function handleRemoteOffer(offerSdp) {
+  await pc.setRemoteDescription(new RTCSessionDescription({
+    type: 'offer', sdp: offerSdp
+  }));
+  var answer = await pc.createAnswer();
+  await pc.setLocalDescription(answer);   // setLocal 后才开始收集 ICE 候选
+  wsSend({ janus: 'answer', sdp: pc.localDescription.sdp });
+}
+// 收到对端 candidate：
+async function addRemoteCandidate(cand) {
+  try { await pc.addIceCandidate(new RTCIceCandidate(cand)); }
+  catch (e) { /* 候选到达过早/过晚，忽略，不影响整体 */ }
+}</code></pre>
+  <h3>4.3 Canvas 绘制视频轨（本项目的 OSD 叠加方案）</h3>
+<pre class="code" data-lang="js"><code>var ctx = canvas.getContext('2d');
+function drawLoop() {
+  // video 元素只是"解码后的帧容器"，可见性隐藏；这里把它的当前帧贴到 Canvas
+  ctx.drawImage(videoEl, 0, 0, canvas.width, canvas.height);
+  // 叠加 OSD：通道名 + 时间戳，随画面缩放自动对齐
+  ctx.fillStyle = 'rgba(0,0,0,.45)';
+  ctx.fillRect(0, 0, canvas.width, 22);
+  ctx.fillStyle = '#7CFC00';
+  ctx.font = '13px monospace';
+  ctx.fillText('CH-01 ' + new Date().toLocaleTimeString(), 8, 16);
+  requestAnimationFrame(drawLoop);
+}
+videoEl.addEventListener('loadedmetadata', drawLoop);</code></pre>
+  <h3>4.4 getStats：量化质量与判断是否走了中继</h3>
+<pre class="code" data-lang="js"><code>setInterval(function () {
+  pc.getStats().then(function (report) {
+    report.forEach(function (r) {
+      if (r.type === 'inbound-rtp' &amp;&amp; r.kind === 'video') {
+        // framesDecoded 持续增长但 freezeCount 涨 → 卡；packetsLost 高 → 网络差
+        console.log('解码帧:', r.framesDecoded, '冻帧:', r.freezeCount,
+                    '丢包率:', r.packetsLost / (r.packetsReceived || 1));
+      }
+      if (r.type === 'candidate-pair' &amp;&amp; r.selected) {
+        // localCandidateType: host/srflx=直连, relay=TURN 中继
+        console.log('当前链路:', r.localCandidateType, '→', r.currentRoundTripTime, 's');
+      }
+    });
+  });
+}, 2000);</code></pre>
+  <h3>4.5 主动请求关键帧（解决花屏）</h3>
+<pre class="code" data-lang="js"><code>// 检测到花屏/绿条时，向 Janus 发 PLI（Picture Loss Indication）请求立即重发关键帧
+// 通常经信令告诉 SFU，由它指示编码器出一个 IDR 帧
+function requestKeyframe() { wsSend({ janus: 'videohangup-keyframe' }); /* Janus 插件特定消息 */ }</code></pre>
+</section>
+
+<section id="sec5" class="card">
+  <h2><span class="num">5</span>实战项目经验（真实项目落地）</h2>
+
+  <h3>5.1 项目背景：把变电站监控从 ActiveX 搬到浏览器原生</h3>
+  <p class="lead"><b>一句话定位</b>：这是一个"去插件化 + 微前端整合"的监控播放端改造项目，业务量级是电力生产监控的长期常驻值班场景。</p>
+  <ul>
+    <li><strong>业务场景</strong>：变电站摄像头实时监控，值班人员要在值班室多屏同看多路摄像头流，7×24 常驻。</li>
+    <li><strong>旧方案痛点</strong>：必须装 <strong>ActiveX 插件</strong>才能播流，绑定 IE；安全软件反复告警；每换一台值班机就要重装插件并过信息安全审计。</li>
+    <li><strong>后续整合</strong>：播放端要被 <strong>Qiankun 微前端</strong>整合成一个子应用，塞进变电 2.0 平台统一入口。</li>
+    <li><strong>目标</strong>：零插件、浏览器原生、端到端低延迟、多路同屏 CPU 可控、可独立部署为子应用。</li>
+  </ul>
+
+  <h3>5.2 我的角色与职责</h3>
+  <ul>
+    <li><strong>角色</strong>：前端负责人，独立承担播放端从技术选型到上线的全部前端工作。</li>
+    <li><strong>分工</strong>：后端同学负责 Janus 网关部署与摄像头接入；我负责浏览器端播放核心、信令对接、渲染与质量自愈；前端组另有同学做变电 2.0 主框架，我按子应用契约接入。</li>
+    <li><strong>协作边界</strong>：信令消息格式由我与后端共同定，质量指标口径双方一起对齐。</li>
+  </ul>
+
+  <h3>5.3 技术栈</h3>
+  <ul>
+    <li><strong>前端</strong>：WebRTC（RTCPeerConnection）+ Vue2 + Canvas 渲染。</li>
+    <li><strong>媒体/信令</strong>：Janus 网关（SFU，streaming 插件）+ WebSocket 信令。</li>
+    <li><strong>微前端</strong>：Qiankun，把播放器封装为独立部署的子应用。</li>
+  </ul>
+
+  <h3>5.4 落地设计：为什么是 SFU + recvonly + Canvas</h3>
+  <ul>
+    <li><span class="tag-key">关键</span><strong>弃 P2P 选 SFU</strong>：多路摄像头源 × 多观看者，P2P 会把源端带宽打爆；摄像头流进 Janus streaming 插件，浏览器作为 answer 端拉流。</li>
+    <li><strong>recvonly</strong>：浏览器只收不发，<code>addTransceiver('video', { direction: 'recvonly' })</code>。</li>
+    <li><strong>信令走 WebSocket</strong>：create → attach streaming → getoffer → 回 answer → trickle ICE。</li>
+    <li><strong>Canvas 渲染而非 &lt;video&gt; 黑盒</strong>：把解码帧 drawImage 到 Canvas，统一叠加通道名/时间戳 OSD，多路绘制收敛到一个 rAF 循环。</li>
+  </ul>
+
+  <h3>5.5 关键实现要点</h3>
+  <pre class="code" data-lang="js"><code>// 多路同屏：每一路一个 pc，但渲染共用池化的 video + Canvas，避免每路新建 DOM
+function createPlayer(channelId, canvas) {
+  var pc = new RTCPeerConnection({ iceServers: STUN_TURN });
+  pc.addTransceiver('video', { direction: 'recvonly' });   // 只收不发，别用默认 sendrecv
+  var hiddenVideo = document.createElement('video');
+  hiddenVideo.muted = true; hiddenVideo.playsInline = true;
+  pc.addEventListener('track', function (e) {
+    hiddenVideo.srcObject = e.streams[0];
+    hiddenVideo.play().catch(function () {/* 自动播放被拦：需用户手势解锁 */});
+    bindDrawLoop(hiddenVideo, canvas, channelId);   // 进入统一 rAF 绘制池
+  });
+  return pc;
+}</code></pre>
+  <p>质量自愈侧：每 2s 调 <code>pc.getStats()</code> 采样 <code>framesDecoded/freezeCount/packetsLost</code> 与 candidate-pair 的 RTT/类型，触发 PLI 请求关键帧或 <code>restartIce()</code>。</p>
+  <pre class="code" data-lang="js"><code>var lastFreeze = 0, badStreak = 0;
+setInterval(async function () {
+  var s = await collectStats(pc);
+  if (s.freezeCount - lastFreeze &gt; 0 &amp;&amp; s.lossRate &gt; 0.05) {
+    badStreak++;
+    if (badStreak &gt;= 3) { requestKeyframe(); badStreak = 0; }   // 丢参考帧→请求关键帧
+  } else { badStreak = 0; }
+  lastFreeze = s.freezeCount;
+  if (s.rtt &gt; 0.6 || s.linkType === 'relay') pc.restartIce();   // 链路劣化，ICE 重启
+}, 2000);</code></pre>
+
+  <h3>5.6 真实问题与解法（含量化前后对比）</h3>
+  <ul>
+    <li><span class="tag-pit">坑</span><strong>自动播放策略</strong>：Chrome 要求带声音媒体需用户手势，muted 后仍偶发 <code>play()</code> reject——catch 后在用户点击页面补一次 play。</li>
+    <li><span class="tag-pit">坑</span><strong>忘了 recvonly</strong>：第一版默认 sendrecv，打开页面就弹摄像头权限、在无摄像头值班机建连失败——改 recvonly 后消失。</li>
+    <li><span class="tag-pit">坑</span><strong>企业网封 UDP</strong>：部分现场只能走 TURN relay，延迟上升。<strong>前后对比（估算）</strong>：靠 getStats 的 candidateType 监控走中继的路数，把"多少路在 relay"从无监控做到可见，超阈值即扩容 TURN。</li>
+    <li><span class="tag-pit">坑</span><strong>GPU 上下文爆炸</strong>：多路每路新建 video+Canvas 导致 GPU 上下文过多——改池化 + 降帧后稳住。</li>
+    <li><span class="tag-pit">坑</span><strong>PLI 不是浏览器直接发</strong>：要经信令告诉 Janus；<code>restartIce()</code> 必须配合一次新 offer/answer 才算完整重启。</li>
+  </ul>
+
+  <h3>5.7 量化成果</h3>
+  <ul>
+    <li><strong>彻底下线 ActiveX</strong>：值班机零安装，信息安全审计环节取消插件安装项。</li>
+    <li><strong>延迟</strong>：端到端从插件方案数秒压到约 <strong>300-500ms（估算）</strong>，满足实时监控。</li>
+    <li><strong>同屏性能</strong>：4 路同屏在普通办公机上 CPU 占用可控（池化渲染后）。</li>
+    <li><strong>可维护性</strong>：作为 Qiankun 子应用独立部署/独立路由，主框架升级不影响播放端。</li>
+  </ul>
+
+  <h3>5.8 协作与排期过程</h3>
+  <ul>
+    <li><strong>契约先行</strong>：先与后端定 WebSocket 信令消息表（create/attach/offer/answer/candidate/PLI），再各自开发。</li>
+    <li><strong>联调协商点</strong>：TURN 服务器地址、STUN/TURN 凭据、信令房间与通道映射，均现场网络环境下反复联调。</li>
+    <li><strong>排期</strong>：按"单路打通 → 多路同屏 → 质量自愈 → Qiankun 子应用封装"分迭代推进，每阶段现场真机验证。</li>
+  </ul>
+
+  <h3>5.9 复盘与可复用经验</h3>
+  <ul>
+    <li><span class="tag-point">要点</span><strong>媒体面与信令面分离</strong>：WebSocket 只管控制信令、WebRTC 只管媒体，职责清晰才好排障。</li>
+    <li><span class="tag-point">要点</span><strong>接收端默认 recvonly</strong>：纯拉流场景别用默认方向，省掉一堆权限/建连坑。</li>
+    <li><span class="tag-point">要点</span><strong>质量要可观测</strong>：getStats 采样 + 规则自愈，把"偶发花屏"从人肉反馈变成自动恢复。</li>
+  </ul>
+
+  <h3>5.10 面试讲法（一句话抓手）</h3>
+  <p class="key-sentence">一句话抓手："我把变电站监控从 ActiveX 插件改成浏览器原生 WebRTC 拉流，用 Janus SFU + recvonly + Canvas 池化渲染做到 300-500ms 低延迟多路同屏，并用 getStats 做了丢帧自动请求关键帧的自愈。"</p>
+</section>
+
+<section id="sec6" class="card">
+  <h2><span class="num">6</span>易错点与面试重点</h2>
+  <h3>6.1 signalingState 状态机乱跳</h3>
+  <p class="lead"><b>一句话定位</b>：协商是严格状态机，stable 之外再 createOffer 必错位。</p>
+  <ul>
+    <li><span class="tag-pit">坑</span><strong>现象</strong>：建连偶发报 <code>InvalidStateError: Failed to execute 'setLocalDescription'</code>。</li>
+    <li><strong>原因</strong>：stable 状态下才能发新一轮 offer；have-local-offer 时又 createOffer，或 answer 端未 setRemoteDescription 就 createAnswer，都会错位。</li>
+    <li><strong>正解</strong>：一次协商一轮完整往返；中途改方向/加轨走 <code>onnegotiationneeded</code> 触发的增量重协商，别手动再 createOffer。</li>
+  </ul>
+  <h3>6.2 recvonly 漏设，纯接收页弹摄像头权限</h3>
+  <p class="lead"><b>一句话定位</b>：不声明 direction，浏览器默认 sendrecv，打开就弹采集。</p>
+  <ul>
+    <li><span class="tag-pit">坑</span><strong>现象</strong>：监控播放页一打开就要摄像头/麦克风权限，无设备机器直接失败。</li>
+    <li><strong>原因</strong>：<code>addTrack</code> 或 <code>addTransceiver</code> 不指定 direction，默认 sendrecv，浏览器认为本端要发送。</li>
+    <li><strong>正解</strong>：纯拉流端一律 <code>addTransceiver('video',{direction:'recvonly'})</code>，并确认 offer/answer 方向一致。</li>
+  </ul>
+  <h3>6.3 trickle ICE 候选到达顺序乱</h3>
+  <p class="lead"><b>一句话定位</b>：候选异步乱序到达，可能早于 remoteDescription set 完。</p>
+  <ul>
+    <li><strong>现象</strong>：候选经信令乱序到达，偶发 <code>addIceCandidate</code> 报错。</li>
+    <li><strong>正解</strong>：addIceCandidate 包 try/catch 容忍"过早到达"；或先缓存候选，等 setRemoteDescription 完成后批量补加。</li>
+  </ul>
+  <h3>6.4 HTTPS/localhost 限制与权限</h3>
+  <p class="lead"><b>一句话定位</b>：WebRTC 与媒体采集只在安全上下文（HTTPS/localhost）可用。</p>
+  <ul>
+    <li><span class="tag-pit">坑</span><strong>现象</strong>：普通 http 页面 getUserMedia / RTCPeerConnection 直接 undefined 或被拒。</li>
+    <li><strong>正解</strong>：生产必须 HTTPS（信令走 wss）；本地调试用 localhost 或自签证书。</li>
+  </ul>
+  <h3>6.5 UDP 被企业防火墙封死</h3>
+  <p class="lead"><b>一句话定位</b>：家里通、现场超时，多半是 UDP 被封且没配 TURN。</p>
+  <ul>
+    <li><span class="tag-pit">坑</span><strong>现象</strong>：现场建连超时，getStats 一直没有 selected candidate-pair。</li>
+    <li><strong>原因</strong>：现场防火墙封 UDP，host/srflx 候选都打不通，又没配 TURN。</li>
+    <li><strong>正解</strong>：部署 TURN（coturn）配 relay 候选，让流量回落到 TCP/TLS 中继；监控 relay 比例做成本与体验平衡。</li>
+  </ul>
+  <h3>6.6 花屏 = 丢关键帧，而非网络"卡"</h3>
+  <p class="lead"><b>一句话定位</b>：绿条/马赛克是丢了 H.264 参考帧，要主动请求 IDR。</p>
+  <ul>
+    <li><span class="tag-pit">坑</span><strong>现象</strong>：画面绿条/马赛克，过一会儿自己好。</li>
+    <li><strong>原因</strong>：H.264 帧间依赖，丢参考帧后后续 P 帧无法正确解码，直到下个 IDR 关键帧到来才恢复。</li>
+    <li><strong>正解</strong>：主动发 PLI/FIR 请求对端立即出关键帧（经 SFU），配合 getStats 丢包率自动触发。</li>
+  </ul>
+</section>
+
+<section id="sec7" class="card">
+  <h2><span class="num">7</span>学习资源与参考</h2>
+  <h3>官方文档与规范</h3>
+  <ul>
+    <li>MDN WebRTC API 总览：<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/WebRTC_API" rel="noopener">developer.mozilla.org/zh-CN/docs/Web/API/WebRTC_API</a></li>
+    <li>W3C WebRTC 1.0 规范（RTCPeerConnection）：<a href="https://w3c.github.io/webrtc-pc/" rel="noopener">w3c.github.io/webrtc-pc</a></li>
+    <li>web.dev WebRTC 入门与最佳实践：<a href="https://web.dev/articles/webrtc-basics" rel="noopener">web.dev/articles/webrtc-basics</a></li>
+    <li>W3C getStats 统计口径（RTCStats）：<a href="https://w3c.github.io/webrtc-stats/" rel="noopener">w3c.github.io/webrtc-stats</a></li>
+  </ul>
+  <h3>书籍与权威资料</h3>
+  <ul>
+    <li><em>WebRTC: APIs and RTCWeb in Browsers</em>（IETF/W3C 规范综述）与 RFC 8829（WebRTC 用 ICE 的用法）：<a href="https://www.rfc-editor.org/" rel="noopener">rfc-editor.org</a> 检索 RFC 8829 / RFC 5389(STUN) / RFC 5766(TURN)。</li>
+    <li>coturn（STUN/TURN 服务端）官方文档：<a href="https://github.com/coturn/coturn" rel="noopener">github.com/coturn/coturn</a></li>
+  </ul>
+  <h3>实战文章</h3>
+  <ul>
+    <li>WebRTC For The Curious（图文讲透 ICE/DTLS/SRTP 全链路，业内公认入门正典）：<a href="https://webrtcforthecurious.com/" rel="noopener">webrtcforthecurious.com</a></li>
+    <li>Janus 网关官方文档（与本项目后端配套）：<a href="https://janus.conf.meetecho.com/docs/" rel="noopener">janus.conf.meetecho.com/docs</a></li>
+  </ul>
+</section>
+
+</main>
+</div>
+<nav class="doc-nav bottom">
+  <a class="doc-nav-btn" href="../03_数据可视化/06_可视化技术选型与原理【标准】.html">← 上一篇</a>
+  <a class="doc-nav-btn home" href="../index.html">⌂ 返回首页</a>
+  <a class="doc-nav-btn" href="../04_实时通信/02_Janus网关【深入】.html">下一篇 →</a>
+</nav>
+<footer>全栈技术栈详解 · WebRTC【深入】 · 基于简历项目实战编写</footer>
+<button id="backTop" type="button" aria-label="回到顶部">↑</button>
+<script>
+(function () {
+  'use strict';
+  try {
+    var btn = document.getElementById('backTop');
+    if (btn) {
+      var toggle = function () { btn.classList.toggle('show', window.scrollY > 480); };
+      window.addEventListener('scroll', toggle, { passive: true });
+      toggle();
+      btn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    }
+  } catch (e) {}
+  try {
+    var pres = document.querySelectorAll('pre.code');
+    for (var i = 0; i < pres.length; i++) {
+      (function (pre) {
+        var b = document.createElement('button');
+        b.type = 'button'; b.className = 'code-copy'; b.textContent = '复制';
+        b.setAttribute('aria-label', '复制代码');
+        pre.appendChild(b);
+        b.addEventListener('click', function () {
+          var codeEl = pre.querySelector('code');
+          var text = codeEl ? codeEl.innerText : pre.innerText;
+          var done = function () { b.textContent = '已复制'; setTimeout(function () { b.textContent = '复制'; }, 1600); };
+          function fb(t, ok) {
+            try {
+              var ta = document.createElement('textarea');
+              ta.value = t; ta.style.position = 'fixed'; ta.style.opacity = '0';
+              document.body.appendChild(ta); ta.select();
+              document.execCommand('copy'); document.body.removeChild(ta); ok();
+            } catch (e2) {}
+          }
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(done, function () { fb(text, done); });
+          } else { fb(text, done); }
+        });
+      })(pres[i]);
+    }
+  } catch (e) {}
+})();
+</script>
+
+<script data-manual>
+/* ===== 全库统一 Prism 语法高亮（内联，离线可看） ===== */
+var _self="undefined"!=typeof window?window:"undefined"!=typeof WorkerGlobalScope&&self instanceof WorkerGlobalScope?self:{},Prism=function(e){var n=/(?:^|\s)lang(?:uage)?-([\w-]+)(?=\s|$)/i,t=0,r={},a={manual:e.Prism&&e.Prism.manual,disableWorkerMessageHandler:e.Prism&&e.Prism.disableWorkerMessageHandler,util:{encode:function e(n){return n instanceof i?new i(n.type,e(n.content),n.alias):Array.isArray(n)?n.map(e):n.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/\u00a0/g," ")},type:function(e){return Object.prototype.toString.call(e).slice(8,-1)},objId:function(e){return e.__id||Object.defineProperty(e,"__id",{value:++t}),e.__id},clone:function e(n,t){var r,i;switch(t=t||{},a.util.type(n)){case"Object":if(i=a.util.objId(n),t[i])return t[i];for(var l in r={},t[i]=r,n)n.hasOwnProperty(l)&&(r[l]=e(n[l],t));return r;case"Array":return i=a.util.objId(n),t[i]?t[i]:(r=[],t[i]=r,n.forEach((function(n,a){r[a]=e(n,t)})),r);default:return n}},getLanguage:function(e){for(;e;){var t=n.exec(e.className);if(t)return t[1].toLowerCase();e=e.parentElement}return"none"},setLanguage:function(e,t){e.className=e.className.replace(RegExp(n,"gi"),""),e.classList.add("language-"+t)},currentScript:function(){if("undefined"==typeof document)return null;if("currentScript"in document)return document.currentScript;try{throw new Error}catch(r){var e=(/at [^(\r\n]*\((.*):[^:]+:[^:]+\)$/i.exec(r.stack)||[])[1];if(e){var n=document.getElementsByTagName("script");for(var t in n)if(n[t].src==e)return n[t]}return null}},isActive:function(e,n,t){for(var r="no-"+n;e;){var a=e.classList;if(a.contains(n))return!0;if(a.contains(r))return!1;e=e.parentElement}return!!t}},languages:{plain:r,plaintext:r,text:r,txt:r,extend:function(e,n){var t=a.util.clone(a.languages[e]);for(var r in n)t[r]=n[r];return t},insertBefore:function(e,n,t,r){var i=(r=r||a.languages)[e],l={};for(var o in i)if(i.hasOwnProperty(o)){if(o==n)for(var s in t)t.hasOwnProperty(s)&&(l[s]=t[s]);t.hasOwnProperty(o)||(l[o]=i[o])}var u=r[e];return r[e]=l,a.languages.DFS(a.languages,(function(n,t){t===u&&n!=e&&(this[n]=l)})),l},DFS:function e(n,t,r,i){i=i||{};var l=a.util.objId;for(var o in n)if(n.hasOwnProperty(o)){t.call(n,o,n[o],r||o);var s=n[o],u=a.util.type(s);"Object"!==u||i[l(s)]?"Array"!==u||i[l(s)]||(i[l(s)]=!0,e(s,t,o,i)):(i[l(s)]=!0,e(s,t,null,i))}}},plugins:{},highlightAll:function(e,n){a.highlightAllUnder(document,e,n)},highlightAllUnder:function(e,n,t){var r={callback:t,container:e,selector:'code[class*="language-"], [class*="language-"] code, code[class*="lang-"], [class*="lang-"] code'};a.hooks.run("before-highlightall",r),r.elements=Array.prototype.slice.apply(r.container.querySelectorAll(r.selector)),a.hooks.run("before-all-elements-highlight",r);for(var i,l=0;i=r.elements[l++];)a.highlightElement(i,!0===n,r.callback)},highlightElement:function(n,t,r){var i=a.util.getLanguage(n),l=a.languages[i];a.util.setLanguage(n,i);var o=n.parentElement;o&&"pre"===o.nodeName.toLowerCase()&&a.util.setLanguage(o,i);var s={element:n,language:i,grammar:l,code:n.textContent};function u(e){s.highlightedCode=e,a.hooks.run("before-insert",s),s.element.innerHTML=s.highlightedCode,a.hooks.run("after-highlight",s),a.hooks.run("complete",s),r&&r.call(s.element)}if(a.hooks.run("before-sanity-check",s),(o=s.element.parentElement)&&"pre"===o.nodeName.toLowerCase()&&!o.hasAttribute("tabindex")&&o.setAttribute("tabindex","0"),!s.code)return a.hooks.run("complete",s),void(r&&r.call(s.element));if(a.hooks.run("before-highlight",s),s.grammar)if(t&&e.Worker){var c=new Worker(a.filename);c.onmessage=function(e){u(e.data)},c.postMessage(JSON.stringify({language:s.language,code:s.code,immediateClose:!0}))}else u(a.highlight(s.code,s.grammar,s.language));else u(a.util.encode(s.code))},highlight:function(e,n,t){var r={code:e,grammar:n,language:t};if(a.hooks.run("before-tokenize",r),!r.grammar)throw new Error('The language "'+r.language+'" has no grammar.');return r.tokens=a.tokenize(r.code,r.grammar),a.hooks.run("after-tokenize",r),i.stringify(a.util.encode(r.tokens),r.language)},tokenize:function(e,n){var t=n.rest;if(t){for(var r in t)n[r]=t[r];delete n.rest}var a=new s;return u(a,a.head,e),o(e,a,n,a.head,0),function(e){for(var n=[],t=e.head.next;t!==e.tail;)n.push(t.value),t=t.next;return n}(a)},hooks:{all:{},add:function(e,n){var t=a.hooks.all;t[e]=t[e]||[],t[e].push(n)},run:function(e,n){var t=a.hooks.all[e];if(t&&t.length)for(var r,i=0;r=t[i++];)r(n)}},Token:i};function i(e,n,t,r){this.type=e,this.content=n,this.alias=t,this.length=0|(r||"").length}function l(e,n,t,r){e.lastIndex=n;var a=e.exec(t);if(a&&r&&a[1]){var i=a[1].length;a.index+=i,a[0]=a[0].slice(i)}return a}function o(e,n,t,r,s,g){for(var f in t)if(t.hasOwnProperty(f)&&t[f]){var h=t[f];h=Array.isArray(h)?h:[h];for(var d=0;d<h.length;++d){if(g&&g.cause==f+","+d)return;var v=h[d],p=v.inside,m=!!v.lookbehind,y=!!v.greedy,k=v.alias;if(y&&!v.pattern.global){var x=v.pattern.toString().match(/[imsuy]*$/)[0];v.pattern=RegExp(v.pattern.source,x+"g")}for(var b=v.pattern||v,w=r.next,A=s;w!==n.tail&&!(g&&A>=g.reach);A+=w.value.length,w=w.next){var E=w.value;if(n.length>e.length)return;if(!(E instanceof i)){var P,L=1;if(y){if(!(P=l(b,A,e,m))||P.index>=e.length)break;var S=P.index,O=P.index+P[0].length,j=A;for(j+=w.value.length;S>=j;)j+=(w=w.next).value.length;if(A=j-=w.value.length,w.value instanceof i)continue;for(var C=w;C!==n.tail&&(j<O||"string"==typeof C.value);C=C.next)L++,j+=C.value.length;L--,E=e.slice(A,j),P.index-=A}else if(!(P=l(b,0,E,m)))continue;S=P.index;var N=P[0],_=E.slice(0,S),M=E.slice(S+N.length),W=A+E.length;g&&W>g.reach&&(g.reach=W);var z=w.prev;if(_&&(z=u(n,z,_),A+=_.length),c(n,z,L),w=u(n,z,new i(f,p?a.tokenize(N,p):N,k,N)),M&&u(n,w,M),L>1){var I={cause:f+","+d,reach:W};o(e,n,t,w.prev,A,I),g&&I.reach>g.reach&&(g.reach=I.reach)}}}}}}function s(){var e={value:null,prev:null,next:null},n={value:null,prev:e,next:null};e.next=n,this.head=e,this.tail=n,this.length=0}function u(e,n,t){var r=n.next,a={value:t,prev:n,next:r};return n.next=a,r.prev=a,e.length++,a}function c(e,n,t){for(var r=n.next,a=0;a<t&&r!==e.tail;a++)r=r.next;n.next=r,r.prev=n,e.length-=a}if(e.Prism=a,i.stringify=function e(n,t){if("string"==typeof n)return n;if(Array.isArray(n)){var r="";return n.forEach((function(n){r+=e(n,t)})),r}var i={type:n.type,content:e(n.content,t),tag:"span",classes:["token",n.type],attributes:{},language:t},l=n.alias;l&&(Array.isArray(l)?Array.prototype.push.apply(i.classes,l):i.classes.push(l)),a.hooks.run("wrap",i);var o="";for(var s in i.attributes)o+=" "+s+'="'+(i.attributes[s]||"").replace(/"/g,"&quot;")+'"';return"<"+i.tag+' class="'+i.classes.join(" ")+'"'+o+">"+i.content+"</"+i.tag+">"},!e.document)return e.addEventListener?(a.disableWorkerMessageHandler||e.addEventListener("message",(function(n){var t=JSON.parse(n.data),r=t.language,i=t.code,l=t.immediateClose;e.postMessage(a.highlight(i,a.languages[r],r)),l&&e.close()}),!1),a):a;var g=a.util.currentScript();function f(){a.manual||a.highlightAll()}if(g&&(a.filename=g.src,g.hasAttribute("data-manual")&&(a.manual=!0)),!a.manual){var h=document.readyState;"loading"===h||"interactive"===h&&g&&g.defer?document.addEventListener("DOMContentLoaded",f):window.requestAnimationFrame?window.requestAnimationFrame(f):window.setTimeout(f,16)}return a}(_self);"undefined"!=typeof module&&module.exports&&(module.exports=Prism),"undefined"!=typeof global&&(global.Prism=Prism);
+Prism.languages.markup={comment:{pattern:/<!--(?:(?!<!--)[\s\S])*?-->/,greedy:!0},prolog:{pattern:/<\?[\s\S]+?\?>/,greedy:!0},doctype:{pattern:/<!DOCTYPE(?:[^>"'[\]]|"[^"]*"|'[^']*')+(?:\[(?:[^<"'\]]|"[^"]*"|'[^']*'|<(?!!--)|<!--(?:[^-]|-(?!->))*-->)*\]\s*)?>/i,greedy:!0,inside:{"internal-subset":{pattern:/(^[^\[]*\[)[\s\S]+(?=\]>$)/,lookbehind:!0,greedy:!0,inside:null},string:{pattern:/"[^"]*"|'[^']*'/,greedy:!0},punctuation:/^<!|>$|[[\]]/,"doctype-tag":/^DOCTYPE/i,name:/[^\s<>'"]+/}},cdata:{pattern:/<!\[CDATA\[[\s\S]*?\]\]>/i,greedy:!0},tag:{pattern:/<\/?(?!\d)[^\s>\/=$<%]+(?:\s(?:\s*[^\s>\/=]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s'">=]+(?=[\s>]))|(?=[\s/>])))+)?\s*\/?>/,greedy:!0,inside:{tag:{pattern:/^<\/?[^\s>\/]+/,inside:{punctuation:/^<\/?/,namespace:/^[^\s>\/:]+:/}},"special-attr":[],"attr-value":{pattern:/=\s*(?:"[^"]*"|'[^']*'|[^\s'">=]+)/,inside:{punctuation:[{pattern:/^=/,alias:"attr-equals"},{pattern:/^(\s*)["']|["']$/,lookbehind:!0}]}},punctuation:/\/?>/,"attr-name":{pattern:/[^\s>\/]+/,inside:{namespace:/^[^\s>\/:]+:/}}}},entity:[{pattern:/&[\da-z]{1,8};/i,alias:"named-entity"},/&#x?[\da-f]{1,8};/i]},Prism.languages.markup.tag.inside["attr-value"].inside.entity=Prism.languages.markup.entity,Prism.languages.markup.doctype.inside["internal-subset"].inside=Prism.languages.markup,Prism.hooks.add("wrap",(function(a){"entity"===a.type&&(a.attributes.title=a.content.replace(/&amp;/,"&"))})),Object.defineProperty(Prism.languages.markup.tag,"addInlined",{value:function(a,e){var s={};s["language-"+e]={pattern:/(^<!\[CDATA\[)[\s\S]+?(?=\]\]>$)/i,lookbehind:!0,inside:Prism.languages[e]},s.cdata=/^<!\[CDATA\[|\]\]>$/i;var t={"included-cdata":{pattern:/<!\[CDATA\[[\s\S]*?\]\]>/i,inside:s}};t["language-"+e]={pattern:/[\s\S]+/,inside:Prism.languages[e]};var n={};n[a]={pattern:RegExp("(<__[^>]*>)(?:<!\\[CDATA\\[(?:[^\\]]|\\](?!\\]>))*\\]\\]>|(?!<!\\[CDATA\\[)[^])*?(?=</__>)".replace(/__/g,(function(){return a})),"i"),lookbehind:!0,greedy:!0,inside:t},Prism.languages.insertBefore("markup","cdata",n)}}),Object.defineProperty(Prism.languages.markup.tag,"addAttribute",{value:function(a,e){Prism.languages.markup.tag.inside["special-attr"].push({pattern:RegExp("(^|[\"'\\s])(?:"+a+")\\s*=\\s*(?:\"[^\"]*\"|'[^']*'|[^\\s'\">=]+(?=[\\s>]))","i"),lookbehind:!0,inside:{"attr-name":/^[^\s=]+/,"attr-value":{pattern:/=[\s\S]+/,inside:{value:{pattern:/(^=\s*(["']|(?!["'])))\S[\s\S]*(?=\2$)/,lookbehind:!0,alias:[e,"language-"+e],inside:Prism.languages[e]},punctuation:[{pattern:/^=/,alias:"attr-equals"},/"|'/]}}}})}}),Prism.languages.html=Prism.languages.markup,Prism.languages.mathml=Prism.languages.markup,Prism.languages.svg=Prism.languages.markup,Prism.languages.xml=Prism.languages.extend("markup",{}),Prism.languages.ssml=Prism.languages.xml,Prism.languages.atom=Prism.languages.xml,Prism.languages.rss=Prism.languages.xml;
+!function(s){var e=/(?:"(?:\\(?:\r\n|[\s\S])|[^"\\\r\n])*"|'(?:\\(?:\r\n|[\s\S])|[^'\\\r\n])*')/;s.languages.css={comment:/\/\*[\s\S]*?\*\//,atrule:{pattern:RegExp("@[\\w-](?:[^;{\\s\"']|\\s+(?!\\s)|"+e.source+")*?(?:;|(?=\\s*\\{))"),inside:{rule:/^@[\w-]+/,"selector-function-argument":{pattern:/(\bselector\s*\(\s*(?![\s)]))(?:[^()\s]|\s+(?![\s)])|\((?:[^()]|\([^()]*\))*\))+(?=\s*\))/,lookbehind:!0,alias:"selector"},keyword:{pattern:/(^|[^\w-])(?:and|not|only|or)(?![\w-])/,lookbehind:!0}}},url:{pattern:RegExp("\\burl\\((?:"+e.source+"|(?:[^\\\\\r\n()\"']|\\\\[^])*)\\)","i"),greedy:!0,inside:{function:/^url/i,punctuation:/^\(|\)$/,string:{pattern:RegExp("^"+e.source+"$"),alias:"url"}}},selector:{pattern:RegExp("(^|[{}\\s])[^{}\\s](?:[^{};\"'\\s]|\\s+(?![\\s{])|"+e.source+")*(?=\\s*\\{)"),lookbehind:!0},string:{pattern:e,greedy:!0},property:{pattern:/(^|[^-\w\xA0-\uFFFF])(?!\s)[-_a-z\xA0-\uFFFF](?:(?!\s)[-\w\xA0-\uFFFF])*(?=\s*:)/i,lookbehind:!0},important:/!important\b/i,function:{pattern:/(^|[^-a-z0-9])[-a-z0-9]+(?=\()/i,lookbehind:!0},punctuation:/[(){};:,]/},s.languages.css.atrule.inside.rest=s.languages.css;var t=s.languages.markup;t&&(t.tag.addInlined("style","css"),t.tag.addAttribute("style","css"))}(Prism);
+Prism.languages.clike={comment:[{pattern:/(^|[^\\])\/\*[\s\S]*?(?:\*\/|$)/,lookbehind:!0,greedy:!0},{pattern:/(^|[^\\:])\/\/.*/,lookbehind:!0,greedy:!0}],string:{pattern:/(["'])(?:\\(?:\r\n|[\s\S])|(?!\1)[^\\\r\n])*\1/,greedy:!0},"class-name":{pattern:/(\b(?:class|extends|implements|instanceof|interface|new|trait)\s+|\bcatch\s+\()[\w.\\]+/i,lookbehind:!0,inside:{punctuation:/[.\\]/}},keyword:/\b(?:break|catch|continue|do|else|finally|for|function|if|in|instanceof|new|null|return|throw|try|while)\b/,boolean:/\b(?:false|true)\b/,function:/\b\w+(?=\()/,number:/\b0x[\da-f]+\b|(?:\b\d+(?:\.\d*)?|\B\.\d+)(?:e[+-]?\d+)?/i,operator:/[<>]=?|[!=]=?=?|--?|\+\+?|&&?|\|\|?|[?*/~^%]/,punctuation:/[{}[\];(),.:]/};
+Prism.languages.javascript=Prism.languages.extend("clike",{"class-name":[Prism.languages.clike["class-name"],{pattern:/(^|[^$\w\xA0-\uFFFF])(?!\s)[_$A-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*(?=\.(?:constructor|prototype))/,lookbehind:!0}],keyword:[{pattern:/((?:^|\})\s*)catch\b/,lookbehind:!0},{pattern:/(^|[^.]|\.\.\.\s*)\b(?:as|assert(?=\s*\{)|async(?=\s*(?:function\b|\(|[$\w\xA0-\uFFFF]|$))|await|break|case|class|const|continue|debugger|default|delete|do|else|enum|export|extends|finally(?=\s*(?:\{|$))|for|from(?=\s*(?:['"]|$))|function|(?:get|set)(?=\s*(?:[#\[$\w\xA0-\uFFFF]|$))|if|implements|import|in|instanceof|interface|let|new|null|of|package|private|protected|public|return|static|super|switch|this|throw|try|typeof|undefined|var|void|while|with|yield)\b/,lookbehind:!0}],function:/#?(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*(?=\s*(?:\.\s*(?:apply|bind|call)\s*)?\()/,number:{pattern:RegExp("(^|[^\\w$])(?:NaN|Infinity|0[bB][01]+(?:_[01]+)*n?|0[oO][0-7]+(?:_[0-7]+)*n?|0[xX][\\dA-Fa-f]+(?:_[\\dA-Fa-f]+)*n?|\\d+(?:_\\d+)*n|(?:\\d+(?:_\\d+)*(?:\\.(?:\\d+(?:_\\d+)*)?)?|\\.\\d+(?:_\\d+)*)(?:[Ee][+-]?\\d+(?:_\\d+)*)?)(?![\\w$])"),lookbehind:!0},operator:/--|\+\+|\*\*=?|=>|&&=?|\|\|=?|[!=]==|<<=?|>>>?=?|[-+*/%&|^!=<>]=?|\.{3}|\?\?=?|\?\.?|[~:]/}),Prism.languages.javascript["class-name"][0].pattern=/(\b(?:class|extends|implements|instanceof|interface|new)\s+)[\w.\\]+/,Prism.languages.insertBefore("javascript","keyword",{regex:{pattern:RegExp("((?:^|[^$\\w\\xA0-\\uFFFF.\"'\\])\\s]|\\b(?:return|yield))\\s*)/(?:(?:\\[(?:[^\\]\\\\\r\n]|\\\\.)*\\]|\\\\.|[^/\\\\\\[\r\n])+/[dgimyus]{0,7}|(?:\\[(?:[^[\\]\\\\\r\n]|\\\\.|\\[(?:[^[\\]\\\\\r\n]|\\\\.|\\[(?:[^[\\]\\\\\r\n]|\\\\.)*\\])*\\])*\\]|\\\\.|[^/\\\\\\[\r\n])+/[dgimyus]{0,7}v[dgimyus]{0,7})(?=(?:\\s|/\\*(?:[^*]|\\*(?!/))*\\*/)*(?:$|[\r\n,.;:})\\]]|//))"),lookbehind:!0,greedy:!0,inside:{"regex-source":{pattern:/^(\/)[\s\S]+(?=\/[a-z]*$)/,lookbehind:!0,alias:"language-regex",inside:Prism.languages.regex},"regex-delimiter":/^\/|\/$/,"regex-flags":/^[a-z]+$/}},"function-variable":{pattern:/#?(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*(?=\s*[=:]\s*(?:async\s*)?(?:\bfunction\b|(?:\((?:[^()]|\([^()]*\))*\)|(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*)\s*=>))/,alias:"function"},parameter:[{pattern:/(function(?:\s+(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*)?\s*\(\s*)(?!\s)(?:[^()\s]|\s+(?![\s)])|\([^()]*\))+(?=\s*\))/,lookbehind:!0,inside:Prism.languages.javascript},{pattern:/(^|[^$\w\xA0-\uFFFF])(?!\s)[_$a-z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*(?=\s*=>)/i,lookbehind:!0,inside:Prism.languages.javascript},{pattern:/(\(\s*)(?!\s)(?:[^()\s]|\s+(?![\s)])|\([^()]*\))+(?=\s*\)\s*=>)/,lookbehind:!0,inside:Prism.languages.javascript},{pattern:/((?:\b|\s|^)(?!(?:as|async|await|break|case|catch|class|const|continue|debugger|default|delete|do|else|enum|export|extends|finally|for|from|function|get|if|implements|import|in|instanceof|interface|let|new|null|of|package|private|protected|public|return|set|static|super|switch|this|throw|try|typeof|undefined|var|void|while|with|yield)(?![$\w\xA0-\uFFFF]))(?:(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*\s*)\(\s*|\]\s*\(\s*)(?!\s)(?:[^()\s]|\s+(?![\s)])|\([^()]*\))+(?=\s*\)\s*\{)/,lookbehind:!0,inside:Prism.languages.javascript}],constant:/\b[A-Z](?:[A-Z_]|\dx?)*\b/}),Prism.languages.insertBefore("javascript","string",{hashbang:{pattern:/^#!.*/,greedy:!0,alias:"comment"},"template-string":{pattern:/`(?:\\[\s\S]|\$\{(?:[^{}]|\{(?:[^{}]|\{[^}]*\})*\})+\}|(?!\$\{)[^\\`])*`/,greedy:!0,inside:{"template-punctuation":{pattern:/^`|`$/,alias:"string"},interpolation:{pattern:/((?:^|[^\\])(?:\\{2})*)\$\{(?:[^{}]|\{(?:[^{}]|\{[^}]*\})*\})+\}/,lookbehind:!0,inside:{"interpolation-punctuation":{pattern:/^\$\{|\}$/,alias:"punctuation"},rest:Prism.languages.javascript}},string:/[\s\S]+/}},"string-property":{pattern:/((?:^|[,{])[ \t]*)(["'])(?:\\(?:\r\n|[\s\S])|(?!\2)[^\\\r\n])*\2(?=\s*:)/m,lookbehind:!0,greedy:!0,alias:"property"}}),Prism.languages.insertBefore("javascript","operator",{"literal-property":{pattern:/((?:^|[,{])[ \t]*)(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*(?=\s*:)/m,lookbehind:!0,alias:"property"}}),Prism.languages.markup&&(Prism.languages.markup.tag.addInlined("script","javascript"),Prism.languages.markup.tag.addAttribute("on(?:abort|blur|change|click|composition(?:end|start|update)|dblclick|error|focus(?:in|out)?|key(?:down|up)|load|mouse(?:down|enter|leave|move|out|over|up)|reset|resize|scroll|select|slotchange|submit|unload|wheel)","javascript")),Prism.languages.js=Prism.languages.javascript;
+!function(e){e.languages.typescript=e.languages.extend("javascript",{"class-name":{pattern:/(\b(?:class|extends|implements|instanceof|interface|new|type)\s+)(?!keyof\b)(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*(?:\s*<(?:[^<>]|<(?:[^<>]|<[^<>]*>)*>)*>)?/,lookbehind:!0,greedy:!0,inside:null},builtin:/\b(?:Array|Function|Promise|any|boolean|console|never|number|string|symbol|unknown)\b/}),e.languages.typescript.keyword.push(/\b(?:abstract|declare|is|keyof|readonly|require)\b/,/\b(?:asserts|infer|interface|module|namespace|type)\b(?=\s*(?:[{_$a-zA-Z\xA0-\uFFFF]|$))/,/\btype\b(?=\s*(?:[\{*]|$))/),delete e.languages.typescript.parameter,delete e.languages.typescript["literal-property"];var s=e.languages.extend("typescript",{});delete s["class-name"],e.languages.typescript["class-name"].inside=s,e.languages.insertBefore("typescript","function",{decorator:{pattern:/@[$\w\xA0-\uFFFF]+/,inside:{at:{pattern:/^@/,alias:"operator"},function:/^[\s\S]+/}},"generic-function":{pattern:/#?(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*\s*<(?:[^<>]|<(?:[^<>]|<[^<>]*>)*>)*>(?=\s*\()/,greedy:!0,inside:{function:/^#?(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*/,generic:{pattern:/<[\s\S]+/,alias:"class-name",inside:s}}}}),e.languages.ts=e.languages.typescript}(Prism);
+!function(e){var n=/\b(?:abstract|assert|boolean|break|byte|case|catch|char|class|const|continue|default|do|double|else|enum|exports|extends|final|finally|float|for|goto|if|implements|import|instanceof|int|interface|long|module|native|new|non-sealed|null|open|opens|package|permits|private|protected|provides|public|record(?!\s*[(){}[\]<>=%~.:,;?+\-*/&|^])|requires|return|sealed|short|static|strictfp|super|switch|synchronized|this|throw|throws|to|transient|transitive|try|uses|var|void|volatile|while|with|yield)\b/,t="(?:[a-z]\\w*\\s*\\.\\s*)*(?:[A-Z]\\w*\\s*\\.\\s*)*",s={pattern:RegExp("(^|[^\\w.])"+t+"[A-Z](?:[\\d_A-Z]*[a-z]\\w*)?\\b"),lookbehind:!0,inside:{namespace:{pattern:/^[a-z]\w*(?:\s*\.\s*[a-z]\w*)*(?:\s*\.)?/,inside:{punctuation:/\./}},punctuation:/\./}};e.languages.java=e.languages.extend("clike",{string:{pattern:/(^|[^\\])"(?:\\.|[^"\\\r\n])*"/,lookbehind:!0,greedy:!0},"class-name":[s,{pattern:RegExp("(^|[^\\w.])"+t+"[A-Z]\\w*(?=\\s+\\w+\\s*[;,=()]|\\s*(?:\\[[\\s,]*\\]\\s*)?::\\s*new\\b)"),lookbehind:!0,inside:s.inside},{pattern:RegExp("(\\b(?:class|enum|extends|implements|instanceof|interface|new|record|throws)\\s+)"+t+"[A-Z]\\w*\\b"),lookbehind:!0,inside:s.inside}],keyword:n,function:[e.languages.clike.function,{pattern:/(::\s*)[a-z_]\w*/,lookbehind:!0}],number:/\b0b[01][01_]*L?\b|\b0x(?:\.[\da-f_p+-]+|[\da-f_]+(?:\.[\da-f_p+-]+)?)\b|(?:\b\d[\d_]*(?:\.[\d_]*)?|\B\.\d[\d_]*)(?:e[+-]?\d[\d_]*)?[dfl]?/i,operator:{pattern:/(^|[^.])(?:<<=?|>>>?=?|->|--|\+\+|&&|\|\||::|[?:~]|[-+*/%&|^!=<>]=?)/m,lookbehind:!0},constant:/\b[A-Z][A-Z_\d]+\b/}),e.languages.insertBefore("java","string",{"triple-quoted-string":{pattern:/"""[ \t]*[\r\n](?:(?:"|"")?(?:\\.|[^"\\]))*"""/,greedy:!0,alias:"string"},char:{pattern:/'(?:\\.|[^'\\\r\n]){1,6}'/,greedy:!0}}),e.languages.insertBefore("java","class-name",{annotation:{pattern:/(^|[^.])@\w+(?:\s*\.\s*\w+)*/,lookbehind:!0,alias:"punctuation"},generics:{pattern:/<(?:[\w\s,.?]|&(?!&)|<(?:[\w\s,.?]|&(?!&)|<(?:[\w\s,.?]|&(?!&)|<(?:[\w\s,.?]|&(?!&))*>)*>)*>)*>/,inside:{"class-name":s,keyword:n,punctuation:/[<>(),.:]/,operator:/[?&|]/}},import:[{pattern:RegExp("(\\bimport\\s+)"+t+"(?:[A-Z]\\w*|\\*)(?=\\s*;)"),lookbehind:!0,inside:{namespace:s.inside.namespace,punctuation:/\./,operator:/\*/,"class-name":/\w+/}},{pattern:RegExp("(\\bimport\\s+static\\s+)"+t+"(?:\\w+|\\*)(?=\\s*;)"),lookbehind:!0,alias:"static",inside:{namespace:s.inside.namespace,static:/\b\w+$/,punctuation:/\./,operator:/\*/,"class-name":/\w+/}}],namespace:{pattern:RegExp("(\\b(?:exports|import(?:\\s+static)?|module|open|opens|package|provides|requires|to|transitive|uses|with)\\s+)(?!<keyword>)[a-z]\\w*(?:\\.[a-z]\\w*)*\\.?".replace(/<keyword>/g,(function(){return n.source}))),lookbehind:!0,inside:{punctuation:/\./}}})}(Prism);
+!function(e){var t="\\b(?:BASH|BASHOPTS|BASH_ALIASES|BASH_ARGC|BASH_ARGV|BASH_CMDS|BASH_COMPLETION_COMPAT_DIR|BASH_LINENO|BASH_REMATCH|BASH_SOURCE|BASH_VERSINFO|BASH_VERSION|COLORTERM|COLUMNS|COMP_WORDBREAKS|DBUS_SESSION_BUS_ADDRESS|DEFAULTS_PATH|DESKTOP_SESSION|DIRSTACK|DISPLAY|EUID|GDMSESSION|GDM_LANG|GNOME_KEYRING_CONTROL|GNOME_KEYRING_PID|GPG_AGENT_INFO|GROUPS|HISTCONTROL|HISTFILE|HISTFILESIZE|HISTSIZE|HOME|HOSTNAME|HOSTTYPE|IFS|INSTANCE|JOB|LANG|LANGUAGE|LC_ADDRESS|LC_ALL|LC_IDENTIFICATION|LC_MEASUREMENT|LC_MONETARY|LC_NAME|LC_NUMERIC|LC_PAPER|LC_TELEPHONE|LC_TIME|LESSCLOSE|LESSOPEN|LINES|LOGNAME|LS_COLORS|MACHTYPE|MAILCHECK|MANDATORY_PATH|NO_AT_BRIDGE|OLDPWD|OPTERR|OPTIND|ORBIT_SOCKETDIR|OSTYPE|PAPERSIZE|PATH|PIPESTATUS|PPID|PS1|PS2|PS3|PS4|PWD|RANDOM|REPLY|SECONDS|SELINUX_INIT|SESSION|SESSIONTYPE|SESSION_MANAGER|SHELL|SHELLOPTS|SHLVL|SSH_AUTH_SOCK|TERM|UID|UPSTART_EVENTS|UPSTART_INSTANCE|UPSTART_JOB|UPSTART_SESSION|USER|WINDOWID|XAUTHORITY|XDG_CONFIG_DIRS|XDG_CURRENT_DESKTOP|XDG_DATA_DIRS|XDG_GREETER_DATA_DIR|XDG_MENU_PREFIX|XDG_RUNTIME_DIR|XDG_SEAT|XDG_SEAT_PATH|XDG_SESSION_DESKTOP|XDG_SESSION_ID|XDG_SESSION_PATH|XDG_SESSION_TYPE|XDG_VTNR|XMODIFIERS)\\b",a={pattern:/(^(["']?)\w+\2)[ \t]+\S.*/,lookbehind:!0,alias:"punctuation",inside:null},n={bash:a,environment:{pattern:RegExp("\\$"+t),alias:"constant"},variable:[{pattern:/\$?\(\([\s\S]+?\)\)/,greedy:!0,inside:{variable:[{pattern:/(^\$\(\([\s\S]+)\)\)/,lookbehind:!0},/^\$\(\(/],number:/\b0x[\dA-Fa-f]+\b|(?:\b\d+(?:\.\d*)?|\B\.\d+)(?:[Ee]-?\d+)?/,operator:/--|\+\+|\*\*=?|<<=?|>>=?|&&|\|\||[=!+\-*/%<>^&|]=?|[?~:]/,punctuation:/\(\(?|\)\)?|,|;/}},{pattern:/\$\((?:\([^)]+\)|[^()])+\)|`[^`]+`/,greedy:!0,inside:{variable:/^\$\(|^`|\)$|`$/}},{pattern:/\$\{[^}]+\}/,greedy:!0,inside:{operator:/:[-=?+]?|[!\/]|##?|%%?|\^\^?|,,?/,punctuation:/[\[\]]/,environment:{pattern:RegExp("(\\{)"+t),lookbehind:!0,alias:"constant"}}},/\$(?:\w+|[#?*!@$])/],entity:/\\(?:[abceEfnrtv\\"]|O?[0-7]{1,3}|U[0-9a-fA-F]{8}|u[0-9a-fA-F]{4}|x[0-9a-fA-F]{1,2})/};e.languages.bash={shebang:{pattern:/^#!\s*\/.*/,alias:"important"},comment:{pattern:/(^|[^"{\\$])#.*/,lookbehind:!0},"function-name":[{pattern:/(\bfunction\s+)[\w-]+(?=(?:\s*\(?:\s*\))?\s*\{)/,lookbehind:!0,alias:"function"},{pattern:/\b[\w-]+(?=\s*\(\s*\)\s*\{)/,alias:"function"}],"for-or-select":{pattern:/(\b(?:for|select)\s+)\w+(?=\s+in\s)/,alias:"variable",lookbehind:!0},"assign-left":{pattern:/(^|[\s;|&]|[<>]\()\w+(?:\.\w+)*(?=\+?=)/,inside:{environment:{pattern:RegExp("(^|[\\s;|&]|[<>]\\()"+t),lookbehind:!0,alias:"constant"}},alias:"variable",lookbehind:!0},parameter:{pattern:/(^|\s)-{1,2}(?:\w+:[+-]?)?\w+(?:\.\w+)*(?=[=\s]|$)/,alias:"variable",lookbehind:!0},string:[{pattern:/((?:^|[^<])<<-?\s*)(\w+)\s[\s\S]*?(?:\r?\n|\r)\2/,lookbehind:!0,greedy:!0,inside:n},{pattern:/((?:^|[^<])<<-?\s*)(["'])(\w+)\2\s[\s\S]*?(?:\r?\n|\r)\3/,lookbehind:!0,greedy:!0,inside:{bash:a}},{pattern:/(^|[^\\](?:\\\\)*)"(?:\\[\s\S]|\$\([^)]+\)|\$(?!\()|`[^`]+`|[^"\\`$])*"/,lookbehind:!0,greedy:!0,inside:n},{pattern:/(^|[^$\\])'[^']*'/,lookbehind:!0,greedy:!0},{pattern:/\$'(?:[^'\\]|\\[\s\S])*'/,greedy:!0,inside:{entity:n.entity}}],environment:{pattern:RegExp("\\$?"+t),alias:"constant"},variable:n.variable,function:{pattern:/(^|[\s;|&]|[<>]\()(?:add|apropos|apt|apt-cache|apt-get|aptitude|aspell|automysqlbackup|awk|basename|bash|bc|bconsole|bg|bzip2|cal|cargo|cat|cfdisk|chgrp|chkconfig|chmod|chown|chroot|cksum|clear|cmp|column|comm|composer|cp|cron|crontab|csplit|curl|cut|date|dc|dd|ddrescue|debootstrap|df|diff|diff3|dig|dir|dircolors|dirname|dirs|dmesg|docker|docker-compose|du|egrep|eject|env|ethtool|expand|expect|expr|fdformat|fdisk|fg|fgrep|file|find|fmt|fold|format|free|fsck|ftp|fuser|gawk|git|gparted|grep|groupadd|groupdel|groupmod|groups|grub-mkconfig|gzip|halt|head|hg|history|host|hostname|htop|iconv|id|ifconfig|ifdown|ifup|import|install|ip|java|jobs|join|kill|killall|less|link|ln|locate|logname|logrotate|look|lpc|lpr|lprint|lprintd|lprintq|lprm|ls|lsof|lynx|make|man|mc|mdadm|mkconfig|mkdir|mke2fs|mkfifo|mkfs|mkisofs|mknod|mkswap|mmv|more|most|mount|mtools|mtr|mutt|mv|nano|nc|netstat|nice|nl|node|nohup|notify-send|npm|nslookup|op|open|parted|passwd|paste|pathchk|ping|pkill|pnpm|podman|podman-compose|popd|pr|printcap|printenv|ps|pushd|pv|quota|quotacheck|quotactl|ram|rar|rcp|reboot|remsync|rename|renice|rev|rm|rmdir|rpm|rsync|scp|screen|sdiff|sed|sendmail|seq|service|sftp|sh|shellcheck|shuf|shutdown|sleep|slocate|sort|split|ssh|stat|strace|su|sudo|sum|suspend|swapon|sync|sysctl|tac|tail|tar|tee|time|timeout|top|touch|tr|traceroute|tsort|tty|umount|uname|unexpand|uniq|units|unrar|unshar|unzip|update-grub|uptime|useradd|userdel|usermod|users|uudecode|uuencode|v|vcpkg|vdir|vi|vim|virsh|vmstat|wait|watch|wc|wget|whereis|which|who|whoami|write|xargs|xdg-open|yarn|yes|zenity|zip|zsh|zypper)(?=$|[)\s;|&])/,lookbehind:!0},keyword:{pattern:/(^|[\s;|&]|[<>]\()(?:case|do|done|elif|else|esac|fi|for|function|if|in|select|then|until|while)(?=$|[)\s;|&])/,lookbehind:!0},builtin:{pattern:/(^|[\s;|&]|[<>]\()(?:\.|:|alias|bind|break|builtin|caller|cd|command|continue|declare|echo|enable|eval|exec|exit|export|getopts|hash|help|let|local|logout|mapfile|printf|pwd|read|readarray|readonly|return|set|shift|shopt|source|test|times|trap|type|typeset|ulimit|umask|unalias|unset)(?=$|[)\s;|&])/,lookbehind:!0,alias:"class-name"},boolean:{pattern:/(^|[\s;|&]|[<>]\()(?:false|true)(?=$|[)\s;|&])/,lookbehind:!0},"file-descriptor":{pattern:/\B&\d\b/,alias:"important"},operator:{pattern:/\d?<>|>\||\+=|=[=~]?|!=?|<<[<-]?|[&\d]?>>|\d[<>]&?|[<>][&=]?|&[>&]?|\|[&|]?/,inside:{"file-descriptor":{pattern:/^\d/,alias:"important"}}},punctuation:/\$?\(\(?|\)\)?|\.\.|[{}[\];\\]/,number:{pattern:/(^|\s)(?:[1-9]\d*|0)(?:[.,]\d+)?\b/,lookbehind:!0}},a.inside=e.languages.bash;for(var s=["comment","function-name","for-or-select","assign-left","parameter","string","environment","function","keyword","builtin","boolean","file-descriptor","operator","punctuation","number"],o=n.variable[1].inside,i=0;i<s.length;i++)o[s[i]]=e.languages.bash[s[i]];e.languages.sh=e.languages.bash,e.languages.shell=e.languages.bash}(Prism);
+Prism.languages.sql={comment:{pattern:/(^|[^\\])(?:\/\*[\s\S]*?\*\/|(?:--|\/\/|#).*)/,lookbehind:!0},variable:[{pattern:/@(["'`])(?:\\[\s\S]|(?!\1)[^\\])+\1/,greedy:!0},/@[\w.$]+/],string:{pattern:/(^|[^@\\])("|')(?:\\[\s\S]|(?!\2)[^\\]|\2\2)*\2/,greedy:!0,lookbehind:!0},identifier:{pattern:/(^|[^@\\])`(?:\\[\s\S]|[^`\\]|``)*`/,greedy:!0,lookbehind:!0,inside:{punctuation:/^`|`$/}},function:/\b(?:AVG|COUNT|FIRST|FORMAT|LAST|LCASE|LEN|MAX|MID|MIN|MOD|NOW|ROUND|SUM|UCASE)(?=\s*\()/i,keyword:/\b(?:ACTION|ADD|AFTER|ALGORITHM|ALL|ALTER|ANALYZE|ANY|APPLY|AS|ASC|AUTHORIZATION|AUTO_INCREMENT|BACKUP|BDB|BEGIN|BERKELEYDB|BIGINT|BINARY|BIT|BLOB|BOOL|BOOLEAN|BREAK|BROWSE|BTREE|BULK|BY|CALL|CASCADED?|CASE|CHAIN|CHAR(?:ACTER|SET)?|CHECK(?:POINT)?|CLOSE|CLUSTERED|COALESCE|COLLATE|COLUMNS?|COMMENT|COMMIT(?:TED)?|COMPUTE|CONNECT|CONSISTENT|CONSTRAINT|CONTAINS(?:TABLE)?|CONTINUE|CONVERT|CREATE|CROSS|CURRENT(?:_DATE|_TIME|_TIMESTAMP|_USER)?|CURSOR|CYCLE|DATA(?:BASES?)?|DATE(?:TIME)?|DAY|DBCC|DEALLOCATE|DEC|DECIMAL|DECLARE|DEFAULT|DEFINER|DELAYED|DELETE|DELIMITERS?|DENY|DESC|DESCRIBE|DETERMINISTIC|DISABLE|DISCARD|DISK|DISTINCT|DISTINCTROW|DISTRIBUTED|DO|DOUBLE|DROP|DUMMY|DUMP(?:FILE)?|DUPLICATE|ELSE(?:IF)?|ENABLE|ENCLOSED|END|ENGINE|ENUM|ERRLVL|ERRORS|ESCAPED?|EXCEPT|EXEC(?:UTE)?|EXISTS|EXIT|EXPLAIN|EXTENDED|FETCH|FIELDS|FILE|FILLFACTOR|FIRST|FIXED|FLOAT|FOLLOWING|FOR(?: EACH ROW)?|FORCE|FOREIGN|FREETEXT(?:TABLE)?|FROM|FULL|FUNCTION|GEOMETRY(?:COLLECTION)?|GLOBAL|GOTO|GRANT|GROUP|HANDLER|HASH|HAVING|HOLDLOCK|HOUR|IDENTITY(?:COL|_INSERT)?|IF|IGNORE|IMPORT|INDEX|INFILE|INNER|INNODB|INOUT|INSERT|INT|INTEGER|INTERSECT|INTERVAL|INTO|INVOKER|ISOLATION|ITERATE|JOIN|KEYS?|KILL|LANGUAGE|LAST|LEAVE|LEFT|LEVEL|LIMIT|LINENO|LINES|LINESTRING|LOAD|LOCAL|LOCK|LONG(?:BLOB|TEXT)|LOOP|MATCH(?:ED)?|MEDIUM(?:BLOB|INT|TEXT)|MERGE|MIDDLEINT|MINUTE|MODE|MODIFIES|MODIFY|MONTH|MULTI(?:LINESTRING|POINT|POLYGON)|NATIONAL|NATURAL|NCHAR|NEXT|NO|NONCLUSTERED|NULLIF|NUMERIC|OFF?|OFFSETS?|ON|OPEN(?:DATASOURCE|QUERY|ROWSET)?|OPTIMIZE|OPTION(?:ALLY)?|ORDER|OUT(?:ER|FILE)?|OVER|PARTIAL|PARTITION|PERCENT|PIVOT|PLAN|POINT|POLYGON|PRECEDING|PRECISION|PREPARE|PREV|PRIMARY|PRINT|PRIVILEGES|PROC(?:EDURE)?|PUBLIC|PURGE|QUICK|RAISERROR|READS?|REAL|RECONFIGURE|REFERENCES|RELEASE|RENAME|REPEAT(?:ABLE)?|REPLACE|REPLICATION|REQUIRE|RESIGNAL|RESTORE|RESTRICT|RETURN(?:ING|S)?|REVOKE|RIGHT|ROLLBACK|ROUTINE|ROW(?:COUNT|GUIDCOL|S)?|RTREE|RULE|SAVE(?:POINT)?|SCHEMA|SECOND|SELECT|SERIAL(?:IZABLE)?|SESSION(?:_USER)?|SET(?:USER)?|SHARE|SHOW|SHUTDOWN|SIMPLE|SMALLINT|SNAPSHOT|SOME|SONAME|SQL|START(?:ING)?|STATISTICS|STATUS|STRIPED|SYSTEM_USER|TABLES?|TABLESPACE|TEMP(?:ORARY|TABLE)?|TERMINATED|TEXT(?:SIZE)?|THEN|TIME(?:STAMP)?|TINY(?:BLOB|INT|TEXT)|TOP?|TRAN(?:SACTIONS?)?|TRIGGER|TRUNCATE|TSEQUAL|TYPES?|UNBOUNDED|UNCOMMITTED|UNDEFINED|UNION|UNIQUE|UNLOCK|UNPIVOT|UNSIGNED|UPDATE(?:TEXT)?|USAGE|USE|USER|USING|VALUES?|VAR(?:BINARY|CHAR|CHARACTER|YING)|VIEW|WAITFOR|WARNINGS|WHEN|WHERE|WHILE|WITH(?: ROLLUP|IN)?|WORK|WRITE(?:TEXT)?|YEAR)\b/i,boolean:/\b(?:FALSE|NULL|TRUE)\b/i,number:/\b0x[\da-f]+\b|\b\d+(?:\.\d*)?|\B\.\d+\b/i,operator:/[-+*\/=%^~]|&&?|\|\|?|!=?|<(?:=>?|<|>)?|>[>=]?|\b(?:AND|BETWEEN|DIV|ILIKE|IN|IS|LIKE|NOT|OR|REGEXP|RLIKE|SOUNDS LIKE|XOR)\b/i,punctuation:/[;[\]()`,.]/};
+!function(e){var n=/[*&][^\s[\]{},]+/,r=/!(?:<[\w\-%#;/?:@&=+$,.!~*'()[\]]+>|(?:[a-zA-Z\d-]*!)?[\w\-%#;/?:@&=+$.~*'()]+)?/,t="(?:"+r.source+"(?:[ \t]+"+n.source+")?|"+n.source+"(?:[ \t]+"+r.source+")?)",a="(?:[^\\s\\x00-\\x08\\x0e-\\x1f!\"#%&'*,\\-:>?@[\\]`{|}\\x7f-\\x84\\x86-\\x9f\\ud800-\\udfff\\ufffe\\uffff]|[?:-]<PLAIN>)(?:[ \t]*(?:(?![#:])<PLAIN>|:<PLAIN>))*".replace(/<PLAIN>/g,(function(){return"[^\\s\\x00-\\x08\\x0e-\\x1f,[\\]{}\\x7f-\\x84\\x86-\\x9f\\ud800-\\udfff\\ufffe\\uffff]"})),d="\"(?:[^\"\\\\\r\n]|\\\\.)*\"|'(?:[^'\\\\\r\n]|\\\\.)*'";function o(e,n){n=(n||"").replace(/m/g,"")+"m";var r="([:\\-,[{]\\s*(?:\\s<<prop>>[ \t]+)?)(?:<<value>>)(?=[ \t]*(?:$|,|\\]|\\}|(?:[\r\n]\\s*)?#))".replace(/<<prop>>/g,(function(){return t})).replace(/<<value>>/g,(function(){return e}));return RegExp(r,n)}e.languages.yaml={scalar:{pattern:RegExp("([\\-:]\\s*(?:\\s<<prop>>[ \t]+)?[|>])[ \t]*(?:((?:\r?\n|\r)[ \t]+)\\S[^\r\n]*(?:\\2[^\r\n]+)*)".replace(/<<prop>>/g,(function(){return t}))),lookbehind:!0,alias:"string"},comment:/#.*/,key:{pattern:RegExp("((?:^|[:\\-,[{\r\n?])[ \t]*(?:<<prop>>[ \t]+)?)<<key>>(?=\\s*:\\s)".replace(/<<prop>>/g,(function(){return t})).replace(/<<key>>/g,(function(){return"(?:"+a+"|"+d+")"}))),lookbehind:!0,greedy:!0,alias:"atrule"},directive:{pattern:/(^[ \t]*)%.+/m,lookbehind:!0,alias:"important"},datetime:{pattern:o("\\d{4}-\\d\\d?-\\d\\d?(?:[tT]|[ \t]+)\\d\\d?:\\d{2}:\\d{2}(?:\\.\\d*)?(?:[ \t]*(?:Z|[-+]\\d\\d?(?::\\d{2})?))?|\\d{4}-\\d{2}-\\d{2}|\\d\\d?:\\d{2}(?::\\d{2}(?:\\.\\d*)?)?"),lookbehind:!0,alias:"number"},boolean:{pattern:o("false|true","i"),lookbehind:!0,alias:"important"},null:{pattern:o("null|~","i"),lookbehind:!0,alias:"important"},string:{pattern:o(d),lookbehind:!0,greedy:!0},number:{pattern:o("[+-]?(?:0x[\\da-f]+|0o[0-7]+|(?:\\d+(?:\\.\\d*)?|\\.\\d+)(?:e[+-]?\\d+)?|\\.inf|\\.nan)","i"),lookbehind:!0},tag:r,important:n,punctuation:/---|[:[\]{}\-,|>?]|\.\.\./},e.languages.yml=e.languages.yaml}(Prism);
+Prism.languages.json={property:{pattern:/(^|[^\\])"(?:\\.|[^\\"\r\n])*"(?=\s*:)/,lookbehind:!0,greedy:!0},string:{pattern:/(^|[^\\])"(?:\\.|[^\\"\r\n])*"(?!\s*:)/,lookbehind:!0,greedy:!0},comment:{pattern:/\/\/.*|\/\*[\s\S]*?(?:\*\/|$)/,greedy:!0},number:/-?\b\d+(?:\.\d+)?(?:e[+-]?\d+)?\b/i,punctuation:/[{}[\],]/,operator:/:/,boolean:/\b(?:false|true)\b/,null:{pattern:/\bnull\b/,alias:"keyword"}},Prism.languages.webmanifest=Prism.languages.json;
+!function(t){var n=t.util.clone(t.languages.javascript),e="(?:\\{<S>*\\.{3}(?:[^{}]|<BRACES>)*\\})";function a(t,n){return t=t.replace(/<S>/g,(function(){return"(?:\\s|//.*(?!.)|/\\*(?:[^*]|\\*(?!/))\\*/)"})).replace(/<BRACES>/g,(function(){return"(?:\\{(?:\\{(?:\\{[^{}]*\\}|[^{}])*\\}|[^{}])*\\})"})).replace(/<SPREAD>/g,(function(){return e})),RegExp(t,n)}e=a(e).source,t.languages.jsx=t.languages.extend("markup",n),t.languages.jsx.tag.pattern=a("</?(?:[\\w.:-]+(?:<S>+(?:[\\w.:$-]+(?:=(?:\"(?:\\\\[^]|[^\\\\\"])*\"|'(?:\\\\[^]|[^\\\\'])*'|[^\\s{'\"/>=]+|<BRACES>))?|<SPREAD>))*<S>*/?)?>"),t.languages.jsx.tag.inside.tag.pattern=/^<\/?[^\s>\/]*/,t.languages.jsx.tag.inside["attr-value"].pattern=/=(?!\{)(?:"(?:\\[\s\S]|[^\\"])*"|'(?:\\[\s\S]|[^\\'])*'|[^\s'">]+)/,t.languages.jsx.tag.inside.tag.inside["class-name"]=/^[A-Z]\w*(?:\.[A-Z]\w*)*$/,t.languages.jsx.tag.inside.comment=n.comment,t.languages.insertBefore("inside","attr-name",{spread:{pattern:a("<SPREAD>"),inside:t.languages.jsx}},t.languages.jsx.tag),t.languages.insertBefore("inside","special-attr",{script:{pattern:a("=<BRACES>"),alias:"language-javascript",inside:{"script-punctuation":{pattern:/^=(?=\{)/,alias:"punctuation"},rest:t.languages.jsx}}},t.languages.jsx.tag);var s=function(t){return t?"string"==typeof t?t:"string"==typeof t.content?t.content:t.content.map(s).join(""):""},g=function(n){for(var e=[],a=0;a<n.length;a++){var o=n[a],i=!1;if("string"!=typeof o&&("tag"===o.type&&o.content[0]&&"tag"===o.content[0].type?"</"===o.content[0].content[0].content?e.length>0&&e[e.length-1].tagName===s(o.content[0].content[1])&&e.pop():"/>"===o.content[o.content.length-1].content||e.push({tagName:s(o.content[0].content[1]),openedBraces:0}):e.length>0&&"punctuation"===o.type&&"{"===o.content?e[e.length-1].openedBraces++:e.length>0&&e[e.length-1].openedBraces>0&&"punctuation"===o.type&&"}"===o.content?e[e.length-1].openedBraces--:i=!0),(i||"string"==typeof o)&&e.length>0&&0===e[e.length-1].openedBraces){var r=s(o);a<n.length-1&&("string"==typeof n[a+1]||"plain-text"===n[a+1].type)&&(r+=s(n[a+1]),n.splice(a+1,1)),a>0&&("string"==typeof n[a-1]||"plain-text"===n[a-1].type)&&(r=s(n[a-1])+r,n.splice(a-1,1),a--),n[a]=new t.Token("plain-text",r,null,r)}o.content&&"string"!=typeof o.content&&g(o.content)}};t.hooks.add("after-tokenize",(function(t){"jsx"!==t.language&&"tsx"!==t.language||g(t.tokens)}))}(Prism);
+!function(t){function a(t){return RegExp("(^(?:"+t+"):[ \t]*(?![ \t]))[^]+","i")}t.languages.http={"request-line":{pattern:/^(?:CONNECT|DELETE|GET|HEAD|OPTIONS|PATCH|POST|PRI|PUT|SEARCH|TRACE)\s(?:https?:\/\/|\/)\S*\sHTTP\/[\d.]+/m,inside:{method:{pattern:/^[A-Z]+\b/,alias:"property"},"request-target":{pattern:/^(\s)(?:https?:\/\/|\/)\S*(?=\s)/,lookbehind:!0,alias:"url",inside:t.languages.uri},"http-version":{pattern:/^(\s)HTTP\/[\d.]+/,lookbehind:!0,alias:"property"}}},"response-status":{pattern:/^HTTP\/[\d.]+ \d+ .+/m,inside:{"http-version":{pattern:/^HTTP\/[\d.]+/,alias:"property"},"status-code":{pattern:/^(\s)\d+(?=\s)/,lookbehind:!0,alias:"number"},"reason-phrase":{pattern:/^(\s).+/,lookbehind:!0,alias:"string"}}},header:{pattern:/^[\w-]+:.+(?:(?:\r\n?|\n)[ \t].+)*/m,inside:{"header-value":[{pattern:a("Content-Security-Policy"),lookbehind:!0,alias:["csp","languages-csp"],inside:t.languages.csp},{pattern:a("Public-Key-Pins(?:-Report-Only)?"),lookbehind:!0,alias:["hpkp","languages-hpkp"],inside:t.languages.hpkp},{pattern:a("Strict-Transport-Security"),lookbehind:!0,alias:["hsts","languages-hsts"],inside:t.languages.hsts},{pattern:a("[^:]+"),lookbehind:!0}],"header-name":{pattern:/^[^:]+/,alias:"keyword"},punctuation:/^:/}}};var e,n=t.languages,s={"application/javascript":n.javascript,"application/json":n.json||n.javascript,"application/xml":n.xml,"text/xml":n.xml,"text/html":n.html,"text/css":n.css,"text/plain":n.plain},i={"application/json":!0,"application/xml":!0};function r(t){var a=t.replace(/^[a-z]+\//,"");return"(?:"+t+"|\\w+/(?:[\\w.-]+\\+)+"+a+"(?![+\\w.-]))"}for(var p in s)if(s[p]){e=e||{};var l=i[p]?r(p):p;e[p.replace(/\//g,"-")]={pattern:RegExp("(content-type:\\s*"+l+"(?:(?:\r\n?|\n)[\\w-].*)*(?:\r(?:\n|(?!\n))|\n))[^ \t\\w-][^]*","i"),lookbehind:!0,inside:s[p]}}e&&t.languages.insertBefore("http","header",e)}(Prism);
+!function(e){var n="(?:[ \t]+(?![ \t])(?:<SP_BS>)?|<SP_BS>)".replace(/<SP_BS>/g,(function(){return"\\\\[\r\n](?:\\s|\\\\[\r\n]|#.*(?!.))*(?![\\s#]|\\\\[\r\n])"})),r="\"(?:[^\"\\\\\r\n]|\\\\(?:\r\n|[^]))*\"|'(?:[^'\\\\\r\n]|\\\\(?:\r\n|[^]))*'",t="--[\\w-]+=(?:<STR>|(?![\"'])(?:[^\\s\\\\]|\\\\.)+)".replace(/<STR>/g,(function(){return r})),o={pattern:RegExp(r),greedy:!0},i={pattern:/(^[ \t]*)#.*/m,lookbehind:!0,greedy:!0};function a(e,r){return e=e.replace(/<OPT>/g,(function(){return t})).replace(/<SP>/g,(function(){return n})),RegExp(e,r)}e.languages.docker={instruction:{pattern:/(^[ \t]*)(?:ADD|ARG|CMD|COPY|ENTRYPOINT|ENV|EXPOSE|FROM|HEALTHCHECK|LABEL|MAINTAINER|ONBUILD|RUN|SHELL|STOPSIGNAL|USER|VOLUME|WORKDIR)(?=\s)(?:\\.|[^\r\n\\])*(?:\\$(?:\s|#.*$)*(?![\s#])(?:\\.|[^\r\n\\])*)*/im,lookbehind:!0,greedy:!0,inside:{options:{pattern:a("(^(?:ONBUILD<SP>)?\\w+<SP>)<OPT>(?:<SP><OPT>)*","i"),lookbehind:!0,greedy:!0,inside:{property:{pattern:/(^|\s)--[\w-]+/,lookbehind:!0},string:[o,{pattern:/(=)(?!["'])(?:[^\s\\]|\\.)+/,lookbehind:!0}],operator:/\\$/m,punctuation:/=/}},keyword:[{pattern:a("(^(?:ONBUILD<SP>)?HEALTHCHECK<SP>(?:<OPT><SP>)*)(?:CMD|NONE)\\b","i"),lookbehind:!0,greedy:!0},{pattern:a("(^(?:ONBUILD<SP>)?FROM<SP>(?:<OPT><SP>)*(?!--)[^ \t\\\\]+<SP>)AS","i"),lookbehind:!0,greedy:!0},{pattern:a("(^ONBUILD<SP>)\\w+","i"),lookbehind:!0,greedy:!0},{pattern:/^\w+/,greedy:!0}],comment:i,string:o,variable:/\$(?:\w+|\{[^{}"'\\]*\})/,operator:/\\$/m}},comment:i},e.languages.dockerfile=e.languages.docker}(Prism);
+!function(e){var n=/\$(?:\w[a-z\d]*(?:_[^\x00-\x1F\s"'\\()$]*)?|\{[^}\s"'\\]+\})/i;e.languages.nginx={comment:{pattern:/(^|[\s{};])#.*/,lookbehind:!0,greedy:!0},directive:{pattern:/(^|\s)\w(?:[^;{}"'\\\s]|\\.|"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|\s+(?:#.*(?!.)|(?![#\s])))*?(?=\s*[;{])/,lookbehind:!0,greedy:!0,inside:{string:{pattern:/((?:^|[^\\])(?:\\\\)*)(?:"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')/,lookbehind:!0,greedy:!0,inside:{escape:{pattern:/\\["'\\nrt]/,alias:"entity"},variable:n}},comment:{pattern:/(\s)#.*/,lookbehind:!0,greedy:!0},keyword:{pattern:/^\S+/,greedy:!0},boolean:{pattern:/(\s)(?:off|on)(?!\S)/,lookbehind:!0},number:{pattern:/(\s)\d+[a-z]*(?!\S)/i,lookbehind:!0},variable:n}},punctuation:/[{};]/}}(Prism);
+Prism.languages.ini={comment:{pattern:/(^[ \f\t\v]*)[#;][^\n\r]*/m,lookbehind:!0},section:{pattern:/(^[ \f\t\v]*)\[[^\n\r\]]*\]?/m,lookbehind:!0,inside:{"section-name":{pattern:/(^\[[ \f\t\v]*)[^ \f\t\v\]]+(?:[ \f\t\v]+[^ \f\t\v\]]+)*/,lookbehind:!0,alias:"selector"},punctuation:/\[|\]/}},key:{pattern:/(^[ \f\t\v]*)[^ \f\n\r\t\v=]+(?:[ \f\t\v]+[^ \f\n\r\t\v=]+)*(?=[ \f\t\v]*=)/m,lookbehind:!0,alias:"attr-name"},value:{pattern:/(=[ \f\t\v]*)[^ \f\n\r\t\v]+(?:[ \f\t\v]+[^ \f\n\r\t\v]+)*/,lookbehind:!0,alias:"attr-value",inside:{"inner-value":{pattern:/^("|').+(?=\1$)/,lookbehind:!0}}},punctuation:/=/};
+!function(e){var n={pattern:/((?:^|[^\\$])(?:\\{2})*)\$(?:\w+|\{[^{}]*\})/,lookbehind:!0,inside:{"interpolation-punctuation":{pattern:/^\$\{?|\}$/,alias:"punctuation"},expression:{pattern:/[\s\S]+/,inside:null}}};e.languages.groovy=e.languages.extend("clike",{string:{pattern:/'''(?:[^\\]|\\[\s\S])*?'''|'(?:\\.|[^\\'\r\n])*'/,greedy:!0},keyword:/\b(?:abstract|as|assert|boolean|break|byte|case|catch|char|class|const|continue|def|default|do|double|else|enum|extends|final|finally|float|for|goto|if|implements|import|in|instanceof|int|interface|long|native|new|package|private|protected|public|return|short|static|strictfp|super|switch|synchronized|this|throw|throws|trait|transient|try|void|volatile|while)\b/,number:/\b(?:0b[01_]+|0x[\da-f_]+(?:\.[\da-f_p\-]+)?|[\d_]+(?:\.[\d_]+)?(?:e[+-]?\d+)?)[glidf]?\b/i,operator:{pattern:/(^|[^.])(?:~|==?~?|\?[.:]?|\*(?:[.=]|\*=?)?|\.[@&]|\.\.<|\.\.(?!\.)|-[-=>]?|\+[+=]?|!=?|<(?:<=?|=>?)?|>(?:>>?=?|=)?|&[&=]?|\|[|=]?|\/=?|\^=?|%=?)/,lookbehind:!0},punctuation:/\.+|[{}[\];(),:$]/}),e.languages.insertBefore("groovy","string",{shebang:{pattern:/#!.+/,alias:"comment",greedy:!0},"interpolation-string":{pattern:/"""(?:[^\\]|\\[\s\S])*?"""|(["/])(?:\\.|(?!\1)[^\\\r\n])*\1|\$\/(?:[^/$]|\$(?:[/$]|(?![/$]))|\/(?!\$))*\/\$/,greedy:!0,inside:{interpolation:n,string:/[\s\S]+/}}}),e.languages.insertBefore("groovy","punctuation",{"spock-block":/\b(?:and|cleanup|expect|given|setup|then|when|where):/}),e.languages.insertBefore("groovy","function",{annotation:{pattern:/(^|[^.])@\w+/,lookbehind:!0,alias:"punctuation"}}),n.inside.expression.inside=e.languages.groovy}(Prism);
+
+
+/* http 语法增强：REST 端点示例（独立/行尾 # 注释 + 无 HTTP 版本的方法行） */
+(function () {
+  'use strict';
+  try {
+    if (window.Prism && Prism.languages.http) {
+      Prism.languages.insertBefore('http', 'request-line', { comment: { pattern: /#.*/ } });
+      var rl = Prism.languages.http['request-line'];
+      rl.pattern = /^(?:CONNECT|DELETE|GET|HEAD|OPTIONS|PATCH|POST|PRI|PUT|SEARCH|TRACE)\s+(?:https?:\/\/|\/)\S*(?:\sHTTP\/[\d.]+)?/m;
+    }
+  } catch (e) {}
+})();
+/* ===== 全库统一 Prism 语法高亮（按 data-lang 映射，text 与未知语言跳过，防重复） ===== */
+(function () {
+  'use strict';
+  if (!window.Prism) { return; }
+  var M = {js:'javascript',ts:'typescript',vue:'markup',html:'markup',xml:'markup',dockerfile:'docker',java:'java',bash:'bash',css:'css',sql:'sql',yaml:'yaml',json:'json',jsx:'jsx',http:'http',nginx:'nginx',ini:'ini',groovy:'groovy',text:''};
+  try {
+    var ps = document.querySelectorAll('pre.code');
+    for (var i = 0; i < ps.length; i++) {
+      var pre = ps[i];
+      var code = pre.querySelector('code');
+      if (!code || code.getAttribute('data-highlighted')) { continue; }
+      var l = (pre.getAttribute('data-lang') || '').trim().toLowerCase();
+      var m = M[l] || '';
+      if (!m || !Prism.languages[m]) { continue; }
+      code.className = 'language-' + m;
+      code.setAttribute('data-highlighted', '1');
+      try { Prism.highlightElement(code); } catch (e) {}
+    }
+  } catch (e) {}
+})();
+
+</script>
+<script src="../glossary/glossary-data.js"></script>
+<script src="../glossary/glossary.js"></script>
+</body>
+</html>

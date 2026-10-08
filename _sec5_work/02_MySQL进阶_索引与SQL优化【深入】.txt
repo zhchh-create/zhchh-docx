@@ -1,0 +1,35 @@
+FILE: 08_数据库与建模/02_MySQL进阶_索引与SQL优化【深入】.html
+DEPTH: 深入
+TOC sec5 text: 使用案例（真实项目落地）
+============================================================
+<section id="sec5" class="card">
+  <h2><span class="num">5</span>使用案例（真实项目落地）</h2>
+
+  <h3>案例 1：大屏告警数据查询优化</h3>
+  <p><strong>业务场景</strong>：大屏要实时展示"未处理告警按时间倒序分页"，告警表随时间累积到几十万行，早期查询要好几秒。</p>
+  <p><strong>落地步骤</strong>：</p>
+  <ol>
+    <li>EXPLAIN 发现早期 <code>WHERE create_time BETWEEN ... ORDER BY create_time</code> 没走合适索引、filesort。</li>
+    <li>建组合索引 <code>(status, create_time)</code>，等值列 status 在前、范围列 create_time 在后。</li>
+    <li>列表只需几列，把列表查询列补进索引形成覆盖索引，免回表。</li>
+  </ol>
+  <p><strong>效果与坑</strong>：查询从数秒降到毫秒级。真实踩过的坑：</p>
+  <ul>
+    <li><span class="tag-pit">坑</span><strong>索引列顺序写反</strong>：最初把 create_time 放第一列、status 放后面，范围列在前、等值列在后，索引利用率差，调换列顺序才好。</li>
+    <li><span class="tag-pit">坑</span><strong>WHERE DATE(create_time)= 套函数致索引失效</strong>：改成 <code>BETWEEN 当天0点 AND 次日0点</code> 才用上索引。</li>
+  </ul>
+
+  <h3>案例 2：列表深分页优化</h3>
+  <p><strong>业务场景</strong>：需求管理列表翻到很靠后的页（offset 上万）时明显变慢。</p>
+  <p><strong>落地步骤</strong>：</p>
+  <ol>
+    <li>确认是 offset 深分页问题——翻越深越慢、前几页快。</li>
+    <li>前端默认"加载更多"（游标分页，记住上页最后 id）为主。</li>
+    <li>必须支持跳页的导出场景，用延迟关联改写 SQL。</li>
+  </ol>
+  <p><strong>效果与坑</strong>：游标分页下"加载更多"翻多少页都稳定快。真实坑：</p>
+  <ul>
+    <li><span class="tag-pit">坑</span><strong>直接 limit 100000,20</strong>：数据多后明显慢。</li>
+    <li><span class="tag-pit">坑</span><strong>游标分页排序键不稳定</strong>：按 id 倒序要与用户排序意图一致，否则翻页漏/重——游标分页依赖稳定、唯一的排序键。</li>
+  </ul>
+</section>

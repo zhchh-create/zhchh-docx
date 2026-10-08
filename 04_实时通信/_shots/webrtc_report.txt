@@ -1,0 +1,599 @@
+﻿{
+  "src": "C:\\Users\\Administrator\\Doubao\\chats\\2026-10-06\\new-chat-1\\技术栈详解\\04_实时通信\\01_WebRTC【深入】.html",
+  "url": "file:///C:/Users/Administrator/Doubao/chats/2026-10-06/new-chat-1/%E6%8A%80%E6%9C%AF%E6%A0%88%E8%AF%A6%E8%A7%A3/04_%E5%AE%9E%E6%97%B6%E9%80%9A%E4%BF%A1/01_WebRTC%E3%80%90%E6%B7%B1%E5%85%A5%E3%80%91.html",
+  "outdir": "C:\\Users\\Administrator\\Doubao\\chats\\2026-10-06\\new-chat-1\\技术栈详解\\04_实时通信\\_shots",
+  "include": [
+    "lint",
+    "screenshots",
+    "structure"
+  ],
+  "shots": {
+    "desktop": {
+      "screenshot": "C:\\Users\\Administrator\\Doubao\\chats\\2026-10-06\\new-chat-1\\技术栈详解\\04_实时通信\\_shots\\01_WebRTC【深入】_desktop.jpg",
+      "screenshotBytes": 1039885,
+      "slices": [
+        "C:\\Users\\Administrator\\Doubao\\chats\\2026-10-06\\new-chat-1\\技术栈详解\\04_实时通信\\_shots\\01_WebRTC【深入】_desktop_p1of3.jpg",
+        "C:\\Users\\Administrator\\Doubao\\chats\\2026-10-06\\new-chat-1\\技术栈详解\\04_实时通信\\_shots\\01_WebRTC【深入】_desktop_p2of3.jpg",
+        "C:\\Users\\Administrator\\Doubao\\chats\\2026-10-06\\new-chat-1\\技术栈详解\\04_实时通信\\_shots\\01_WebRTC【深入】_desktop_p3of3.jpg"
+      ],
+      "sliceHint": "主图过阈值（字节>800KB 或 高度>4000px），已按 3200px 切片。若主图 Read 失败，改读 slices 里各分片。",
+      "truncated": false,
+      "structure": {
+        "title": "WebRTC【深入】｜全栈技术栈详解",
+        "firstH1": "WebRTC 实时通信",
+        "viewport": {
+          "w": 1424,
+          "h": 749
+        },
+        "fullpage": {
+          "w": 1424,
+          "h": 13292
+        },
+        "counts": {
+          "section": 7,
+          "h1": 1,
+          "h2": 8,
+          "img": 0,
+          "canvas": 0,
+          "svg": 3,
+          "links": 21,
+          "buttons": 8
+        }
+      },
+      "consoleErrors": [],
+      "consoleWarnings": [],
+      "horizontalOverflow": [],
+      "resourceErrors": [],
+      "overlappingText": [
+        {
+          "a": {
+            "tag": "a",
+            "text": "工作原理与流程",
+            "rect": [
+              297,
+              491,
+              98,
+              19
+            ]
+          },
+          "b": {
+            "tag": "a",
+            "text": "← 上一篇",
+            "rect": [
+              242,
+              501,
+              84,
+              30
+            ]
+          },
+          "intersectPx": 261,
+          "coverRatio": 0.14
+        },
+        {
+          "a": {
+            "tag": "a",
+            "text": "核心语法与 API 要点",
+            "rect": [
+              754,
+              491,
+              126,
+              19
+            ]
+          },
+          "b": {
+            "tag": "a",
+            "text": "⌂ 返回首页",
+            "rect": [
+              662,
+              501,
+              100,
+              30
+            ]
+          },
+          "intersectPx": 70,
+          "coverRatio": 0.03
+        },
+        {
+          "a": {
+            "tag": "a",
+            "text": "← 上一篇",
+            "rect": [
+              242,
+              501,
+              84,
+              30
+            ]
+          },
+          "b": {
+            "tag": "a",
+            "text": "实战项目经验（真实项目落地）",
+            "rect": [
+              297,
+              523,
+              196,
+              19
+            ]
+          },
+          "intersectPx": 234,
+          "coverRatio": 0.09
+        },
+        {
+          "a": {
+            "tag": "a",
+            "text": "⌂ 返回首页",
+            "rect": [
+              662,
+              501,
+              100,
+              30
+            ]
+          },
+          "b": {
+            "tag": "a",
+            "text": "易错点与面试重点",
+            "rect": [
+              754,
+              523,
+              112,
+              19
+            ]
+          },
+          "intersectPx": 63,
+          "coverRatio": 0.03
+        },
+        {
+          "a": {
+            "tag": "button",
+            "text": "复制",
+            "rect": [
+              1035,
+              6002,
+              42,
+              23
+            ]
+          },
+          "b": {
+            "tag": "code",
+            "text": "// 接收场景：本端不发，只收 Janus 的流。方向用 direction 控制，不是靠 addTrack。\nvar ",
+            "rect": [
+              298,
+              6013,
+              788,
+              491
+            ]
+          },
+          "intersectPx": 504,
+          "coverRatio": 0.52
+        }
+      ],
+      "overlappingTextHint": "含义：两个含文字的元素 bounding rect 有交集。典型 case：绝对定位徽章/浮层压到内容文字上、卡片尺寸没对齐。coverRatio 是交集面积占较小元素面积的比例，越大越可疑。 | 修法：调整定位、给徽章预留空间、或缩小重叠元素之一。 | 豁免：(1) 故意的视觉层叠（如卡片右上角小 badge 落在卡片 padding 空隙里没盖文字），可对着截图确认后忽略；(2) coverRatio < 0.1 且截图看不出问题的，多半是亚像素抖动。",
+      "slopFontsWarning": [
+        {
+          "family": "arial",
+          "elementCount": 8,
+          "sampleText": "复制"
+        }
+      ],
+      "slopFontsHint": "warning · 含义：页面使用了 skill 明确禁的 slop 高发字体（Inter / Roboto / Arial / Fraunces / Playfair）。elementCount 是命中该字体的元素数（不含 fallback），sampleText 是首个样例文字。 | 修法：换成主题相关的字体族（衬线/无衬线/等宽视调性而定），走自托管镜像 miaoda.feishu.cn/fonts/css2。 | 豁免：(1) **用户品牌指定使用**——例如客户 CI 明确要求 Inter/Roboto，写在 brief 里可忽略；(2) **系统字体 fallback 命中**——虽然本规则只取 fontFamily 首选族，但如果这个族本身写的是 \"Arial\"、可能只是保守 fallback；如果同一元素明显还挂了自定义字体但 fallback 落到 Arial（例如自定义字体 404 了），修的其实是字体加载而非字体选型；(3) 极简项目本就要 \"grotesque + 中性感\"，且用户未指定——罕见但存在，看截图和 design plan 确认后可豁免。",
+      "reportSource": "cdp"
+    },
+    "mobile": {
+      "screenshot": "C:\\Users\\Administrator\\Doubao\\chats\\2026-10-06\\new-chat-1\\技术栈详解\\04_实时通信\\_shots\\01_WebRTC【深入】_mobile.jpg",
+      "screenshotBytes": 1456548,
+      "slices": [
+        "C:\\Users\\Administrator\\Doubao\\chats\\2026-10-06\\new-chat-1\\技术栈详解\\04_实时通信\\_shots\\01_WebRTC【深入】_mobile_p1of6.jpg",
+        "C:\\Users\\Administrator\\Doubao\\chats\\2026-10-06\\new-chat-1\\技术栈详解\\04_实时通信\\_shots\\01_WebRTC【深入】_mobile_p2of6.jpg",
+        "C:\\Users\\Administrator\\Doubao\\chats\\2026-10-06\\new-chat-1\\技术栈详解\\04_实时通信\\_shots\\01_WebRTC【深入】_mobile_p3of6.jpg",
+        "C:\\Users\\Administrator\\Doubao\\chats\\2026-10-06\\new-chat-1\\技术栈详解\\04_实时通信\\_shots\\01_WebRTC【深入】_mobile_p4of6.jpg",
+        "C:\\Users\\Administrator\\Doubao\\chats\\2026-10-06\\new-chat-1\\技术栈详解\\04_实时通信\\_shots\\01_WebRTC【深入】_mobile_p5of6.jpg",
+        "C:\\Users\\Administrator\\Doubao\\chats\\2026-10-06\\new-chat-1\\技术栈详解\\04_实时通信\\_shots\\01_WebRTC【深入】_mobile_p6of6.jpg"
+      ],
+      "sliceHint": "主图过阈值（字节>800KB 或 高度>4000px），已按 3200px 切片。若主图 Read 失败，改读 slices 里各分片。",
+      "truncated": false,
+      "structure": {
+        "title": "WebRTC【深入】｜全栈技术栈详解",
+        "firstH1": "WebRTC 实时通信",
+        "viewport": {
+          "w": 500,
+          "h": 693
+        },
+        "fullpage": {
+          "w": 500,
+          "h": 16159
+        },
+        "counts": {
+          "section": 7,
+          "h1": 1,
+          "h2": 8,
+          "img": 0,
+          "canvas": 0,
+          "svg": 3,
+          "links": 21,
+          "buttons": 8
+        }
+      },
+      "consoleErrors": [],
+      "consoleWarnings": [],
+      "horizontalOverflow": [],
+      "resourceErrors": [],
+      "overlappingText": [
+        {
+          "a": {
+            "tag": "h2",
+            "text": "1技术点概览",
+            "rect": [
+              33,
+              846,
+              434,
+              32
+            ]
+          },
+          "b": {
+            "tag": "a",
+            "text": "← 上一篇",
+            "rect": [
+              14,
+              875,
+              74,
+              27
+            ]
+          },
+          "intersectPx": 153,
+          "coverRatio": 0.08
+        },
+        {
+          "a": {
+            "tag": "h2",
+            "text": "1技术点概览",
+            "rect": [
+              33,
+              846,
+              434,
+              32
+            ]
+          },
+          "b": {
+            "tag": "a",
+            "text": "⌂ 返回首页",
+            "rect": [
+              205,
+              875,
+              90,
+              27
+            ]
+          },
+          "intersectPx": 251,
+          "coverRatio": 0.1
+        },
+        {
+          "a": {
+            "tag": "h2",
+            "text": "1技术点概览",
+            "rect": [
+              33,
+              846,
+              434,
+              32
+            ]
+          },
+          "b": {
+            "tag": "a",
+            "text": "下一篇 →",
+            "rect": [
+              412,
+              875,
+              74,
+              27
+            ]
+          },
+          "intersectPx": 153,
+          "coverRatio": 0.08
+        },
+        {
+          "a": {
+            "tag": "span",
+            "text": "1",
+            "rect": [
+              51,
+              846,
+              32,
+              32
+            ]
+          },
+          "b": {
+            "tag": "a",
+            "text": "← 上一篇",
+            "rect": [
+              14,
+              875,
+              74,
+              27
+            ]
+          },
+          "intersectPx": 90,
+          "coverRatio": 0.09
+        },
+        {
+          "a": {
+            "tag": "li",
+            "text": "过去的痛点：监控/会议/客服直播要么要求装 ActiveX 插件（IE 专属、安全告警、换机就崩），要么走 HTTP-F",
+            "rect": [
+              59,
+              1429,
+              408,
+              82
+            ]
+          },
+          "b": {
+            "tag": "button",
+            "text": "↑",
+            "rect": [
+              440,
+              1494,
+              44,
+              44
+            ]
+          },
+          "intersectPx": 457,
+          "coverRatio": 0.24
+        },
+        {
+          "a": {
+            "tag": "button",
+            "text": "↑",
+            "rect": [
+              440,
+              1494,
+              44,
+              44
+            ]
+          },
+          "b": {
+            "tag": "li",
+            "text": "WebRTC 带来：浏览器直接拿到 SRTP 加密的 RTP 包，端到端延迟压到 200-500ms，无需安装任何东西。",
+            "rect": [
+              59,
+              1519,
+              408,
+              55
+            ]
+          },
+          "intersectPx": 515,
+          "coverRatio": 0.27
+        },
+        {
+          "a": {
+            "tag": "strong",
+            "text": "它是状态机",
+            "rect": [
+              59,
+              2899,
+              75,
+              20
+            ]
+          },
+          "b": {
+            "tag": "code",
+            "text": "new→have-local-offer→stable→have-remote-pranswer…",
+            "rect": [
+              59,
+              2901,
+              400,
+              45
+            ]
+          },
+          "intersectPx": 1350,
+          "coverRatio": 0.9
+        },
+        {
+          "a": {
+            "tag": "strong",
+            "text": "接收侧",
+            "rect": [
+              59,
+              3249,
+              45,
+              20
+            ]
+          },
+          "b": {
+            "tag": "code",
+            "text": "video.srcObject = event.streams[0]",
+            "rect": [
+              59,
+              3251,
+              381,
+              45
+            ]
+          },
+          "intersectPx": 810,
+          "coverRatio": 0.9
+        },
+        {
+          "a": {
+            "tag": "code",
+            "text": "pc.ontrack",
+            "rect": [
+              119,
+              3251,
+              88,
+              18
+            ]
+          },
+          "b": {
+            "tag": "code",
+            "text": "video.srcObject = event.streams[0]",
+            "rect": [
+              59,
+              3251,
+              381,
+              45
+            ]
+          },
+          "intersectPx": 1582,
+          "coverRatio": 1
+        },
+        {
+          "a": {
+            "tag": "strong",
+            "text": "addTrack 声明发送",
+            "rect": [
+              151,
+              7754,
+              120,
+              19
+            ]
+          },
+          "b": {
+            "tag": "strong",
+            "text": "addTransceiver 显式声明方向",
+            "rect": [
+              53,
+              7754,
+              396,
+              44
+            ]
+          },
+          "intersectPx": 2271,
+          "coverRatio": 1
+        },
+        {
+          "a": {
+            "tag": "strong",
+            "text": "addTransceiver 显式声明方向",
+            "rect": [
+              53,
+              7754,
+              396,
+              44
+            ]
+          },
+          "b": {
+            "tag": "code",
+            "text": "addTrack(track)",
+            "rect": [
+              95,
+              7782,
+              118,
+              17
+            ]
+          },
+          "intersectPx": 2010,
+          "coverRatio": 1
+        },
+        {
+          "a": {
+            "tag": "strong",
+            "text": "addTransceiver 显式声明方向",
+            "rect": [
+              53,
+              7754,
+              396,
+              44
+            ]
+          },
+          "b": {
+            "tag": "code",
+            "text": "sendrecv",
+            "rect": [
+              365,
+              7782,
+              69,
+              17
+            ]
+          },
+          "intersectPx": 1167,
+          "coverRatio": 1
+        },
+        {
+          "a": {
+            "tag": "strong",
+            "text": "recvonly",
+            "rect": [
+              59,
+              10618,
+              60,
+              20
+            ]
+          },
+          "b": {
+            "tag": "code",
+            "text": "addTransceiver('video', { direction: 'recvonly' })",
+            "rect": [
+              59,
+              10620,
+              390,
+              45
+            ]
+          },
+          "intersectPx": 1076,
+          "coverRatio": 0.9
+        },
+        {
+          "a": {
+            "tag": "span",
+            "text": "坑",
+            "rect": [
+              59,
+              13401,
+              30,
+              20
+            ]
+          },
+          "b": {
+            "tag": "code",
+            "text": "InvalidStateError: Failed to execute 'setLocalDescription'",
+            "rect": [
+              59,
+              13404,
+              379,
+              45
+            ]
+          },
+          "intersectPx": 510,
+          "coverRatio": 0.85
+        },
+        {
+          "a": {
+            "tag": "strong",
+            "text": "现象",
+            "rect": [
+              95,
+              13402,
+              30,
+              20
+            ]
+          },
+          "b": {
+            "tag": "code",
+            "text": "InvalidStateError: Failed to execute 'setLocalDescription'",
+            "rect": [
+              59,
+              13404,
+              379,
+              45
+            ]
+          },
+          "intersectPx": 540,
+          "coverRatio": 0.9
+        }
+      ],
+      "overlappingTextHint": "含义：两个含文字的元素 bounding rect 有交集。典型 case：绝对定位徽章/浮层压到内容文字上、卡片尺寸没对齐。coverRatio 是交集面积占较小元素面积的比例，越大越可疑。 | 修法：调整定位、给徽章预留空间、或缩小重叠元素之一。 | 豁免：(1) 故意的视觉层叠（如卡片右上角小 badge 落在卡片 padding 空隙里没盖文字），可对着截图确认后忽略；(2) coverRatio < 0.1 且截图看不出问题的，多半是亚像素抖动。",
+      "slopFontsWarning": [
+        {
+          "family": "arial",
+          "elementCount": 8,
+          "sampleText": "复制"
+        }
+      ],
+      "slopFontsHint": "warning · 含义：页面使用了 skill 明确禁的 slop 高发字体（Inter / Roboto / Arial / Fraunces / Playfair）。elementCount 是命中该字体的元素数（不含 fallback），sampleText 是首个样例文字。 | 修法：换成主题相关的字体族（衬线/无衬线/等宽视调性而定），走自托管镜像 miaoda.feishu.cn/fonts/css2。 | 豁免：(1) **用户品牌指定使用**——例如客户 CI 明确要求 Inter/Roboto，写在 brief 里可忽略；(2) **系统字体 fallback 命中**——虽然本规则只取 fontFamily 首选族，但如果这个族本身写的是 \"Arial\"、可能只是保守 fallback；如果同一元素明显还挂了自定义字体但 fallback 落到 Arial（例如自定义字体 404 了），修的其实是字体加载而非字体选型；(3) 极简项目本就要 \"grotesque + 中性感\"，且用户未指定——罕见但存在，看截图和 design plan 确认后可豁免。",
+      "reportSource": "cdp"
+    }
+  },
+  "engine": "chrome_cli",
+  "chromiumExec": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+  "engineDegraded": true,
+  "engineDegradedReason": "playwright 未装",
+  "elapsedSec": 7.4
+}
+

@@ -1,0 +1,24 @@
+FILE: 08_数据库与建模/09_Elasticsearch搜索引擎【标准】.html
+DEPTH: 标准
+TOC sec5 text: 使用案例（真实项目落地）
+============================================================
+<section id="sec5" class="card">
+    <h2><span class="num">5</span>使用案例（真实项目落地）</h2>
+    <div class="warn-box">本人简历项目（大屏项目群、DCP-RMP）未实际部署 Elasticsearch。本案例为基于大屏告警检索场景做的规划与学习，非已上线履历。</div>
+    <h3>案例：大屏历史告警的全文检索与多维聚合规划</h3>
+    <p><strong>业务场景</strong>：大屏系统历史告警数据越积越多，运维要"按告警内容关键词搜历史告警""按级别/时间维度统计趋势"，MySQL 的 like 模糊查和 group by 在亿级行上越来越慢。</p>
+    <p><strong>落地步骤（规划）</strong>：</p>
+    <ol>
+      <li><strong>定分工</strong>：MySQL 存权威告警数据，ES 冗余一份用于检索与聚合。</li>
+      <li><strong>同步</strong>：告警写入 MySQL 后，通过消息队列异步同步到 ES（见消息队列一页），接受秒级延迟。</li>
+      <li><strong>Mapping</strong>：告警内容用 text + IK 分词，级别/设备 id 用 keyword 精确过滤，时间用 date 聚合。</li>
+      <li><strong>检索与聚合</strong>：前端关键词走 match，级别走 filter，趋势图走 date_histogram 聚合。</li>
+    </ol>
+    <p><strong>关键代码</strong>：即 4.1 的 Mapping 与 4.2 的 match+filter+aggs 查询。</p>
+    <p><strong>效果与坑（规划/学习）</strong>：预期把"秒级模糊查+趋势聚合"做成毫秒级。梳理的坑：</p>
+    <ul>
+      <li><span class="tag-pit">坑</span><strong>没指定分词器</strong>：中文按单字切，搜"监控"会把含"监""控"单独的文档也召回——必须用 IK。</li>
+      <li><span class="tag-pit">坑</span><strong>ES 当主库用</strong>：把权威数据只放 ES，丢数据/一致性问题一堆——ES 只做检索冗余层。</li>
+      <li><span class="tag-point">要点</span><strong>同步要容忍延迟</strong>：刚写 MySQL 的告警在 ES 有秒级延迟，业务上标注"约 1 秒可检索"。</li>
+    </ul>
+  </section>

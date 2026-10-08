@@ -1,0 +1,31 @@
+FILE: 08_数据库与建模/06_Redis进阶_缓存策略与分布式锁【深入】.html
+DEPTH: 深入
+TOC sec5 text: 使用案例（真实项目落地）
+============================================================
+<section id="sec5" class="card">
+  <h2><span class="num">5</span>使用案例（真实项目落地）</h2>
+
+  <h3>案例 1：DCP-RMP——Redisson 解决需求并发提交与幂等</h3>
+  <p><strong>业务场景</strong>：同一条需求可能被多人/多端同时点"提交"，要保证同一时刻只有一个实例执行状态流转，避免重复提交。</p>
+  <p><strong>落地步骤</strong>：</p>
+  <ol>
+    <li>用 Redisson 的可重入锁，锁 key = <code>lock:req:{id}</code>，锁内执行状态流转。</li>
+    <li>不指定 leaseTime，靠看门狗自动续期，避免业务没跑完锁先释放。</li>
+    <li>finally 里 <code>isHeldByCurrentThread</code> 判断后再解锁，只解自己持有的。</li>
+  </ol>
+  <p><strong>效果与坑</strong>：并发提交被串行化，不再出现重复流转。真实踩过的坑：</p>
+  <ul>
+    <li><span class="tag-pit">坑</span><strong>手写 setnx 锁被外部调用拖过过期时间</strong>：业务里一次外部调用超过锁的 10s 过期，锁提前释放、另一实例又进来造成并发；换 Redisson 看门狗续期后解决。</li>
+    <li><span class="tag-pit">坑</span><strong>unlock 前不判断持有者</strong>：异常场景下误删了别人刚加的锁。</li>
+    <li><span class="tag-point">要点</span><strong>红锁过度设计</strong>：曾考虑上红锁，评估后单实例主从+Redisson 已足够，红锁的复杂度和争议不值得。</li>
+  </ul>
+
+  <h3>案例 2：缓存三大问题的实际应对</h3>
+  <p><strong>业务场景</strong>：大屏告警热点数据、缓存过期策略。</p>
+  <p><strong>落地步骤</strong>：热点告警数据过期时间加随机抖动防雪崩；对查空的需求 id 缓存短过期空值防穿透；热点 key 重建加锁防击穿。</p>
+  <p><strong>效果与坑</strong>：缓存失效时段不再出现数据库瞬时尖刺。真实坑：</p>
+  <ul>
+    <li><span class="tag-pit">坑</span><strong>所有 key 都设固定 30 分钟过期</strong>：整点同时失效打了一波 DB，加随机抖动后平稳。</li>
+    <li><span class="tag-pit">坑</span><strong>有人刷不存在的 id 频繁回源</strong>：缓存空值后挡掉。</li>
+  </ul>
+</section>

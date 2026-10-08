@@ -1,0 +1,32 @@
+FILE: 07_后端开发/10_接口安全_JWT与鉴权【标准】.html
+DEPTH: 标准
+TOC sec5 text: 使用案例（真实项目落地）
+============================================================
+<section id="sec5" class="card">
+  <h2><span class="num">5</span>使用案例（真实项目落地）</h2>
+  <h3>案例：DCP-RMP 的登录态与 RBAC 权限</h3>
+  <p><strong>业务场景</strong>：DCP-RMP 前后端分离，有"管理员/团队成员/只读"等角色，不同角色能操作的需求范围不同。需要一套无状态登录态，且能在登出/改密后立即失效。</p>
+  <p><strong>落地步骤</strong>：</p>
+  <ol>
+    <li>登录校验账号密码后，签发短时效 access token（HS256）+ 长时效 refresh token（存 Redis）。</li>
+    <li>前端把 token 存 localStorage，Axios 拦截器自动在请求头带上。</li>
+    <li>后端写 AuthInterceptor 统一验签、查 Redis 黑名单、把用户身份放进 ThreadLocal（UserContext）。</li>
+    <li>接口层用 <code>@PreAuthorize</code> 按角色控制，数据层再按团队做行级过滤。</li>
+    <li>登出/改密时把当前 access token 加入 Redis 黑名单（设过期=token 剩余有效期）。</li>
+  </ol>
+<pre class="code" data-lang="ts"><code>// 前端：Axios 拦截器统一带 token，401 时尝试用 refresh 换新
+axios.interceptors.request.use(cfg =&gt; {
+  const t = localStorage.getItem('access_token');
+  if (t) cfg.headers.Authorization = `Bearer ${t}`;
+  return cfg;
+});
+axios.interceptors.response.use(r =&gt; r, async err =&gt; {
+  if (err.response?.status === 401) { /* 用 refresh_token 换新后重放 */ }
+});</code></pre>
+  <p><strong>效果与坑</strong>：登录态无状态、多实例部署无需共享 Session；配合黑名单做到了登出即失效。真实踩过的坑：</p>
+  <ul>
+    <li><span class="tag-pit">坑</span><strong>access token 一开始设了 7 天</strong>：泄露风险大，改成 2 小时 + refresh 机制。</li>
+    <li><span class="tag-pit">坑</span><strong>没加黑名单时改密码后旧 token 还能用</strong>：用户以为已下线，补上黑名单才闭环。</li>
+    <li><span class="tag-pit">坑</span><strong>JWT 里塞了用户手机号</strong>：后来发现 Payload Base64 解码就能看，敏感信息一律移出 token。</li>
+  </ul>
+</section>

@@ -1,0 +1,22 @@
+FILE: 07_后端开发/13_SpringSecurity与OAuth2【标准】.html
+DEPTH: 标准
+TOC sec5 text: 使用案例（真实项目落地）
+============================================================
+<section id="sec5" class="card">
+    <h2><span class="num">5</span>使用案例（真实项目落地）</h2>
+    <h3>案例：DCP-RMP 从 JWT 拦截器到 Spring Security 的演进评估</h3>
+    <p><strong>业务场景</strong>：DCP-RMP 当前用 JWT + HandlerInterceptor 做登录态校验，配合 RBAC 判断"需求编辑/删除"等操作权限。随着角色变多（普通成员、团队管理员、平台管理员），权限判断散落在拦截器与各处 if/else。</p>
+    <p><strong>落地步骤（演进评估）</strong>：</p>
+    <ol>
+      <li><strong>保留现状</strong>：当前拦截器已稳定运行、团队熟悉，判定"没必要立刻迁"。</li>
+      <li><strong>梳理规则</strong>：把现有"放行路径 / 需登录 / 需某角色"三类规则列成清单——这正是 Spring Security URL 规则能表达的。</li>
+      <li><strong>试点方法级</strong>：将来要迁时，先把最复杂的"删除需求需 ADMIN"用 <code>@PreAuthorize</code> 表达，替代散落的 if 判断。</li>
+    </ol>
+    <p><strong>关键代码</strong>：即 4.1 的 SecurityFilterChain 与 4.2 的 @PreAuthorize，与现有 JWT 拦截器做同一件事，只是换成框架标准件。</p>
+    <p><strong>效果与坑</strong>：评估结论是"维持拦截器、把 Spring Security 作为接第三方登录/复杂权限时的目标方案"。演进中要注意：</p>
+    <ul>
+      <li><span class="tag-pit">坑</span><strong>同时存在拦截器与 Security 过滤器</strong>：两套鉴权重复判断、顺序混乱——迁移时要二选一，不要叠床架屋。</li>
+      <li><span class="tag-pit">坑</span><strong>忘了放行登录接口</strong>：配了 anyRequest().authenticated() 却把 /login 也拦了，导致登不进去。</li>
+      <li><span class="tag-point">要点</span><strong>csrf 默认开</strong>：前后端分离无 cookie 会话，要显式关闭 CSRF，否则 POST 请求被拦。</li>
+    </ul>
+  </section>

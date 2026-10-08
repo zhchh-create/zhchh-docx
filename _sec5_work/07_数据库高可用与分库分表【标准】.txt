@@ -1,0 +1,21 @@
+FILE: 08_数据库与建模/07_数据库高可用与分库分表【标准】.html
+DEPTH: 标准
+TOC sec5 text: 使用案例（真实项目落地）
+============================================================
+<section id="sec5" class="card">
+  <h2><span class="num">5</span>使用案例（真实项目落地）</h2>
+  <h3>案例：大屏历史数据归档与高可用方案评估</h3>
+  <p><strong>业务场景</strong>：大屏系统随时间累积了大量历史告警/时序数据，需要控制单表规模；同时评估读写分离与分库分表的可行性。</p>
+  <p><strong>落地步骤</strong>：</p>
+  <ol>
+    <li><strong>先不急于分片</strong>：热点数据走 Redis、慢查询先优化索引，单表规模先靠"历史数据归档"控制。</li>
+    <li><strong>归档</strong>：把超过一定时间的历史数据定期迁到归档表/归档库，在线表只留近期热数据。</li>
+    <li><strong>方案评估</strong>：评估了主从+读写分离（ShardingSphere）作为后续扩展方向，按 order/业务维度预留分片键设计。</li>
+  </ol>
+  <p><strong>效果与坑</strong>：在线表规模被归档压下来，查询保持快；评估清楚了读写分离与分片的代价，没有过早引入。真实经验：</p>
+  <ul>
+    <li><span class="tag-pit">坑</span><strong>历史数据全堆在线表</strong>：一年后单表上亿行、列表变慢——归档到老表后在线表清爽。</li>
+    <li><span class="tag-pit">坑</span><strong>无脑把读都切到从库</strong>：评估时意识到"刚写完就读从库会延迟"，关键读要走主库。</li>
+    <li><span class="tag-point">要点</span><strong>分片键要早期预留</strong>：分片键一旦选错后期迁移极痛，建表早期就按可能的分片方向（如按团队/租户）预留。</li>
+  </ul>
+</section>

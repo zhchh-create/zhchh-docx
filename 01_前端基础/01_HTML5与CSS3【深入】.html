@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTML5与CSS3【深入】｜全栈技术栈详解</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%231d4ed8'/%3E%3Crect x='3' y='4' width='10' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='7' width='7' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='10' width='9' height='2' rx='1' fill='%23fff'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#f4f6f9; --surface:#ffffff; --line:#e2e8f0; --line-2:#cbd5e1;
+  --ink:#1f2937; --ink-2:#475569; --ink-3:#6b7280;
+  --accent:#1d4ed8; --accent-2:#0e7490; --accent-soft:#dbeafe;
+  --warn:#b45309; --warn-soft:#fef3c7;
+  --danger:#b91c1c; --danger-soft:#fee2e2;
+  --ok:#047857; --ok-soft:#d1fae5;
+  --code-bg:#0f172a; --code-ink:#e2e8f0;
+  --radius:12px; --shadow:0 1px 3px rgba(15,23,42,.08);
+  --font:-apple-system,"Segoe UI","Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  --mono:"Cascadia Mono","JetBrains Mono",Consolas,"Courier New",monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.75 var(--font);-webkit-font-smoothing:antialiased}
+.container{max-width:980px;margin:0 auto;padding:0 20px}
+.hero{background:linear-gradient(180deg,#1e293b 0%,#0f172a 100%);color:#f8fafc;padding:44px 0 36px}
+.hero .breadcrumb{font-size:13px;color:#94a3b8;letter-spacing:.04em;margin:0 0 12px}
+.hero h1{margin:0 0 10px;font-size:30px;line-height:1.3;font-weight:700}
+.hero .meta-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.badge{display:inline-block;padding:2px 12px;border-radius:999px;font-size:13px;font-weight:600;line-height:1.6}
+.badge.deep{background:var(--danger-soft);color:var(--danger);border:1px solid #fca5a5}
+.badge.std{background:var(--accent-soft);color:var(--accent);border:1px solid #93c5fd}
+.badge.basic{background:var(--ok-soft);color:var(--ok);border:1px solid #6ee7b7}
+.hero .meta{font-size:14px;color:#cbd5e1}
+.hero-desc{max-width:860px;margin:0;font-size:15.5px;color:#cbd5e1}
+.toc{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin:24px 0}
+.toc h2{margin:0 0 12px;font-size:16px;color:var(--ink)}
+.toc ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:6px 24px;counter-reset:toc}
+.toc li{counter-increment:toc;font-size:14px}
+.toc li::before{content:counter(toc);display:inline-block;min-width:22px;height:22px;line-height:22px;text-align:center;background:var(--accent-soft);color:var(--accent);border-radius:6px;font-size:12px;font-weight:600;margin-right:8px}
+.toc a{color:var(--accent);text-decoration:none}
+.toc a:hover{text-decoration:underline}
+main{display:block;padding-bottom:40px}
+section.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:28px 34px;margin:24px 0}
+section.card h2{font-size:21px;margin:0 0 18px;padding-left:12px;border-left:4px solid var(--accent);line-height:1.4}
+section.card h2 .num{display:inline-block;min-width:30px;height:30px;line-height:30px;text-align:center;background:var(--accent);color:#fff;border-radius:8px;font-size:15px;font-weight:700;margin-right:10px;vertical-align:1px}
+section.card h3{font-size:17px;margin:26px 0 10px;color:var(--accent-2)}
+section.card h4{font-size:15px;margin:18px 0 8px}
+section.card p{margin:10px 0}
+section.card ul,section.card ol{margin:10px 0;padding-left:24px}
+section.card li{margin:6px 0}
+strong{color:var(--ink)}
+code{font-family:var(--mono);font-size:.92em;background:#eef2f7;color:#0f4c81;padding:1px 6px;border-radius:5px}
+pre.code{position:relative;background:var(--code-bg);color:var(--code-ink);border-radius:10px;padding:16px 18px;overflow-x:auto;margin:14px 0;line-height:1.65;font-size:13.5px;font-family:var(--mono)}
+pre.code::before{content:attr(data-lang);position:absolute;top:8px;right:12px;font-size:11.5px;color:#64748b;letter-spacing:.06em}
+pre.code code{background:transparent;color:inherit;padding:0;font-size:inherit}
+.code-copy{position:absolute;top:6px;right:64px;font-size:12px;color:#cbd5e1;background:#1e293b;border:1px solid #334155;border-radius:6px;padding:2px 8px;cursor:pointer}
+.code-copy:hover{color:#fff;border-color:#475569}
+table{width:100%;table-layout:fixed;border-collapse:collapse;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top;overflow-wrap:break-word}
+th{background:#f1f5f9;font-weight:600}
+tbody tr:nth-child(even){background:#f8fafc}
+.diagram{margin:20px 0}
+.diagram svg{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:10px;background:#fbfdff}
+.diagram-caption{margin:8px 0 0;text-align:center;font-size:13px;color:var(--ink-3)}
+.note{border-left:4px solid var(--accent);background:#f0f6ff;border-radius:0 8px 8px 0;padding:12px 16px;margin:14px 0;font-size:14px}
+.warn-box{border-left:4px solid var(--warn);background:var(--warn-soft);border-radius:0 8px 8px 0;padding:12px 16px;margin:14px 0;font-size:14px}
+.danger-box{border-left:4px solid var(--danger);background:var(--danger-soft);border-radius:0 8px 8px 0;padding:12px 16px;margin:14px 0;font-size:14px}
+footer{background:#1e293b;color:#94a3b8;text-align:center;font-size:13px;padding:22px 0;margin-top:8px}
+#backTop{position:fixed;right:24px;bottom:32px;width:44px;height:44px;border:none;border-radius:50%;background:var(--accent);color:#fff;font-size:18px;cursor:pointer;box-shadow:0 4px 12px rgba(29,78,216,.35);opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s;z-index:99}
+#backTop.show{opacity:1;visibility:visible}
+@media (max-width:760px){
+  .container{padding:0 14px}
+  .hero{padding:32px 0 26px}
+  .hero h1{font-size:23px}
+  .toc ol{grid-template-columns:1fr}
+  section.card{padding:20px 18px}
+  pre.code{font-size:12.5px;padding:14px 14px}
+  .code-copy{position:static;display:block;width:max-content;margin:0 0 10px auto}
+  #backTop{right:16px;bottom:20px}
+}
+
+/* ===== 全库统一导航 ===== */
+.doc-nav{display:flex;justify-content:space-between;align-items:center;gap:8px;max-width:980px;margin:0 auto;padding:10px 20px}
+.doc-nav.top{position:sticky;top:0;z-index:70;background:var(--surface);border-bottom:1px solid var(--line);box-shadow:var(--shadow)}
+.doc-nav.bottom{border-top:1px solid var(--line);padding-top:16px;padding-bottom:16px;margin-top:8px}
+.doc-nav-btn{color:var(--accent);text-decoration:none;font-size:14px;font-weight:600;line-height:1;padding:7px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);white-space:nowrap;transition:border-color .15s,background .15s}
+a.doc-nav-btn:hover{border-color:var(--accent);background:var(--accent-soft)}
+.doc-nav-btn.home{color:var(--ink-2)}
+.doc-nav-btn.home:hover{color:var(--accent)}
+.doc-nav-btn.hidden{visibility:hidden}
+@media(max-width:640px){.doc-nav{gap:6px;padding-left:14px;padding-right:14px}.doc-nav-btn{font-size:13px;padding:6px 9px}}
+
+/* ===== 全库统一 Prism 深色主题 ===== */
+code[class*=language-],pre[class*=language-]{color:#f8f8f2;background:0 0;text-shadow:0 1px rgba(0,0,0,.3);font-family:Consolas,Monaco,'Andale Mono','Ubuntu Mono',monospace;font-size:1em;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{padding:1em;margin:.5em 0;overflow:auto;border-radius:.3em}:not(pre)>code[class*=language-],pre[class*=language-]{background:#272822}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal}.token.cdata,.token.comment,.token.doctype,.token.prolog{color:#8292a2}.token.punctuation{color:#f8f8f2}.token.namespace{opacity:.7}.token.constant,.token.deleted,.token.property,.token.symbol,.token.tag{color:#f92672}.token.boolean,.token.number{color:#ae81ff}.token.attr-name,.token.builtin,.token.char,.token.inserted,.token.selector,.token.string{color:#a6e22e}.language-css .token.string,.style .token.string,.token.entity,.token.operator,.token.url,.token.variable{color:#f8f8f2}.token.atrule,.token.attr-value,.token.class-name,.token.function{color:#e6db74}.token.keyword{color:#66d9ef}.token.important,.token.regex{color:#fd971f}.token.bold,.token.important{font-weight:700}.token.italic{font-style:italic}.token.entity{cursor:help}
+/* 适配库内代码块：保留 --code-bg 深底与 --mono 字体，去除主题自带背景/阴影 */
+pre.code code[class*=language-]{background:transparent;text-shadow:none;font-family:var(--mono);font-size:inherit;padding:0;line-height:inherit;color:inherit;white-space:inherit}
+
+/* ===== 全库统一可读性排版 ===== */
+/* 正文阅读密度：行距加大、留白充足 */
+body{line-height:1.85}
+section.card{padding:34px 40px;margin:26px 0}
+section.card h2{font-size:24px;margin:0 0 22px;padding-left:14px}
+section.card h2 .num{min-width:32px;height:32px;line-height:32px;font-size:16px}
+section.card h3{font-size:19px;margin:36px 0 12px;padding-left:10px;border-left:3px solid var(--accent-2);line-height:1.45}
+section.card h4{font-size:16.5px;margin:24px 0 10px;padding-left:8px;border-left:3px solid var(--line-2);color:#334155;font-weight:600;line-height:1.45}
+section.card p{margin:12px 0}
+section.card ul,section.card ol{margin:12px 0;padding-left:26px}
+section.card li{margin:8px 0;line-height:1.8}
+section.card li>ul,section.card li>ol{margin:6px 0}
+/* 一级要点：主题色圆点/序号 */
+section.card ul>li::marker{color:var(--accent);font-size:1.05em}
+section.card ol>li::marker{color:var(--accent);font-weight:700}
+/* 二级细节：细色条 + 缩进 + 次级色 marker */
+section.card ul ul>li::marker,section.card ol ol>li::marker{color:var(--accent-2)}
+section.card ul ul,section.card ol ol,section.card ul ol,section.card ol ul{padding-left:22px;border-left:2px solid var(--line);margin-left:6px}
+/* 行内强调标签：关键术语 / 要点 / 坑 */
+.tag-key,.tag-point,.tag-pit{display:inline-block;font-size:12px;font-weight:700;line-height:1;padding:3px 8px;border-radius:5px;margin-right:6px;vertical-align:2px;white-space:nowrap}
+.tag-key{background:var(--accent-soft);color:var(--accent);border:1px solid #93c5fd}
+.tag-point{background:var(--ok-soft);color:var(--ok);border:1px solid #6ee7b7}
+.tag-pit{background:var(--warn-soft);color:var(--warn);border:1px solid #fcd34d}
+/* 强调句：结论/易错点 左侧色条 */
+.key-sentence{border-left:4px solid var(--accent);background:#f0f6ff;padding:9px 14px;margin:14px 0;border-radius:0 8px 8px 0;font-weight:600;color:var(--ink);line-height:1.8}
+.pit-sentence{border-left:4px solid var(--warn);background:var(--warn-soft);padding:9px 14px;margin:14px 0;border-radius:0 8px 8px 0;font-weight:600;color:var(--ink);line-height:1.8}
+/* 概念块「一句话定位」 */
+.lead{font-size:15.5px;color:var(--ink-2);margin:0 0 14px;padding:10px 14px;background:#f8fafc;border:1px solid var(--line);border-radius:8px;line-height:1.8}
+.lead b,.lead strong{color:var(--ink)}
+/* 长代码/长句折行保护 */
+section.card li strong{color:var(--ink)}
+@media(max-width:760px){
+  body{line-height:1.8}
+  section.card{padding:22px 18px}
+  section.card h2{font-size:21px}
+  section.card h3{font-size:17.5px;margin:28px 0 10px}
+  section.card h4{font-size:15.5px;margin:20px 0 8px}
+  .lead{padding:8px 10px;font-size:14.5px}
+}
+
+</style>
+<link rel="stylesheet" href="../glossary/glossary.css">
+</head>
+<body>
+<header class="hero">
+  <div class="container">
+    <p class="breadcrumb">技术栈详解 · 01 前端基础</p>
+    <h1>HTML5 与 CSS3</h1>
+    <div class="meta-row">
+      <span class="badge deep">深入</span>
+      <span class="meta">定位：前端表现层地基——语义化标记 + 样式系统</span>
+    </div>
+    <p class="hero-desc">HTML5 与 CSS3 是浏览器渲染链的输入层：HTML 负责内容结构与语义，CSS 负责视觉与布局。本页从盒模型、BFC、层叠上下文讲到渲染流水线与 Flex/Grid 心智模型，再以电力大屏项目群的实际做法展示多分辨率适配与主题体系，最后给出 10 年全栈实践中反复踩过的坑与面试高频题。</p>
+  </div>
+</header>
+<nav class="doc-nav top" aria-label="文档导航">
+  <a class="doc-nav-btn hidden" href="#">← 上一篇</a>
+  <a class="doc-nav-btn home" href="../index.html">⌂ 返回首页</a>
+  <a class="doc-nav-btn" href="../01_前端基础/02_JavaScript核心【深入】.html">下一篇 →</a>
+</nav>
+<div class="container">
+<nav class="toc" aria-label="目录">
+  <h2>本页目录</h2>
+  <ol>
+    <li><a href="#sec1">技术点概览</a></li>
+    <li><a href="#sec2">核心概念</a></li>
+    <li><a href="#sec3">工作原理与流程</a></li>
+    <li><a href="#sec4">核心语法与 API 要点</a></li>
+    <li><a href="#sec5">实战项目经验（真实项目）</a></li>
+    <li><a href="#sec6">易错点与面试重点</a></li>
+    <li><a href="#sec7">学习资源与参考</a></li>
+  </ol>
+</nav>
+<main>
+
+<section id="sec1" class="card">
+  <h2><span class="num">1</span>技术点概览</h2>
+  <h3>是什么</h3>
+  <p>HTML5 是超文本标记语言的第五版规范，目前由 WHATWG 以 Living Standard（活标准，持续更新，不再按版本号发布）形式维护，2019 年 W3C 与 WHATWG 签署合作备忘录后也停止独立发布 HTML 规范，以 Living Standard 为唯一现行版本。相比 HTML4/XHTML，它新增了<strong>语义化标签</strong>（<code>header/nav/main/section/article/aside/footer</code>）、<strong>多媒体</strong>（<code>video/audio</code>）、<strong>图形</strong>（<code>canvas</code>、内联 SVG）、<strong>表单增强</strong>（新 <code>input</code> 类型与约束校验）、<strong>浏览器 API</strong>（Web Storage、History、Geolocation、WebSocket、Web Worker 等）。CSS3 则不是"第三个版本"，而是 CSS 的<strong>模块化演进</strong>：每个能力独立成模块并单独定级——Selectors、Flexbox（CSS Box Alignment Module Level 3）、Grid（CSS Grid Layout Module Level 1）、Transforms、Animations、Media Queries 各自成熟发布，浏览器按模块渐进支持。</p>
+  <h3>解决什么问题</h3>
+  <p>2010 年代前的 Web 开发有三座大山：<strong>table 布局与"div 海洋"</strong>让结构与表现混杂、改版成本极高；<strong>Flash 垄断多媒体</strong>，在 iOS 上不可用且安全漏洞频发；<strong>布局、动画全靠 JS hack</strong>（float 清除、定时器做动画、JS 量测做自适应），代码脆弱且无法利用 GPU 合成。HTML5 用语义让爬虫、无障碍工具和框架都能读懂页面结构；CSS3 用原生 Flex/Grid、过渡动画、媒体查询把这些 JS 活接回浏览器引擎，配合 GPU 合成线程大幅提升流畅度。</p>
+  <div class="diagram">
+    <svg viewBox="0 0 800 250" role="img" aria-label="HTML、CSS、JavaScript 在浏览器渲染链中的位置示意图">
+      <defs>
+        <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+          <path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/>
+        </marker>
+      </defs>
+      <text x="400" y="22" text-anchor="middle" font-size="14" font-weight="700" fill="#1f2937">浏览器渲染链中的输入与加工（示意）</text>
+      <rect x="50" y="45" width="150" height="46" rx="8" fill="#eff6ff" stroke="#2563eb"/>
+      <text x="125" y="67" text-anchor="middle" font-size="14" font-weight="600" fill="#1d4ed8">HTML</text>
+      <text x="125" y="84" text-anchor="middle" font-size="12" fill="#475569">结构 + 语义</text>
+      <rect x="235" y="45" width="150" height="46" rx="8" fill="#ecfeff" stroke="#0d9488"/>
+      <text x="310" y="67" text-anchor="middle" font-size="14" font-weight="600" fill="#0e7490">CSS</text>
+      <text x="310" y="84" text-anchor="middle" font-size="12" fill="#475569">样式 + 布局</text>
+      <rect x="420" y="45" width="150" height="46" rx="8" fill="#f1f5f9" stroke="#64748b"/>
+      <text x="495" y="67" text-anchor="middle" font-size="14" font-weight="600" fill="#334155">JavaScript</text>
+      <text x="495" y="84" text-anchor="middle" font-size="12" fill="#475569">运行时修改 DOM/CSSOM</text>
+      <line x1="125" y1="91" x2="125" y2="120" stroke="#64748b" marker-end="url(#arr)"/>
+      <line x1="310" y1="91" x2="310" y2="120" stroke="#64748b" marker-end="url(#arr)"/>
+      <line x1="495" y1="91" x2="495" y2="120" stroke="#64748b" stroke-dasharray="5,4" marker-end="url(#arr)"/>
+      <rect x="60" y="122" width="470" height="56" rx="8" fill="#fefce8" stroke="#d97706"/>
+      <text x="295" y="146" text-anchor="middle" font-size="14" font-weight="600" fill="#b45309">DOM 树 + CSSOM → 样式计算 → 布局 → 绘制 → 合成</text>
+      <text x="295" y="166" text-anchor="middle" font-size="12" fill="#475569">渲染管线：把结构与样式变成像素指令</text>
+      <line x1="530" y1="150" x2="568" y2="150" stroke="#64748b" marker-end="url(#arr)"/>
+      <rect x="572" y="128" width="180" height="46" rx="8" fill="#f0fdf4" stroke="#047857"/>
+      <text x="662" y="149" text-anchor="middle" font-size="14" font-weight="600" fill="#047857">屏幕像素</text>
+      <text x="662" y="167" text-anchor="middle" font-size="12" fill="#475569">人眼所见</text>
+      <text x="400" y="215" text-anchor="middle" font-size="13" fill="#475569">HTML 定义"这是什么"；CSS 定义"长什么样、怎么排"；JS 在运行时读写两者。</text>
+      <text x="400" y="236" text-anchor="middle" font-size="13" fill="#6b7280">本页主题：HTML 的结构语义 + CSS 的表现与布局机制</text>
+    </svg>
+    <p class="diagram-caption">图 1 HTML/CSS/JS 在浏览器渲染链中的位置（示意）</p>
+  </div>
+  <h3>横向对比：为什么不是旧方案</h3>
+  <ul>
+    <li><strong>HTML5 语义化 vs HTML4 的 table/div 布局</strong>：table 布局渲染时要等整表尺寸确定才出结果（首屏慢），且改一列牵全身；div 海洋让文档大纲完全失真。语义化换来的是可维护性（结构即文档）、SEO 结构化数据、无障碍（读屏器按 landmark 导航），代价是迁移成本——这正是"HTML5 迁移"曾是专门项目的原因。</li>
+    <li><strong>CSS3 模块 vs CSS2.1</strong>：CSS2.1 时代实现"三栏布局 + 圆角 + 渐变"分别靠 float hack、切图、滤镜滤镜，都是不可维护的 workaround。CSS3 用 Flexbox（一维）与 Grid（二维）原生接管布局，用 <code>border-radius/box-shadow/gradient</code> 干掉切图，用 transition/animation 干掉 JS 定时器动画；代价是浏览器支持差异需要降级策略（详见板块 6）。</li>
+    <li><strong>原生 CSS vs 框架方案（Tailwind/组件库/预处理器）</strong>：原子化 CSS 与组件库解决"团队一致性与迭代速度"，代价是构建链依赖、产物体积、以及换肤时样式源分散。本项目群（大屏/管理平台）的取舍是"组件库（ElementUI/ElementPlus）+ CSS 变量主题 + 少量 SCSS"，理由是长期维护的组件生态与夜间大屏换肤需求（见板块 5 案例 2）。</li>
+  </ul>
+</section>
+
+<section id="sec2" class="card">
+  <h2><span class="num">2</span>核心概念</h2>
+  <h3>2.1 语义化标签与文档大纲（Semantic HTML &amp; Document Outline）</h3>
+  <p class="lead"><b>一句话定位</b>：语义化不是性能优化，而是让"结构本身携带含义"——选择标签依据内容是什么，而非它长什么样。</p>
+  <ul>
+    <li><strong>结构即信息</strong>：<code>header/nav/main/section/article/aside/footer</code> 让浏览器生成文档大纲、爬虫理解主题、读屏器提供"跳转区域"导航。</li>
+    <li><strong>怎么选</strong>：可单独分发的独立内容用 <code>&lt;article&gt;</code>，做主题分组用 <code>&lt;section&gt;</code>，与主内容松散相关的补充用 <code>&lt;aside&gt;</code>。</li>
+  </ul>
+  <p class="key-sentence"><span class="tag-point">要点</span>目的是让文档在失去 CSS 后仍然是"一篇有结构的文章"。</p>
+  <h3>2.2 盒模型（Box Model）与 box-sizing</h3>
+  <p class="lead"><b>一句话定位</b>：元素是 content→padding→border→margin 四层矩形；box-sizing 决定 width 到底含不含 padding/border。</p>
+  <ul>
+    <li><strong>标准盒模型（W3C）</strong>：<code>width</code> 只算 content。</li>
+    <li><strong>border-box（怪异盒）</strong>：<code>width</code> 含 content+padding+border——旧 IE 默认。</li>
+    <li><strong>差异</strong>：给元素设 100% 宽再加 padding/border，两种模型差出整整两倍 padding+border。</li>
+  </ul>
+  <p class="key-sentence"><span class="tag-key">工程惯例</span>全局 <code>*{box-sizing:border-box}</code> reset，让"宽度即占位宽度"成立，栅格/百分比布局不再手工减 padding。</p>
+  <h3>2.3 块级格式化上下文（BFC, Block Formatting Context）</h3>
+  <p class="lead"><b>一句话定位</b>：BFC 是布局引擎划出的"独立渲染领地"，内部布局不与外部互相渗透。</p>
+  <ul>
+    <li><strong>触发条件</strong>：<code>position:absolute/fixed</code>、非 none 的 <code>float</code>、非 visible 的 <code>overflow</code>、<code>display:inline-block/flow-root</code>，以及 flex/grid 容器的<strong>直接子项</strong>（flex item / grid item，其自身非 flex/grid/table 容器）等。注：<code>display:flex/grid</code> 容器本身建立的是 FFC/GFC，并非 BFC。</li>
+    <li><strong>解决三类问题</strong>：子元素 margin 溢出父盒、浮动元素盖住兄弟内容、父盒不包裹浮动子元素（高度塌陷）。</li>
+  </ul>
+  <p class="key-sentence"><span class="tag-point">最优雅触发</span><code>display:flow-root</code>——不改变盒类型，只产生格式化上下文，无副作用。</p>
+  <h3>2.4 层叠上下文与 z-index（Stacking Context）</h3>
+  <p class="lead"><b>一句话定位</b>：z-index 不是全局数值，只在同一个层叠上下文内部才可比较。</p>
+  <ul>
+    <li><strong>触发面很广</strong>：除 <code>position+z-index</code> 外，<code>opacity&lt;1</code>、<code>transform/filter/will-change</code>、<code>mix-blend-mode</code>、<code>contain:paint</code> 都会凭空造出一个上下文。</li>
+    <li><strong>玄学 bug</strong>：加 <code>transform:translateZ(0)</code> 触发 GPU 合成后，元素 z-index 只在"自己的小世界"里生效，数值更大却盖不过兄弟——它被困在父级创建的上下文里。</li>
+  </ul>
+  <p class="pit-sentence"><span class="tag-pit">坑</span>排查"z-index 不生效"的唯一正确路径，就是沿父级一层层找谁创建了层叠上下文。</p>
+  <h3>2.5 选择器与特殊性（Specificity）</h3>
+  <p class="lead"><b>一句话定位</b>：特殊性按四元组计分，避免把它堆得太高，否则最终只能靠 !important 续命。</p>
+  <ul>
+    <li><strong>四元组</strong>：<code>(内联样式, id 数, 类/属性/伪类数, 元素/伪元素数)</code>，如 <code>0,1,0,0</code>；内联 &gt; id &gt; 类 &gt; 元素。</li>
+    <li><strong>三个新选择器</strong>：<code>:where()</code> 特殊性恒为 0（写 reset 不污染后续覆盖）；<code>:is()</code> 取参数里最高的那个；<code>:has()</code> 父选择器（2023 年起主流浏览器均支持），如 <code>a:has(&gt; img)</code>、<code>.card:has(.active)</code>，按子元素状态反向选父级。</li>
+  </ul>
+  <p class="pit-sentence"><span class="tag-pit">坑</span><code>#nav .item a.active</code> 这类高特殊性选择器会让后面的样式越来越难覆盖，滥用 <code>!important</code> 让样式表失去可预测性。</p>
+  <h3>2.6 层叠规则（The Cascade）</h3>
+  <p class="lead"><b>一句话定位</b>：同一属性多处声明，按"来源 → 特殊性 → 出现顺序"三步裁决。</p>
+  <ol>
+    <li><strong>来源与重要性</strong>：浏览器默认 &lt; 用户 &lt; 作者；<code>!important</code> 会把整档反转。</li>
+    <li><strong>特殊性</strong>：来源相同则比四元组。</li>
+    <li><strong>出现顺序</strong>：后声明的覆盖先声明的。</li>
+  </ol>
+  <p class="key-sentence"><span class="tag-point">要点</span>这解释了"reset 放最前、覆盖样式最后"的惯例，也解释了 <code>@layer</code>（级联层）为何成为新规范——把来源这一维扩展成作者内部可控的显式分层。</p>
+  <h3>2.7 Flex 弹性布局（一维布局）</h3>
+  <p class="lead"><b>一句话定位</b>：在一根轴上分配空间与对齐；先按 flex-basis 排好，再用 grow/shrink 消化剩余。</p>
+  <ul>
+    <li><strong>容器属性</strong>：<code>flex-direction</code> 定主轴、<code>justify-content</code> 管主轴分配、<code>align-items</code> 管交叉轴对齐、<code>gap</code> 管间距。</li>
+    <li><strong>项目属性</strong>：<code>flex-grow/flex-shrink/flex-basis</code> 决定剩余空间怎么分、不足时怎么缩。</li>
+  </ul>
+  <p class="key-sentence"><span class="tag-point">要点</span>它是 float 的全面替代（不用清浮动、能垂直居中、能换行）；局限是只处理一维——同时约束行与列就力不从心。</p>
+  <h3>2.8 Grid 网格布局（二维布局）</h3>
+  <p class="lead"><b>一句话定位</b>：把容器划成显式轨道与命名区域，同时约束行与列，是"页面骨架"级布局的正解。</p>
+  <ul>
+    <li><strong>核心概念</strong>：<code>grid-template-columns/rows</code> 定轨道、<code>grid-template-areas</code> 命名区域；放不下的进隐式网格（<code>grid-auto-rows</code>）。</li>
+    <li><strong>新单位</strong>：<code>fr</code> 比例分配剩余空间（区别于百分比）、<code>minmax()</code> 定轨道弹性范围。</li>
+  </ul>
+  <p class="key-sentence"><span class="tag-point">要点</span>Flex 管"一行内的排列"，Grid 管"整页行列结构"；Grid 的一格内部常再嵌一个 Flex——两者是互补而非竞争。</p>
+  <h3>2.9 单位体系：px/em/rem/vw/vh 与 calc()/clamp()</h3>
+  <p class="lead"><b>一句话定位</b>：rem 是全局缩放的正解，vw/vh 只用于页面级尺寸，calc/clamp 做计算与弹性区间。</p>
+  <ul>
+    <li><strong>各单位</strong>：<code>px</code> 绝对；<code>em</code> 相对当前字号（padding/margin 上会连锁放大，慎用）；<code>rem</code> 相对根字号；<code>vw/vh</code> 相对视口；<code>%</code> 相对包含块。</li>
+    <li><strong>三原则</strong>：根字号驱动 rem（按设计稿整体缩放）；视口单位只用于页面级尺寸；<code>clamp(14px,2vw,18px)</code> 让字号在区间内随视口平滑变化。</li>
+  </ul>
+  <p class="pit-sentence"><span class="tag-pit">坑</span><code>100vh</code> 在移动端包含地址栏区域，页面底部被遮挡。</p>
+  <h3>2.10 过渡、变换与动画：性能的三原则</h3>
+  <p class="lead"><b>一句话定位</b>：只动 transform 与 opacity，因为它们走合成线程、不触发重排重绘。</p>
+  <ul>
+    <li><strong>可插值性</strong>：width/height 可插值但触发重排；opacity/transform 不触发。</li>
+    <li><strong>三原则</strong>：只动 transform 与 opacity；动画元素必要时提升为独立图层（will-change，别滥用）；尊重 <code>prefers-reduced-motion</code>。</li>
+  </ul>
+  <p>动画的价值是"状态变化的引导"，为动画而动画会拖慢页面并消耗移动端电量。</p>
+</section>
+
+<section id="sec3" class="card">
+  <h2><span class="num">3</span>工作原理与流程</h2>
+  <h3>3.1 渲染流水线：HTML/CSS 如何变成像素</h3>
+  <p>理解这条链路是理解前端性能优化的地基。浏览器拿到 HTML 字节后，先在渲染进程的主线程上走完解析与样式计算，再交给合成与光栅化（部分阶段可并行/异步）。每一步的输入输出如下：</p>
+  <div class="diagram">
+    <svg viewBox="0 0 800 320" role="img" aria-label="从字节到像素的渲染流水线示意图">
+      <defs>
+        <marker id="arr2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+          <path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/>
+        </marker>
+      </defs>
+      <text x="400" y="22" text-anchor="middle" font-size="14" font-weight="700" fill="#1f2937">渲染流水线（主线程 + 合成线程，示意）</text>
+      <rect x="40" y="45" width="112" height="40" rx="7" fill="#eff6ff" stroke="#2563eb"/>
+      <text x="96" y="62" text-anchor="middle" font-size="12.5" fill="#1d4ed8">HTML 字节</text>
+      <text x="96" y="78" text-anchor="middle" font-size="11" fill="#475569">Bytes</text>
+      <line x1="152" y1="65" x2="180" y2="65" stroke="#64748b" marker-end="url(#arr2)"/>
+      <rect x="184" y="45" width="112" height="40" rx="7" fill="#eff6ff" stroke="#2563eb"/>
+      <text x="240" y="62" text-anchor="middle" font-size="12.5" fill="#1d4ed8">字符 → Token</text>
+      <text x="240" y="78" text-anchor="middle" font-size="11" fill="#475569">词法分析</text>
+      <line x1="296" y1="65" x2="324" y2="65" stroke="#64748b" marker-end="url(#arr2)"/>
+      <rect x="328" y="45" width="112" height="40" rx="7" fill="#eff6ff" stroke="#2563eb"/>
+      <text x="384" y="62" text-anchor="middle" font-size="12.5" fill="#1d4ed8">Node 节点</text>
+      <text x="384" y="78" text-anchor="middle" font-size="11" fill="#475569">语法树</text>
+      <line x1="440" y1="65" x2="468" y2="65" stroke="#64748b" marker-end="url(#arr2)"/>
+      <rect x="472" y="45" width="120" height="40" rx="7" fill="#dbeafe" stroke="#1d4ed8"/>
+      <text x="532" y="62" text-anchor="middle" font-size="12.5" font-weight="600" fill="#1d4ed8">DOM 树</text>
+      <text x="532" y="78" text-anchor="middle" font-size="11" fill="#475569">Document Object Model</text>
+      <rect x="40" y="112" width="112" height="40" rx="7" fill="#ecfeff" stroke="#0d9488"/>
+      <text x="96" y="129" text-anchor="middle" font-size="12.5" fill="#0e7490">CSS 字节</text>
+      <text x="96" y="145" text-anchor="middle" font-size="11" fill="#475569">Bytes</text>
+      <line x1="152" y1="132" x2="180" y2="132" stroke="#64748b" marker-end="url(#arr2)"/>
+      <rect x="184" y="112" width="112" height="40" rx="7" fill="#ecfeff" stroke="#0d9488"/>
+      <text x="240" y="129" text-anchor="middle" font-size="12.5" fill="#0e7490">Token → Node</text>
+      <text x="240" y="145" text-anchor="middle" font-size="11" fill="#475569">词法/语法分析</text>
+      <line x1="296" y1="132" x2="324" y2="132" stroke="#64748b" marker-end="url(#arr2)"/>
+      <rect x="328" y="112" width="112" height="40" rx="7" fill="#ecfeff" stroke="#0d9488"/>
+      <text x="384" y="129" text-anchor="middle" font-size="12.5" fill="#0e7490">规则匹配</text>
+      <text x="384" y="145" text-anchor="middle" font-size="11" fill="#475569">自右向左匹配</text>
+      <line x1="440" y1="132" x2="468" y2="132" stroke="#64748b" marker-end="url(#arr2)"/>
+      <rect x="472" y="112" width="120" height="40" rx="7" fill="#ccfbf1" stroke="#0d9488"/>
+      <text x="532" y="129" text-anchor="middle" font-size="12.5" font-weight="600" fill="#0e7490">CSSOM</text>
+      <text x="532" y="145" text-anchor="middle" font-size="11" fill="#475569">CSS Object Model</text>
+      <line x1="532" y1="152" x2="532" y2="180" stroke="#64748b" marker-end="url(#arr2)"/>
+      <line x1="532" y1="85" x2="532" y2="180" stroke="#64748b" marker-end="url(#arr2)"/>
+      <rect x="400" y="184" width="270" height="42" rx="7" fill="#fefce8" stroke="#d97706"/>
+      <text x="535" y="204" text-anchor="middle" font-size="13" font-weight="600" fill="#b45309">样式计算 Style</text>
+      <text x="535" y="220" text-anchor="middle" font-size="11" fill="#475569">层叠裁决 → computed style</text>
+      <line x1="400" y1="205" x2="356" y2="205" stroke="#64748b" marker-end="url(#arr2)"/>
+      <rect x="240" y="184" width="112" height="42" rx="7" fill="#fefce8" stroke="#d97706"/>
+      <text x="296" y="204" text-anchor="middle" font-size="13" font-weight="600" fill="#b45309">布局 Layout</text>
+      <text x="296" y="220" text-anchor="middle" font-size="11" fill="#475569">盒几何：BFC/层叠上下文</text>
+      <line x1="240" y1="205" x2="196" y2="205" stroke="#64748b" marker-end="url(#arr2)"/>
+      <rect x="80" y="184" width="112" height="42" rx="7" fill="#fefce8" stroke="#d97706"/>
+      <text x="136" y="204" text-anchor="middle" font-size="13" font-weight="600" fill="#b45309">绘制 Paint</text>
+      <text x="136" y="220" text-anchor="middle" font-size="11" fill="#475569">生成绘制指令</text>
+      <line x1="80" y1="205" x2="36" y2="205" stroke="#64748b" marker-end="url(#arr2)"/>
+      <rect x="30" y="258" width="130" height="42" rx="7" fill="#f0fdf4" stroke="#047857"/>
+      <text x="95" y="278" text-anchor="middle" font-size="13" font-weight="600" fill="#047857">合成 Composite</text>
+      <text x="95" y="294" text-anchor="middle" font-size="11" fill="#475569">合成线程，GPU 加速</text>
+      <rect x="220" y="258" width="130" height="42" rx="7" fill="#f0fdf4" stroke="#047857"/>
+      <text x="285" y="278" text-anchor="middle" font-size="13" font-weight="600" fill="#047857">光栅化 Raster</text>
+      <text x="285" y="294" text-anchor="middle" font-size="11" fill="#475569">把图层画成位图</text>
+      <rect x="410" y="258" width="130" height="42" rx="7" fill="#f0fdf4" stroke="#047857"/>
+      <text x="475" y="278" text-anchor="middle" font-size="13" font-weight="600" fill="#047857">屏幕显示</text>
+      <text x="475" y="294" text-anchor="middle" font-size="11" fill="#475569">最终像素上屏</text>
+    </svg>
+    <p class="diagram-caption">图 2 渲染流水线：从字节到像素的五个阶段（示意）</p>
+  </div>
+  <ol>
+    <li><strong>解析（Parse）</strong>：HTML 按"字节→字符→Token→Node"四步变成 DOM 树；CSS 同样变成 CSSOM。注意 CSS 规则匹配是<strong>自右向左</strong>的（先找右端选择器命中的元素再回溯验证祖先），所以 <code>.nav .item</code> 比 <code>.nav div.item</code> 快——右端越具体，命中集越小。</li>
+    <li><strong>样式计算（Style）</strong>：对每个 DOM 节点执行层叠裁决，产出计算样式（computed style）。样式计算与 DOM 构建可交错进行（遇到 <code>&lt;link&gt;</code> 会阻塞渲染直至 CSSOM 就绪——这就是为什么 CSS 是"渲染阻塞资源"）。</li>
+    <li><strong>布局（Layout）</strong>：按盒模型、BFC、Flex/Grid 算法算出每个盒的几何（位置与尺寸）。布局结果是"布局树"（Layout Tree），只含可见节点；<code>display:none</code> 的节点不进树。</li>
+    <li><strong>绘制（Paint）</strong>：把每个盒的可见样式转成绘制指令序列（先背景、再边框、再内容、再定位元素，顺序由层叠上下文决定）。</li>
+    <li><strong>合成（Composite）</strong>：主线程把页面按层（layer）切分，合成线程按帧把各层光栅化后的位图拼到屏幕上。合成只发生在合成线程，不占用主线程——这就是 <code>transform/opacity</code> 动画流畅的根源。</li>
+  </ol>
+  <h3>3.2 层叠裁决：一条属性到底听谁的</h3>
+  <div class="diagram">
+    <svg viewBox="0 0 800 330" role="img" aria-label="CSS 层叠裁决流程示意图">
+      <defs>
+        <marker id="arr3" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+          <path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/>
+        </marker>
+      </defs>
+      <text x="400" y="22" text-anchor="middle" font-size="14" font-weight="700" fill="#1f2937">CSS 层叠裁决流程（Cascade，示意）</text>
+      <rect x="240" y="40" width="330" height="44" rx="8" fill="#eff6ff" stroke="#2563eb"/>
+      <text x="405" y="60" text-anchor="middle" font-size="13" font-weight="600" fill="#1d4ed8">收集所有匹配该元素的声明</text>
+      <text x="405" y="77" text-anchor="middle" font-size="11.5" fill="#475569">来源：作者样式 / 用户样式 / 浏览器默认样式</text>
+      <line x1="405" y1="84" x2="405" y2="112" stroke="#64748b" marker-end="url(#arr3)"/>
+      <rect x="240" y="116" width="330" height="44" rx="8" fill="#fefce8" stroke="#d97706"/>
+      <text x="405" y="136" text-anchor="middle" font-size="13" font-weight="600" fill="#b45309">第一轮：按来源与重要性排序</text>
+      <text x="405" y="153" text-anchor="middle" font-size="11.5" fill="#475569">作者 !important &gt; 作者 &gt; 用户 &gt; 浏览器默认</text>
+      <line x1="405" y1="160" x2="405" y2="188" stroke="#64748b" marker-end="url(#arr3)"/>
+      <rect x="240" y="192" width="330" height="44" rx="8" fill="#ecfeff" stroke="#0d9488"/>
+      <text x="405" y="212" text-anchor="middle" font-size="13" font-weight="600" fill="#0e7490">第二轮：比较特殊性</text>
+      <text x="405" y="229" text-anchor="middle" font-size="11.5" fill="#475569">(内联, id, 类, 元素) 四元组，逐位比较</text>
+      <line x1="405" y1="236" x2="405" y2="264" stroke="#64748b" marker-end="url(#arr3)"/>
+      <rect x="240" y="268" width="330" height="44" rx="8" fill="#f0fdf4" stroke="#047857"/>
+      <text x="405" y="288" text-anchor="middle" font-size="13" font-weight="600" fill="#047857">第三轮：出现顺序，后者胜出</text>
+      <text x="405" y="305" text-anchor="middle" font-size="11.5" fill="#475569">同来源同特殊性时，靠后声明的覆盖</text>
+      <rect x="610" y="192" width="160" height="44" rx="8" fill="#f1f5f9" stroke="#64748b"/>
+      <text x="690" y="212" text-anchor="middle" font-size="12.5" font-weight="600" fill="#334155">计算结果</text>
+      <text x="690" y="229" text-anchor="middle" font-size="11.5" fill="#475569">computed style，交给渲染流水线</text>
+      <line x1="570" y1="214" x2="606" y2="214" stroke="#64748b" marker-end="url(#arr3)"/>
+    </svg>
+    <p class="diagram-caption">图 3 层叠裁决三步流程（示意）</p>
+  </div>
+  <ol>
+    <li><strong>收集</strong>：找出所有匹配该元素的声明（含继承、含 <code>@layer</code> 内外的层）。继承不是层叠的一部分：可继承属性（如 color/font）在"无任何声明"时从父元素取计算值。</li>
+    <li><strong>来源与重要性</strong>：作者样式默认压过浏览器默认样式，这是 reset 类样式能"清零"默认外观的前提。<code>!important</code> 是来源维上的反转，工程上应只在覆盖第三方样式等极端场景使用。</li>
+    <li><strong>特殊性与顺序</strong>：同来源内先比特殊性，再比声明顺序。这意味着"把覆盖样式写在后头"是合理惯例，也意味着组件库的样式通常特意保持在较低特殊性，方便业务覆盖。</li>
+  </ol>
+  <h3>3.3 Flex 与 Grid 的布局算法：一维与二维的分工</h3>
+  <div class="diagram">
+    <svg viewBox="0 0 800 330" role="img" aria-label="Flex 与 Grid 布局心智模型对比示意图">
+      <defs>
+        <marker id="arr4" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+          <path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/>
+        </marker>
+      </defs>
+      <text x="400" y="22" text-anchor="middle" font-size="14" font-weight="700" fill="#1f2937">Flex（一维）与 Grid（二维）的心智模型（示意）</text>
+      <rect x="50" y="45" width="320" height="200" rx="10" fill="#fbfdff" stroke="#2563eb"/>
+      <text x="210" y="66" text-anchor="middle" font-size="13" font-weight="700" fill="#1d4ed8">Flex：一根轴</text>
+      <rect x="80" y="85" width="80" height="36" rx="6" fill="#eff6ff" stroke="#2563eb"/>
+      <rect x="172" y="85" width="80" height="36" rx="6" fill="#eff6ff" stroke="#2563eb"/>
+      <rect x="264" y="85" width="80" height="36" rx="6" fill="#eff6ff" stroke="#2563eb"/>
+      <text x="120" y="107" text-anchor="middle" font-size="12" fill="#1d4ed8">项目1</text>
+      <text x="212" y="107" text-anchor="middle" font-size="12" fill="#1d4ed8">项目2</text>
+      <text x="304" y="107" text-anchor="middle" font-size="12" fill="#1d4ed8">项目3</text>
+      <line x1="80" y1="160" x2="344" y2="160" stroke="#2563eb" stroke-width="2" marker-end="url(#arr4)"/>
+      <line x1="344" y1="160" x2="80" y2="160" stroke="#2563eb" stroke-width="2" marker-end="url(#arr4)"/>
+      <text x="212" y="148" text-anchor="middle" font-size="12" fill="#1d4ed8">主轴 main axis（justify-content）</text>
+      <line x1="212" y1="190" x2="212" y2="225" stroke="#0e7490" stroke-width="2" marker-end="url(#arr4)"/>
+      <text x="220" y="216" text-anchor="middle" font-size="12" fill="#0e7490">交叉轴</text>
+      <text x="210" y="236" text-anchor="middle" font-size="11.5" fill="#475569">align-items / gap</text>
+      <rect x="430" y="45" width="320" height="200" rx="10" fill="#fbfdff" stroke="#0d9488"/>
+      <text x="590" y="66" text-anchor="middle" font-size="13" font-weight="700" fill="#0e7490">Grid：行 + 列</text>
+      <rect x="455" y="85" width="120" height="55" rx="6" fill="#ecfeff" stroke="#0d9488"/>
+      <rect x="590" y="85" width="120" height="55" rx="6" fill="#ecfeff" stroke="#0d9488"/>
+      <rect x="455" y="155" width="120" height="55" rx="6" fill="#ecfeff" stroke="#0d9488"/>
+      <rect x="590" y="155" width="120" height="55" rx="6" fill="#ecfeff" stroke="#0d9488"/>
+      <text x="515" y="112" text-anchor="middle" font-size="11.5" fill="#0e7490">区域 A</text>
+      <text x="650" y="112" text-anchor="middle" font-size="11.5" fill="#0e7490">区域 B</text>
+      <text x="515" y="182" text-anchor="middle" font-size="11.5" fill="#0e7490">区域 C</text>
+      <text x="650" y="182" text-anchor="middle" font-size="11.5" fill="#0e7490">区域 D</text>
+      <text x="512" y="240" text-anchor="middle" font-size="11.5" fill="#475569">grid-template-columns: 1fr 1fr</text>
+      <text x="640" y="240" text-anchor="middle" font-size="11.5" fill="#475569">grid-template-areas 命名区域</text>
+      <text x="400" y="282" text-anchor="middle" font-size="13" fill="#475569">选择规则：内容在一根轴上排列 → Flex；页面/面板需要同时约束行列结构 → Grid。</text>
+      <text x="400" y="305" text-anchor="middle" font-size="13" fill="#6b7280">实际项目里二者嵌套使用：Grid 搭骨架，单元格内用 Flex 排内容。</text>
+    </svg>
+    <p class="diagram-caption">图 4 Flex 与 Grid：一维 vs 二维的分工（示意）</p>
+  </div>
+  <p>Flex 的尺寸决议顺序是：先按 <code>flex-basis</code>（默认 content 尺寸）排布，再用 <code>flex-grow</code> 把剩余空间按比例分给允许增长的项、用 <code>flex-shrink</code> 在空间不足时按比例压缩。Grid 的轨道决议是两轮的：第一轮按内容的 <code>max-content</code> 估算各轨道最小/理想尺寸，第二轮把剩余空间按 <code>fr</code> 权重分配。这就是为什么"Flex 容器内一列内容特别宽会挤压兄弟列"，而 Grid 用 <code>1fr 1fr</code> 能强制两列等宽（fr 是"空间单位"而非内容单位）。选型判断：工具栏、导航、列表项、居中场景用 Flex；仪表盘骨架、卡片栅格、需要区域命名的复杂版面用 Grid。</p>
+</section>
+
+<section id="sec4" class="card">
+  <h2><span class="num">4</span>核心语法与 API 要点</h2>
+  <h3>4.1 语义化文档骨架</h3>
+<pre class="code" data-lang="html"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="zh-CN"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;页面主题&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;header&gt;站点头部（logo、导航）&lt;/header&gt;
+  &lt;main&gt;
+    &lt;section&gt;主题分组&lt;/section&gt;
+    &lt;article&gt;可独立分发的内容&lt;/article&gt;
+  &lt;/main&gt;
+  &lt;aside&gt;侧栏补充信息&lt;/aside&gt;
+  &lt;footer&gt;版权、链接&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+  <p>要点：<code>main</code> 一个页面只出现一次；<code>h1</code> 是文档主标题不是视觉元素；<code>lang</code> 属性直接影响读屏器发音与排版引擎的断词规则。</p>
+  <h3>4.2 现代 reset 与盒模型</h3>
+<pre class="code" data-lang="css"><code>*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; }               /* 浏览器默认 margin 清零 */
+img, video { display: block; max-width: 100%; }
+ul[class], ol[class] { list-style: none; padding: 0; }</code></pre>
+  <h3>4.3 Flex：最常用的三个模式</h3>
+<pre class="code" data-lang="css"><code>.center { display: flex; align-items: center; justify-content: center; }   /* 水平垂直居中 */
+.nav { display: flex; gap: 12px; }                                          /* 间距用 gap，不写 margin hack */
+.split { display: flex; }
+.split &gt; :first-child { flex: 1 1 0; }      /* 剩余空间全给第一项 */
+.split &gt; :last-child { flex: 0 0 auto; }    /* 末项保持内容宽 */</code></pre>
+  <h3>4.4 Grid：经典后台骨架</h3>
+<pre class="code" data-lang="css"><code>.layout {
+  display: grid;
+  grid-template-columns: 220px 1fr;              /* 侧栏固定，主区弹性 */
+  grid-template-rows: 56px 1fr auto;
+  grid-template-areas:
+    "header header"
+    "sidebar main"
+    "footer footer";
+  height: 100vh;
+}
+.header { grid-area: header; }
+.sidebar { grid-area: sidebar; }
+.main { grid-area: main; min-width: 0; }        /* min-width:0 防内容撑爆轨道 */</code></pre>
+  <p>高频坑提醒：Grid 项目默认 <code>min-width:auto</code>，长内容（如超长英文串、表格）会把轨道撑爆，显式 <code>min-width:0</code> 是标准解法。</p>
+  <h3>4.5 自定义属性与 clamp</h3>
+<pre class="code" data-lang="css"><code>:root { --brand: #1d4ed8; --space: 16px; }
+.button { background: var(--brand); padding: calc(var(--space) / 2) var(--space); }
+.title { font-size: clamp(14px, 2vw, 18px); }  /* 视口越大字越大，卡在区间内 */</code></pre>
+  <p>自定义属性在运行时可用 JS 改（<code>el.style.setProperty('--brand', '#0e7490')</code>），是"换肤"最轻量的实现（见案例 2）。</p>
+  <h3>4.6 过渡、变换与动画</h3>
+<pre class="code" data-lang="css"><code>.card { transition: transform .25s ease, box-shadow .25s ease; }
+.card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,.15); }
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .55; }
+}
+.alarm { animation: pulse 2s ease-in-out infinite; }   /* 告警闪烁：只动 opacity */
+@media (prefers-reduced-motion: reduce) {
+  .alarm { animation: none; }
+}</code></pre>
+  <h3>4.7 响应式：移动优先断点</h3>
+<pre class="code" data-lang="css"><code>/* 移动优先：基础样式面向窄屏，用 min-width 逐级增强 */
+.grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+@media (min-width: 768px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1200px) { .grid { grid-template-columns: repeat(4, 1fr); } }
+/* 容器查询：按容器宽度而非视口适配（2023 年后主流浏览器均支持） */
+.panel { container-type: inline-size; }
+@container (min-width: 400px) { .panel &gt; .body { grid-template-columns: 1fr 1fr; } }</code></pre>
+  <h3>4.8 表单增强：类型与约束校验</h3>
+<pre class="code" data-lang="html"><code>&lt;form&gt;
+  &lt;input type="email" name="mail" required
+         pattern="[^@]+@[^@]+\.[^@]+" placeholder="name@example.com"&gt;
+  &lt;input type="tel" name="phone"&gt;
+  &lt;input type="date" name="date"&gt;
+  &lt;input type="range" min="0" max="100"&gt;
+&lt;/form&gt;</code></pre>
+<pre class="code" data-lang="css"><code>input:invalid { border-color: var(--danger); }          /* 约束校验自动匹配伪类 */
+input:valid { border-color: var(--ok); }</code></pre>
+  <p>原生校验（Constraint Validation API）在提交时自动拦截并提示，服务端仍需二次校验——前端校验只是体验，不是安全边界。</p>
+</section>
+
+<section id="sec5" class="card">
+  <h2><span class="num">5</span>实战项目经验（真实项目落地）</h2>
+
+  <h3>5.1 项目背景</h3>
+  <p class="lead"><b>一句话定位</b>：电力大屏可视化项目群（2016-2022）iClean 智能监控——摄像头画面、光跟踪算法结果、告警信息聚合到大屏，且现场分辨率极其混杂。</p>
+  <ul>
+    <li><strong>业务场景</strong>：调度/值班中心多屏轮播，光跟踪框必须与画面目标像素级对齐，否则值班员不信任结果。</li>
+    <li><strong>硬件碎片化</strong>：LED 拼接屏、多屏显示器、普通办公屏并存，物理分辨率 1366×768 ~ 4K 不等。</li>
+  </ul>
+
+  <h3>5.2 我的角色与职责</h3>
+  <ul>
+    <li><strong>角色</strong>：前端开发，负责大屏自适应缩放、跟踪叠加层定位、面板换肤与动画统一。</li>
+    <li><strong>团队与分工</strong>：前端 2-3 人、后端/算法若干（估算）；我负责大屏视觉层与适配方案。</li>
+  </ul>
+
+  <h3>5.3 技术栈</h3>
+  <ul>
+    <li><strong>布局</strong>：rem 等比缩放 + Flex 网格 + Grid 面板骨架 + CSS 变量主题。</li>
+    <li><strong>图表</strong>：ECharts 多面板轮播；叠加层用绝对定位 + 百分比。</li>
+  </ul>
+
+  <h3>5.4 落地设计</h3>
+  <ul>
+    <li><strong>rem 一套样式等比缩放</strong>：设计稿 1920，脚本按 clientWidth/1920 设根字号并 clamp，全站尺寸 rem。</li>
+    <li><strong>叠加层百分比对齐</strong>：算法输出归一化坐标，叠层 left/top/width/height 全用百分比，随画面缩放自动对齐。</li>
+    <li><strong>CSS 变量主题</strong>：白天/夜间两套 token，切换只改 <code>data-theme</code>。</li>
+  </ul>
+
+  <h3>5.5 关键实现要点</h3>
+  <pre class="code" data-lang="js"><code>// 大屏 rem 缩放：设计稿 1920，根字号 1rem = 设计稿 1px 比例
+function setRootFont() {
+  var w = document.documentElement.clientWidth;
+  var base = Math.min(100, Math.max(60, w / 19.2));   // 1920px → 100px
+  document.documentElement.style.fontSize = base + 'px';
+}
+window.addEventListener('resize', setRootFont);
+setRootFont();</code></pre>
+  <pre class="code" data-lang="css"><code>/* 跟踪叠加层：算法输出归一化坐标，CSS 百分比对齐画面 */
+.track-overlay { position: absolute; pointer-events: none;
+                 border: 2px solid var(--alarm, #dc2626);
+                 left: var(--tx, 0%); top: var(--ty, 0%);
+                 width: var(--tw, 10%); height: var(--th, 10%); }</code></pre>
+  <pre class="code" data-lang="css"><code>:root[data-theme="day"] {
+  --bg: #f4f6f9; --panel: #ffffff; --text: #1f2937; --alarm: #dc2626;
+}
+:root[data-theme="night"] {
+  --bg: #0b1220; --panel: #111c33; --text: #cbd5e1; --alarm: #f87171;
+}
+body { background: var(--bg); color: var(--text);
+       transition: background-color .3s ease, color .3s ease; }</code></pre>
+
+  <h3>5.6 真实问题与解法</h3>
+  <ul>
+    <li><strong>旧内核降级</strong>：现场部分机器内核旧，rem 与 <code>flex:1</code> 简写解析差异，需降级写法。</li>
+    <li><strong>transform 破层级</strong>：叠加层加 <code>transition</code> 平滑跟踪时，<code>transform</code> 新建层叠上下文致告警弹窗 z-index 失效——统一在叠加容器收敛层叠。</li>
+    <li><strong>小字发虚</strong>：1366 屏根字号约 71px，细汉字发虚；最小字号线提到 12px（rem 计算值）。</li>
+    <li><strong>background 不能过渡</strong>：把 <code>background</code> 简写放进 transition 渐变生硬，拆成 <code>background-color</code> 才平滑。</li>
+    <li><strong>ECharts 不随 CSS 换肤</strong>：canvas 不随主题自动变色，必须显式 <code>setOption</code> 同步，否则夜间图表仍白底。</li>
+  </ul>
+
+  <h3>5.7 量化成果</h3>
+  <ul>
+    <li>1366×768 ~ 4K 全分辨率版面与跟踪框不失真，跟踪框与目标偏差视觉可接受（≤2px 级，估算）。</li>
+    <li>夜间值班屏白色面积大幅下降（示意约 60%），换肤即时无闪烁。</li>
+  </ul>
+
+  <h3>5.8 协作与排期过程</h3>
+  <ul>
+    <li><strong>契约先行</strong>：与算法侧定归一化坐标协议 (x,y,w,h)，叠加层才敢用百分比定位。</li>
+    <li><strong>联调协商</strong>：ECharts 与页面换肤割裂问题，与图表开发约定"换肤时一起 setOption"。</li>
+    <li><strong>排期</strong>：先做 rem 缩放跑通 1920 基准，再补旧内核降级与夜间主题。</li>
+  </ul>
+
+  <h3>5.9 复盘与可复用经验</h3>
+  <ul>
+    <li><strong>一套样式等比缩放</strong>：rem + clamp 比为每种分辨率单独写媒体查询划算。</li>
+    <li><strong>canvas 图表是 CSS 换肤盲区</strong>：凡 canvas 渲染的可视化都要手动同步主题。</li>
+    <li><strong>层叠上下文要统一收敛</strong>：transform/filter 会悄悄新建层叠，z-index 问题先查这个。</li>
+  </ul>
+
+  <h3>5.10 面试讲法</h3>
+  <p class="key-sentence"><span class="tag-point">抓手</span>用 rem 等比缩放 + 百分比叠加层，在 1366~4K 混杂现场做到跟踪框像素级对齐，并用 CSS 变量统一了大屏日夜换肤。</p>
+</section>
+
+<section id="sec6" class="card">
+  <h2><span class="num">6</span>易错点与面试重点</h2>
+  <h3>6.1 盒模型手算题：border-box 到底差在哪</h3>
+  <p class="lead"><b>一句话定位</b>：标准盒模型 width 只含 content，padding/border 额外累加会溢出。</p>
+  <ul>
+    <li><strong>现象</strong>：<code>div{width:100%;padding:20px;border:1px solid}</code> 在标准盒模型下实际占位 100% + 42px，溢出父容器。</li>
+    <li><strong>正解</strong>：全局 <code>*{box-sizing:border-box}</code>。栅格系统必须 border-box。</li>
+  </ul>
+  <h3>6.2 margin 塌陷：为什么父元素的 margin 消失了</h3>
+  <p class="lead"><b>一句话定位</b>：相邻块级垂直 margin 合并取最大值，且穿透未形成 BFC 的父盒。</p>
+  <ul>
+    <li><strong>现象</strong>：父盒无 padding/border，子元素设 <code>margin-top:20px</code>，结果父盒整体下移、子 margin"穿透"。</li>
+    <li><strong>正解</strong>：给父盒触发 BFC（<code>overflow:hidden</code> 或更推荐 <code>display:flow-root</code>），或改用 padding/gap。</li>
+  </ul>
+  <h3>6.3 z-index 失效：加了 transform 之后层级乱了</h3>
+  <p class="lead"><b>一句话定位</b>：transform/opacity/filter 创建新层叠上下文，z-index 只能在内部比。</p>
+  <ul>
+    <li><strong>现象</strong>：弹窗 <code>z-index:9999</code> 依然被普通元素盖住。</li>
+    <li><strong>原因</strong>：弹窗或其祖先被 <code>transform/opacity/filter/will-change</code> 创建成新层叠上下文，弹窗"被困在小世界里"。</li>
+    <li><strong>正解</strong>：不要随便加 transform 触发合成层；置顶元素检查祖先链，必要时把 transform 移到兄弟元素上。</li>
+  </ul>
+  <h3>6.4 100vh 的移动端陷阱</h3>
+  <p class="lead"><b>一句话定位</b>：vh 按最大视口算，比可见视口高，底部被地址栏遮。</p>
+  <ul>
+    <li><strong>现象</strong>：<code>height:100vh</code> 底部在手机浏览器被地址栏遮住。</li>
+    <li><strong>正解</strong>：用 <code>100dvh</code>；兼容老浏览器用 <code>100vh</code> 兜底加 <code>@supports</code> 覆盖。</li>
+  </ul>
+  <h3>6.5 特殊性踩坑：nth-child 与 nth-of-type 记混</h3>
+  <p class="lead"><b>一句话定位</b>：nth-child 按所有兄弟序号匹配，nth-of-type 才按同类型序号。</p>
+  <ul>
+    <li><strong>现象</strong>：<code>li:nth-child(2)</code> 想选中第二个 li，却选中了别的东西。</li>
+    <li><strong>要点</strong>：<code>:where()</code> 特殊性为 0、<code>:is()</code> 取参数最高特殊性——特异性可控的伪类。</li>
+  </ul>
+  <h3>6.6 百分比高度失效</h3>
+  <p class="lead"><b>一句话定位</b>：百分比高度要求父元素有确定高度，auto 父级给不了基准。</p>
+  <ul>
+    <li><strong>现象</strong>：<code>height:50%</code> 无效，子元素高度塌为 0。</li>
+    <li><strong>正解</strong>：链条上显式给高度，或改用 flex/grid 拉伸（align-items 默认 stretch）。</li>
+  </ul>
+  <h3>6.7 img 底部多出一截空白</h3>
+  <p class="lead"><b>一句话定位</b>：内联元素按基线对齐，图片底边留出下行部空间。</p>
+  <ul>
+    <li><strong>现象</strong>：图片下方总有 4px 左右空隙。</li>
+    <li><strong>正解</strong>：<code>img{display:block}</code> 或 <code>vertical-align:middle</code>。</li>
+  </ul>
+</section>
+
+<section id="sec7" class="card">
+  <h2><span class="num">7</span>学习资源与参考</h2>
+  <h3>官方文档与规范</h3>
+  <ul>
+    <li>MDN HTML 元素参考：<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML" rel="noopener">developer.mozilla.org/zh-CN/docs/Web/HTML</a></li>
+    <li>MDN CSS 参考与教程：<a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS" rel="noopener">developer.mozilla.org/zh-CN/docs/Web/CSS</a></li>
+    <li>HTML Living Standard（WHATWG，唯一现行 HTML 规范）：<a href="https://html.spec.whatwg.org/" rel="noopener">html.spec.whatwg.org</a></li>
+    <li>CSS 规范与模块状态（W3C）：<a href="https://www.w3.org/Style/CSS/" rel="noopener">www.w3.org/Style/CSS</a></li>
+    <li>Can I Use（特性支持查询，写降级方案前必查）：<a href="https://caniuse.com/" rel="noopener">caniuse.com</a></li>
+  </ul>
+  <h3>书籍</h3>
+  <ul>
+    <li>《CSS 权威指南（第 4 版）》（Eric A. Meyer / Estelle Weyl，中国电力出版社中文版）——盒模型、层叠、选择器的系统正典。</li>
+    <li>《深入解析 CSS》（Keith J. Grant，人民邮电出版社）——用"为什么"串起布局与层叠，比速查书更适合建立心智模型。</li>
+  </ul>
+  <h3>实战文章</h3>
+  <ul>
+    <li>CSS-Tricks（Flexbox/Grid 完整指南与真实案例）：<a href="https://css-tricks.com/" rel="noopener">css-tricks.com</a></li>
+    <li>web.dev 渲染性能系列（官方，讲渲染流水线与优化）：<a href="https://web.dev/learn/performance" rel="noopener">web.dev/learn/performance</a></li>
+  </ul>
+</section>
+
+</main>
+</div>
+<nav class="doc-nav bottom">
+  <a class="doc-nav-btn hidden" href="#">← 上一篇</a>
+  <a class="doc-nav-btn home" href="../index.html">⌂ 返回首页</a>
+  <a class="doc-nav-btn" href="../01_前端基础/02_JavaScript核心【深入】.html">下一篇 →</a>
+</nav>
+<footer>全栈技术栈详解 · HTML5与CSS3【深入】 · 基于简历项目实战编写</footer>
+<button id="backTop" type="button" aria-label="回到顶部">↑</button>
+<script>
+(function () {
+  'use strict';
+  try {
+    var btn = document.getElementById('backTop');
+    if (btn) {
+      var toggle = function () { btn.classList.toggle('show', window.scrollY > 480); };
+      window.addEventListener('scroll', toggle, { passive: true });
+      toggle();
+      btn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    }
+  } catch (e) {}
+  try {
+    var pres = document.querySelectorAll('pre.code');
+    for (var i = 0; i < pres.length; i++) {
+      (function (pre) {
+        var b = document.createElement('button');
+        b.type = 'button'; b.className = 'code-copy'; b.textContent = '复制';
+        b.setAttribute('aria-label', '复制代码');
+        pre.appendChild(b);
+        b.addEventListener('click', function () {
+          var codeEl = pre.querySelector('code');
+          var text = codeEl ? codeEl.innerText : pre.innerText;
+          var done = function () { b.textContent = '已复制'; setTimeout(function () { b.textContent = '复制'; }, 1600); };
+          function fb(t, ok) {
+            try {
+              var ta = document.createElement('textarea');
+              ta.value = t; ta.style.position = 'fixed'; ta.style.opacity = '0';
+              document.body.appendChild(ta); ta.select();
+              document.execCommand('copy'); document.body.removeChild(ta); ok();
+            } catch (e2) {}
+          }
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(done, function () { fb(text, done); });
+          } else { fb(text, done); }
+        });
+      })(pres[i]);
+    }
+  } catch (e) {}
+})();
+</script>
+
+<script data-manual>
+/* ===== 全库统一 Prism 语法高亮（内联，离线可看） ===== */
+var _self="undefined"!=typeof window?window:"undefined"!=typeof WorkerGlobalScope&&self instanceof WorkerGlobalScope?self:{},Prism=function(e){var n=/(?:^|\s)lang(?:uage)?-([\w-]+)(?=\s|$)/i,t=0,r={},a={manual:e.Prism&&e.Prism.manual,disableWorkerMessageHandler:e.Prism&&e.Prism.disableWorkerMessageHandler,util:{encode:function e(n){return n instanceof i?new i(n.type,e(n.content),n.alias):Array.isArray(n)?n.map(e):n.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/\u00a0/g," ")},type:function(e){return Object.prototype.toString.call(e).slice(8,-1)},objId:function(e){return e.__id||Object.defineProperty(e,"__id",{value:++t}),e.__id},clone:function e(n,t){var r,i;switch(t=t||{},a.util.type(n)){case"Object":if(i=a.util.objId(n),t[i])return t[i];for(var l in r={},t[i]=r,n)n.hasOwnProperty(l)&&(r[l]=e(n[l],t));return r;case"Array":return i=a.util.objId(n),t[i]?t[i]:(r=[],t[i]=r,n.forEach((function(n,a){r[a]=e(n,t)})),r);default:return n}},getLanguage:function(e){for(;e;){var t=n.exec(e.className);if(t)return t[1].toLowerCase();e=e.parentElement}return"none"},setLanguage:function(e,t){e.className=e.className.replace(RegExp(n,"gi"),""),e.classList.add("language-"+t)},currentScript:function(){if("undefined"==typeof document)return null;if("currentScript"in document)return document.currentScript;try{throw new Error}catch(r){var e=(/at [^(\r\n]*\((.*):[^:]+:[^:]+\)$/i.exec(r.stack)||[])[1];if(e){var n=document.getElementsByTagName("script");for(var t in n)if(n[t].src==e)return n[t]}return null}},isActive:function(e,n,t){for(var r="no-"+n;e;){var a=e.classList;if(a.contains(n))return!0;if(a.contains(r))return!1;e=e.parentElement}return!!t}},languages:{plain:r,plaintext:r,text:r,txt:r,extend:function(e,n){var t=a.util.clone(a.languages[e]);for(var r in n)t[r]=n[r];return t},insertBefore:function(e,n,t,r){var i=(r=r||a.languages)[e],l={};for(var o in i)if(i.hasOwnProperty(o)){if(o==n)for(var s in t)t.hasOwnProperty(s)&&(l[s]=t[s]);t.hasOwnProperty(o)||(l[o]=i[o])}var u=r[e];return r[e]=l,a.languages.DFS(a.languages,(function(n,t){t===u&&n!=e&&(this[n]=l)})),l},DFS:function e(n,t,r,i){i=i||{};var l=a.util.objId;for(var o in n)if(n.hasOwnProperty(o)){t.call(n,o,n[o],r||o);var s=n[o],u=a.util.type(s);"Object"!==u||i[l(s)]?"Array"!==u||i[l(s)]||(i[l(s)]=!0,e(s,t,o,i)):(i[l(s)]=!0,e(s,t,null,i))}}},plugins:{},highlightAll:function(e,n){a.highlightAllUnder(document,e,n)},highlightAllUnder:function(e,n,t){var r={callback:t,container:e,selector:'code[class*="language-"], [class*="language-"] code, code[class*="lang-"], [class*="lang-"] code'};a.hooks.run("before-highlightall",r),r.elements=Array.prototype.slice.apply(r.container.querySelectorAll(r.selector)),a.hooks.run("before-all-elements-highlight",r);for(var i,l=0;i=r.elements[l++];)a.highlightElement(i,!0===n,r.callback)},highlightElement:function(n,t,r){var i=a.util.getLanguage(n),l=a.languages[i];a.util.setLanguage(n,i);var o=n.parentElement;o&&"pre"===o.nodeName.toLowerCase()&&a.util.setLanguage(o,i);var s={element:n,language:i,grammar:l,code:n.textContent};function u(e){s.highlightedCode=e,a.hooks.run("before-insert",s),s.element.innerHTML=s.highlightedCode,a.hooks.run("after-highlight",s),a.hooks.run("complete",s),r&&r.call(s.element)}if(a.hooks.run("before-sanity-check",s),(o=s.element.parentElement)&&"pre"===o.nodeName.toLowerCase()&&!o.hasAttribute("tabindex")&&o.setAttribute("tabindex","0"),!s.code)return a.hooks.run("complete",s),void(r&&r.call(s.element));if(a.hooks.run("before-highlight",s),s.grammar)if(t&&e.Worker){var c=new Worker(a.filename);c.onmessage=function(e){u(e.data)},c.postMessage(JSON.stringify({language:s.language,code:s.code,immediateClose:!0}))}else u(a.highlight(s.code,s.grammar,s.language));else u(a.util.encode(s.code))},highlight:function(e,n,t){var r={code:e,grammar:n,language:t};if(a.hooks.run("before-tokenize",r),!r.grammar)throw new Error('The language "'+r.language+'" has no grammar.');return r.tokens=a.tokenize(r.code,r.grammar),a.hooks.run("after-tokenize",r),i.stringify(a.util.encode(r.tokens),r.language)},tokenize:function(e,n){var t=n.rest;if(t){for(var r in t)n[r]=t[r];delete n.rest}var a=new s;return u(a,a.head,e),o(e,a,n,a.head,0),function(e){for(var n=[],t=e.head.next;t!==e.tail;)n.push(t.value),t=t.next;return n}(a)},hooks:{all:{},add:function(e,n){var t=a.hooks.all;t[e]=t[e]||[],t[e].push(n)},run:function(e,n){var t=a.hooks.all[e];if(t&&t.length)for(var r,i=0;r=t[i++];)r(n)}},Token:i};function i(e,n,t,r){this.type=e,this.content=n,this.alias=t,this.length=0|(r||"").length}function l(e,n,t,r){e.lastIndex=n;var a=e.exec(t);if(a&&r&&a[1]){var i=a[1].length;a.index+=i,a[0]=a[0].slice(i)}return a}function o(e,n,t,r,s,g){for(var f in t)if(t.hasOwnProperty(f)&&t[f]){var h=t[f];h=Array.isArray(h)?h:[h];for(var d=0;d<h.length;++d){if(g&&g.cause==f+","+d)return;var v=h[d],p=v.inside,m=!!v.lookbehind,y=!!v.greedy,k=v.alias;if(y&&!v.pattern.global){var x=v.pattern.toString().match(/[imsuy]*$/)[0];v.pattern=RegExp(v.pattern.source,x+"g")}for(var b=v.pattern||v,w=r.next,A=s;w!==n.tail&&!(g&&A>=g.reach);A+=w.value.length,w=w.next){var E=w.value;if(n.length>e.length)return;if(!(E instanceof i)){var P,L=1;if(y){if(!(P=l(b,A,e,m))||P.index>=e.length)break;var S=P.index,O=P.index+P[0].length,j=A;for(j+=w.value.length;S>=j;)j+=(w=w.next).value.length;if(A=j-=w.value.length,w.value instanceof i)continue;for(var C=w;C!==n.tail&&(j<O||"string"==typeof C.value);C=C.next)L++,j+=C.value.length;L--,E=e.slice(A,j),P.index-=A}else if(!(P=l(b,0,E,m)))continue;S=P.index;var N=P[0],_=E.slice(0,S),M=E.slice(S+N.length),W=A+E.length;g&&W>g.reach&&(g.reach=W);var z=w.prev;if(_&&(z=u(n,z,_),A+=_.length),c(n,z,L),w=u(n,z,new i(f,p?a.tokenize(N,p):N,k,N)),M&&u(n,w,M),L>1){var I={cause:f+","+d,reach:W};o(e,n,t,w.prev,A,I),g&&I.reach>g.reach&&(g.reach=I.reach)}}}}}}function s(){var e={value:null,prev:null,next:null},n={value:null,prev:e,next:null};e.next=n,this.head=e,this.tail=n,this.length=0}function u(e,n,t){var r=n.next,a={value:t,prev:n,next:r};return n.next=a,r.prev=a,e.length++,a}function c(e,n,t){for(var r=n.next,a=0;a<t&&r!==e.tail;a++)r=r.next;n.next=r,r.prev=n,e.length-=a}if(e.Prism=a,i.stringify=function e(n,t){if("string"==typeof n)return n;if(Array.isArray(n)){var r="";return n.forEach((function(n){r+=e(n,t)})),r}var i={type:n.type,content:e(n.content,t),tag:"span",classes:["token",n.type],attributes:{},language:t},l=n.alias;l&&(Array.isArray(l)?Array.prototype.push.apply(i.classes,l):i.classes.push(l)),a.hooks.run("wrap",i);var o="";for(var s in i.attributes)o+=" "+s+'="'+(i.attributes[s]||"").replace(/"/g,"&quot;")+'"';return"<"+i.tag+' class="'+i.classes.join(" ")+'"'+o+">"+i.content+"</"+i.tag+">"},!e.document)return e.addEventListener?(a.disableWorkerMessageHandler||e.addEventListener("message",(function(n){var t=JSON.parse(n.data),r=t.language,i=t.code,l=t.immediateClose;e.postMessage(a.highlight(i,a.languages[r],r)),l&&e.close()}),!1),a):a;var g=a.util.currentScript();function f(){a.manual||a.highlightAll()}if(g&&(a.filename=g.src,g.hasAttribute("data-manual")&&(a.manual=!0)),!a.manual){var h=document.readyState;"loading"===h||"interactive"===h&&g&&g.defer?document.addEventListener("DOMContentLoaded",f):window.requestAnimationFrame?window.requestAnimationFrame(f):window.setTimeout(f,16)}return a}(_self);"undefined"!=typeof module&&module.exports&&(module.exports=Prism),"undefined"!=typeof global&&(global.Prism=Prism);
+Prism.languages.markup={comment:{pattern:/<!--(?:(?!<!--)[\s\S])*?-->/,greedy:!0},prolog:{pattern:/<\?[\s\S]+?\?>/,greedy:!0},doctype:{pattern:/<!DOCTYPE(?:[^>"'[\]]|"[^"]*"|'[^']*')+(?:\[(?:[^<"'\]]|"[^"]*"|'[^']*'|<(?!!--)|<!--(?:[^-]|-(?!->))*-->)*\]\s*)?>/i,greedy:!0,inside:{"internal-subset":{pattern:/(^[^\[]*\[)[\s\S]+(?=\]>$)/,lookbehind:!0,greedy:!0,inside:null},string:{pattern:/"[^"]*"|'[^']*'/,greedy:!0},punctuation:/^<!|>$|[[\]]/,"doctype-tag":/^DOCTYPE/i,name:/[^\s<>'"]+/}},cdata:{pattern:/<!\[CDATA\[[\s\S]*?\]\]>/i,greedy:!0},tag:{pattern:/<\/?(?!\d)[^\s>\/=$<%]+(?:\s(?:\s*[^\s>\/=]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s'">=]+(?=[\s>]))|(?=[\s/>])))+)?\s*\/?>/,greedy:!0,inside:{tag:{pattern:/^<\/?[^\s>\/]+/,inside:{punctuation:/^<\/?/,namespace:/^[^\s>\/:]+:/}},"special-attr":[],"attr-value":{pattern:/=\s*(?:"[^"]*"|'[^']*'|[^\s'">=]+)/,inside:{punctuation:[{pattern:/^=/,alias:"attr-equals"},{pattern:/^(\s*)["']|["']$/,lookbehind:!0}]}},punctuation:/\/?>/,"attr-name":{pattern:/[^\s>\/]+/,inside:{namespace:/^[^\s>\/:]+:/}}}},entity:[{pattern:/&[\da-z]{1,8};/i,alias:"named-entity"},/&#x?[\da-f]{1,8};/i]},Prism.languages.markup.tag.inside["attr-value"].inside.entity=Prism.languages.markup.entity,Prism.languages.markup.doctype.inside["internal-subset"].inside=Prism.languages.markup,Prism.hooks.add("wrap",(function(a){"entity"===a.type&&(a.attributes.title=a.content.replace(/&amp;/,"&"))})),Object.defineProperty(Prism.languages.markup.tag,"addInlined",{value:function(a,e){var s={};s["language-"+e]={pattern:/(^<!\[CDATA\[)[\s\S]+?(?=\]\]>$)/i,lookbehind:!0,inside:Prism.languages[e]},s.cdata=/^<!\[CDATA\[|\]\]>$/i;var t={"included-cdata":{pattern:/<!\[CDATA\[[\s\S]*?\]\]>/i,inside:s}};t["language-"+e]={pattern:/[\s\S]+/,inside:Prism.languages[e]};var n={};n[a]={pattern:RegExp("(<__[^>]*>)(?:<!\\[CDATA\\[(?:[^\\]]|\\](?!\\]>))*\\]\\]>|(?!<!\\[CDATA\\[)[^])*?(?=</__>)".replace(/__/g,(function(){return a})),"i"),lookbehind:!0,greedy:!0,inside:t},Prism.languages.insertBefore("markup","cdata",n)}}),Object.defineProperty(Prism.languages.markup.tag,"addAttribute",{value:function(a,e){Prism.languages.markup.tag.inside["special-attr"].push({pattern:RegExp("(^|[\"'\\s])(?:"+a+")\\s*=\\s*(?:\"[^\"]*\"|'[^']*'|[^\\s'\">=]+(?=[\\s>]))","i"),lookbehind:!0,inside:{"attr-name":/^[^\s=]+/,"attr-value":{pattern:/=[\s\S]+/,inside:{value:{pattern:/(^=\s*(["']|(?!["'])))\S[\s\S]*(?=\2$)/,lookbehind:!0,alias:[e,"language-"+e],inside:Prism.languages[e]},punctuation:[{pattern:/^=/,alias:"attr-equals"},/"|'/]}}}})}}),Prism.languages.html=Prism.languages.markup,Prism.languages.mathml=Prism.languages.markup,Prism.languages.svg=Prism.languages.markup,Prism.languages.xml=Prism.languages.extend("markup",{}),Prism.languages.ssml=Prism.languages.xml,Prism.languages.atom=Prism.languages.xml,Prism.languages.rss=Prism.languages.xml;
+!function(s){var e=/(?:"(?:\\(?:\r\n|[\s\S])|[^"\\\r\n])*"|'(?:\\(?:\r\n|[\s\S])|[^'\\\r\n])*')/;s.languages.css={comment:/\/\*[\s\S]*?\*\//,atrule:{pattern:RegExp("@[\\w-](?:[^;{\\s\"']|\\s+(?!\\s)|"+e.source+")*?(?:;|(?=\\s*\\{))"),inside:{rule:/^@[\w-]+/,"selector-function-argument":{pattern:/(\bselector\s*\(\s*(?![\s)]))(?:[^()\s]|\s+(?![\s)])|\((?:[^()]|\([^()]*\))*\))+(?=\s*\))/,lookbehind:!0,alias:"selector"},keyword:{pattern:/(^|[^\w-])(?:and|not|only|or)(?![\w-])/,lookbehind:!0}}},url:{pattern:RegExp("\\burl\\((?:"+e.source+"|(?:[^\\\\\r\n()\"']|\\\\[^])*)\\)","i"),greedy:!0,inside:{function:/^url/i,punctuation:/^\(|\)$/,string:{pattern:RegExp("^"+e.source+"$"),alias:"url"}}},selector:{pattern:RegExp("(^|[{}\\s])[^{}\\s](?:[^{};\"'\\s]|\\s+(?![\\s{])|"+e.source+")*(?=\\s*\\{)"),lookbehind:!0},string:{pattern:e,greedy:!0},property:{pattern:/(^|[^-\w\xA0-\uFFFF])(?!\s)[-_a-z\xA0-\uFFFF](?:(?!\s)[-\w\xA0-\uFFFF])*(?=\s*:)/i,lookbehind:!0},important:/!important\b/i,function:{pattern:/(^|[^-a-z0-9])[-a-z0-9]+(?=\()/i,lookbehind:!0},punctuation:/[(){};:,]/},s.languages.css.atrule.inside.rest=s.languages.css;var t=s.languages.markup;t&&(t.tag.addInlined("style","css"),t.tag.addAttribute("style","css"))}(Prism);
+Prism.languages.clike={comment:[{pattern:/(^|[^\\])\/\*[\s\S]*?(?:\*\/|$)/,lookbehind:!0,greedy:!0},{pattern:/(^|[^\\:])\/\/.*/,lookbehind:!0,greedy:!0}],string:{pattern:/(["'])(?:\\(?:\r\n|[\s\S])|(?!\1)[^\\\r\n])*\1/,greedy:!0},"class-name":{pattern:/(\b(?:class|extends|implements|instanceof|interface|new|trait)\s+|\bcatch\s+\()[\w.\\]+/i,lookbehind:!0,inside:{punctuation:/[.\\]/}},keyword:/\b(?:break|catch|continue|do|else|finally|for|function|if|in|instanceof|new|null|return|throw|try|while)\b/,boolean:/\b(?:false|true)\b/,function:/\b\w+(?=\()/,number:/\b0x[\da-f]+\b|(?:\b\d+(?:\.\d*)?|\B\.\d+)(?:e[+-]?\d+)?/i,operator:/[<>]=?|[!=]=?=?|--?|\+\+?|&&?|\|\|?|[?*/~^%]/,punctuation:/[{}[\];(),.:]/};
+Prism.languages.javascript=Prism.languages.extend("clike",{"class-name":[Prism.languages.clike["class-name"],{pattern:/(^|[^$\w\xA0-\uFFFF])(?!\s)[_$A-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*(?=\.(?:constructor|prototype))/,lookbehind:!0}],keyword:[{pattern:/((?:^|\})\s*)catch\b/,lookbehind:!0},{pattern:/(^|[^.]|\.\.\.\s*)\b(?:as|assert(?=\s*\{)|async(?=\s*(?:function\b|\(|[$\w\xA0-\uFFFF]|$))|await|break|case|class|const|continue|debugger|default|delete|do|else|enum|export|extends|finally(?=\s*(?:\{|$))|for|from(?=\s*(?:['"]|$))|function|(?:get|set)(?=\s*(?:[#\[$\w\xA0-\uFFFF]|$))|if|implements|import|in|instanceof|interface|let|new|null|of|package|private|protected|public|return|static|super|switch|this|throw|try|typeof|undefined|var|void|while|with|yield)\b/,lookbehind:!0}],function:/#?(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*(?=\s*(?:\.\s*(?:apply|bind|call)\s*)?\()/,number:{pattern:RegExp("(^|[^\\w$])(?:NaN|Infinity|0[bB][01]+(?:_[01]+)*n?|0[oO][0-7]+(?:_[0-7]+)*n?|0[xX][\\dA-Fa-f]+(?:_[\\dA-Fa-f]+)*n?|\\d+(?:_\\d+)*n|(?:\\d+(?:_\\d+)*(?:\\.(?:\\d+(?:_\\d+)*)?)?|\\.\\d+(?:_\\d+)*)(?:[Ee][+-]?\\d+(?:_\\d+)*)?)(?![\\w$])"),lookbehind:!0},operator:/--|\+\+|\*\*=?|=>|&&=?|\|\|=?|[!=]==|<<=?|>>>?=?|[-+*/%&|^!=<>]=?|\.{3}|\?\?=?|\?\.?|[~:]/}),Prism.languages.javascript["class-name"][0].pattern=/(\b(?:class|extends|implements|instanceof|interface|new)\s+)[\w.\\]+/,Prism.languages.insertBefore("javascript","keyword",{regex:{pattern:RegExp("((?:^|[^$\\w\\xA0-\\uFFFF.\"'\\])\\s]|\\b(?:return|yield))\\s*)/(?:(?:\\[(?:[^\\]\\\\\r\n]|\\\\.)*\\]|\\\\.|[^/\\\\\\[\r\n])+/[dgimyus]{0,7}|(?:\\[(?:[^[\\]\\\\\r\n]|\\\\.|\\[(?:[^[\\]\\\\\r\n]|\\\\.|\\[(?:[^[\\]\\\\\r\n]|\\\\.)*\\])*\\])*\\]|\\\\.|[^/\\\\\\[\r\n])+/[dgimyus]{0,7}v[dgimyus]{0,7})(?=(?:\\s|/\\*(?:[^*]|\\*(?!/))*\\*/)*(?:$|[\r\n,.;:})\\]]|//))"),lookbehind:!0,greedy:!0,inside:{"regex-source":{pattern:/^(\/)[\s\S]+(?=\/[a-z]*$)/,lookbehind:!0,alias:"language-regex",inside:Prism.languages.regex},"regex-delimiter":/^\/|\/$/,"regex-flags":/^[a-z]+$/}},"function-variable":{pattern:/#?(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*(?=\s*[=:]\s*(?:async\s*)?(?:\bfunction\b|(?:\((?:[^()]|\([^()]*\))*\)|(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*)\s*=>))/,alias:"function"},parameter:[{pattern:/(function(?:\s+(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*)?\s*\(\s*)(?!\s)(?:[^()\s]|\s+(?![\s)])|\([^()]*\))+(?=\s*\))/,lookbehind:!0,inside:Prism.languages.javascript},{pattern:/(^|[^$\w\xA0-\uFFFF])(?!\s)[_$a-z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*(?=\s*=>)/i,lookbehind:!0,inside:Prism.languages.javascript},{pattern:/(\(\s*)(?!\s)(?:[^()\s]|\s+(?![\s)])|\([^()]*\))+(?=\s*\)\s*=>)/,lookbehind:!0,inside:Prism.languages.javascript},{pattern:/((?:\b|\s|^)(?!(?:as|async|await|break|case|catch|class|const|continue|debugger|default|delete|do|else|enum|export|extends|finally|for|from|function|get|if|implements|import|in|instanceof|interface|let|new|null|of|package|private|protected|public|return|set|static|super|switch|this|throw|try|typeof|undefined|var|void|while|with|yield)(?![$\w\xA0-\uFFFF]))(?:(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*\s*)\(\s*|\]\s*\(\s*)(?!\s)(?:[^()\s]|\s+(?![\s)])|\([^()]*\))+(?=\s*\)\s*\{)/,lookbehind:!0,inside:Prism.languages.javascript}],constant:/\b[A-Z](?:[A-Z_]|\dx?)*\b/}),Prism.languages.insertBefore("javascript","string",{hashbang:{pattern:/^#!.*/,greedy:!0,alias:"comment"},"template-string":{pattern:/`(?:\\[\s\S]|\$\{(?:[^{}]|\{(?:[^{}]|\{[^}]*\})*\})+\}|(?!\$\{)[^\\`])*`/,greedy:!0,inside:{"template-punctuation":{pattern:/^`|`$/,alias:"string"},interpolation:{pattern:/((?:^|[^\\])(?:\\{2})*)\$\{(?:[^{}]|\{(?:[^{}]|\{[^}]*\})*\})+\}/,lookbehind:!0,inside:{"interpolation-punctuation":{pattern:/^\$\{|\}$/,alias:"punctuation"},rest:Prism.languages.javascript}},string:/[\s\S]+/}},"string-property":{pattern:/((?:^|[,{])[ \t]*)(["'])(?:\\(?:\r\n|[\s\S])|(?!\2)[^\\\r\n])*\2(?=\s*:)/m,lookbehind:!0,greedy:!0,alias:"property"}}),Prism.languages.insertBefore("javascript","operator",{"literal-property":{pattern:/((?:^|[,{])[ \t]*)(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*(?=\s*:)/m,lookbehind:!0,alias:"property"}}),Prism.languages.markup&&(Prism.languages.markup.tag.addInlined("script","javascript"),Prism.languages.markup.tag.addAttribute("on(?:abort|blur|change|click|composition(?:end|start|update)|dblclick|error|focus(?:in|out)?|key(?:down|up)|load|mouse(?:down|enter|leave|move|out|over|up)|reset|resize|scroll|select|slotchange|submit|unload|wheel)","javascript")),Prism.languages.js=Prism.languages.javascript;
+!function(e){e.languages.typescript=e.languages.extend("javascript",{"class-name":{pattern:/(\b(?:class|extends|implements|instanceof|interface|new|type)\s+)(?!keyof\b)(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*(?:\s*<(?:[^<>]|<(?:[^<>]|<[^<>]*>)*>)*>)?/,lookbehind:!0,greedy:!0,inside:null},builtin:/\b(?:Array|Function|Promise|any|boolean|console|never|number|string|symbol|unknown)\b/}),e.languages.typescript.keyword.push(/\b(?:abstract|declare|is|keyof|readonly|require)\b/,/\b(?:asserts|infer|interface|module|namespace|type)\b(?=\s*(?:[{_$a-zA-Z\xA0-\uFFFF]|$))/,/\btype\b(?=\s*(?:[\{*]|$))/),delete e.languages.typescript.parameter,delete e.languages.typescript["literal-property"];var s=e.languages.extend("typescript",{});delete s["class-name"],e.languages.typescript["class-name"].inside=s,e.languages.insertBefore("typescript","function",{decorator:{pattern:/@[$\w\xA0-\uFFFF]+/,inside:{at:{pattern:/^@/,alias:"operator"},function:/^[\s\S]+/}},"generic-function":{pattern:/#?(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*\s*<(?:[^<>]|<(?:[^<>]|<[^<>]*>)*>)*>(?=\s*\()/,greedy:!0,inside:{function:/^#?(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*/,generic:{pattern:/<[\s\S]+/,alias:"class-name",inside:s}}}}),e.languages.ts=e.languages.typescript}(Prism);
+!function(e){var n=/\b(?:abstract|assert|boolean|break|byte|case|catch|char|class|const|continue|default|do|double|else|enum|exports|extends|final|finally|float|for|goto|if|implements|import|instanceof|int|interface|long|module|native|new|non-sealed|null|open|opens|package|permits|private|protected|provides|public|record(?!\s*[(){}[\]<>=%~.:,;?+\-*/&|^])|requires|return|sealed|short|static|strictfp|super|switch|synchronized|this|throw|throws|to|transient|transitive|try|uses|var|void|volatile|while|with|yield)\b/,t="(?:[a-z]\\w*\\s*\\.\\s*)*(?:[A-Z]\\w*\\s*\\.\\s*)*",s={pattern:RegExp("(^|[^\\w.])"+t+"[A-Z](?:[\\d_A-Z]*[a-z]\\w*)?\\b"),lookbehind:!0,inside:{namespace:{pattern:/^[a-z]\w*(?:\s*\.\s*[a-z]\w*)*(?:\s*\.)?/,inside:{punctuation:/\./}},punctuation:/\./}};e.languages.java=e.languages.extend("clike",{string:{pattern:/(^|[^\\])"(?:\\.|[^"\\\r\n])*"/,lookbehind:!0,greedy:!0},"class-name":[s,{pattern:RegExp("(^|[^\\w.])"+t+"[A-Z]\\w*(?=\\s+\\w+\\s*[;,=()]|\\s*(?:\\[[\\s,]*\\]\\s*)?::\\s*new\\b)"),lookbehind:!0,inside:s.inside},{pattern:RegExp("(\\b(?:class|enum|extends|implements|instanceof|interface|new|record|throws)\\s+)"+t+"[A-Z]\\w*\\b"),lookbehind:!0,inside:s.inside}],keyword:n,function:[e.languages.clike.function,{pattern:/(::\s*)[a-z_]\w*/,lookbehind:!0}],number:/\b0b[01][01_]*L?\b|\b0x(?:\.[\da-f_p+-]+|[\da-f_]+(?:\.[\da-f_p+-]+)?)\b|(?:\b\d[\d_]*(?:\.[\d_]*)?|\B\.\d[\d_]*)(?:e[+-]?\d[\d_]*)?[dfl]?/i,operator:{pattern:/(^|[^.])(?:<<=?|>>>?=?|->|--|\+\+|&&|\|\||::|[?:~]|[-+*/%&|^!=<>]=?)/m,lookbehind:!0},constant:/\b[A-Z][A-Z_\d]+\b/}),e.languages.insertBefore("java","string",{"triple-quoted-string":{pattern:/"""[ \t]*[\r\n](?:(?:"|"")?(?:\\.|[^"\\]))*"""/,greedy:!0,alias:"string"},char:{pattern:/'(?:\\.|[^'\\\r\n]){1,6}'/,greedy:!0}}),e.languages.insertBefore("java","class-name",{annotation:{pattern:/(^|[^.])@\w+(?:\s*\.\s*\w+)*/,lookbehind:!0,alias:"punctuation"},generics:{pattern:/<(?:[\w\s,.?]|&(?!&)|<(?:[\w\s,.?]|&(?!&)|<(?:[\w\s,.?]|&(?!&)|<(?:[\w\s,.?]|&(?!&))*>)*>)*>)*>/,inside:{"class-name":s,keyword:n,punctuation:/[<>(),.:]/,operator:/[?&|]/}},import:[{pattern:RegExp("(\\bimport\\s+)"+t+"(?:[A-Z]\\w*|\\*)(?=\\s*;)"),lookbehind:!0,inside:{namespace:s.inside.namespace,punctuation:/\./,operator:/\*/,"class-name":/\w+/}},{pattern:RegExp("(\\bimport\\s+static\\s+)"+t+"(?:\\w+|\\*)(?=\\s*;)"),lookbehind:!0,alias:"static",inside:{namespace:s.inside.namespace,static:/\b\w+$/,punctuation:/\./,operator:/\*/,"class-name":/\w+/}}],namespace:{pattern:RegExp("(\\b(?:exports|import(?:\\s+static)?|module|open|opens|package|provides|requires|to|transitive|uses|with)\\s+)(?!<keyword>)[a-z]\\w*(?:\\.[a-z]\\w*)*\\.?".replace(/<keyword>/g,(function(){return n.source}))),lookbehind:!0,inside:{punctuation:/\./}}})}(Prism);
+!function(e){var t="\\b(?:BASH|BASHOPTS|BASH_ALIASES|BASH_ARGC|BASH_ARGV|BASH_CMDS|BASH_COMPLETION_COMPAT_DIR|BASH_LINENO|BASH_REMATCH|BASH_SOURCE|BASH_VERSINFO|BASH_VERSION|COLORTERM|COLUMNS|COMP_WORDBREAKS|DBUS_SESSION_BUS_ADDRESS|DEFAULTS_PATH|DESKTOP_SESSION|DIRSTACK|DISPLAY|EUID|GDMSESSION|GDM_LANG|GNOME_KEYRING_CONTROL|GNOME_KEYRING_PID|GPG_AGENT_INFO|GROUPS|HISTCONTROL|HISTFILE|HISTFILESIZE|HISTSIZE|HOME|HOSTNAME|HOSTTYPE|IFS|INSTANCE|JOB|LANG|LANGUAGE|LC_ADDRESS|LC_ALL|LC_IDENTIFICATION|LC_MEASUREMENT|LC_MONETARY|LC_NAME|LC_NUMERIC|LC_PAPER|LC_TELEPHONE|LC_TIME|LESSCLOSE|LESSOPEN|LINES|LOGNAME|LS_COLORS|MACHTYPE|MAILCHECK|MANDATORY_PATH|NO_AT_BRIDGE|OLDPWD|OPTERR|OPTIND|ORBIT_SOCKETDIR|OSTYPE|PAPERSIZE|PATH|PIPESTATUS|PPID|PS1|PS2|PS3|PS4|PWD|RANDOM|REPLY|SECONDS|SELINUX_INIT|SESSION|SESSIONTYPE|SESSION_MANAGER|SHELL|SHELLOPTS|SHLVL|SSH_AUTH_SOCK|TERM|UID|UPSTART_EVENTS|UPSTART_INSTANCE|UPSTART_JOB|UPSTART_SESSION|USER|WINDOWID|XAUTHORITY|XDG_CONFIG_DIRS|XDG_CURRENT_DESKTOP|XDG_DATA_DIRS|XDG_GREETER_DATA_DIR|XDG_MENU_PREFIX|XDG_RUNTIME_DIR|XDG_SEAT|XDG_SEAT_PATH|XDG_SESSION_DESKTOP|XDG_SESSION_ID|XDG_SESSION_PATH|XDG_SESSION_TYPE|XDG_VTNR|XMODIFIERS)\\b",a={pattern:/(^(["']?)\w+\2)[ \t]+\S.*/,lookbehind:!0,alias:"punctuation",inside:null},n={bash:a,environment:{pattern:RegExp("\\$"+t),alias:"constant"},variable:[{pattern:/\$?\(\([\s\S]+?\)\)/,greedy:!0,inside:{variable:[{pattern:/(^\$\(\([\s\S]+)\)\)/,lookbehind:!0},/^\$\(\(/],number:/\b0x[\dA-Fa-f]+\b|(?:\b\d+(?:\.\d*)?|\B\.\d+)(?:[Ee]-?\d+)?/,operator:/--|\+\+|\*\*=?|<<=?|>>=?|&&|\|\||[=!+\-*/%<>^&|]=?|[?~:]/,punctuation:/\(\(?|\)\)?|,|;/}},{pattern:/\$\((?:\([^)]+\)|[^()])+\)|`[^`]+`/,greedy:!0,inside:{variable:/^\$\(|^`|\)$|`$/}},{pattern:/\$\{[^}]+\}/,greedy:!0,inside:{operator:/:[-=?+]?|[!\/]|##?|%%?|\^\^?|,,?/,punctuation:/[\[\]]/,environment:{pattern:RegExp("(\\{)"+t),lookbehind:!0,alias:"constant"}}},/\$(?:\w+|[#?*!@$])/],entity:/\\(?:[abceEfnrtv\\"]|O?[0-7]{1,3}|U[0-9a-fA-F]{8}|u[0-9a-fA-F]{4}|x[0-9a-fA-F]{1,2})/};e.languages.bash={shebang:{pattern:/^#!\s*\/.*/,alias:"important"},comment:{pattern:/(^|[^"{\\$])#.*/,lookbehind:!0},"function-name":[{pattern:/(\bfunction\s+)[\w-]+(?=(?:\s*\(?:\s*\))?\s*\{)/,lookbehind:!0,alias:"function"},{pattern:/\b[\w-]+(?=\s*\(\s*\)\s*\{)/,alias:"function"}],"for-or-select":{pattern:/(\b(?:for|select)\s+)\w+(?=\s+in\s)/,alias:"variable",lookbehind:!0},"assign-left":{pattern:/(^|[\s;|&]|[<>]\()\w+(?:\.\w+)*(?=\+?=)/,inside:{environment:{pattern:RegExp("(^|[\\s;|&]|[<>]\\()"+t),lookbehind:!0,alias:"constant"}},alias:"variable",lookbehind:!0},parameter:{pattern:/(^|\s)-{1,2}(?:\w+:[+-]?)?\w+(?:\.\w+)*(?=[=\s]|$)/,alias:"variable",lookbehind:!0},string:[{pattern:/((?:^|[^<])<<-?\s*)(\w+)\s[\s\S]*?(?:\r?\n|\r)\2/,lookbehind:!0,greedy:!0,inside:n},{pattern:/((?:^|[^<])<<-?\s*)(["'])(\w+)\2\s[\s\S]*?(?:\r?\n|\r)\3/,lookbehind:!0,greedy:!0,inside:{bash:a}},{pattern:/(^|[^\\](?:\\\\)*)"(?:\\[\s\S]|\$\([^)]+\)|\$(?!\()|`[^`]+`|[^"\\`$])*"/,lookbehind:!0,greedy:!0,inside:n},{pattern:/(^|[^$\\])'[^']*'/,lookbehind:!0,greedy:!0},{pattern:/\$'(?:[^'\\]|\\[\s\S])*'/,greedy:!0,inside:{entity:n.entity}}],environment:{pattern:RegExp("\\$?"+t),alias:"constant"},variable:n.variable,function:{pattern:/(^|[\s;|&]|[<>]\()(?:add|apropos|apt|apt-cache|apt-get|aptitude|aspell|automysqlbackup|awk|basename|bash|bc|bconsole|bg|bzip2|cal|cargo|cat|cfdisk|chgrp|chkconfig|chmod|chown|chroot|cksum|clear|cmp|column|comm|composer|cp|cron|crontab|csplit|curl|cut|date|dc|dd|ddrescue|debootstrap|df|diff|diff3|dig|dir|dircolors|dirname|dirs|dmesg|docker|docker-compose|du|egrep|eject|env|ethtool|expand|expect|expr|fdformat|fdisk|fg|fgrep|file|find|fmt|fold|format|free|fsck|ftp|fuser|gawk|git|gparted|grep|groupadd|groupdel|groupmod|groups|grub-mkconfig|gzip|halt|head|hg|history|host|hostname|htop|iconv|id|ifconfig|ifdown|ifup|import|install|ip|java|jobs|join|kill|killall|less|link|ln|locate|logname|logrotate|look|lpc|lpr|lprint|lprintd|lprintq|lprm|ls|lsof|lynx|make|man|mc|mdadm|mkconfig|mkdir|mke2fs|mkfifo|mkfs|mkisofs|mknod|mkswap|mmv|more|most|mount|mtools|mtr|mutt|mv|nano|nc|netstat|nice|nl|node|nohup|notify-send|npm|nslookup|op|open|parted|passwd|paste|pathchk|ping|pkill|pnpm|podman|podman-compose|popd|pr|printcap|printenv|ps|pushd|pv|quota|quotacheck|quotactl|ram|rar|rcp|reboot|remsync|rename|renice|rev|rm|rmdir|rpm|rsync|scp|screen|sdiff|sed|sendmail|seq|service|sftp|sh|shellcheck|shuf|shutdown|sleep|slocate|sort|split|ssh|stat|strace|su|sudo|sum|suspend|swapon|sync|sysctl|tac|tail|tar|tee|time|timeout|top|touch|tr|traceroute|tsort|tty|umount|uname|unexpand|uniq|units|unrar|unshar|unzip|update-grub|uptime|useradd|userdel|usermod|users|uudecode|uuencode|v|vcpkg|vdir|vi|vim|virsh|vmstat|wait|watch|wc|wget|whereis|which|who|whoami|write|xargs|xdg-open|yarn|yes|zenity|zip|zsh|zypper)(?=$|[)\s;|&])/,lookbehind:!0},keyword:{pattern:/(^|[\s;|&]|[<>]\()(?:case|do|done|elif|else|esac|fi|for|function|if|in|select|then|until|while)(?=$|[)\s;|&])/,lookbehind:!0},builtin:{pattern:/(^|[\s;|&]|[<>]\()(?:\.|:|alias|bind|break|builtin|caller|cd|command|continue|declare|echo|enable|eval|exec|exit|export|getopts|hash|help|let|local|logout|mapfile|printf|pwd|read|readarray|readonly|return|set|shift|shopt|source|test|times|trap|type|typeset|ulimit|umask|unalias|unset)(?=$|[)\s;|&])/,lookbehind:!0,alias:"class-name"},boolean:{pattern:/(^|[\s;|&]|[<>]\()(?:false|true)(?=$|[)\s;|&])/,lookbehind:!0},"file-descriptor":{pattern:/\B&\d\b/,alias:"important"},operator:{pattern:/\d?<>|>\||\+=|=[=~]?|!=?|<<[<-]?|[&\d]?>>|\d[<>]&?|[<>][&=]?|&[>&]?|\|[&|]?/,inside:{"file-descriptor":{pattern:/^\d/,alias:"important"}}},punctuation:/\$?\(\(?|\)\)?|\.\.|[{}[\];\\]/,number:{pattern:/(^|\s)(?:[1-9]\d*|0)(?:[.,]\d+)?\b/,lookbehind:!0}},a.inside=e.languages.bash;for(var s=["comment","function-name","for-or-select","assign-left","parameter","string","environment","function","keyword","builtin","boolean","file-descriptor","operator","punctuation","number"],o=n.variable[1].inside,i=0;i<s.length;i++)o[s[i]]=e.languages.bash[s[i]];e.languages.sh=e.languages.bash,e.languages.shell=e.languages.bash}(Prism);
+Prism.languages.sql={comment:{pattern:/(^|[^\\])(?:\/\*[\s\S]*?\*\/|(?:--|\/\/|#).*)/,lookbehind:!0},variable:[{pattern:/@(["'`])(?:\\[\s\S]|(?!\1)[^\\])+\1/,greedy:!0},/@[\w.$]+/],string:{pattern:/(^|[^@\\])("|')(?:\\[\s\S]|(?!\2)[^\\]|\2\2)*\2/,greedy:!0,lookbehind:!0},identifier:{pattern:/(^|[^@\\])`(?:\\[\s\S]|[^`\\]|``)*`/,greedy:!0,lookbehind:!0,inside:{punctuation:/^`|`$/}},function:/\b(?:AVG|COUNT|FIRST|FORMAT|LAST|LCASE|LEN|MAX|MID|MIN|MOD|NOW|ROUND|SUM|UCASE)(?=\s*\()/i,keyword:/\b(?:ACTION|ADD|AFTER|ALGORITHM|ALL|ALTER|ANALYZE|ANY|APPLY|AS|ASC|AUTHORIZATION|AUTO_INCREMENT|BACKUP|BDB|BEGIN|BERKELEYDB|BIGINT|BINARY|BIT|BLOB|BOOL|BOOLEAN|BREAK|BROWSE|BTREE|BULK|BY|CALL|CASCADED?|CASE|CHAIN|CHAR(?:ACTER|SET)?|CHECK(?:POINT)?|CLOSE|CLUSTERED|COALESCE|COLLATE|COLUMNS?|COMMENT|COMMIT(?:TED)?|COMPUTE|CONNECT|CONSISTENT|CONSTRAINT|CONTAINS(?:TABLE)?|CONTINUE|CONVERT|CREATE|CROSS|CURRENT(?:_DATE|_TIME|_TIMESTAMP|_USER)?|CURSOR|CYCLE|DATA(?:BASES?)?|DATE(?:TIME)?|DAY|DBCC|DEALLOCATE|DEC|DECIMAL|DECLARE|DEFAULT|DEFINER|DELAYED|DELETE|DELIMITERS?|DENY|DESC|DESCRIBE|DETERMINISTIC|DISABLE|DISCARD|DISK|DISTINCT|DISTINCTROW|DISTRIBUTED|DO|DOUBLE|DROP|DUMMY|DUMP(?:FILE)?|DUPLICATE|ELSE(?:IF)?|ENABLE|ENCLOSED|END|ENGINE|ENUM|ERRLVL|ERRORS|ESCAPED?|EXCEPT|EXEC(?:UTE)?|EXISTS|EXIT|EXPLAIN|EXTENDED|FETCH|FIELDS|FILE|FILLFACTOR|FIRST|FIXED|FLOAT|FOLLOWING|FOR(?: EACH ROW)?|FORCE|FOREIGN|FREETEXT(?:TABLE)?|FROM|FULL|FUNCTION|GEOMETRY(?:COLLECTION)?|GLOBAL|GOTO|GRANT|GROUP|HANDLER|HASH|HAVING|HOLDLOCK|HOUR|IDENTITY(?:COL|_INSERT)?|IF|IGNORE|IMPORT|INDEX|INFILE|INNER|INNODB|INOUT|INSERT|INT|INTEGER|INTERSECT|INTERVAL|INTO|INVOKER|ISOLATION|ITERATE|JOIN|KEYS?|KILL|LANGUAGE|LAST|LEAVE|LEFT|LEVEL|LIMIT|LINENO|LINES|LINESTRING|LOAD|LOCAL|LOCK|LONG(?:BLOB|TEXT)|LOOP|MATCH(?:ED)?|MEDIUM(?:BLOB|INT|TEXT)|MERGE|MIDDLEINT|MINUTE|MODE|MODIFIES|MODIFY|MONTH|MULTI(?:LINESTRING|POINT|POLYGON)|NATIONAL|NATURAL|NCHAR|NEXT|NO|NONCLUSTERED|NULLIF|NUMERIC|OFF?|OFFSETS?|ON|OPEN(?:DATASOURCE|QUERY|ROWSET)?|OPTIMIZE|OPTION(?:ALLY)?|ORDER|OUT(?:ER|FILE)?|OVER|PARTIAL|PARTITION|PERCENT|PIVOT|PLAN|POINT|POLYGON|PRECEDING|PRECISION|PREPARE|PREV|PRIMARY|PRINT|PRIVILEGES|PROC(?:EDURE)?|PUBLIC|PURGE|QUICK|RAISERROR|READS?|REAL|RECONFIGURE|REFERENCES|RELEASE|RENAME|REPEAT(?:ABLE)?|REPLACE|REPLICATION|REQUIRE|RESIGNAL|RESTORE|RESTRICT|RETURN(?:ING|S)?|REVOKE|RIGHT|ROLLBACK|ROUTINE|ROW(?:COUNT|GUIDCOL|S)?|RTREE|RULE|SAVE(?:POINT)?|SCHEMA|SECOND|SELECT|SERIAL(?:IZABLE)?|SESSION(?:_USER)?|SET(?:USER)?|SHARE|SHOW|SHUTDOWN|SIMPLE|SMALLINT|SNAPSHOT|SOME|SONAME|SQL|START(?:ING)?|STATISTICS|STATUS|STRIPED|SYSTEM_USER|TABLES?|TABLESPACE|TEMP(?:ORARY|TABLE)?|TERMINATED|TEXT(?:SIZE)?|THEN|TIME(?:STAMP)?|TINY(?:BLOB|INT|TEXT)|TOP?|TRAN(?:SACTIONS?)?|TRIGGER|TRUNCATE|TSEQUAL|TYPES?|UNBOUNDED|UNCOMMITTED|UNDEFINED|UNION|UNIQUE|UNLOCK|UNPIVOT|UNSIGNED|UPDATE(?:TEXT)?|USAGE|USE|USER|USING|VALUES?|VAR(?:BINARY|CHAR|CHARACTER|YING)|VIEW|WAITFOR|WARNINGS|WHEN|WHERE|WHILE|WITH(?: ROLLUP|IN)?|WORK|WRITE(?:TEXT)?|YEAR)\b/i,boolean:/\b(?:FALSE|NULL|TRUE)\b/i,number:/\b0x[\da-f]+\b|\b\d+(?:\.\d*)?|\B\.\d+\b/i,operator:/[-+*\/=%^~]|&&?|\|\|?|!=?|<(?:=>?|<|>)?|>[>=]?|\b(?:AND|BETWEEN|DIV|ILIKE|IN|IS|LIKE|NOT|OR|REGEXP|RLIKE|SOUNDS LIKE|XOR)\b/i,punctuation:/[;[\]()`,.]/};
+!function(e){var n=/[*&][^\s[\]{},]+/,r=/!(?:<[\w\-%#;/?:@&=+$,.!~*'()[\]]+>|(?:[a-zA-Z\d-]*!)?[\w\-%#;/?:@&=+$.~*'()]+)?/,t="(?:"+r.source+"(?:[ \t]+"+n.source+")?|"+n.source+"(?:[ \t]+"+r.source+")?)",a="(?:[^\\s\\x00-\\x08\\x0e-\\x1f!\"#%&'*,\\-:>?@[\\]`{|}\\x7f-\\x84\\x86-\\x9f\\ud800-\\udfff\\ufffe\\uffff]|[?:-]<PLAIN>)(?:[ \t]*(?:(?![#:])<PLAIN>|:<PLAIN>))*".replace(/<PLAIN>/g,(function(){return"[^\\s\\x00-\\x08\\x0e-\\x1f,[\\]{}\\x7f-\\x84\\x86-\\x9f\\ud800-\\udfff\\ufffe\\uffff]"})),d="\"(?:[^\"\\\\\r\n]|\\\\.)*\"|'(?:[^'\\\\\r\n]|\\\\.)*'";function o(e,n){n=(n||"").replace(/m/g,"")+"m";var r="([:\\-,[{]\\s*(?:\\s<<prop>>[ \t]+)?)(?:<<value>>)(?=[ \t]*(?:$|,|\\]|\\}|(?:[\r\n]\\s*)?#))".replace(/<<prop>>/g,(function(){return t})).replace(/<<value>>/g,(function(){return e}));return RegExp(r,n)}e.languages.yaml={scalar:{pattern:RegExp("([\\-:]\\s*(?:\\s<<prop>>[ \t]+)?[|>])[ \t]*(?:((?:\r?\n|\r)[ \t]+)\\S[^\r\n]*(?:\\2[^\r\n]+)*)".replace(/<<prop>>/g,(function(){return t}))),lookbehind:!0,alias:"string"},comment:/#.*/,key:{pattern:RegExp("((?:^|[:\\-,[{\r\n?])[ \t]*(?:<<prop>>[ \t]+)?)<<key>>(?=\\s*:\\s)".replace(/<<prop>>/g,(function(){return t})).replace(/<<key>>/g,(function(){return"(?:"+a+"|"+d+")"}))),lookbehind:!0,greedy:!0,alias:"atrule"},directive:{pattern:/(^[ \t]*)%.+/m,lookbehind:!0,alias:"important"},datetime:{pattern:o("\\d{4}-\\d\\d?-\\d\\d?(?:[tT]|[ \t]+)\\d\\d?:\\d{2}:\\d{2}(?:\\.\\d*)?(?:[ \t]*(?:Z|[-+]\\d\\d?(?::\\d{2})?))?|\\d{4}-\\d{2}-\\d{2}|\\d\\d?:\\d{2}(?::\\d{2}(?:\\.\\d*)?)?"),lookbehind:!0,alias:"number"},boolean:{pattern:o("false|true","i"),lookbehind:!0,alias:"important"},null:{pattern:o("null|~","i"),lookbehind:!0,alias:"important"},string:{pattern:o(d),lookbehind:!0,greedy:!0},number:{pattern:o("[+-]?(?:0x[\\da-f]+|0o[0-7]+|(?:\\d+(?:\\.\\d*)?|\\.\\d+)(?:e[+-]?\\d+)?|\\.inf|\\.nan)","i"),lookbehind:!0},tag:r,important:n,punctuation:/---|[:[\]{}\-,|>?]|\.\.\./},e.languages.yml=e.languages.yaml}(Prism);
+Prism.languages.json={property:{pattern:/(^|[^\\])"(?:\\.|[^\\"\r\n])*"(?=\s*:)/,lookbehind:!0,greedy:!0},string:{pattern:/(^|[^\\])"(?:\\.|[^\\"\r\n])*"(?!\s*:)/,lookbehind:!0,greedy:!0},comment:{pattern:/\/\/.*|\/\*[\s\S]*?(?:\*\/|$)/,greedy:!0},number:/-?\b\d+(?:\.\d+)?(?:e[+-]?\d+)?\b/i,punctuation:/[{}[\],]/,operator:/:/,boolean:/\b(?:false|true)\b/,null:{pattern:/\bnull\b/,alias:"keyword"}},Prism.languages.webmanifest=Prism.languages.json;
+!function(t){var n=t.util.clone(t.languages.javascript),e="(?:\\{<S>*\\.{3}(?:[^{}]|<BRACES>)*\\})";function a(t,n){return t=t.replace(/<S>/g,(function(){return"(?:\\s|//.*(?!.)|/\\*(?:[^*]|\\*(?!/))\\*/)"})).replace(/<BRACES>/g,(function(){return"(?:\\{(?:\\{(?:\\{[^{}]*\\}|[^{}])*\\}|[^{}])*\\})"})).replace(/<SPREAD>/g,(function(){return e})),RegExp(t,n)}e=a(e).source,t.languages.jsx=t.languages.extend("markup",n),t.languages.jsx.tag.pattern=a("</?(?:[\\w.:-]+(?:<S>+(?:[\\w.:$-]+(?:=(?:\"(?:\\\\[^]|[^\\\\\"])*\"|'(?:\\\\[^]|[^\\\\'])*'|[^\\s{'\"/>=]+|<BRACES>))?|<SPREAD>))*<S>*/?)?>"),t.languages.jsx.tag.inside.tag.pattern=/^<\/?[^\s>\/]*/,t.languages.jsx.tag.inside["attr-value"].pattern=/=(?!\{)(?:"(?:\\[\s\S]|[^\\"])*"|'(?:\\[\s\S]|[^\\'])*'|[^\s'">]+)/,t.languages.jsx.tag.inside.tag.inside["class-name"]=/^[A-Z]\w*(?:\.[A-Z]\w*)*$/,t.languages.jsx.tag.inside.comment=n.comment,t.languages.insertBefore("inside","attr-name",{spread:{pattern:a("<SPREAD>"),inside:t.languages.jsx}},t.languages.jsx.tag),t.languages.insertBefore("inside","special-attr",{script:{pattern:a("=<BRACES>"),alias:"language-javascript",inside:{"script-punctuation":{pattern:/^=(?=\{)/,alias:"punctuation"},rest:t.languages.jsx}}},t.languages.jsx.tag);var s=function(t){return t?"string"==typeof t?t:"string"==typeof t.content?t.content:t.content.map(s).join(""):""},g=function(n){for(var e=[],a=0;a<n.length;a++){var o=n[a],i=!1;if("string"!=typeof o&&("tag"===o.type&&o.content[0]&&"tag"===o.content[0].type?"</"===o.content[0].content[0].content?e.length>0&&e[e.length-1].tagName===s(o.content[0].content[1])&&e.pop():"/>"===o.content[o.content.length-1].content||e.push({tagName:s(o.content[0].content[1]),openedBraces:0}):e.length>0&&"punctuation"===o.type&&"{"===o.content?e[e.length-1].openedBraces++:e.length>0&&e[e.length-1].openedBraces>0&&"punctuation"===o.type&&"}"===o.content?e[e.length-1].openedBraces--:i=!0),(i||"string"==typeof o)&&e.length>0&&0===e[e.length-1].openedBraces){var r=s(o);a<n.length-1&&("string"==typeof n[a+1]||"plain-text"===n[a+1].type)&&(r+=s(n[a+1]),n.splice(a+1,1)),a>0&&("string"==typeof n[a-1]||"plain-text"===n[a-1].type)&&(r=s(n[a-1])+r,n.splice(a-1,1),a--),n[a]=new t.Token("plain-text",r,null,r)}o.content&&"string"!=typeof o.content&&g(o.content)}};t.hooks.add("after-tokenize",(function(t){"jsx"!==t.language&&"tsx"!==t.language||g(t.tokens)}))}(Prism);
+!function(t){function a(t){return RegExp("(^(?:"+t+"):[ \t]*(?![ \t]))[^]+","i")}t.languages.http={"request-line":{pattern:/^(?:CONNECT|DELETE|GET|HEAD|OPTIONS|PATCH|POST|PRI|PUT|SEARCH|TRACE)\s(?:https?:\/\/|\/)\S*\sHTTP\/[\d.]+/m,inside:{method:{pattern:/^[A-Z]+\b/,alias:"property"},"request-target":{pattern:/^(\s)(?:https?:\/\/|\/)\S*(?=\s)/,lookbehind:!0,alias:"url",inside:t.languages.uri},"http-version":{pattern:/^(\s)HTTP\/[\d.]+/,lookbehind:!0,alias:"property"}}},"response-status":{pattern:/^HTTP\/[\d.]+ \d+ .+/m,inside:{"http-version":{pattern:/^HTTP\/[\d.]+/,alias:"property"},"status-code":{pattern:/^(\s)\d+(?=\s)/,lookbehind:!0,alias:"number"},"reason-phrase":{pattern:/^(\s).+/,lookbehind:!0,alias:"string"}}},header:{pattern:/^[\w-]+:.+(?:(?:\r\n?|\n)[ \t].+)*/m,inside:{"header-value":[{pattern:a("Content-Security-Policy"),lookbehind:!0,alias:["csp","languages-csp"],inside:t.languages.csp},{pattern:a("Public-Key-Pins(?:-Report-Only)?"),lookbehind:!0,alias:["hpkp","languages-hpkp"],inside:t.languages.hpkp},{pattern:a("Strict-Transport-Security"),lookbehind:!0,alias:["hsts","languages-hsts"],inside:t.languages.hsts},{pattern:a("[^:]+"),lookbehind:!0}],"header-name":{pattern:/^[^:]+/,alias:"keyword"},punctuation:/^:/}}};var e,n=t.languages,s={"application/javascript":n.javascript,"application/json":n.json||n.javascript,"application/xml":n.xml,"text/xml":n.xml,"text/html":n.html,"text/css":n.css,"text/plain":n.plain},i={"application/json":!0,"application/xml":!0};function r(t){var a=t.replace(/^[a-z]+\//,"");return"(?:"+t+"|\\w+/(?:[\\w.-]+\\+)+"+a+"(?![+\\w.-]))"}for(var p in s)if(s[p]){e=e||{};var l=i[p]?r(p):p;e[p.replace(/\//g,"-")]={pattern:RegExp("(content-type:\\s*"+l+"(?:(?:\r\n?|\n)[\\w-].*)*(?:\r(?:\n|(?!\n))|\n))[^ \t\\w-][^]*","i"),lookbehind:!0,inside:s[p]}}e&&t.languages.insertBefore("http","header",e)}(Prism);
+!function(e){var n="(?:[ \t]+(?![ \t])(?:<SP_BS>)?|<SP_BS>)".replace(/<SP_BS>/g,(function(){return"\\\\[\r\n](?:\\s|\\\\[\r\n]|#.*(?!.))*(?![\\s#]|\\\\[\r\n])"})),r="\"(?:[^\"\\\\\r\n]|\\\\(?:\r\n|[^]))*\"|'(?:[^'\\\\\r\n]|\\\\(?:\r\n|[^]))*'",t="--[\\w-]+=(?:<STR>|(?![\"'])(?:[^\\s\\\\]|\\\\.)+)".replace(/<STR>/g,(function(){return r})),o={pattern:RegExp(r),greedy:!0},i={pattern:/(^[ \t]*)#.*/m,lookbehind:!0,greedy:!0};function a(e,r){return e=e.replace(/<OPT>/g,(function(){return t})).replace(/<SP>/g,(function(){return n})),RegExp(e,r)}e.languages.docker={instruction:{pattern:/(^[ \t]*)(?:ADD|ARG|CMD|COPY|ENTRYPOINT|ENV|EXPOSE|FROM|HEALTHCHECK|LABEL|MAINTAINER|ONBUILD|RUN|SHELL|STOPSIGNAL|USER|VOLUME|WORKDIR)(?=\s)(?:\\.|[^\r\n\\])*(?:\\$(?:\s|#.*$)*(?![\s#])(?:\\.|[^\r\n\\])*)*/im,lookbehind:!0,greedy:!0,inside:{options:{pattern:a("(^(?:ONBUILD<SP>)?\\w+<SP>)<OPT>(?:<SP><OPT>)*","i"),lookbehind:!0,greedy:!0,inside:{property:{pattern:/(^|\s)--[\w-]+/,lookbehind:!0},string:[o,{pattern:/(=)(?!["'])(?:[^\s\\]|\\.)+/,lookbehind:!0}],operator:/\\$/m,punctuation:/=/}},keyword:[{pattern:a("(^(?:ONBUILD<SP>)?HEALTHCHECK<SP>(?:<OPT><SP>)*)(?:CMD|NONE)\\b","i"),lookbehind:!0,greedy:!0},{pattern:a("(^(?:ONBUILD<SP>)?FROM<SP>(?:<OPT><SP>)*(?!--)[^ \t\\\\]+<SP>)AS","i"),lookbehind:!0,greedy:!0},{pattern:a("(^ONBUILD<SP>)\\w+","i"),lookbehind:!0,greedy:!0},{pattern:/^\w+/,greedy:!0}],comment:i,string:o,variable:/\$(?:\w+|\{[^{}"'\\]*\})/,operator:/\\$/m}},comment:i},e.languages.dockerfile=e.languages.docker}(Prism);
+!function(e){var n=/\$(?:\w[a-z\d]*(?:_[^\x00-\x1F\s"'\\()$]*)?|\{[^}\s"'\\]+\})/i;e.languages.nginx={comment:{pattern:/(^|[\s{};])#.*/,lookbehind:!0,greedy:!0},directive:{pattern:/(^|\s)\w(?:[^;{}"'\\\s]|\\.|"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|\s+(?:#.*(?!.)|(?![#\s])))*?(?=\s*[;{])/,lookbehind:!0,greedy:!0,inside:{string:{pattern:/((?:^|[^\\])(?:\\\\)*)(?:"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')/,lookbehind:!0,greedy:!0,inside:{escape:{pattern:/\\["'\\nrt]/,alias:"entity"},variable:n}},comment:{pattern:/(\s)#.*/,lookbehind:!0,greedy:!0},keyword:{pattern:/^\S+/,greedy:!0},boolean:{pattern:/(\s)(?:off|on)(?!\S)/,lookbehind:!0},number:{pattern:/(\s)\d+[a-z]*(?!\S)/i,lookbehind:!0},variable:n}},punctuation:/[{};]/}}(Prism);
+Prism.languages.ini={comment:{pattern:/(^[ \f\t\v]*)[#;][^\n\r]*/m,lookbehind:!0},section:{pattern:/(^[ \f\t\v]*)\[[^\n\r\]]*\]?/m,lookbehind:!0,inside:{"section-name":{pattern:/(^\[[ \f\t\v]*)[^ \f\t\v\]]+(?:[ \f\t\v]+[^ \f\t\v\]]+)*/,lookbehind:!0,alias:"selector"},punctuation:/\[|\]/}},key:{pattern:/(^[ \f\t\v]*)[^ \f\n\r\t\v=]+(?:[ \f\t\v]+[^ \f\n\r\t\v=]+)*(?=[ \f\t\v]*=)/m,lookbehind:!0,alias:"attr-name"},value:{pattern:/(=[ \f\t\v]*)[^ \f\n\r\t\v]+(?:[ \f\t\v]+[^ \f\n\r\t\v]+)*/,lookbehind:!0,alias:"attr-value",inside:{"inner-value":{pattern:/^("|').+(?=\1$)/,lookbehind:!0}}},punctuation:/=/};
+!function(e){var n={pattern:/((?:^|[^\\$])(?:\\{2})*)\$(?:\w+|\{[^{}]*\})/,lookbehind:!0,inside:{"interpolation-punctuation":{pattern:/^\$\{?|\}$/,alias:"punctuation"},expression:{pattern:/[\s\S]+/,inside:null}}};e.languages.groovy=e.languages.extend("clike",{string:{pattern:/'''(?:[^\\]|\\[\s\S])*?'''|'(?:\\.|[^\\'\r\n])*'/,greedy:!0},keyword:/\b(?:abstract|as|assert|boolean|break|byte|case|catch|char|class|const|continue|def|default|do|double|else|enum|extends|final|finally|float|for|goto|if|implements|import|in|instanceof|int|interface|long|native|new|package|private|protected|public|return|short|static|strictfp|super|switch|synchronized|this|throw|throws|trait|transient|try|void|volatile|while)\b/,number:/\b(?:0b[01_]+|0x[\da-f_]+(?:\.[\da-f_p\-]+)?|[\d_]+(?:\.[\d_]+)?(?:e[+-]?\d+)?)[glidf]?\b/i,operator:{pattern:/(^|[^.])(?:~|==?~?|\?[.:]?|\*(?:[.=]|\*=?)?|\.[@&]|\.\.<|\.\.(?!\.)|-[-=>]?|\+[+=]?|!=?|<(?:<=?|=>?)?|>(?:>>?=?|=)?|&[&=]?|\|[|=]?|\/=?|\^=?|%=?)/,lookbehind:!0},punctuation:/\.+|[{}[\];(),:$]/}),e.languages.insertBefore("groovy","string",{shebang:{pattern:/#!.+/,alias:"comment",greedy:!0},"interpolation-string":{pattern:/"""(?:[^\\]|\\[\s\S])*?"""|(["/])(?:\\.|(?!\1)[^\\\r\n])*\1|\$\/(?:[^/$]|\$(?:[/$]|(?![/$]))|\/(?!\$))*\/\$/,greedy:!0,inside:{interpolation:n,string:/[\s\S]+/}}}),e.languages.insertBefore("groovy","punctuation",{"spock-block":/\b(?:and|cleanup|expect|given|setup|then|when|where):/}),e.languages.insertBefore("groovy","function",{annotation:{pattern:/(^|[^.])@\w+/,lookbehind:!0,alias:"punctuation"}}),n.inside.expression.inside=e.languages.groovy}(Prism);
+
+
+/* http 语法增强：REST 端点示例（独立/行尾 # 注释 + 无 HTTP 版本的方法行） */
+(function () {
+  'use strict';
+  try {
+    if (window.Prism && Prism.languages.http) {
+      Prism.languages.insertBefore('http', 'request-line', { comment: { pattern: /#.*/ } });
+      var rl = Prism.languages.http['request-line'];
+      rl.pattern = /^(?:CONNECT|DELETE|GET|HEAD|OPTIONS|PATCH|POST|PRI|PUT|SEARCH|TRACE)\s+(?:https?:\/\/|\/)\S*(?:\sHTTP\/[\d.]+)?/m;
+    }
+  } catch (e) {}
+})();
+/* ===== 全库统一 Prism 语法高亮（按 data-lang 映射，text 与未知语言跳过，防重复） ===== */
+(function () {
+  'use strict';
+  if (!window.Prism) { return; }
+  var M = {js:'javascript',ts:'typescript',vue:'markup',html:'markup',xml:'markup',dockerfile:'docker',java:'java',bash:'bash',css:'css',sql:'sql',yaml:'yaml',json:'json',jsx:'jsx',http:'http',nginx:'nginx',ini:'ini',groovy:'groovy',text:''};
+  try {
+    var ps = document.querySelectorAll('pre.code');
+    for (var i = 0; i < ps.length; i++) {
+      var pre = ps[i];
+      var code = pre.querySelector('code');
+      if (!code || code.getAttribute('data-highlighted')) { continue; }
+      var l = (pre.getAttribute('data-lang') || '').trim().toLowerCase();
+      var m = M[l] || '';
+      if (!m || !Prism.languages[m]) { continue; }
+      code.className = 'language-' + m;
+      code.setAttribute('data-highlighted', '1');
+      try { Prism.highlightElement(code); } catch (e) {}
+    }
+  } catch (e) {}
+})();
+
+</script>
+<script src="../glossary/glossary-data.js"></script>
+<script src="../glossary/glossary.js"></script>
+</body>
+</html>

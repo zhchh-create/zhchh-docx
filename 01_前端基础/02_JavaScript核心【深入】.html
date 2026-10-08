@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JavaScript核心【深入】｜全栈技术栈详解</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%231d4ed8'/%3E%3Crect x='3' y='4' width='10' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='7' width='7' height='2' rx='1' fill='%23fff'/%3E%3Crect x='3' y='10' width='9' height='2' rx='1' fill='%23fff'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#f4f6f9; --surface:#ffffff; --line:#e2e8f0; --line-2:#cbd5e1;
+  --ink:#1f2937; --ink-2:#475569; --ink-3:#6b7280;
+  --accent:#1d4ed8; --accent-2:#0e7490; --accent-soft:#dbeafe;
+  --warn:#b45309; --warn-soft:#fef3c7;
+  --danger:#b91c1c; --danger-soft:#fee2e2;
+  --ok:#047857; --ok-soft:#d1fae5;
+  --code-bg:#0f172a; --code-ink:#e2e8f0;
+  --radius:12px; --shadow:0 1px 3px rgba(15,23,42,.08);
+  --font:-apple-system,"Segoe UI","Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  --mono:"Cascadia Mono","JetBrains Mono",Consolas,"Courier New",monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.75 var(--font);-webkit-font-smoothing:antialiased}
+.container{max-width:980px;margin:0 auto;padding:0 20px}
+.hero{background:linear-gradient(180deg,#1e293b 0%,#0f172a 100%);color:#f8fafc;padding:44px 0 36px}
+.hero .breadcrumb{font-size:13px;color:#94a3b8;letter-spacing:.04em;margin:0 0 12px}
+.hero h1{margin:0 0 10px;font-size:30px;line-height:1.3;font-weight:700}
+.hero .meta-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.badge{display:inline-block;padding:2px 12px;border-radius:999px;font-size:13px;font-weight:600;line-height:1.6}
+.badge.deep{background:var(--danger-soft);color:var(--danger);border:1px solid #fca5a5}
+.badge.std{background:var(--accent-soft);color:var(--accent);border:1px solid #93c5fd}
+.badge.basic{background:var(--ok-soft);color:var(--ok);border:1px solid #6ee7b7}
+.hero .meta{font-size:14px;color:#cbd5e1}
+.hero-desc{max-width:860px;margin:0;font-size:15.5px;color:#cbd5e1}
+.toc{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin:24px 0}
+.toc h2{margin:0 0 12px;font-size:16px;color:var(--ink)}
+.toc ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:6px 24px;counter-reset:toc}
+.toc li{counter-increment:toc;font-size:14px}
+.toc li::before{content:counter(toc);display:inline-block;min-width:22px;height:22px;line-height:22px;text-align:center;background:var(--accent-soft);color:var(--accent);border-radius:6px;font-size:12px;font-weight:600;margin-right:8px}
+.toc a{color:var(--accent);text-decoration:none}
+.toc a:hover{text-decoration:underline}
+main{display:block;padding-bottom:40px}
+section.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:28px 34px;margin:24px 0}
+section.card h2{font-size:21px;margin:0 0 18px;padding-left:12px;border-left:4px solid var(--accent);line-height:1.4}
+section.card h2 .num{display:inline-block;min-width:30px;height:30px;line-height:30px;text-align:center;background:var(--accent);color:#fff;border-radius:8px;font-size:15px;font-weight:700;margin-right:10px;vertical-align:1px}
+section.card h3{font-size:17px;margin:26px 0 10px;color:var(--accent-2)}
+section.card h4{font-size:15px;margin:18px 0 8px}
+section.card p{margin:10px 0}
+section.card ul,section.card ol{margin:10px 0;padding-left:24px}
+section.card li{margin:6px 0}
+strong{color:var(--ink)}
+code{font-family:var(--mono);font-size:.92em;background:#eef2f7;color:#0f4c81;padding:1px 6px;border-radius:5px}
+pre.code{position:relative;background:var(--code-bg);color:var(--code-ink);border-radius:10px;padding:16px 18px;overflow-x:auto;margin:14px 0;line-height:1.65;font-size:13.5px;font-family:var(--mono)}
+pre.code::before{content:attr(data-lang);position:absolute;top:8px;right:12px;font-size:11.5px;color:#64748b;letter-spacing:.06em}
+pre.code code{background:transparent;color:inherit;padding:0;font-size:inherit}
+.code-copy{position:absolute;top:6px;right:64px;font-size:12px;color:#cbd5e1;background:#1e293b;border:1px solid #334155;border-radius:6px;padding:2px 8px;cursor:pointer}
+.code-copy:hover{color:#fff;border-color:#475569}
+table{width:100%;table-layout:fixed;border-collapse:collapse;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top;overflow-wrap:break-word}
+th{background:#f1f5f9;font-weight:600}
+tbody tr:nth-child(even){background:#f8fafc}
+.diagram{margin:20px 0}
+.diagram svg{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:10px;background:#fbfdff}
+.diagram-caption{margin:8px 0 0;text-align:center;font-size:13px;color:var(--ink-3)}
+.note{border-left:4px solid var(--accent);background:#f0f6ff;border-radius:0 8px 8px 0;padding:12px 16px;margin:14px 0;font-size:14px}
+.warn-box{border-left:4px solid var(--warn);background:var(--warn-soft);border-radius:0 8px 8px 0;padding:12px 16px;margin:14px 0;font-size:14px}
+.danger-box{border-left:4px solid var(--danger);background:var(--danger-soft);border-radius:0 8px 8px 0;padding:12px 16px;margin:14px 0;font-size:14px}
+footer{background:#1e293b;color:#94a3b8;text-align:center;font-size:13px;padding:22px 0;margin-top:8px}
+#backTop{position:fixed;right:24px;bottom:32px;width:44px;height:44px;border:none;border-radius:50%;background:var(--accent);color:#fff;font-size:18px;cursor:pointer;box-shadow:0 4px 12px rgba(29,78,216,.35);opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s;z-index:99}
+#backTop.show{opacity:1;visibility:visible}
+@media (max-width:760px){
+  .container{padding:0 14px}
+  .hero{padding:32px 0 26px}
+  .hero h1{font-size:23px}
+  .toc ol{grid-template-columns:1fr}
+  section.card{padding:20px 18px}
+  pre.code{font-size:12.5px;padding:14px 14px}
+  .code-copy{position:static;display:block;width:max-content;margin:0 0 10px auto}
+  #backTop{right:16px;bottom:20px}
+}
+
+/* ===== 全库统一导航 ===== */
+.doc-nav{display:flex;justify-content:space-between;align-items:center;gap:8px;max-width:980px;margin:0 auto;padding:10px 20px}
+.doc-nav.top{position:sticky;top:0;z-index:70;background:var(--surface);border-bottom:1px solid var(--line);box-shadow:var(--shadow)}
+.doc-nav.bottom{border-top:1px solid var(--line);padding-top:16px;padding-bottom:16px;margin-top:8px}
+.doc-nav-btn{color:var(--accent);text-decoration:none;font-size:14px;font-weight:600;line-height:1;padding:7px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);white-space:nowrap;transition:border-color .15s,background .15s}
+a.doc-nav-btn:hover{border-color:var(--accent);background:var(--accent-soft)}
+.doc-nav-btn.home{color:var(--ink-2)}
+.doc-nav-btn.home:hover{color:var(--accent)}
+.doc-nav-btn.hidden{visibility:hidden}
+@media(max-width:640px){.doc-nav{gap:6px;padding-left:14px;padding-right:14px}.doc-nav-btn{font-size:13px;padding:6px 9px}}
+
+/* ===== 全库统一 Prism 深色主题 ===== */
+code[class*=language-],pre[class*=language-]{color:#f8f8f2;background:0 0;text-shadow:0 1px rgba(0,0,0,.3);font-family:Consolas,Monaco,'Andale Mono','Ubuntu Mono',monospace;font-size:1em;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{padding:1em;margin:.5em 0;overflow:auto;border-radius:.3em}:not(pre)>code[class*=language-],pre[class*=language-]{background:#272822}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal}.token.cdata,.token.comment,.token.doctype,.token.prolog{color:#8292a2}.token.punctuation{color:#f8f8f2}.token.namespace{opacity:.7}.token.constant,.token.deleted,.token.property,.token.symbol,.token.tag{color:#f92672}.token.boolean,.token.number{color:#ae81ff}.token.attr-name,.token.builtin,.token.char,.token.inserted,.token.selector,.token.string{color:#a6e22e}.language-css .token.string,.style .token.string,.token.entity,.token.operator,.token.url,.token.variable{color:#f8f8f2}.token.atrule,.token.attr-value,.token.class-name,.token.function{color:#e6db74}.token.keyword{color:#66d9ef}.token.important,.token.regex{color:#fd971f}.token.bold,.token.important{font-weight:700}.token.italic{font-style:italic}.token.entity{cursor:help}
+/* 适配库内代码块：保留 --code-bg 深底与 --mono 字体，去除主题自带背景/阴影 */
+pre.code code[class*=language-]{background:transparent;text-shadow:none;font-family:var(--mono);font-size:inherit;padding:0;line-height:inherit;color:inherit;white-space:inherit}
+
+/* ===== 全库统一可读性排版 ===== */
+/* 正文阅读密度：行距加大、留白充足 */
+body{line-height:1.85}
+section.card{padding:34px 40px;margin:26px 0}
+section.card h2{font-size:24px;margin:0 0 22px;padding-left:14px}
+section.card h2 .num{min-width:32px;height:32px;line-height:32px;font-size:16px}
+section.card h3{font-size:19px;margin:36px 0 12px;padding-left:10px;border-left:3px solid var(--accent-2);line-height:1.45}
+section.card h4{font-size:16.5px;margin:24px 0 10px;padding-left:8px;border-left:3px solid var(--line-2);color:#334155;font-weight:600;line-height:1.45}
+section.card p{margin:12px 0}
+section.card ul,section.card ol{margin:12px 0;padding-left:26px}
+section.card li{margin:8px 0;line-height:1.8}
+section.card li>ul,section.card li>ol{margin:6px 0}
+/* 一级要点：主题色圆点/序号 */
+section.card ul>li::marker{color:var(--accent);font-size:1.05em}
+section.card ol>li::marker{color:var(--accent);font-weight:700}
+/* 二级细节：细色条 + 缩进 + 次级色 marker */
+section.card ul ul>li::marker,section.card ol ol>li::marker{color:var(--accent-2)}
+section.card ul ul,section.card ol ol,section.card ul ol,section.card ol ul{padding-left:22px;border-left:2px solid var(--line);margin-left:6px}
+/* 行内强调标签：关键术语 / 要点 / 坑 */
+.tag-key,.tag-point,.tag-pit{display:inline-block;font-size:12px;font-weight:700;line-height:1;padding:3px 8px;border-radius:5px;margin-right:6px;vertical-align:2px;white-space:nowrap}
+.tag-key{background:var(--accent-soft);color:var(--accent);border:1px solid #93c5fd}
+.tag-point{background:var(--ok-soft);color:var(--ok);border:1px solid #6ee7b7}
+.tag-pit{background:var(--warn-soft);color:var(--warn);border:1px solid #fcd34d}
+/* 强调句：结论/易错点 左侧色条 */
+.key-sentence{border-left:4px solid var(--accent);background:#f0f6ff;padding:9px 14px;margin:14px 0;border-radius:0 8px 8px 0;font-weight:600;color:var(--ink);line-height:1.8}
+.pit-sentence{border-left:4px solid var(--warn);background:var(--warn-soft);padding:9px 14px;margin:14px 0;border-radius:0 8px 8px 0;font-weight:600;color:var(--ink);line-height:1.8}
+/* 概念块「一句话定位」 */
+.lead{font-size:15.5px;color:var(--ink-2);margin:0 0 14px;padding:10px 14px;background:#f8fafc;border:1px solid var(--line);border-radius:8px;line-height:1.8}
+.lead b,.lead strong{color:var(--ink)}
+/* 长代码/长句折行保护 */
+section.card li strong{color:var(--ink)}
+@media(max-width:760px){
+  body{line-height:1.8}
+  section.card{padding:22px 18px}
+  section.card h2{font-size:21px}
+  section.card h3{font-size:17.5px;margin:28px 0 10px}
+  section.card h4{font-size:15.5px;margin:20px 0 8px}
+  .lead{padding:8px 10px;font-size:14.5px}
+}
+
+</style>
+<link rel="stylesheet" href="../glossary/glossary.css">
+</head>
+<body>
+<header class="hero">
+  <div class="container">
+    <p class="breadcrumb">技术栈详解 · 01 前端基础</p>
+    <h1>JavaScript 核心</h1>
+    <div class="meta-row">
+      <span class="badge deep">深入</span>
+      <span class="meta">定位：前端编程语言本体——类型、作用域、闭包、this、原型链的心智模型</span>
+    </div>
+    <p class="hero-desc">JavaScript 的"难"不在语法，而在一套与多数后端语言不同的执行模型：动态类型、词法作用域、函数即对象、原型继承、闭包捕获词法环境。本页从执行上下文与调用栈讲起，落到闭包、this、原型链三块硬骨头，再以 iClean 智能监控与大屏项目群的真实代码（光跟踪算法、分布式数据聚合、自研 Grid/Tree/Dialog 插件）展示这套语言如何支撑一个 10 年的前端栈。异步与事件循环单独成页，本页聚焦"语言本体"。</p>
+  </div>
+</header>
+<nav class="doc-nav top" aria-label="文档导航">
+  <a class="doc-nav-btn" href="../01_前端基础/01_HTML5与CSS3【深入】.html">← 上一篇</a>
+  <a class="doc-nav-btn home" href="../index.html">⌂ 返回首页</a>
+  <a class="doc-nav-btn" href="../01_前端基础/03_JavaScript进阶_事件循环与异步【深入】.html">下一篇 →</a>
+</nav>
+<div class="container">
+<nav class="toc" aria-label="目录">
+  <h2>本页目录</h2>
+  <ol>
+    <li><a href="#sec1">技术点概览</a></li>
+    <li><a href="#sec2">核心概念</a></li>
+    <li><a href="#sec3">工作原理与流程</a></li>
+    <li><a href="#sec4">核心语法与 API 要点</a></li>
+    <li><a href="#sec5">实战项目经验（真实项目）</a></li>
+    <li><a href="#sec6">易错点与面试重点</a></li>
+    <li><a href="#sec7">学习资源与参考</a></li>
+  </ol>
+</nav>
+<main>
+
+<section id="sec1" class="card">
+  <h2><span class="num">1</span>技术点概览</h2>
+  <h3>是什么</h3>
+  <p class="lead"><b>一句话定位</b>：日常说的 JS 是三层叠加——语言标准 + DOM + BOM，由 V8 实现语言、浏览器宿主再挂接口。</p>
+  <ul>
+    <li><strong>ECMAScript（ES）</strong>：语言标准本身（语法、类型、原型、闭包），由 ECMA-262 定义、TC39 按年滚动发布（ES2015/ES2020…）。</li>
+    <li><strong>DOM API</strong>：浏览器提供的"操作网页"接口（Document Object Model）。</li>
+    <li><strong>BOM</strong>：与浏览器外壳打交道的接口（<code>window/navigator/location</code> 等）。</li>
+  </ul>
+  <p>"JS 难"常难在：同一门语言在浏览器里既有函数式一面（一等函数、闭包），又有命令式操作 DOM 一面，还有动态类型带来的运行期意外。</p>
+  <h3>解决什么问题</h3>
+  <p class="lead"><b>一句话定位</b>：JS 把网页从静态文档变成应用；功底分水岭是"能否预测代码在运行期做了什么"。</p>
+  <ul>
+    <li><strong>它是浏览器里唯一能动态执行逻辑的语言</strong>：表单校验、交互、数据请求、Canvas、实时大屏都靠它。</li>
+    <li><strong>分水岭</strong>：不在"会不会写 for"，而在能否预测运行期——this 指向谁、闭包捕获哪个变量、原型链在哪步命中、GC 会不会漏掉大对象。</li>
+  </ul>
+  <p>这些恰是 jQuery 时代插件、大屏实时聚合这类"无框架兜底"代码里最容易埋雷的地方。</p>
+  <div class="diagram">
+    <svg viewBox="0 0 800 240" role="img" aria-label="JavaScript 三层组成在浏览器中的位置示意图">
+      <defs>
+        <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+          <path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/>
+        </marker>
+      </defs>
+      <text x="400" y="22" text-anchor="middle" font-size="14" font-weight="700" fill="#1f2937">JavaScript = ECMAScript + DOM + BOM（示意）</text>
+      <rect x="250" y="42" width="300" height="52" rx="8" fill="#eff6ff" stroke="#2563eb"/>
+      <text x="400" y="64" text-anchor="middle" font-size="14" font-weight="600" fill="#1d4ed8">ECMAScript（语言核心）</text>
+      <text x="400" y="82" text-anchor="middle" font-size="12" fill="#475569">类型/作用域/闭包/this/原型 · V8 实现</text>
+      <line x1="400" y1="94" x2="240" y2="122" stroke="#64748b" marker-end="url(#arr)"/>
+      <line x1="400" y1="94" x2="560" y2="122" stroke="#64748b" marker-end="url(#arr)"/>
+      <rect x="90" y="126" width="280" height="52" rx="8" fill="#ecfeff" stroke="#0d9488"/>
+      <text x="230" y="148" text-anchor="middle" font-size="14" font-weight="600" fill="#0e7490">DOM（文档对象模型）</text>
+      <text x="230" y="166" text-anchor="middle" font-size="12" fill="#475569">document / 元素节点 / 事件 / CSSOM</text>
+      <rect x="430" y="126" width="280" height="52" rx="8" fill="#f1f5f9" stroke="#64748b"/>
+      <text x="570" y="148" text-anchor="middle" font-size="14" font-weight="600" fill="#334155">BOM（浏览器对象）</text>
+      <text x="570" y="166" text-anchor="middle" font-size="12" fill="#475569">window / navigator / location / history</text>
+      <text x="400" y="210" text-anchor="middle" font-size="13" fill="#475569">本页聚焦最上层 ECMAScript：这部分在 Node.js、 worker、任意引擎里都成立，不依赖浏览器。</text>
+    </svg>
+    <p class="diagram-caption">图 1 JavaScript 的三层组成（示意）</p>
+  </div>
+  <h3>横向对比：原生 JS vs TypeScript vs 框架封装</h3>
+  <div class="diagram">
+    <svg viewBox="0 0 800 260" role="img" aria-label="原生JS与TypeScript与框架封装对比图">
+      <defs>
+        <marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+          <path d="M0,0 L7,3 L0,6 Z" fill="#64748b"/>
+        </marker>
+      </defs>
+      <text x="400" y="22" text-anchor="middle" font-size="14" font-weight="700" fill="#1f2937">三个层面的演进：从裸奔到有保护（示意）</text>
+
+      <!-- 原生JS -->
+      <rect x="20" y="50" width="240" height="190" rx="8" fill="#fef2f2" stroke="#dc2626"/>
+      <text x="140" y="75" text-anchor="middle" font-size="12.5" font-weight="700" fill="#b91c1c">原生 JS / jQuery</text>
+      <text x="35" y="100" font-size="11" fill="#475569">类型检查：运行期才报错</text>
+      <text x="35" y="122" font-size="11" fill="#475569">DOM 操作：手动写 .text() .html()</text>
+      <text x="35" y="144" font-size="11" fill="#475569">模块：CommonJS require</text>
+      <text x="35" y="175" font-size="11" font-weight="600" fill="#b91c1c">特点：灵活、但容易出 bug</text>
+      <text x="35" y="195" font-size="11" fill="#64748b">早期项目（iClean、大屏）</text>
+      <text x="35" y="220" font-size="10.5" fill="#b45309">错误推迟到运行期，靠人肉测试</text>
+
+      <!-- TypeScript -->
+      <rect x="280" y="50" width="240" height="190" rx="8" fill="#eff6ff" stroke="#2563eb"/>
+      <text x="400" y="75" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1d4ed8">TypeScript</text>
+      <text x="295" y="100" font-size="11" fill="#475569">类型检查：编译期就报错</text>
+      <text x="295" y="122" font-size="11" fill="#475569">DOM 操作：还是手动写</text>
+      <text x="295" y="144" font-size="11" fill="#475569">模块：ESM import/export</text>
+      <text x="295" y="175" font-size="11" font-weight="600" fill="#1d4ed8">特点：类型安全、重构友好</text>
+      <text x="295" y="195" font-size="11" fill="#64748b">后期项目（DCP-RMP）</text>
+      <text x="295" y="220" font-size="10.5" fill="#047857">错误前移到编译期，大型项目必备</text>
+
+      <!-- 框架封装 -->
+      <rect x="540" y="50" width="240" height="190" rx="8" fill="#f0fdf4" stroke="#047857"/>
+      <text x="660" y="75" text-anchor="middle" font-size="12.5" font-weight="700" fill="#047857">Vue / React 框架</text>
+      <text x="555" y="100" font-size="11" fill="#475569">类型检查：TS 加持</text>
+      <text x="555" y="122" font-size="11" fill="#475569">DOM 操作：数据驱动，不用手动改</text>
+      <text x="555" y="144" font-size="11" fill="#475569">模块：ESM + Vite 打包</text>
+      <text x="555" y="175" font-size="11" font-weight="600" fill="#047857">特点：声明式、自动同步视图</text>
+      <text x="555" y="195" font-size="11" fill="#64748b">现代前端主流范式</text>
+      <text x="555" y="220" font-size="10.5" fill="#b45309">代价：要接受框架的响应式模型</text>
+    </svg>
+    <p class="diagram-caption">图 从原生 JS 到框架封装的三层演进（示意）</p>
+  </div>
+  <ul>
+    <li><strong>原生 ES vs TypeScript</strong>：TS 不改变运行时，它在编译期把类型擦除成普通 JS。原生 JS 的动态性是"灵活但把错误推迟到运行期"，TS 把这部分风险前移到编译期。本项目群早期（iClean、大屏）全是原生 JS + jQuery，后期 DCP-RMP 全面切到 TS——迁移的收益正是"大型公共包与 API 客户端不再靠人肉契约"（见 TypeScript 页）。</li>
+    <li><strong>命令式操作 DOM vs 框架声明式渲染</strong>：jQuery/原生时代，状态与 DOM 的同步全靠手写（改 <code>.text()</code>、<code>.html()</code>），一旦状态分支多就极易漏改。Vue/React 用"数据驱动视图"接管了这层映射，代价是要接受框架的响应式模型。理解原生 JS 仍然必要：框架编译产物、虚拟 DOM diff、插件底层最终都是原生 JS。</li>
+    <li><strong>CommonJS vs ESM 模块</strong>：早期大屏 Webpack 项目用 CommonJS（<code>require</code>，运行时动态加载、值拷贝），现代 Vite/Node 用 ESM（<code>import/export</code>，编译期静态分析、活绑定、可 tree-shaking）。工程选型上，新代码一律 ESM，老代码靠工具兼容。</li>
+  </ul>
+</section>
+
+<section id="sec2" class="card">
+  <h2><span class="num">2</span>核心概念</h2>
+  <h3>2.1 动态类型与隐式转换（Dynamic Typing &amp; Coercion）</h3>
+  <p class="lead"><b>一句话定位</b>：变量无类型、值才有类型，错误全部推迟到运行期——工程上用显式转换与 <code>===</code> 把不确定性压死。</p>
+  <ul>
+    <li><strong>动态类型</strong>：变量不绑定类型，今天存数字、明天存字符串都合法；类型检查发生在运行期，而非编译期。</li>
+    <li><strong>按值 vs 按引用</strong>：六种原始类型（<code>number/<wbr>string/<wbr>boolean/<wbr>null/<wbr>undefined/<wbr>symbol</code>，ES2020 加 <code>bigint</code>）赋值拷贝值；<code>object</code>（含数组、函数）赋值只拷贝引用。</li>
+    <li><strong>隐式转换</strong>：运算符两侧类型不一致时引擎自动转换——<code>+</code> 遇字符串会拼接，<code>==</code> 按抽象相等规则辗转比较，是大量"看起来对其实错"的根因。</li>
+  </ul>
+  <p class="key-sentence"><span class="tag-key">铁律</span>比较一律用 <code>===</code>（不转换、值与类型都比）；需要转换时显式写 <code>Number(x)</code> / <code>String(x)</code>，不依赖引擎的隐式行为。</p>
+  <h3>2.2 执行上下文与作用域链（Execution Context &amp; Scope Chain）</h3>
+  <p class="lead"><b>一句话定位</b>：变量从哪来由"源码写在哪"决定，引擎靠沿作用域链向上查找来解析名字。</p>
+  <ul>
+    <li><strong>执行上下文</strong>：每进入一段可执行代码，引擎就建一个上下文——全局一个、每次函数调用一个；里面存当前作用域的变量声明与对外层词法环境的引用。</li>
+    <li><strong>作用域链</strong>：沿父词法环境引用一路向上直到全局对象，形成一条链；查变量时从当前作用域开始沿链找，命中即停。</li>
+    <li><strong>词法作用域（静态作用域）</strong>：变量可见性由函数在源码中的书写位置决定，与"谁调用它"无关——这是闭包成立的前提。</li>
+  </ul>
+  <h3>2.3 闭包（Closure）</h3>
+  <p class="lead"><b>一句话定位</b>：函数把"出生时所在的词法环境"绑在自己身上，即使外层函数已返回，仍能访问那些变量。</p>
+  <ul>
+    <li><strong>本质</strong>：内部函数在创建时把外层词法环境捕获到自身；外部函数返回后，这个环境因仍被函数引用而不被垃圾回收。</li>
+    <li><strong>典型用途</strong>：数据私有化（模块模式）、回调保持状态、函数柯里化、防抖节流——都靠闭包留住"上次的状态"。</li>
+  </ul>
+  <p class="pit-sentence"><span class="tag-pit">坑</span>被闭包长期引用的对象不会被回收；在大屏长驻页面里用闭包持有大数组，会造成"切屏后内存只涨不降"。</p>
+  <h3>2.4 this 的绑定规则（this Binding）</h3>
+  <p class="lead"><b>一句话定位</b>：this 不看函数定义在哪，而看它"怎么被调用"——四条规则按优先级裁决。</p>
+  <ul>
+    <li><strong>new 调用（最高优先级）</strong>：<code>new Foo()</code>，this 是新创建的实例对象。</li>
+    <li><strong>显式绑定</strong>：<code>foo.call/apply/bind(ctx)</code>，this 是手动传入的 ctx。</li>
+    <li><strong>隐式绑定</strong>：<code>obj.foo()</code>，this 是调用点前面的对象 obj。</li>
+    <li><strong>默认绑定（兜底）</strong>：直接 <code>foo()</code>，严格模式下是 undefined，非严格模式是全局对象。</li>
+    <li><strong>箭头函数</strong>：不绑定自己的 this，捕获定义处的 this——回调里"this 丢了"的标准解法。</li>
+  </ul>
+  <p class="pit-sentence"><span class="tag-pit">坑</span>把对象方法当回调传出去（<code>setTimeout(obj.foo)</code>）后，this 退化为全局/undefined；要么用箭头函数包一层，要么 <code>.bind(obj)</code>。</p>
+  <h3>2.5 原型与原型链（Prototype &amp; Prototype Chain）</h3>
+  <p class="lead"><b>一句话定位</b>：JS 没有经典继承，对象靠"内部指针委托"把属性查找沿原型链向上传递。</p>
+  <ul>
+    <li><strong>委托而非复制</strong>：每个对象内部有隐藏指针 <code>[[Prototype]]</code>（经 <code>__proto__</code> 访问）指向另一个对象；自身没有的属性沿链向上找，直到 <code>null</code>。</li>
+    <li><strong>prototype vs __proto__</strong>：<code>prototype</code> 是函数的属性，指向"实例的原型对象"；<code>__proto__</code> 是实例指向其原型对象的链接。两者方向相反，是最易混的点。</li>
+    <li><strong>new 接线</strong>：<code>new</code> 出来的实例，其 <code>__proto__</code> 指向构造函数的 <code>prototype</code>。</li>
+  </ul>
+  <p class="key-sentence"><span class="tag-point">要点</span>改了原型对象上的方法，所有"继承自它"的对象都会看到——这正是 <code>class</code> 只是语法糖、以及"为什么改数组原型全局生效"的底层原因。</p>
+  <h3>2.6 class 与继承（ES6 Class）</h3>
+  <p class="lead"><b>一句话定位</b>：ES6 class 不是新的继承模型，而是原型继承的语法糖。</p>
+  <ul>
+    <li><strong>三个关键件</strong>：<code>constructor</code> 对应原构造函数；<code>extends</code> 经 <code>Object.setPrototypeOf</code> 接好父子原型链；<code>super()</code> 调用父类构造函数。</li>
+    <li><strong>细节</strong>：类方法默认不可枚举，<code>static</code> 成员挂在构造函数本身上；<code>#privateField</code> 是运行期真正的私有字段。</li>
+  </ul>
+  <p>工程上 class 比手写 <code>Child.prototype = new Parent()</code> 清晰得多；自研 Grid/Tree 插件的内部状态就用私有字段藏住。</p>
+  <h3>2.7 模块化：ESM 与 CommonJS（Modules）</h3>
+  <p class="lead"><b>一句话定位</b>：模块解决全局污染与代码组织；ESM 静态、CommonJS 运行时，二者语义不同。</p>
+  <ul>
+    <li><strong>ESM（import/export）</strong>：编译期静态确定导入导出，支持 tree-shaking；绑定是活的（导出值变，导入方跟着变）；模块只执行一次、形成单例。</li>
+    <li><strong>CommonJS（require/module.exports）</strong>：运行时动态加载；对<strong>原始类型</strong>导出的是值拷贝（首次 require 时快照，导出方重新赋值不影响导入方），对<strong>对象/数组</strong>仍是共享引用（导入方修改其属性会同步回导出方）。</li>
+  </ul>
+  <p class="pit-sentence"><span class="tag-pit">坑</span>老 CommonJS 构建里"改了导出对象的字段页面没更新"，往往就是值拷贝/活绑定的差异所致；大屏老项目走 CJS，DCP-RMP 走 ESM。</p>
+  <h3>2.8 垃圾回收与内存管理（Garbage Collection）</h3>
+  <p class="lead"><b>一句话定位</b>：V8 靠"可达性"决定回收，前端内存泄漏几乎都是"本该不可达却仍被引用"。</p>
+  <ul>
+    <li><strong>可达性判定</strong>：从根（全局对象、当前调用栈变量）出发能到达的对象保留，不可达的回收。</li>
+    <li><strong>回收算法</strong>：早期引用计数因循环引用被淘汰；现代引擎以标记-清除为主，辅以分代回收（新生代 Scavenge、老生代 Mark-Compact）。</li>
+    <li><strong>防泄漏工具</strong>：<code>WeakMap/WeakSet</code> 的 key 是弱引用，不阻止 GC 回收——用它给 DOM/对象挂附加数据（<code>weakMap.set(el, meta)</code>），元素被销毁后条目自动消失，是避免"全局表长期持有大对象"的标准做法。</li>
+  </ul>
+  <p class="pit-sentence"><span class="tag-pit">坑</span>三类典型泄漏：未解绑的事件监听、忘记清理的定时器、被闭包或全局数组长期持有的大对象——大屏"切屏后内存只涨不降"基本都能归到这三类。</p>
+</section>
+
+<section id="sec3" class="card">
+  <h2><span class="num">3</span>工作原理与流程</h2>
+  <h3>3.1 调用栈与执行上下文生命周期</h3>
+  <p>JS 是单线程执行：同一时刻只跑一段代码，靠<strong>调用栈</strong>（call stack）记录"现在执行到哪个函数、该返回哪里"。每进入一个函数就压入一个执行上下文，函数返回就弹出。栈有上限（V8 约一万余帧），递归过深就是栈溢出。下图是一次函数调用的入栈过程：</p>
+  <div class="diagram">
+    <svg viewBox="0 0 800 280" role="img" aria-label="调用栈压栈出栈与执行上下文生命周期示意图">
+      <defs>
+        <marker id="arra" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+          <path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/>
+        </marker>
+      </defs>
+      <text x="400" y="22" text-anchor="middle" font-size="14" font-weight="700" fill="#1f2937">调用栈：调用入栈、返回出栈（示意）</text>
+      <rect x="120" y="48" width="220" height="40" rx="7" fill="#eff6ff" stroke="#2563eb"/>
+      <text x="230" y="66" text-anchor="middle" font-size="12.5" font-weight="600" fill="#1d4ed8">全局上下文 Global EC</text>
+      <text x="230" y="81" text-anchor="middle" font-size="11" fill="#475569">最先入栈，最后出栈</text>
+      <rect x="120" y="96" width="220" height="38" rx="7" fill="#ecfeff" stroke="#0d9488"/>
+      <text x="230" y="113" text-anchor="middle" font-size="12.5" fill="#0e7490">main() 上下文</text>
+      <text x="230" y="128" text-anchor="middle" font-size="11" fill="#475569">含自身变量 + 外层链引用</text>
+      <rect x="120" y="142" width="220" height="38" rx="7" fill="#fefce8" stroke="#d97706"/>
+      <text x="230" y="159" text-anchor="middle" font-size="12.5" fill="#b45309">compute() 上下文（栈顶，正在执行）</text>
+      <text x="230" y="174" text-anchor="middle" font-size="11" fill="#475569">返回后弹出，环境可被回收（除非闭包引用）</text>
+      <line x1="340" y1="161" x2="430" y2="161" stroke="#64748b" marker-end="url(#arra)"/>
+      <rect x="434" y="140" width="300" height="70" rx="8" fill="#f1f5f9" stroke="#64748b"/>
+      <text x="584" y="162" text-anchor="middle" font-size="12.5" font-weight="600" fill="#334155">每个上下文持有：变量环境 + this 绑定</text>
+      <text x="584" y="182" text-anchor="middle" font-size="11.5" fill="#475569">沿父词法环境形成作用域链</text>
+      <text x="584" y="199" text-anchor="middle" font-size="11.5" fill="#475569">栈顶上下文决定当前可见的变量与 this</text>
+      <text x="230" y="210" text-anchor="middle" font-size="12" fill="#6b7280">栈向下生长：新调用压入栈顶</text>
+      <text x="400" y="252" text-anchor="middle" font-size="13" fill="#475569">栈溢出 = 递归无出口；闭包 = 栈帧弹出后，其词法环境仍被函数对象引用而存活。</text>
+    </svg>
+    <p class="diagram-caption">图 2 调用栈与执行上下文生命周期（示意）</p>
+  </div>
+  <ol>
+    <li><strong>全局上下文入栈</strong>：页面脚本启动，先创建全局上下文并压栈。</li>
+    <li><strong>函数调用压栈</strong>：每调用一个函数，创建其执行上下文（含变量环境、this、外层作用域链引用）压到栈顶。</li>
+    <li><strong>栈顶即当前</strong>：JS 永远只执行栈顶上下文的代码；变量查找沿作用域链、this 按当前调用规则确定。</li>
+    <li><strong>返回出栈</strong>：函数返回，上下文弹出。若其内部函数已被外部引用（闭包），词法环境不被回收——这就是闭包的内存本质。</li>
+  </ol>
+  <h3>3.2 原型链查找：属性到底在哪一步命中</h3>
+  <div class="diagram">
+    <svg viewBox="0 0 800 300" role="img" aria-label="JavaScript 原型链查找机制示意图">
+      <defs>
+        <marker id="arrb" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+          <path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/>
+        </marker>
+      </defs>
+      <text x="400" y="22" text-anchor="middle" font-size="14" font-weight="700" fill="#1f2937">原型链委托查找（示意）</text>
+      <rect x="60" y="46" width="230" height="60" rx="8" fill="#eff6ff" stroke="#2563eb"/>
+      <text x="175" y="68" text-anchor="middle" font-size="13" font-weight="600" fill="#1d4ed8">实例 obj = new GridRow()</text>
+      <text x="175" y="86" text-anchor="middle" font-size="11.5" fill="#475569">自身属性：rowData / checked</text>
+      <line x1="175" y1="106" x2="175" y2="132" stroke="#64748b" stroke-dasharray="4,3" marker-end="url(#arrb)"/>
+      <text x="190" y="124" font-size="11" fill="#64748b">__proto__</text>
+      <rect x="60" y="136" width="230" height="60" rx="8" fill="#ecfeff" stroke="#0d9488"/>
+      <text x="175" y="158" text-anchor="middle" font-size="13" font-weight="600" fill="#0e7490">GridRow.prototype</text>
+      <text x="175" y="176" text-anchor="middle" font-size="11.5" fill="#475569">方法：render() / toggle()</text>
+      <line x1="175" y1="196" x2="175" y2="222" stroke="#64748b" stroke-dasharray="4,3" marker-end="url(#arrb)"/>
+      <text x="190" y="214" font-size="11" fill="#64748b">__proto__</text>
+      <rect x="60" y="226" width="230" height="50" rx="8" fill="#f1f5f9" stroke="#64748b"/>
+      <text x="175" y="247" text-anchor="middle" font-size="13" font-weight="600" fill="#334155">Object.prototype</text>
+      <text x="175" y="264" text-anchor="middle" font-size="11.5" fill="#475569">toString() / valueOf()，再往上是 null</text>
+      <rect x="360" y="60" width="390" height="200" rx="10" fill="#fbfdff" stroke="#d97706"/>
+      <text x="555" y="86" text-anchor="middle" font-size="13" font-weight="700" fill="#b45309">访问 obj.render() 的查找过程</text>
+      <text x="380" y="116" font-size="12.5" fill="#334155">1. 先看 obj 自身有没有 render —— 没有</text>
+      <text x="380" y="142" font-size="12.5" fill="#334155">2. 沿 __proto__ 找 GridRow.prototype —— 命中，调用</text>
+      <text x="380" y="168" font-size="12.5" fill="#334155">3. 若访问 obj.toString()：自身无 → GridRow.proto 无</text>
+      <text x="380" y="190" font-size="12.5" fill="#334155">   → 再上 Object.prototype 命中</text>
+      <text x="380" y="220" font-size="12.5" fill="#b91c1c">陷阱：直接改 Object.prototype = 全局污染</text>
+      <text x="380" y="244" font-size="12.5" fill="#475569">遍历用 hasOwnProperty 过滤原型成员</text>
+    </svg>
+    <p class="diagram-caption">图 3 原型链委托查找（示意）</p>
+  </div>
+  <p>为什么这样设计：JS 用"对象关联对象"而非"类拷贝实例"，节省内存——所有实例共享同一份方法（方法挂在 prototype 上，而不是每个实例复制一份）。代价是理解成本：<code>for...in</code> 会把原型上可枚举的属性也遍历出来，必须用 <code>hasOwnProperty</code> 过滤；随意给原型塞方法会造成原型污染（pollution），被第三方库或恶意输入利用。</p>
+</section>
+
+<section id="sec4" class="card">
+  <h2><span class="num">4</span>核心语法与 API 要点</h2>
+  <h3>4.1 现代变量声明：let/const 与暂时性死区</h3>
+<pre class="code" data-lang="js"><code>const MAX = 100;          // 基本类型：不可重新赋值，优先用 const
+let count = 0;            // 需要重新赋值才用 let
+// var count = 0;         // 函数作用域 + 提升 + 挂全局，新项目不再用
+
+console.log(a);           // let/const 在声明前访问 = ReferenceError（暂时性死区 TDZ）
+let a = 1;</code></pre>
+  <p>对比：<code>var</code> 是函数作用域，存在提升（声明被提到作用域顶部、值为 undefined），且在循环里用 <code>var</code> 会导致所有迭代共享同一个变量（经典闭包陷阱）。<code>let/const</code> 是块级作用域，彻底解决这两个问题。</p>
+  <h3>4.2 this 绑定：四种写法对比</h3>
+<pre class="code" data-lang="js"><code>const grid = {
+  name: '告警表',
+  render() { console.log(this.name); }
+};
+grid.render();                 // 隐式绑定：this = grid，输出"告警表"
+
+const fn = grid.render;
+fn();                          // 丢失绑定：this = undefined（严格模式），报错！
+
+const bound = grid.render.bind(grid);   // 显式 bind：永久锁定 this = grid
+setTimeout(bound, 100);
+
+// 箭头函数：不绑定自己的 this，捕获定义处的 this
+const obj = {
+  name: 'x',
+  tick() { setTimeout(() => console.log(this.name), 100); }  // this 仍是 obj
+};</code></pre>
+  <h3>4.3 手写 call / apply / bind</h3>
+<pre class="code" data-lang="js"><code>Function.prototype.myCall = function (ctx, ...args) {
+  ctx = ctx || globalThis;
+  const key = Symbol();
+  ctx[key] = this;              // 把当前函数临时挂到 ctx 上
+  const res = ctx[key](...args); // 以 ctx 为 this 调用
+  delete ctx[key];
+  return res;
+};
+// apply 与 call 只差在参数：apply 收数组，call 收展开参数
+// bind：返回一个永久绑定 this 的新函数（上方 bound 的底层逻辑）</code></pre>
+  <h3>4.4 闭包实战：私有状态与模块化</h3>
+<pre class="code" data-lang="js"><code>// 闭包实现模块私有变量：外部无法直接触碰 _counter
+function createCounter(init = 0) {
+  let _counter = init;                 // 被返回函数闭包引用，不随函数返回销毁
+  return {
+    inc() { return ++_counter; },
+    get() { return _counter; }
+  };
+}
+const c = createCounter(10);
+c.inc(); c.inc();
+console.log(c.get());    // 12；外部访问不到 _counter</code></pre>
+  <h3>4.5 原型与 class 两种继承写法对比</h3>
+<pre class="code" data-lang="js"><code>// 老式原型继承（易写错：Child.prototype = new Parent() 会执行父构造）
+function Parent(name) { this.name = name; }
+Parent.prototype.say = function () { return this.name; };
+
+// 新式 class（等价、清晰，工程统一用这个）
+class Parent2 {
+  constructor(name) { this.name = name; }
+  say() { return this.name; }
+}
+class Child extends Parent2 {
+  constructor(name, age) { super(name); this.age = age; }  // super 必调
+}
+const ch = new Child('row', 3);
+console.log(ch.say());   // 'row'，沿原型链命中 Parent2.prototype.say</code></pre>
+  <h3>4.6 数组与常用高阶 API</h3>
+<pre class="code" data-lang="js"><code>const rows = [{ level: 1 }, { level: 2 }, { level: 1 }];
+// map / filter / reduce / find：纯函数风格，避免手写 for
+const alarms = rows.filter(r => r.level === 1).map(r => ({ ...r, status: 'alarm' }));
+const total = rows.reduce((sum, r) => sum + r.level, 0);
+// 注意：filter/map 返回新数组，不污染原数据；改原数据用 forEach 或直接索引</code></pre>
+</section>
+
+<section id="sec5" class="card">
+  <h2><span class="num">5</span>实战项目经验（真实项目落地）</h2>
+
+  <h3>5.1 项目背景</h3>
+  <p class="lead"><b>一句话定位</b>：电力大屏项目群 iClean 智能监控——把多个变电站的摄像头画面、光跟踪算法框选结果、设备状态聚到一屏展示。</p>
+  <ul>
+    <li><strong>业务场景</strong>：调度中心一屏看多站，算法侧通过 WebSocket/轮询推送归一化目标坐标，前端要做数据清洗、聚合、叠加层绘制。</li>
+    <li><strong>量级</strong>：单屏并发约 9 路视频叠加（估算），多个采集节点分布式上报。</li>
+    <li><strong>年代</strong>：约 2016-2018，Vue2 尚新、jQuery 仍是主力，靠原生 JS 功底无框架兜底。</li>
+  </ul>
+
+  <h3>5.2 我的角色与职责</h3>
+  <ul>
+    <li><strong>角色</strong>：前端开发，负责监控叠加层的数据处理与 Grid/Tree/Dialog 通用插件。</li>
+    <li><strong>团队与分工</strong>：前端 2-3 人、算法与后端若干（估算）；我负责前端数据聚合、去重与插件这一块，并与算法侧对坐标协议。</li>
+  </ul>
+
+  <h3>5.3 技术栈</h3>
+  <ul>
+    <li><strong>前端</strong>：Vue2 + jQuery 混合 + 原生 JS（闭包、原型、事件委托）。</li>
+    <li><strong>通信</strong>：后端 Java，WebSocket + 轮询双通道推送。</li>
+    <li><strong>组件</strong>：现场老机器跑不动 ElementUI，团队自研基于 jQuery 的 Grid/Tree/Dialog 插件。</li>
+  </ul>
+
+  <h3>5.4 落地设计</h3>
+  <ul>
+    <li><strong>闭包跟踪注册表</strong>：每路视频维护私有 <code>tracks</code>，外部只能经 <code>update/clear</code> 操作，防多轮推送互相污染。</li>
+    <li><strong>分布式去重</strong>：按 <code>deviceId</code> 归一，时间戳旧的丢弃。</li>
+    <li><strong>坐标换算</strong>：算法输出 0~1 归一化坐标，叠加层用百分比等比定位对齐画面。</li>
+    <li><strong>聚合与插件</strong>：用 <code>reduce</code> 把告警按站点分桶；Grid 方法挂在原型上共享给所有实例。</li>
+  </ul>
+
+  <h3>5.5 关键实现要点</h3>
+  <pre class="code" data-lang="js"><code>// 跟踪注册表：闭包封装私有 tracks，防止外部直接篡改
+function createTrackStore() {
+  const tracks = {};                 // 私有：{ [deviceId]: { box, ts } }
+  return {
+    update(deviceId, box, ts) {
+      const old = tracks[deviceId];
+      if (old && old.ts > ts) return;   // 分布式乱序：旧数据丢弃
+      tracks[deviceId] = { box, ts };
+      renderOverlay(deviceId, box);
+    },
+    clear(deviceId) { delete tracks[deviceId]; hideOverlay(deviceId); },
+    snapshot() { return Object.keys(tracks).map(id => ({ id, ...tracks[id] })); }
+  };
+}</code></pre>
+  <pre class="code" data-lang="js"><code>// 告警聚合：扁平数组 → 按站点分桶（reduce 纯函数）
+function groupBySite(alarms) {
+  return alarms.reduce((acc, a) => {
+    (acc[a.site] = acc[a.site] || []).push(a);
+    return acc;
+  }, {});
+}
+// Grid 插件原型：方法共享给所有实例
+function Grid(el, options) { this.$el = el; this.rows = options.rows || []; }
+Grid.prototype.render = function () { /* 渲染 rows */ };
+Grid.prototype.sortBy = function (key) {
+  this.rows = [...this.rows].sort((a, b) => a[key] - b[key]);  // 不改原数组
+  this.render();
+};</code></pre>
+
+  <h3>5.6 真实问题与解法</h3>
+  <ul>
+    <li><strong>var 循环闭包事故</strong>：for 循环用 <code>var</code> 绑定每路回调，所有闭包共享同一循环变量——9 路跟踪框全画到最后一路；改 IIFE 立即传参后逐路正确（修复前 9 框错位 → 修复后逐路跟随）。</li>
+    <li><strong>推送乱序</strong>：分布式上报乱序，必须按 <code>ts</code> 丢弃旧帧，否则跟踪框会"回跳"。</li>
+    <li><strong>闭包持有大对象</strong>：切走监控页后 tracks 未 clear，长运行内存缓慢上涨；路由离开统一 <code>clearAll</code> 释放。</li>
+    <li><strong>sort 默认字典序</strong>：数字列必须传 <code>(a,b)=&gt;a-b</code>，否则 10 排在 2 前面。</li>
+    <li><strong>e.target 是子元素</strong>：事件委托后动态新行无需重绑，但 <code>e.target</code> 可能是行内图标，用 <code>closest('tr')</code> 找到真正行。</li>
+    <li><strong>原型共享引用</strong>：原型上的数组配置写成引用会多实例互染——默认值必须在构造函数里深拷贝。</li>
+  </ul>
+
+  <h3>5.7 量化成果</h3>
+  <ul>
+    <li>9 路画面跟踪框稳定跟随、坐标偏差视觉可接受（估算）。</li>
+    <li>Grid/Tree/Dialog 三插件复用到多个大屏页面，新页面接入不再重写表格逻辑。</li>
+  </ul>
+
+  <h3>5.8 协作与排期过程</h3>
+  <ul>
+    <li><strong>契约先行</strong>：与算法侧先定坐标协议（归一化 0~1、原点定义），与后端定 <code>deviceId/ts</code> 字段后再开发，避免边写边对。</li>
+    <li><strong>联调协商</strong>：分布式上报乱序问题与后端协商出"前端按 ts 去重"的责任边界，双方不重复清洗。</li>
+    <li><strong>排期</strong>：叠加层与插件分两期——先跑通单路叠加，再扩多路并抽离通用插件。</li>
+  </ul>
+
+  <h3>5.9 复盘与可复用经验</h3>
+  <ul>
+    <li><strong>闭包管私有状态</strong>：注册表模式天然防外部篡改，比挂全局对象安全。</li>
+    <li><strong>时间戳去重是分布式前端必备</strong>：多源上报必乱序，前端要有兜底。</li>
+    <li><strong>离开即清理</strong>：闭包、定时器、监听器在路由卸载时统一释放。</li>
+  </ul>
+
+  <h3>5.10 面试讲法</h3>
+  <p class="key-sentence"><span class="tag-point">抓手</span>在 jQuery 时代用闭包注册表 + 时间戳去重，扛住了约 9 路分布式视频目标的前端聚合，并用原型共享把表格插件做成可复用资产。</p>
+</section>
+
+<section id="sec6" class="card">
+  <h2><span class="num">6</span>易错点与面试重点</h2>
+  <h3>6.1 回调里 this 丢失</h3>
+  <p class="lead"><b>一句话定位</b>：方法被单独传出去后脱离了调用前缀，this 退化为默认绑定。</p>
+  <ul>
+    <li><strong>现象</strong>：把 <code>obj.method</code> 单独传给 <code>setTimeout</code> 或事件监听，运行时 this 变成 undefined/全局。</li>
+    <li><strong>原因</strong>：方法传出去后脱离了 <code>obj.</code> 调用前缀，触发"默认绑定"而非隐式绑定。</li>
+    <li><strong>正解</strong>：<code>bind(obj)</code>、箭头函数，或调用时保持 <code>obj.method()</code> 形式。</li>
+  </ul>
+  <p class="pit-sentence"><span class="tag-pit">坑</span>这是面试高频追问，也是 Vue2 里"methods 当回调传"的原型坑。</p>
+  <h3>6.2 == 隐式转换的雷区</h3>
+  <p class="lead"><b>一句话定位</b>：抽象相等规则绕，业务里别用 ==。</p>
+  <ul>
+    <li><strong>现象</strong>：<code>[] == ![]</code> 为 true、<code>null == undefined</code> 为 true、<code>'0' == 0</code> 为 true。</li>
+    <li><strong>原因</strong>：抽象相等会先转数字/布尔再比较，规则绕。</li>
+    <li><strong>正解</strong>：业务代码一律 <code>===</code>；唯一例外 <code>x == null</code> 同时判 null/undefined（ESLint 常放行）。</li>
+  </ul>
+  <h3>6.3 循环 + 闭包（var 时代经典 bug）</h3>
+  <p class="lead"><b>一句话定位</b>：var 无块级作用域，循环里的回调共享同一个 i。</p>
+  <ul>
+    <li><strong>现象</strong>：<code>for(var i=0;i&lt;3;i++){ setTimeout(()=&gt;console.log(i),0); }</code> 打印 3 个 3。</li>
+    <li><strong>原因</strong>：var 没有块级作用域，三个回调共享同一个 i，循环结束后 i=3。</li>
+    <li><strong>正解</strong>：改 <code>let i</code>（每次迭代新建绑定），或老环境用 IIFE 传参。</li>
+  </ul>
+  <h3>6.4 原型上的引用被共享</h3>
+  <p class="lead"><b>一句话定位</b>：可变数组/对象写在原型或共享默认值上，多实例互相污染。</p>
+  <ul>
+    <li><strong>现象</strong>：给一个实例改了 <code>grid.rows</code>，所有表格实例的 rows 都变了。</li>
+    <li><strong>原因</strong>：把可变数组/对象写在了原型上（或构造函数默认值共享引用）。</li>
+    <li><strong>正解</strong>：实例状态在构造函数里独立创建，如 <code>this.rows = options.rows ? [...options.rows] : []</code>。</li>
+  </ul>
+  <h3>6.5 类型判断：typeof null 与数组</h3>
+  <p class="lead"><b>一句话定位</b>：typeof 分不清 null 与数组，用专用 API 判。</p>
+  <ul>
+    <li><strong>现象</strong>：<code>typeof null === 'object'</code>（历史 bug，修不了）、<code>typeof [] === 'object'</code> 分不清数组。</li>
+    <li><strong>正解</strong>：判空用 <code>x === null</code>；判数组用 <code>Array.isArray(x)</code>；判普通对象用 <code>Object.prototype.toString.call(x)</code>。</li>
+  </ul>
+  <h3>6.6 浮点精度 0.1 + 0.2</h3>
+  <p class="lead"><b>一句话定位</b>：IEEE 754 无法精确表示十进制小数，比较要用容差。</p>
+  <ul>
+    <li><strong>现象</strong>：<code>0.1 + 0.2 === 0.3</code> 为 false，结果是 0.30000000000000004。</li>
+    <li><strong>原因</strong>：IEEE 754 双精度无法精确表示十进制小数。</li>
+    <li><strong>正解</strong>：比较用 <code>Math.abs(a-b) &lt; Number.EPSILON</code>，或定点整数（分）算后再格式化；显示时 <code>toFixed(2)</code>。</li>
+  </ul>
+</section>
+
+<section id="sec7" class="card">
+  <h2><span class="num">7</span>学习资源与参考</h2>
+  <h3>官方文档与规范</h3>
+  <ul>
+    <li>MDN JavaScript 指南与参考（中文，最权威的入门与 API 手册）：<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript" rel="noopener">developer.mozilla.org/zh-CN/docs/Web/JavaScript</a></li>
+    <li>ECMAScript 现行规范（TC39，读语言本质与边缘行为时查）：<a href="https://tc39.es/ecma262/" rel="noopener">tc39.es/ecma262</a></li>
+    <li>现代 JavaScript 教程（javascript.info，中文翻译质量高，从基础到异步全覆盖）：<a href="https://zh.javascript.info/" rel="noopener">zh.javascript.info</a></li>
+  </ul>
+  <h3>书籍</h3>
+  <ul>
+    <li>《你不知道的 JavaScript》（Get Started / Scope &amp; Closures / this &amp; Object Prototypes 三卷，Kyle Simpson）——讲透作用域、闭包、this、原型链的不二之选，本页核心概念的思想源头。</li>
+    <li>《JavaScript 高级程序设计（第 4 版）》（Matt Frisbie，人民邮电出版社）——API 与浏览器环境的系统参考书。</li>
+  </ul>
+  <h3>实战文章</h3>
+  <ul>
+    <li>V8 官方博客（引擎内部、垃圾回收、优化机制）：<a href="https://v8.dev/" rel="noopener">v8.dev</a></li>
+    <li>MDN 闭包与继承专题（配合本页板块 2、3 阅读）：<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Closures" rel="noopener">developer.mozilla.org/zh-CN/docs/Web/JavaScript/Closures</a></li>
+  </ul>
+</section>
+
+</main>
+</div>
+<nav class="doc-nav bottom">
+  <a class="doc-nav-btn" href="../01_前端基础/01_HTML5与CSS3【深入】.html">← 上一篇</a>
+  <a class="doc-nav-btn home" href="../index.html">⌂ 返回首页</a>
+  <a class="doc-nav-btn" href="../01_前端基础/03_JavaScript进阶_事件循环与异步【深入】.html">下一篇 →</a>
+</nav>
+<footer>全栈技术栈详解 · JavaScript核心【深入】 · 基于简历项目实战编写</footer>
+<button id="backTop" type="button" aria-label="回到顶部">↑</button>
+<script>
+(function () {
+  'use strict';
+  try {
+    var btn = document.getElementById('backTop');
+    if (btn) {
+      var toggle = function () { btn.classList.toggle('show', window.scrollY > 480); };
+      window.addEventListener('scroll', toggle, { passive: true });
+      toggle();
+      btn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    }
+  } catch (e) {}
+  try {
+    var pres = document.querySelectorAll('pre.code');
+    for (var i = 0; i < pres.length; i++) {
+      (function (pre) {
+        var b = document.createElement('button');
+        b.type = 'button'; b.className = 'code-copy'; b.textContent = '复制';
+        b.setAttribute('aria-label', '复制代码');
+        pre.appendChild(b);
+        b.addEventListener('click', function () {
+          var codeEl = pre.querySelector('code');
+          var text = codeEl ? codeEl.innerText : pre.innerText;
+          var done = function () { b.textContent = '已复制'; setTimeout(function () { b.textContent = '复制'; }, 1600); };
+          function fb(t, ok) {
+            try {
+              var ta = document.createElement('textarea');
+              ta.value = t; ta.style.position = 'fixed'; ta.style.opacity = '0';
+              document.body.appendChild(ta); ta.select();
+              document.execCommand('copy'); document.body.removeChild(ta); ok();
+            } catch (e2) {}
+          }
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(done, function () { fb(text, done); });
+          } else { fb(text, done); }
+        });
+      })(pres[i]);
+    }
+  } catch (e) {}
+})();
+</script>
+
+<script data-manual>
+/* ===== 全库统一 Prism 语法高亮（内联，离线可看） ===== */
+var _self="undefined"!=typeof window?window:"undefined"!=typeof WorkerGlobalScope&&self instanceof WorkerGlobalScope?self:{},Prism=function(e){var n=/(?:^|\s)lang(?:uage)?-([\w-]+)(?=\s|$)/i,t=0,r={},a={manual:e.Prism&&e.Prism.manual,disableWorkerMessageHandler:e.Prism&&e.Prism.disableWorkerMessageHandler,util:{encode:function e(n){return n instanceof i?new i(n.type,e(n.content),n.alias):Array.isArray(n)?n.map(e):n.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/\u00a0/g," ")},type:function(e){return Object.prototype.toString.call(e).slice(8,-1)},objId:function(e){return e.__id||Object.defineProperty(e,"__id",{value:++t}),e.__id},clone:function e(n,t){var r,i;switch(t=t||{},a.util.type(n)){case"Object":if(i=a.util.objId(n),t[i])return t[i];for(var l in r={},t[i]=r,n)n.hasOwnProperty(l)&&(r[l]=e(n[l],t));return r;case"Array":return i=a.util.objId(n),t[i]?t[i]:(r=[],t[i]=r,n.forEach((function(n,a){r[a]=e(n,t)})),r);default:return n}},getLanguage:function(e){for(;e;){var t=n.exec(e.className);if(t)return t[1].toLowerCase();e=e.parentElement}return"none"},setLanguage:function(e,t){e.className=e.className.replace(RegExp(n,"gi"),""),e.classList.add("language-"+t)},currentScript:function(){if("undefined"==typeof document)return null;if("currentScript"in document)return document.currentScript;try{throw new Error}catch(r){var e=(/at [^(\r\n]*\((.*):[^:]+:[^:]+\)$/i.exec(r.stack)||[])[1];if(e){var n=document.getElementsByTagName("script");for(var t in n)if(n[t].src==e)return n[t]}return null}},isActive:function(e,n,t){for(var r="no-"+n;e;){var a=e.classList;if(a.contains(n))return!0;if(a.contains(r))return!1;e=e.parentElement}return!!t}},languages:{plain:r,plaintext:r,text:r,txt:r,extend:function(e,n){var t=a.util.clone(a.languages[e]);for(var r in n)t[r]=n[r];return t},insertBefore:function(e,n,t,r){var i=(r=r||a.languages)[e],l={};for(var o in i)if(i.hasOwnProperty(o)){if(o==n)for(var s in t)t.hasOwnProperty(s)&&(l[s]=t[s]);t.hasOwnProperty(o)||(l[o]=i[o])}var u=r[e];return r[e]=l,a.languages.DFS(a.languages,(function(n,t){t===u&&n!=e&&(this[n]=l)})),l},DFS:function e(n,t,r,i){i=i||{};var l=a.util.objId;for(var o in n)if(n.hasOwnProperty(o)){t.call(n,o,n[o],r||o);var s=n[o],u=a.util.type(s);"Object"!==u||i[l(s)]?"Array"!==u||i[l(s)]||(i[l(s)]=!0,e(s,t,o,i)):(i[l(s)]=!0,e(s,t,null,i))}}},plugins:{},highlightAll:function(e,n){a.highlightAllUnder(document,e,n)},highlightAllUnder:function(e,n,t){var r={callback:t,container:e,selector:'code[class*="language-"], [class*="language-"] code, code[class*="lang-"], [class*="lang-"] code'};a.hooks.run("before-highlightall",r),r.elements=Array.prototype.slice.apply(r.container.querySelectorAll(r.selector)),a.hooks.run("before-all-elements-highlight",r);for(var i,l=0;i=r.elements[l++];)a.highlightElement(i,!0===n,r.callback)},highlightElement:function(n,t,r){var i=a.util.getLanguage(n),l=a.languages[i];a.util.setLanguage(n,i);var o=n.parentElement;o&&"pre"===o.nodeName.toLowerCase()&&a.util.setLanguage(o,i);var s={element:n,language:i,grammar:l,code:n.textContent};function u(e){s.highlightedCode=e,a.hooks.run("before-insert",s),s.element.innerHTML=s.highlightedCode,a.hooks.run("after-highlight",s),a.hooks.run("complete",s),r&&r.call(s.element)}if(a.hooks.run("before-sanity-check",s),(o=s.element.parentElement)&&"pre"===o.nodeName.toLowerCase()&&!o.hasAttribute("tabindex")&&o.setAttribute("tabindex","0"),!s.code)return a.hooks.run("complete",s),void(r&&r.call(s.element));if(a.hooks.run("before-highlight",s),s.grammar)if(t&&e.Worker){var c=new Worker(a.filename);c.onmessage=function(e){u(e.data)},c.postMessage(JSON.stringify({language:s.language,code:s.code,immediateClose:!0}))}else u(a.highlight(s.code,s.grammar,s.language));else u(a.util.encode(s.code))},highlight:function(e,n,t){var r={code:e,grammar:n,language:t};if(a.hooks.run("before-tokenize",r),!r.grammar)throw new Error('The language "'+r.language+'" has no grammar.');return r.tokens=a.tokenize(r.code,r.grammar),a.hooks.run("after-tokenize",r),i.stringify(a.util.encode(r.tokens),r.language)},tokenize:function(e,n){var t=n.rest;if(t){for(var r in t)n[r]=t[r];delete n.rest}var a=new s;return u(a,a.head,e),o(e,a,n,a.head,0),function(e){for(var n=[],t=e.head.next;t!==e.tail;)n.push(t.value),t=t.next;return n}(a)},hooks:{all:{},add:function(e,n){var t=a.hooks.all;t[e]=t[e]||[],t[e].push(n)},run:function(e,n){var t=a.hooks.all[e];if(t&&t.length)for(var r,i=0;r=t[i++];)r(n)}},Token:i};function i(e,n,t,r){this.type=e,this.content=n,this.alias=t,this.length=0|(r||"").length}function l(e,n,t,r){e.lastIndex=n;var a=e.exec(t);if(a&&r&&a[1]){var i=a[1].length;a.index+=i,a[0]=a[0].slice(i)}return a}function o(e,n,t,r,s,g){for(var f in t)if(t.hasOwnProperty(f)&&t[f]){var h=t[f];h=Array.isArray(h)?h:[h];for(var d=0;d<h.length;++d){if(g&&g.cause==f+","+d)return;var v=h[d],p=v.inside,m=!!v.lookbehind,y=!!v.greedy,k=v.alias;if(y&&!v.pattern.global){var x=v.pattern.toString().match(/[imsuy]*$/)[0];v.pattern=RegExp(v.pattern.source,x+"g")}for(var b=v.pattern||v,w=r.next,A=s;w!==n.tail&&!(g&&A>=g.reach);A+=w.value.length,w=w.next){var E=w.value;if(n.length>e.length)return;if(!(E instanceof i)){var P,L=1;if(y){if(!(P=l(b,A,e,m))||P.index>=e.length)break;var S=P.index,O=P.index+P[0].length,j=A;for(j+=w.value.length;S>=j;)j+=(w=w.next).value.length;if(A=j-=w.value.length,w.value instanceof i)continue;for(var C=w;C!==n.tail&&(j<O||"string"==typeof C.value);C=C.next)L++,j+=C.value.length;L--,E=e.slice(A,j),P.index-=A}else if(!(P=l(b,0,E,m)))continue;S=P.index;var N=P[0],_=E.slice(0,S),M=E.slice(S+N.length),W=A+E.length;g&&W>g.reach&&(g.reach=W);var z=w.prev;if(_&&(z=u(n,z,_),A+=_.length),c(n,z,L),w=u(n,z,new i(f,p?a.tokenize(N,p):N,k,N)),M&&u(n,w,M),L>1){var I={cause:f+","+d,reach:W};o(e,n,t,w.prev,A,I),g&&I.reach>g.reach&&(g.reach=I.reach)}}}}}}function s(){var e={value:null,prev:null,next:null},n={value:null,prev:e,next:null};e.next=n,this.head=e,this.tail=n,this.length=0}function u(e,n,t){var r=n.next,a={value:t,prev:n,next:r};return n.next=a,r.prev=a,e.length++,a}function c(e,n,t){for(var r=n.next,a=0;a<t&&r!==e.tail;a++)r=r.next;n.next=r,r.prev=n,e.length-=a}if(e.Prism=a,i.stringify=function e(n,t){if("string"==typeof n)return n;if(Array.isArray(n)){var r="";return n.forEach((function(n){r+=e(n,t)})),r}var i={type:n.type,content:e(n.content,t),tag:"span",classes:["token",n.type],attributes:{},language:t},l=n.alias;l&&(Array.isArray(l)?Array.prototype.push.apply(i.classes,l):i.classes.push(l)),a.hooks.run("wrap",i);var o="";for(var s in i.attributes)o+=" "+s+'="'+(i.attributes[s]||"").replace(/"/g,"&quot;")+'"';return"<"+i.tag+' class="'+i.classes.join(" ")+'"'+o+">"+i.content+"</"+i.tag+">"},!e.document)return e.addEventListener?(a.disableWorkerMessageHandler||e.addEventListener("message",(function(n){var t=JSON.parse(n.data),r=t.language,i=t.code,l=t.immediateClose;e.postMessage(a.highlight(i,a.languages[r],r)),l&&e.close()}),!1),a):a;var g=a.util.currentScript();function f(){a.manual||a.highlightAll()}if(g&&(a.filename=g.src,g.hasAttribute("data-manual")&&(a.manual=!0)),!a.manual){var h=document.readyState;"loading"===h||"interactive"===h&&g&&g.defer?document.addEventListener("DOMContentLoaded",f):window.requestAnimationFrame?window.requestAnimationFrame(f):window.setTimeout(f,16)}return a}(_self);"undefined"!=typeof module&&module.exports&&(module.exports=Prism),"undefined"!=typeof global&&(global.Prism=Prism);
+Prism.languages.markup={comment:{pattern:/<!--(?:(?!<!--)[\s\S])*?-->/,greedy:!0},prolog:{pattern:/<\?[\s\S]+?\?>/,greedy:!0},doctype:{pattern:/<!DOCTYPE(?:[^>"'[\]]|"[^"]*"|'[^']*')+(?:\[(?:[^<"'\]]|"[^"]*"|'[^']*'|<(?!!--)|<!--(?:[^-]|-(?!->))*-->)*\]\s*)?>/i,greedy:!0,inside:{"internal-subset":{pattern:/(^[^\[]*\[)[\s\S]+(?=\]>$)/,lookbehind:!0,greedy:!0,inside:null},string:{pattern:/"[^"]*"|'[^']*'/,greedy:!0},punctuation:/^<!|>$|[[\]]/,"doctype-tag":/^DOCTYPE/i,name:/[^\s<>'"]+/}},cdata:{pattern:/<!\[CDATA\[[\s\S]*?\]\]>/i,greedy:!0},tag:{pattern:/<\/?(?!\d)[^\s>\/=$<%]+(?:\s(?:\s*[^\s>\/=]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s'">=]+(?=[\s>]))|(?=[\s/>])))+)?\s*\/?>/,greedy:!0,inside:{tag:{pattern:/^<\/?[^\s>\/]+/,inside:{punctuation:/^<\/?/,namespace:/^[^\s>\/:]+:/}},"special-attr":[],"attr-value":{pattern:/=\s*(?:"[^"]*"|'[^']*'|[^\s'">=]+)/,inside:{punctuation:[{pattern:/^=/,alias:"attr-equals"},{pattern:/^(\s*)["']|["']$/,lookbehind:!0}]}},punctuation:/\/?>/,"attr-name":{pattern:/[^\s>\/]+/,inside:{namespace:/^[^\s>\/:]+:/}}}},entity:[{pattern:/&[\da-z]{1,8};/i,alias:"named-entity"},/&#x?[\da-f]{1,8};/i]},Prism.languages.markup.tag.inside["attr-value"].inside.entity=Prism.languages.markup.entity,Prism.languages.markup.doctype.inside["internal-subset"].inside=Prism.languages.markup,Prism.hooks.add("wrap",(function(a){"entity"===a.type&&(a.attributes.title=a.content.replace(/&amp;/,"&"))})),Object.defineProperty(Prism.languages.markup.tag,"addInlined",{value:function(a,e){var s={};s["language-"+e]={pattern:/(^<!\[CDATA\[)[\s\S]+?(?=\]\]>$)/i,lookbehind:!0,inside:Prism.languages[e]},s.cdata=/^<!\[CDATA\[|\]\]>$/i;var t={"included-cdata":{pattern:/<!\[CDATA\[[\s\S]*?\]\]>/i,inside:s}};t["language-"+e]={pattern:/[\s\S]+/,inside:Prism.languages[e]};var n={};n[a]={pattern:RegExp("(<__[^>]*>)(?:<!\\[CDATA\\[(?:[^\\]]|\\](?!\\]>))*\\]\\]>|(?!<!\\[CDATA\\[)[^])*?(?=</__>)".replace(/__/g,(function(){return a})),"i"),lookbehind:!0,greedy:!0,inside:t},Prism.languages.insertBefore("markup","cdata",n)}}),Object.defineProperty(Prism.languages.markup.tag,"addAttribute",{value:function(a,e){Prism.languages.markup.tag.inside["special-attr"].push({pattern:RegExp("(^|[\"'\\s])(?:"+a+")\\s*=\\s*(?:\"[^\"]*\"|'[^']*'|[^\\s'\">=]+(?=[\\s>]))","i"),lookbehind:!0,inside:{"attr-name":/^[^\s=]+/,"attr-value":{pattern:/=[\s\S]+/,inside:{value:{pattern:/(^=\s*(["']|(?!["'])))\S[\s\S]*(?=\2$)/,lookbehind:!0,alias:[e,"language-"+e],inside:Prism.languages[e]},punctuation:[{pattern:/^=/,alias:"attr-equals"},/"|'/]}}}})}}),Prism.languages.html=Prism.languages.markup,Prism.languages.mathml=Prism.languages.markup,Prism.languages.svg=Prism.languages.markup,Prism.languages.xml=Prism.languages.extend("markup",{}),Prism.languages.ssml=Prism.languages.xml,Prism.languages.atom=Prism.languages.xml,Prism.languages.rss=Prism.languages.xml;
+!function(s){var e=/(?:"(?:\\(?:\r\n|[\s\S])|[^"\\\r\n])*"|'(?:\\(?:\r\n|[\s\S])|[^'\\\r\n])*')/;s.languages.css={comment:/\/\*[\s\S]*?\*\//,atrule:{pattern:RegExp("@[\\w-](?:[^;{\\s\"']|\\s+(?!\\s)|"+e.source+")*?(?:;|(?=\\s*\\{))"),inside:{rule:/^@[\w-]+/,"selector-function-argument":{pattern:/(\bselector\s*\(\s*(?![\s)]))(?:[^()\s]|\s+(?![\s)])|\((?:[^()]|\([^()]*\))*\))+(?=\s*\))/,lookbehind:!0,alias:"selector"},keyword:{pattern:/(^|[^\w-])(?:and|not|only|or)(?![\w-])/,lookbehind:!0}}},url:{pattern:RegExp("\\burl\\((?:"+e.source+"|(?:[^\\\\\r\n()\"']|\\\\[^])*)\\)","i"),greedy:!0,inside:{function:/^url/i,punctuation:/^\(|\)$/,string:{pattern:RegExp("^"+e.source+"$"),alias:"url"}}},selector:{pattern:RegExp("(^|[{}\\s])[^{}\\s](?:[^{};\"'\\s]|\\s+(?![\\s{])|"+e.source+")*(?=\\s*\\{)"),lookbehind:!0},string:{pattern:e,greedy:!0},property:{pattern:/(^|[^-\w\xA0-\uFFFF])(?!\s)[-_a-z\xA0-\uFFFF](?:(?!\s)[-\w\xA0-\uFFFF])*(?=\s*:)/i,lookbehind:!0},important:/!important\b/i,function:{pattern:/(^|[^-a-z0-9])[-a-z0-9]+(?=\()/i,lookbehind:!0},punctuation:/[(){};:,]/},s.languages.css.atrule.inside.rest=s.languages.css;var t=s.languages.markup;t&&(t.tag.addInlined("style","css"),t.tag.addAttribute("style","css"))}(Prism);
+Prism.languages.clike={comment:[{pattern:/(^|[^\\])\/\*[\s\S]*?(?:\*\/|$)/,lookbehind:!0,greedy:!0},{pattern:/(^|[^\\:])\/\/.*/,lookbehind:!0,greedy:!0}],string:{pattern:/(["'])(?:\\(?:\r\n|[\s\S])|(?!\1)[^\\\r\n])*\1/,greedy:!0},"class-name":{pattern:/(\b(?:class|extends|implements|instanceof|interface|new|trait)\s+|\bcatch\s+\()[\w.\\]+/i,lookbehind:!0,inside:{punctuation:/[.\\]/}},keyword:/\b(?:break|catch|continue|do|else|finally|for|function|if|in|instanceof|new|null|return|throw|try|while)\b/,boolean:/\b(?:false|true)\b/,function:/\b\w+(?=\()/,number:/\b0x[\da-f]+\b|(?:\b\d+(?:\.\d*)?|\B\.\d+)(?:e[+-]?\d+)?/i,operator:/[<>]=?|[!=]=?=?|--?|\+\+?|&&?|\|\|?|[?*/~^%]/,punctuation:/[{}[\];(),.:]/};
+Prism.languages.javascript=Prism.languages.extend("clike",{"class-name":[Prism.languages.clike["class-name"],{pattern:/(^|[^$\w\xA0-\uFFFF])(?!\s)[_$A-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*(?=\.(?:constructor|prototype))/,lookbehind:!0}],keyword:[{pattern:/((?:^|\})\s*)catch\b/,lookbehind:!0},{pattern:/(^|[^.]|\.\.\.\s*)\b(?:as|assert(?=\s*\{)|async(?=\s*(?:function\b|\(|[$\w\xA0-\uFFFF]|$))|await|break|case|class|const|continue|debugger|default|delete|do|else|enum|export|extends|finally(?=\s*(?:\{|$))|for|from(?=\s*(?:['"]|$))|function|(?:get|set)(?=\s*(?:[#\[$\w\xA0-\uFFFF]|$))|if|implements|import|in|instanceof|interface|let|new|null|of|package|private|protected|public|return|static|super|switch|this|throw|try|typeof|undefined|var|void|while|with|yield)\b/,lookbehind:!0}],function:/#?(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*(?=\s*(?:\.\s*(?:apply|bind|call)\s*)?\()/,number:{pattern:RegExp("(^|[^\\w$])(?:NaN|Infinity|0[bB][01]+(?:_[01]+)*n?|0[oO][0-7]+(?:_[0-7]+)*n?|0[xX][\\dA-Fa-f]+(?:_[\\dA-Fa-f]+)*n?|\\d+(?:_\\d+)*n|(?:\\d+(?:_\\d+)*(?:\\.(?:\\d+(?:_\\d+)*)?)?|\\.\\d+(?:_\\d+)*)(?:[Ee][+-]?\\d+(?:_\\d+)*)?)(?![\\w$])"),lookbehind:!0},operator:/--|\+\+|\*\*=?|=>|&&=?|\|\|=?|[!=]==|<<=?|>>>?=?|[-+*/%&|^!=<>]=?|\.{3}|\?\?=?|\?\.?|[~:]/}),Prism.languages.javascript["class-name"][0].pattern=/(\b(?:class|extends|implements|instanceof|interface|new)\s+)[\w.\\]+/,Prism.languages.insertBefore("javascript","keyword",{regex:{pattern:RegExp("((?:^|[^$\\w\\xA0-\\uFFFF.\"'\\])\\s]|\\b(?:return|yield))\\s*)/(?:(?:\\[(?:[^\\]\\\\\r\n]|\\\\.)*\\]|\\\\.|[^/\\\\\\[\r\n])+/[dgimyus]{0,7}|(?:\\[(?:[^[\\]\\\\\r\n]|\\\\.|\\[(?:[^[\\]\\\\\r\n]|\\\\.|\\[(?:[^[\\]\\\\\r\n]|\\\\.)*\\])*\\])*\\]|\\\\.|[^/\\\\\\[\r\n])+/[dgimyus]{0,7}v[dgimyus]{0,7})(?=(?:\\s|/\\*(?:[^*]|\\*(?!/))*\\*/)*(?:$|[\r\n,.;:})\\]]|//))"),lookbehind:!0,greedy:!0,inside:{"regex-source":{pattern:/^(\/)[\s\S]+(?=\/[a-z]*$)/,lookbehind:!0,alias:"language-regex",inside:Prism.languages.regex},"regex-delimiter":/^\/|\/$/,"regex-flags":/^[a-z]+$/}},"function-variable":{pattern:/#?(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*(?=\s*[=:]\s*(?:async\s*)?(?:\bfunction\b|(?:\((?:[^()]|\([^()]*\))*\)|(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*)\s*=>))/,alias:"function"},parameter:[{pattern:/(function(?:\s+(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*)?\s*\(\s*)(?!\s)(?:[^()\s]|\s+(?![\s)])|\([^()]*\))+(?=\s*\))/,lookbehind:!0,inside:Prism.languages.javascript},{pattern:/(^|[^$\w\xA0-\uFFFF])(?!\s)[_$a-z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*(?=\s*=>)/i,lookbehind:!0,inside:Prism.languages.javascript},{pattern:/(\(\s*)(?!\s)(?:[^()\s]|\s+(?![\s)])|\([^()]*\))+(?=\s*\)\s*=>)/,lookbehind:!0,inside:Prism.languages.javascript},{pattern:/((?:\b|\s|^)(?!(?:as|async|await|break|case|catch|class|const|continue|debugger|default|delete|do|else|enum|export|extends|finally|for|from|function|get|if|implements|import|in|instanceof|interface|let|new|null|of|package|private|protected|public|return|set|static|super|switch|this|throw|try|typeof|undefined|var|void|while|with|yield)(?![$\w\xA0-\uFFFF]))(?:(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*\s*)\(\s*|\]\s*\(\s*)(?!\s)(?:[^()\s]|\s+(?![\s)])|\([^()]*\))+(?=\s*\)\s*\{)/,lookbehind:!0,inside:Prism.languages.javascript}],constant:/\b[A-Z](?:[A-Z_]|\dx?)*\b/}),Prism.languages.insertBefore("javascript","string",{hashbang:{pattern:/^#!.*/,greedy:!0,alias:"comment"},"template-string":{pattern:/`(?:\\[\s\S]|\$\{(?:[^{}]|\{(?:[^{}]|\{[^}]*\})*\})+\}|(?!\$\{)[^\\`])*`/,greedy:!0,inside:{"template-punctuation":{pattern:/^`|`$/,alias:"string"},interpolation:{pattern:/((?:^|[^\\])(?:\\{2})*)\$\{(?:[^{}]|\{(?:[^{}]|\{[^}]*\})*\})+\}/,lookbehind:!0,inside:{"interpolation-punctuation":{pattern:/^\$\{|\}$/,alias:"punctuation"},rest:Prism.languages.javascript}},string:/[\s\S]+/}},"string-property":{pattern:/((?:^|[,{])[ \t]*)(["'])(?:\\(?:\r\n|[\s\S])|(?!\2)[^\\\r\n])*\2(?=\s*:)/m,lookbehind:!0,greedy:!0,alias:"property"}}),Prism.languages.insertBefore("javascript","operator",{"literal-property":{pattern:/((?:^|[,{])[ \t]*)(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*(?=\s*:)/m,lookbehind:!0,alias:"property"}}),Prism.languages.markup&&(Prism.languages.markup.tag.addInlined("script","javascript"),Prism.languages.markup.tag.addAttribute("on(?:abort|blur|change|click|composition(?:end|start|update)|dblclick|error|focus(?:in|out)?|key(?:down|up)|load|mouse(?:down|enter|leave|move|out|over|up)|reset|resize|scroll|select|slotchange|submit|unload|wheel)","javascript")),Prism.languages.js=Prism.languages.javascript;
+!function(e){e.languages.typescript=e.languages.extend("javascript",{"class-name":{pattern:/(\b(?:class|extends|implements|instanceof|interface|new|type)\s+)(?!keyof\b)(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*(?:\s*<(?:[^<>]|<(?:[^<>]|<[^<>]*>)*>)*>)?/,lookbehind:!0,greedy:!0,inside:null},builtin:/\b(?:Array|Function|Promise|any|boolean|console|never|number|string|symbol|unknown)\b/}),e.languages.typescript.keyword.push(/\b(?:abstract|declare|is|keyof|readonly|require)\b/,/\b(?:asserts|infer|interface|module|namespace|type)\b(?=\s*(?:[{_$a-zA-Z\xA0-\uFFFF]|$))/,/\btype\b(?=\s*(?:[\{*]|$))/),delete e.languages.typescript.parameter,delete e.languages.typescript["literal-property"];var s=e.languages.extend("typescript",{});delete s["class-name"],e.languages.typescript["class-name"].inside=s,e.languages.insertBefore("typescript","function",{decorator:{pattern:/@[$\w\xA0-\uFFFF]+/,inside:{at:{pattern:/^@/,alias:"operator"},function:/^[\s\S]+/}},"generic-function":{pattern:/#?(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*\s*<(?:[^<>]|<(?:[^<>]|<[^<>]*>)*>)*>(?=\s*\()/,greedy:!0,inside:{function:/^#?(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*/,generic:{pattern:/<[\s\S]+/,alias:"class-name",inside:s}}}}),e.languages.ts=e.languages.typescript}(Prism);
+!function(e){var n=/\b(?:abstract|assert|boolean|break|byte|case|catch|char|class|const|continue|default|do|double|else|enum|exports|extends|final|finally|float|for|goto|if|implements|import|instanceof|int|interface|long|module|native|new|non-sealed|null|open|opens|package|permits|private|protected|provides|public|record(?!\s*[(){}[\]<>=%~.:,;?+\-*/&|^])|requires|return|sealed|short|static|strictfp|super|switch|synchronized|this|throw|throws|to|transient|transitive|try|uses|var|void|volatile|while|with|yield)\b/,t="(?:[a-z]\\w*\\s*\\.\\s*)*(?:[A-Z]\\w*\\s*\\.\\s*)*",s={pattern:RegExp("(^|[^\\w.])"+t+"[A-Z](?:[\\d_A-Z]*[a-z]\\w*)?\\b"),lookbehind:!0,inside:{namespace:{pattern:/^[a-z]\w*(?:\s*\.\s*[a-z]\w*)*(?:\s*\.)?/,inside:{punctuation:/\./}},punctuation:/\./}};e.languages.java=e.languages.extend("clike",{string:{pattern:/(^|[^\\])"(?:\\.|[^"\\\r\n])*"/,lookbehind:!0,greedy:!0},"class-name":[s,{pattern:RegExp("(^|[^\\w.])"+t+"[A-Z]\\w*(?=\\s+\\w+\\s*[;,=()]|\\s*(?:\\[[\\s,]*\\]\\s*)?::\\s*new\\b)"),lookbehind:!0,inside:s.inside},{pattern:RegExp("(\\b(?:class|enum|extends|implements|instanceof|interface|new|record|throws)\\s+)"+t+"[A-Z]\\w*\\b"),lookbehind:!0,inside:s.inside}],keyword:n,function:[e.languages.clike.function,{pattern:/(::\s*)[a-z_]\w*/,lookbehind:!0}],number:/\b0b[01][01_]*L?\b|\b0x(?:\.[\da-f_p+-]+|[\da-f_]+(?:\.[\da-f_p+-]+)?)\b|(?:\b\d[\d_]*(?:\.[\d_]*)?|\B\.\d[\d_]*)(?:e[+-]?\d[\d_]*)?[dfl]?/i,operator:{pattern:/(^|[^.])(?:<<=?|>>>?=?|->|--|\+\+|&&|\|\||::|[?:~]|[-+*/%&|^!=<>]=?)/m,lookbehind:!0},constant:/\b[A-Z][A-Z_\d]+\b/}),e.languages.insertBefore("java","string",{"triple-quoted-string":{pattern:/"""[ \t]*[\r\n](?:(?:"|"")?(?:\\.|[^"\\]))*"""/,greedy:!0,alias:"string"},char:{pattern:/'(?:\\.|[^'\\\r\n]){1,6}'/,greedy:!0}}),e.languages.insertBefore("java","class-name",{annotation:{pattern:/(^|[^.])@\w+(?:\s*\.\s*\w+)*/,lookbehind:!0,alias:"punctuation"},generics:{pattern:/<(?:[\w\s,.?]|&(?!&)|<(?:[\w\s,.?]|&(?!&)|<(?:[\w\s,.?]|&(?!&)|<(?:[\w\s,.?]|&(?!&))*>)*>)*>)*>/,inside:{"class-name":s,keyword:n,punctuation:/[<>(),.:]/,operator:/[?&|]/}},import:[{pattern:RegExp("(\\bimport\\s+)"+t+"(?:[A-Z]\\w*|\\*)(?=\\s*;)"),lookbehind:!0,inside:{namespace:s.inside.namespace,punctuation:/\./,operator:/\*/,"class-name":/\w+/}},{pattern:RegExp("(\\bimport\\s+static\\s+)"+t+"(?:\\w+|\\*)(?=\\s*;)"),lookbehind:!0,alias:"static",inside:{namespace:s.inside.namespace,static:/\b\w+$/,punctuation:/\./,operator:/\*/,"class-name":/\w+/}}],namespace:{pattern:RegExp("(\\b(?:exports|import(?:\\s+static)?|module|open|opens|package|provides|requires|to|transitive|uses|with)\\s+)(?!<keyword>)[a-z]\\w*(?:\\.[a-z]\\w*)*\\.?".replace(/<keyword>/g,(function(){return n.source}))),lookbehind:!0,inside:{punctuation:/\./}}})}(Prism);
+!function(e){var t="\\b(?:BASH|BASHOPTS|BASH_ALIASES|BASH_ARGC|BASH_ARGV|BASH_CMDS|BASH_COMPLETION_COMPAT_DIR|BASH_LINENO|BASH_REMATCH|BASH_SOURCE|BASH_VERSINFO|BASH_VERSION|COLORTERM|COLUMNS|COMP_WORDBREAKS|DBUS_SESSION_BUS_ADDRESS|DEFAULTS_PATH|DESKTOP_SESSION|DIRSTACK|DISPLAY|EUID|GDMSESSION|GDM_LANG|GNOME_KEYRING_CONTROL|GNOME_KEYRING_PID|GPG_AGENT_INFO|GROUPS|HISTCONTROL|HISTFILE|HISTFILESIZE|HISTSIZE|HOME|HOSTNAME|HOSTTYPE|IFS|INSTANCE|JOB|LANG|LANGUAGE|LC_ADDRESS|LC_ALL|LC_IDENTIFICATION|LC_MEASUREMENT|LC_MONETARY|LC_NAME|LC_NUMERIC|LC_PAPER|LC_TELEPHONE|LC_TIME|LESSCLOSE|LESSOPEN|LINES|LOGNAME|LS_COLORS|MACHTYPE|MAILCHECK|MANDATORY_PATH|NO_AT_BRIDGE|OLDPWD|OPTERR|OPTIND|ORBIT_SOCKETDIR|OSTYPE|PAPERSIZE|PATH|PIPESTATUS|PPID|PS1|PS2|PS3|PS4|PWD|RANDOM|REPLY|SECONDS|SELINUX_INIT|SESSION|SESSIONTYPE|SESSION_MANAGER|SHELL|SHELLOPTS|SHLVL|SSH_AUTH_SOCK|TERM|UID|UPSTART_EVENTS|UPSTART_INSTANCE|UPSTART_JOB|UPSTART_SESSION|USER|WINDOWID|XAUTHORITY|XDG_CONFIG_DIRS|XDG_CURRENT_DESKTOP|XDG_DATA_DIRS|XDG_GREETER_DATA_DIR|XDG_MENU_PREFIX|XDG_RUNTIME_DIR|XDG_SEAT|XDG_SEAT_PATH|XDG_SESSION_DESKTOP|XDG_SESSION_ID|XDG_SESSION_PATH|XDG_SESSION_TYPE|XDG_VTNR|XMODIFIERS)\\b",a={pattern:/(^(["']?)\w+\2)[ \t]+\S.*/,lookbehind:!0,alias:"punctuation",inside:null},n={bash:a,environment:{pattern:RegExp("\\$"+t),alias:"constant"},variable:[{pattern:/\$?\(\([\s\S]+?\)\)/,greedy:!0,inside:{variable:[{pattern:/(^\$\(\([\s\S]+)\)\)/,lookbehind:!0},/^\$\(\(/],number:/\b0x[\dA-Fa-f]+\b|(?:\b\d+(?:\.\d*)?|\B\.\d+)(?:[Ee]-?\d+)?/,operator:/--|\+\+|\*\*=?|<<=?|>>=?|&&|\|\||[=!+\-*/%<>^&|]=?|[?~:]/,punctuation:/\(\(?|\)\)?|,|;/}},{pattern:/\$\((?:\([^)]+\)|[^()])+\)|`[^`]+`/,greedy:!0,inside:{variable:/^\$\(|^`|\)$|`$/}},{pattern:/\$\{[^}]+\}/,greedy:!0,inside:{operator:/:[-=?+]?|[!\/]|##?|%%?|\^\^?|,,?/,punctuation:/[\[\]]/,environment:{pattern:RegExp("(\\{)"+t),lookbehind:!0,alias:"constant"}}},/\$(?:\w+|[#?*!@$])/],entity:/\\(?:[abceEfnrtv\\"]|O?[0-7]{1,3}|U[0-9a-fA-F]{8}|u[0-9a-fA-F]{4}|x[0-9a-fA-F]{1,2})/};e.languages.bash={shebang:{pattern:/^#!\s*\/.*/,alias:"important"},comment:{pattern:/(^|[^"{\\$])#.*/,lookbehind:!0},"function-name":[{pattern:/(\bfunction\s+)[\w-]+(?=(?:\s*\(?:\s*\))?\s*\{)/,lookbehind:!0,alias:"function"},{pattern:/\b[\w-]+(?=\s*\(\s*\)\s*\{)/,alias:"function"}],"for-or-select":{pattern:/(\b(?:for|select)\s+)\w+(?=\s+in\s)/,alias:"variable",lookbehind:!0},"assign-left":{pattern:/(^|[\s;|&]|[<>]\()\w+(?:\.\w+)*(?=\+?=)/,inside:{environment:{pattern:RegExp("(^|[\\s;|&]|[<>]\\()"+t),lookbehind:!0,alias:"constant"}},alias:"variable",lookbehind:!0},parameter:{pattern:/(^|\s)-{1,2}(?:\w+:[+-]?)?\w+(?:\.\w+)*(?=[=\s]|$)/,alias:"variable",lookbehind:!0},string:[{pattern:/((?:^|[^<])<<-?\s*)(\w+)\s[\s\S]*?(?:\r?\n|\r)\2/,lookbehind:!0,greedy:!0,inside:n},{pattern:/((?:^|[^<])<<-?\s*)(["'])(\w+)\2\s[\s\S]*?(?:\r?\n|\r)\3/,lookbehind:!0,greedy:!0,inside:{bash:a}},{pattern:/(^|[^\\](?:\\\\)*)"(?:\\[\s\S]|\$\([^)]+\)|\$(?!\()|`[^`]+`|[^"\\`$])*"/,lookbehind:!0,greedy:!0,inside:n},{pattern:/(^|[^$\\])'[^']*'/,lookbehind:!0,greedy:!0},{pattern:/\$'(?:[^'\\]|\\[\s\S])*'/,greedy:!0,inside:{entity:n.entity}}],environment:{pattern:RegExp("\\$?"+t),alias:"constant"},variable:n.variable,function:{pattern:/(^|[\s;|&]|[<>]\()(?:add|apropos|apt|apt-cache|apt-get|aptitude|aspell|automysqlbackup|awk|basename|bash|bc|bconsole|bg|bzip2|cal|cargo|cat|cfdisk|chgrp|chkconfig|chmod|chown|chroot|cksum|clear|cmp|column|comm|composer|cp|cron|crontab|csplit|curl|cut|date|dc|dd|ddrescue|debootstrap|df|diff|diff3|dig|dir|dircolors|dirname|dirs|dmesg|docker|docker-compose|du|egrep|eject|env|ethtool|expand|expect|expr|fdformat|fdisk|fg|fgrep|file|find|fmt|fold|format|free|fsck|ftp|fuser|gawk|git|gparted|grep|groupadd|groupdel|groupmod|groups|grub-mkconfig|gzip|halt|head|hg|history|host|hostname|htop|iconv|id|ifconfig|ifdown|ifup|import|install|ip|java|jobs|join|kill|killall|less|link|ln|locate|logname|logrotate|look|lpc|lpr|lprint|lprintd|lprintq|lprm|ls|lsof|lynx|make|man|mc|mdadm|mkconfig|mkdir|mke2fs|mkfifo|mkfs|mkisofs|mknod|mkswap|mmv|more|most|mount|mtools|mtr|mutt|mv|nano|nc|netstat|nice|nl|node|nohup|notify-send|npm|nslookup|op|open|parted|passwd|paste|pathchk|ping|pkill|pnpm|podman|podman-compose|popd|pr|printcap|printenv|ps|pushd|pv|quota|quotacheck|quotactl|ram|rar|rcp|reboot|remsync|rename|renice|rev|rm|rmdir|rpm|rsync|scp|screen|sdiff|sed|sendmail|seq|service|sftp|sh|shellcheck|shuf|shutdown|sleep|slocate|sort|split|ssh|stat|strace|su|sudo|sum|suspend|swapon|sync|sysctl|tac|tail|tar|tee|time|timeout|top|touch|tr|traceroute|tsort|tty|umount|uname|unexpand|uniq|units|unrar|unshar|unzip|update-grub|uptime|useradd|userdel|usermod|users|uudecode|uuencode|v|vcpkg|vdir|vi|vim|virsh|vmstat|wait|watch|wc|wget|whereis|which|who|whoami|write|xargs|xdg-open|yarn|yes|zenity|zip|zsh|zypper)(?=$|[)\s;|&])/,lookbehind:!0},keyword:{pattern:/(^|[\s;|&]|[<>]\()(?:case|do|done|elif|else|esac|fi|for|function|if|in|select|then|until|while)(?=$|[)\s;|&])/,lookbehind:!0},builtin:{pattern:/(^|[\s;|&]|[<>]\()(?:\.|:|alias|bind|break|builtin|caller|cd|command|continue|declare|echo|enable|eval|exec|exit|export|getopts|hash|help|let|local|logout|mapfile|printf|pwd|read|readarray|readonly|return|set|shift|shopt|source|test|times|trap|type|typeset|ulimit|umask|unalias|unset)(?=$|[)\s;|&])/,lookbehind:!0,alias:"class-name"},boolean:{pattern:/(^|[\s;|&]|[<>]\()(?:false|true)(?=$|[)\s;|&])/,lookbehind:!0},"file-descriptor":{pattern:/\B&\d\b/,alias:"important"},operator:{pattern:/\d?<>|>\||\+=|=[=~]?|!=?|<<[<-]?|[&\d]?>>|\d[<>]&?|[<>][&=]?|&[>&]?|\|[&|]?/,inside:{"file-descriptor":{pattern:/^\d/,alias:"important"}}},punctuation:/\$?\(\(?|\)\)?|\.\.|[{}[\];\\]/,number:{pattern:/(^|\s)(?:[1-9]\d*|0)(?:[.,]\d+)?\b/,lookbehind:!0}},a.inside=e.languages.bash;for(var s=["comment","function-name","for-or-select","assign-left","parameter","string","environment","function","keyword","builtin","boolean","file-descriptor","operator","punctuation","number"],o=n.variable[1].inside,i=0;i<s.length;i++)o[s[i]]=e.languages.bash[s[i]];e.languages.sh=e.languages.bash,e.languages.shell=e.languages.bash}(Prism);
+Prism.languages.sql={comment:{pattern:/(^|[^\\])(?:\/\*[\s\S]*?\*\/|(?:--|\/\/|#).*)/,lookbehind:!0},variable:[{pattern:/@(["'`])(?:\\[\s\S]|(?!\1)[^\\])+\1/,greedy:!0},/@[\w.$]+/],string:{pattern:/(^|[^@\\])("|')(?:\\[\s\S]|(?!\2)[^\\]|\2\2)*\2/,greedy:!0,lookbehind:!0},identifier:{pattern:/(^|[^@\\])`(?:\\[\s\S]|[^`\\]|``)*`/,greedy:!0,lookbehind:!0,inside:{punctuation:/^`|`$/}},function:/\b(?:AVG|COUNT|FIRST|FORMAT|LAST|LCASE|LEN|MAX|MID|MIN|MOD|NOW|ROUND|SUM|UCASE)(?=\s*\()/i,keyword:/\b(?:ACTION|ADD|AFTER|ALGORITHM|ALL|ALTER|ANALYZE|ANY|APPLY|AS|ASC|AUTHORIZATION|AUTO_INCREMENT|BACKUP|BDB|BEGIN|BERKELEYDB|BIGINT|BINARY|BIT|BLOB|BOOL|BOOLEAN|BREAK|BROWSE|BTREE|BULK|BY|CALL|CASCADED?|CASE|CHAIN|CHAR(?:ACTER|SET)?|CHECK(?:POINT)?|CLOSE|CLUSTERED|COALESCE|COLLATE|COLUMNS?|COMMENT|COMMIT(?:TED)?|COMPUTE|CONNECT|CONSISTENT|CONSTRAINT|CONTAINS(?:TABLE)?|CONTINUE|CONVERT|CREATE|CROSS|CURRENT(?:_DATE|_TIME|_TIMESTAMP|_USER)?|CURSOR|CYCLE|DATA(?:BASES?)?|DATE(?:TIME)?|DAY|DBCC|DEALLOCATE|DEC|DECIMAL|DECLARE|DEFAULT|DEFINER|DELAYED|DELETE|DELIMITERS?|DENY|DESC|DESCRIBE|DETERMINISTIC|DISABLE|DISCARD|DISK|DISTINCT|DISTINCTROW|DISTRIBUTED|DO|DOUBLE|DROP|DUMMY|DUMP(?:FILE)?|DUPLICATE|ELSE(?:IF)?|ENABLE|ENCLOSED|END|ENGINE|ENUM|ERRLVL|ERRORS|ESCAPED?|EXCEPT|EXEC(?:UTE)?|EXISTS|EXIT|EXPLAIN|EXTENDED|FETCH|FIELDS|FILE|FILLFACTOR|FIRST|FIXED|FLOAT|FOLLOWING|FOR(?: EACH ROW)?|FORCE|FOREIGN|FREETEXT(?:TABLE)?|FROM|FULL|FUNCTION|GEOMETRY(?:COLLECTION)?|GLOBAL|GOTO|GRANT|GROUP|HANDLER|HASH|HAVING|HOLDLOCK|HOUR|IDENTITY(?:COL|_INSERT)?|IF|IGNORE|IMPORT|INDEX|INFILE|INNER|INNODB|INOUT|INSERT|INT|INTEGER|INTERSECT|INTERVAL|INTO|INVOKER|ISOLATION|ITERATE|JOIN|KEYS?|KILL|LANGUAGE|LAST|LEAVE|LEFT|LEVEL|LIMIT|LINENO|LINES|LINESTRING|LOAD|LOCAL|LOCK|LONG(?:BLOB|TEXT)|LOOP|MATCH(?:ED)?|MEDIUM(?:BLOB|INT|TEXT)|MERGE|MIDDLEINT|MINUTE|MODE|MODIFIES|MODIFY|MONTH|MULTI(?:LINESTRING|POINT|POLYGON)|NATIONAL|NATURAL|NCHAR|NEXT|NO|NONCLUSTERED|NULLIF|NUMERIC|OFF?|OFFSETS?|ON|OPEN(?:DATASOURCE|QUERY|ROWSET)?|OPTIMIZE|OPTION(?:ALLY)?|ORDER|OUT(?:ER|FILE)?|OVER|PARTIAL|PARTITION|PERCENT|PIVOT|PLAN|POINT|POLYGON|PRECEDING|PRECISION|PREPARE|PREV|PRIMARY|PRINT|PRIVILEGES|PROC(?:EDURE)?|PUBLIC|PURGE|QUICK|RAISERROR|READS?|REAL|RECONFIGURE|REFERENCES|RELEASE|RENAME|REPEAT(?:ABLE)?|REPLACE|REPLICATION|REQUIRE|RESIGNAL|RESTORE|RESTRICT|RETURN(?:ING|S)?|REVOKE|RIGHT|ROLLBACK|ROUTINE|ROW(?:COUNT|GUIDCOL|S)?|RTREE|RULE|SAVE(?:POINT)?|SCHEMA|SECOND|SELECT|SERIAL(?:IZABLE)?|SESSION(?:_USER)?|SET(?:USER)?|SHARE|SHOW|SHUTDOWN|SIMPLE|SMALLINT|SNAPSHOT|SOME|SONAME|SQL|START(?:ING)?|STATISTICS|STATUS|STRIPED|SYSTEM_USER|TABLES?|TABLESPACE|TEMP(?:ORARY|TABLE)?|TERMINATED|TEXT(?:SIZE)?|THEN|TIME(?:STAMP)?|TINY(?:BLOB|INT|TEXT)|TOP?|TRAN(?:SACTIONS?)?|TRIGGER|TRUNCATE|TSEQUAL|TYPES?|UNBOUNDED|UNCOMMITTED|UNDEFINED|UNION|UNIQUE|UNLOCK|UNPIVOT|UNSIGNED|UPDATE(?:TEXT)?|USAGE|USE|USER|USING|VALUES?|VAR(?:BINARY|CHAR|CHARACTER|YING)|VIEW|WAITFOR|WARNINGS|WHEN|WHERE|WHILE|WITH(?: ROLLUP|IN)?|WORK|WRITE(?:TEXT)?|YEAR)\b/i,boolean:/\b(?:FALSE|NULL|TRUE)\b/i,number:/\b0x[\da-f]+\b|\b\d+(?:\.\d*)?|\B\.\d+\b/i,operator:/[-+*\/=%^~]|&&?|\|\|?|!=?|<(?:=>?|<|>)?|>[>=]?|\b(?:AND|BETWEEN|DIV|ILIKE|IN|IS|LIKE|NOT|OR|REGEXP|RLIKE|SOUNDS LIKE|XOR)\b/i,punctuation:/[;[\]()`,.]/};
+!function(e){var n=/[*&][^\s[\]{},]+/,r=/!(?:<[\w\-%#;/?:@&=+$,.!~*'()[\]]+>|(?:[a-zA-Z\d-]*!)?[\w\-%#;/?:@&=+$.~*'()]+)?/,t="(?:"+r.source+"(?:[ \t]+"+n.source+")?|"+n.source+"(?:[ \t]+"+r.source+")?)",a="(?:[^\\s\\x00-\\x08\\x0e-\\x1f!\"#%&'*,\\-:>?@[\\]`{|}\\x7f-\\x84\\x86-\\x9f\\ud800-\\udfff\\ufffe\\uffff]|[?:-]<PLAIN>)(?:[ \t]*(?:(?![#:])<PLAIN>|:<PLAIN>))*".replace(/<PLAIN>/g,(function(){return"[^\\s\\x00-\\x08\\x0e-\\x1f,[\\]{}\\x7f-\\x84\\x86-\\x9f\\ud800-\\udfff\\ufffe\\uffff]"})),d="\"(?:[^\"\\\\\r\n]|\\\\.)*\"|'(?:[^'\\\\\r\n]|\\\\.)*'";function o(e,n){n=(n||"").replace(/m/g,"")+"m";var r="([:\\-,[{]\\s*(?:\\s<<prop>>[ \t]+)?)(?:<<value>>)(?=[ \t]*(?:$|,|\\]|\\}|(?:[\r\n]\\s*)?#))".replace(/<<prop>>/g,(function(){return t})).replace(/<<value>>/g,(function(){return e}));return RegExp(r,n)}e.languages.yaml={scalar:{pattern:RegExp("([\\-:]\\s*(?:\\s<<prop>>[ \t]+)?[|>])[ \t]*(?:((?:\r?\n|\r)[ \t]+)\\S[^\r\n]*(?:\\2[^\r\n]+)*)".replace(/<<prop>>/g,(function(){return t}))),lookbehind:!0,alias:"string"},comment:/#.*/,key:{pattern:RegExp("((?:^|[:\\-,[{\r\n?])[ \t]*(?:<<prop>>[ \t]+)?)<<key>>(?=\\s*:\\s)".replace(/<<prop>>/g,(function(){return t})).replace(/<<key>>/g,(function(){return"(?:"+a+"|"+d+")"}))),lookbehind:!0,greedy:!0,alias:"atrule"},directive:{pattern:/(^[ \t]*)%.+/m,lookbehind:!0,alias:"important"},datetime:{pattern:o("\\d{4}-\\d\\d?-\\d\\d?(?:[tT]|[ \t]+)\\d\\d?:\\d{2}:\\d{2}(?:\\.\\d*)?(?:[ \t]*(?:Z|[-+]\\d\\d?(?::\\d{2})?))?|\\d{4}-\\d{2}-\\d{2}|\\d\\d?:\\d{2}(?::\\d{2}(?:\\.\\d*)?)?"),lookbehind:!0,alias:"number"},boolean:{pattern:o("false|true","i"),lookbehind:!0,alias:"important"},null:{pattern:o("null|~","i"),lookbehind:!0,alias:"important"},string:{pattern:o(d),lookbehind:!0,greedy:!0},number:{pattern:o("[+-]?(?:0x[\\da-f]+|0o[0-7]+|(?:\\d+(?:\\.\\d*)?|\\.\\d+)(?:e[+-]?\\d+)?|\\.inf|\\.nan)","i"),lookbehind:!0},tag:r,important:n,punctuation:/---|[:[\]{}\-,|>?]|\.\.\./},e.languages.yml=e.languages.yaml}(Prism);
+Prism.languages.json={property:{pattern:/(^|[^\\])"(?:\\.|[^\\"\r\n])*"(?=\s*:)/,lookbehind:!0,greedy:!0},string:{pattern:/(^|[^\\])"(?:\\.|[^\\"\r\n])*"(?!\s*:)/,lookbehind:!0,greedy:!0},comment:{pattern:/\/\/.*|\/\*[\s\S]*?(?:\*\/|$)/,greedy:!0},number:/-?\b\d+(?:\.\d+)?(?:e[+-]?\d+)?\b/i,punctuation:/[{}[\],]/,operator:/:/,boolean:/\b(?:false|true)\b/,null:{pattern:/\bnull\b/,alias:"keyword"}},Prism.languages.webmanifest=Prism.languages.json;
+!function(t){var n=t.util.clone(t.languages.javascript),e="(?:\\{<S>*\\.{3}(?:[^{}]|<BRACES>)*\\})";function a(t,n){return t=t.replace(/<S>/g,(function(){return"(?:\\s|//.*(?!.)|/\\*(?:[^*]|\\*(?!/))\\*/)"})).replace(/<BRACES>/g,(function(){return"(?:\\{(?:\\{(?:\\{[^{}]*\\}|[^{}])*\\}|[^{}])*\\})"})).replace(/<SPREAD>/g,(function(){return e})),RegExp(t,n)}e=a(e).source,t.languages.jsx=t.languages.extend("markup",n),t.languages.jsx.tag.pattern=a("</?(?:[\\w.:-]+(?:<S>+(?:[\\w.:$-]+(?:=(?:\"(?:\\\\[^]|[^\\\\\"])*\"|'(?:\\\\[^]|[^\\\\'])*'|[^\\s{'\"/>=]+|<BRACES>))?|<SPREAD>))*<S>*/?)?>"),t.languages.jsx.tag.inside.tag.pattern=/^<\/?[^\s>\/]*/,t.languages.jsx.tag.inside["attr-value"].pattern=/=(?!\{)(?:"(?:\\[\s\S]|[^\\"])*"|'(?:\\[\s\S]|[^\\'])*'|[^\s'">]+)/,t.languages.jsx.tag.inside.tag.inside["class-name"]=/^[A-Z]\w*(?:\.[A-Z]\w*)*$/,t.languages.jsx.tag.inside.comment=n.comment,t.languages.insertBefore("inside","attr-name",{spread:{pattern:a("<SPREAD>"),inside:t.languages.jsx}},t.languages.jsx.tag),t.languages.insertBefore("inside","special-attr",{script:{pattern:a("=<BRACES>"),alias:"language-javascript",inside:{"script-punctuation":{pattern:/^=(?=\{)/,alias:"punctuation"},rest:t.languages.jsx}}},t.languages.jsx.tag);var s=function(t){return t?"string"==typeof t?t:"string"==typeof t.content?t.content:t.content.map(s).join(""):""},g=function(n){for(var e=[],a=0;a<n.length;a++){var o=n[a],i=!1;if("string"!=typeof o&&("tag"===o.type&&o.content[0]&&"tag"===o.content[0].type?"</"===o.content[0].content[0].content?e.length>0&&e[e.length-1].tagName===s(o.content[0].content[1])&&e.pop():"/>"===o.content[o.content.length-1].content||e.push({tagName:s(o.content[0].content[1]),openedBraces:0}):e.length>0&&"punctuation"===o.type&&"{"===o.content?e[e.length-1].openedBraces++:e.length>0&&e[e.length-1].openedBraces>0&&"punctuation"===o.type&&"}"===o.content?e[e.length-1].openedBraces--:i=!0),(i||"string"==typeof o)&&e.length>0&&0===e[e.length-1].openedBraces){var r=s(o);a<n.length-1&&("string"==typeof n[a+1]||"plain-text"===n[a+1].type)&&(r+=s(n[a+1]),n.splice(a+1,1)),a>0&&("string"==typeof n[a-1]||"plain-text"===n[a-1].type)&&(r=s(n[a-1])+r,n.splice(a-1,1),a--),n[a]=new t.Token("plain-text",r,null,r)}o.content&&"string"!=typeof o.content&&g(o.content)}};t.hooks.add("after-tokenize",(function(t){"jsx"!==t.language&&"tsx"!==t.language||g(t.tokens)}))}(Prism);
+!function(t){function a(t){return RegExp("(^(?:"+t+"):[ \t]*(?![ \t]))[^]+","i")}t.languages.http={"request-line":{pattern:/^(?:CONNECT|DELETE|GET|HEAD|OPTIONS|PATCH|POST|PRI|PUT|SEARCH|TRACE)\s(?:https?:\/\/|\/)\S*\sHTTP\/[\d.]+/m,inside:{method:{pattern:/^[A-Z]+\b/,alias:"property"},"request-target":{pattern:/^(\s)(?:https?:\/\/|\/)\S*(?=\s)/,lookbehind:!0,alias:"url",inside:t.languages.uri},"http-version":{pattern:/^(\s)HTTP\/[\d.]+/,lookbehind:!0,alias:"property"}}},"response-status":{pattern:/^HTTP\/[\d.]+ \d+ .+/m,inside:{"http-version":{pattern:/^HTTP\/[\d.]+/,alias:"property"},"status-code":{pattern:/^(\s)\d+(?=\s)/,lookbehind:!0,alias:"number"},"reason-phrase":{pattern:/^(\s).+/,lookbehind:!0,alias:"string"}}},header:{pattern:/^[\w-]+:.+(?:(?:\r\n?|\n)[ \t].+)*/m,inside:{"header-value":[{pattern:a("Content-Security-Policy"),lookbehind:!0,alias:["csp","languages-csp"],inside:t.languages.csp},{pattern:a("Public-Key-Pins(?:-Report-Only)?"),lookbehind:!0,alias:["hpkp","languages-hpkp"],inside:t.languages.hpkp},{pattern:a("Strict-Transport-Security"),lookbehind:!0,alias:["hsts","languages-hsts"],inside:t.languages.hsts},{pattern:a("[^:]+"),lookbehind:!0}],"header-name":{pattern:/^[^:]+/,alias:"keyword"},punctuation:/^:/}}};var e,n=t.languages,s={"application/javascript":n.javascript,"application/json":n.json||n.javascript,"application/xml":n.xml,"text/xml":n.xml,"text/html":n.html,"text/css":n.css,"text/plain":n.plain},i={"application/json":!0,"application/xml":!0};function r(t){var a=t.replace(/^[a-z]+\//,"");return"(?:"+t+"|\\w+/(?:[\\w.-]+\\+)+"+a+"(?![+\\w.-]))"}for(var p in s)if(s[p]){e=e||{};var l=i[p]?r(p):p;e[p.replace(/\//g,"-")]={pattern:RegExp("(content-type:\\s*"+l+"(?:(?:\r\n?|\n)[\\w-].*)*(?:\r(?:\n|(?!\n))|\n))[^ \t\\w-][^]*","i"),lookbehind:!0,inside:s[p]}}e&&t.languages.insertBefore("http","header",e)}(Prism);
+!function(e){var n="(?:[ \t]+(?![ \t])(?:<SP_BS>)?|<SP_BS>)".replace(/<SP_BS>/g,(function(){return"\\\\[\r\n](?:\\s|\\\\[\r\n]|#.*(?!.))*(?![\\s#]|\\\\[\r\n])"})),r="\"(?:[^\"\\\\\r\n]|\\\\(?:\r\n|[^]))*\"|'(?:[^'\\\\\r\n]|\\\\(?:\r\n|[^]))*'",t="--[\\w-]+=(?:<STR>|(?![\"'])(?:[^\\s\\\\]|\\\\.)+)".replace(/<STR>/g,(function(){return r})),o={pattern:RegExp(r),greedy:!0},i={pattern:/(^[ \t]*)#.*/m,lookbehind:!0,greedy:!0};function a(e,r){return e=e.replace(/<OPT>/g,(function(){return t})).replace(/<SP>/g,(function(){return n})),RegExp(e,r)}e.languages.docker={instruction:{pattern:/(^[ \t]*)(?:ADD|ARG|CMD|COPY|ENTRYPOINT|ENV|EXPOSE|FROM|HEALTHCHECK|LABEL|MAINTAINER|ONBUILD|RUN|SHELL|STOPSIGNAL|USER|VOLUME|WORKDIR)(?=\s)(?:\\.|[^\r\n\\])*(?:\\$(?:\s|#.*$)*(?![\s#])(?:\\.|[^\r\n\\])*)*/im,lookbehind:!0,greedy:!0,inside:{options:{pattern:a("(^(?:ONBUILD<SP>)?\\w+<SP>)<OPT>(?:<SP><OPT>)*","i"),lookbehind:!0,greedy:!0,inside:{property:{pattern:/(^|\s)--[\w-]+/,lookbehind:!0},string:[o,{pattern:/(=)(?!["'])(?:[^\s\\]|\\.)+/,lookbehind:!0}],operator:/\\$/m,punctuation:/=/}},keyword:[{pattern:a("(^(?:ONBUILD<SP>)?HEALTHCHECK<SP>(?:<OPT><SP>)*)(?:CMD|NONE)\\b","i"),lookbehind:!0,greedy:!0},{pattern:a("(^(?:ONBUILD<SP>)?FROM<SP>(?:<OPT><SP>)*(?!--)[^ \t\\\\]+<SP>)AS","i"),lookbehind:!0,greedy:!0},{pattern:a("(^ONBUILD<SP>)\\w+","i"),lookbehind:!0,greedy:!0},{pattern:/^\w+/,greedy:!0}],comment:i,string:o,variable:/\$(?:\w+|\{[^{}"'\\]*\})/,operator:/\\$/m}},comment:i},e.languages.dockerfile=e.languages.docker}(Prism);
+!function(e){var n=/\$(?:\w[a-z\d]*(?:_[^\x00-\x1F\s"'\\()$]*)?|\{[^}\s"'\\]+\})/i;e.languages.nginx={comment:{pattern:/(^|[\s{};])#.*/,lookbehind:!0,greedy:!0},directive:{pattern:/(^|\s)\w(?:[^;{}"'\\\s]|\\.|"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|\s+(?:#.*(?!.)|(?![#\s])))*?(?=\s*[;{])/,lookbehind:!0,greedy:!0,inside:{string:{pattern:/((?:^|[^\\])(?:\\\\)*)(?:"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')/,lookbehind:!0,greedy:!0,inside:{escape:{pattern:/\\["'\\nrt]/,alias:"entity"},variable:n}},comment:{pattern:/(\s)#.*/,lookbehind:!0,greedy:!0},keyword:{pattern:/^\S+/,greedy:!0},boolean:{pattern:/(\s)(?:off|on)(?!\S)/,lookbehind:!0},number:{pattern:/(\s)\d+[a-z]*(?!\S)/i,lookbehind:!0},variable:n}},punctuation:/[{};]/}}(Prism);
+Prism.languages.ini={comment:{pattern:/(^[ \f\t\v]*)[#;][^\n\r]*/m,lookbehind:!0},section:{pattern:/(^[ \f\t\v]*)\[[^\n\r\]]*\]?/m,lookbehind:!0,inside:{"section-name":{pattern:/(^\[[ \f\t\v]*)[^ \f\t\v\]]+(?:[ \f\t\v]+[^ \f\t\v\]]+)*/,lookbehind:!0,alias:"selector"},punctuation:/\[|\]/}},key:{pattern:/(^[ \f\t\v]*)[^ \f\n\r\t\v=]+(?:[ \f\t\v]+[^ \f\n\r\t\v=]+)*(?=[ \f\t\v]*=)/m,lookbehind:!0,alias:"attr-name"},value:{pattern:/(=[ \f\t\v]*)[^ \f\n\r\t\v]+(?:[ \f\t\v]+[^ \f\n\r\t\v]+)*/,lookbehind:!0,alias:"attr-value",inside:{"inner-value":{pattern:/^("|').+(?=\1$)/,lookbehind:!0}}},punctuation:/=/};
+!function(e){var n={pattern:/((?:^|[^\\$])(?:\\{2})*)\$(?:\w+|\{[^{}]*\})/,lookbehind:!0,inside:{"interpolation-punctuation":{pattern:/^\$\{?|\}$/,alias:"punctuation"},expression:{pattern:/[\s\S]+/,inside:null}}};e.languages.groovy=e.languages.extend("clike",{string:{pattern:/'''(?:[^\\]|\\[\s\S])*?'''|'(?:\\.|[^\\'\r\n])*'/,greedy:!0},keyword:/\b(?:abstract|as|assert|boolean|break|byte|case|catch|char|class|const|continue|def|default|do|double|else|enum|extends|final|finally|float|for|goto|if|implements|import|in|instanceof|int|interface|long|native|new|package|private|protected|public|return|short|static|strictfp|super|switch|synchronized|this|throw|throws|trait|transient|try|void|volatile|while)\b/,number:/\b(?:0b[01_]+|0x[\da-f_]+(?:\.[\da-f_p\-]+)?|[\d_]+(?:\.[\d_]+)?(?:e[+-]?\d+)?)[glidf]?\b/i,operator:{pattern:/(^|[^.])(?:~|==?~?|\?[.:]?|\*(?:[.=]|\*=?)?|\.[@&]|\.\.<|\.\.(?!\.)|-[-=>]?|\+[+=]?|!=?|<(?:<=?|=>?)?|>(?:>>?=?|=)?|&[&=]?|\|[|=]?|\/=?|\^=?|%=?)/,lookbehind:!0},punctuation:/\.+|[{}[\];(),:$]/}),e.languages.insertBefore("groovy","string",{shebang:{pattern:/#!.+/,alias:"comment",greedy:!0},"interpolation-string":{pattern:/"""(?:[^\\]|\\[\s\S])*?"""|(["/])(?:\\.|(?!\1)[^\\\r\n])*\1|\$\/(?:[^/$]|\$(?:[/$]|(?![/$]))|\/(?!\$))*\/\$/,greedy:!0,inside:{interpolation:n,string:/[\s\S]+/}}}),e.languages.insertBefore("groovy","punctuation",{"spock-block":/\b(?:and|cleanup|expect|given|setup|then|when|where):/}),e.languages.insertBefore("groovy","function",{annotation:{pattern:/(^|[^.])@\w+/,lookbehind:!0,alias:"punctuation"}}),n.inside.expression.inside=e.languages.groovy}(Prism);
+
+
+/* http 语法增强：REST 端点示例（独立/行尾 # 注释 + 无 HTTP 版本的方法行） */
+(function () {
+  'use strict';
+  try {
+    if (window.Prism && Prism.languages.http) {
+      Prism.languages.insertBefore('http', 'request-line', { comment: { pattern: /#.*/ } });
+      var rl = Prism.languages.http['request-line'];
+      rl.pattern = /^(?:CONNECT|DELETE|GET|HEAD|OPTIONS|PATCH|POST|PRI|PUT|SEARCH|TRACE)\s+(?:https?:\/\/|\/)\S*(?:\sHTTP\/[\d.]+)?/m;
+    }
+  } catch (e) {}
+})();
+/* ===== 全库统一 Prism 语法高亮（按 data-lang 映射，text 与未知语言跳过，防重复） ===== */
+(function () {
+  'use strict';
+  if (!window.Prism) { return; }
+  var M = {js:'javascript',ts:'typescript',vue:'markup',html:'markup',xml:'markup',dockerfile:'docker',java:'java',bash:'bash',css:'css',sql:'sql',yaml:'yaml',json:'json',jsx:'jsx',http:'http',nginx:'nginx',ini:'ini',groovy:'groovy',text:''};
+  try {
+    var ps = document.querySelectorAll('pre.code');
+    for (var i = 0; i < ps.length; i++) {
+      var pre = ps[i];
+      var code = pre.querySelector('code');
+      if (!code || code.getAttribute('data-highlighted')) { continue; }
+      var l = (pre.getAttribute('data-lang') || '').trim().toLowerCase();
+      var m = M[l] || '';
+      if (!m || !Prism.languages[m]) { continue; }
+      code.className = 'language-' + m;
+      code.setAttribute('data-highlighted', '1');
+      try { Prism.highlightElement(code); } catch (e) {}
+    }
+  } catch (e) {}
+})();
+
+</script>
+<script src="../glossary/glossary-data.js"></script>
+<script src="../glossary/glossary.js"></script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+FILE: 07_后端开发/09_RESTful_API设计【标准】.html
+DEPTH: 标准
+TOC sec5 text: 使用案例（真实项目落地）
+============================================================
+<section id="sec5" class="card">
+  <h2><span class="num">5</span>使用案例（真实项目落地）</h2>
+  <h3>案例：DCP-RMP / 源启的 API 设计规范落地</h3>
+  <p><strong>业务场景</strong>：DCP-RMP 与源启都是前后端分离 + 多子应用的 Monorepo，接口众多。需要一套全项目统一的 URL 命名、状态码、分页与错误结构约定，避免每个 Controller 各写各的。</p>
+  <p><strong>落地步骤</strong>：</p>
+  <ol>
+    <li>URL 统一 <code>/api/v1/资源名词复数</code>，子资源表归属；动作类操作用 <code>POST /资源/{id}/动作</code>。</li>
+    <li>HTTP 方法按语义选，创建返回 201、删除返回 204，不再一律 200。</li>
+    <li>统一分页 <code>page/size</code>，统一返回包装 <code>Result{code,message,data}</code>，错误带字段级 errors。</li>
+    <li>结合上一页的 OpenAPI，这套规范直接进 swagger 文档与生成的 TS 客户端。</li>
+  </ol>
+  <p><strong>效果与坑</strong>：接口风格统一后，新接口新人一看 URL+方法就懂，前后端联调沟通成本明显下降。真实踩过的坑：</p>
+  <ul>
+    <li><span class="tag-pit">坑</span><strong>全部用 POST、URL 全是 /xxxAction</strong>：前后端都要翻文档猜语义，后来逐步改成 REST。</li>
+    <li><span class="tag-pit">坑</span><strong>状态码与 body code 双轨致前端判断混乱</strong>：约定"401 一律跳登录、业务成败看 body.code"后理顺。</li>
+    <li><span class="tag-pit">坑</span><strong>分页参数 pageNum/pageSize 与 page/size 混用</strong>：前端要兼容两套，统一后才干净。</li>
+  </ul>
+</section>

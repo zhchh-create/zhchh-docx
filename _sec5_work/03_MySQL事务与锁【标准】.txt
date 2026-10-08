@@ -1,0 +1,21 @@
+FILE: 08_数据库与建模/03_MySQL事务与锁【标准】.html
+DEPTH: 标准
+TOC sec5 text: 使用案例（真实项目落地）
+============================================================
+<section id="sec5" class="card">
+  <h2><span class="num">5</span>使用案例（真实项目落地）</h2>
+  <h3>案例：DCP-RMP 需求状态流转的事务与并发冲突</h3>
+  <p><strong>业务场景</strong>：需求从草稿→评审中→已上线，流转时要同时改状态、记流转日志、更新对应计数；多人可能同时操作同一条需求。</p>
+  <p><strong>落地步骤</strong>：</p>
+  <ol>
+    <li>把"改状态+写日志+更新计数"放进一个 <code>@Transactional(rollbackFor=Exception.class)</code> 方法。</li>
+    <li>并发更新用条件更新（<code>WHERE status=前置状态</code>）+ version 乐观锁，影响行数为 0 就提示刷新。</li>
+    <li>事务方法保持短小，不在事务里调外部慢接口。</li>
+  </ol>
+  <p><strong>效果与坑</strong>：状态流转不再出现"状态改了、日志没写"的半截数据；并发操作下后提交者会被乐观锁挡住。真实踩过的坑：</p>
+  <ul>
+    <li><span class="tag-pit">坑</span><strong>漏写 rollbackFor</strong>：早期没加 <code>rollbackFor=Exception.class</code>，一个受检异常导致本该回滚却提交了，数据不一致。</li>
+    <li><span class="tag-pit">坑</span><strong>加锁顺序不一致致偶发死锁</strong>：两个入口以不同顺序更新"需求行+计数行"；统一成"先锁需求再锁计数"的固定顺序后消失。</li>
+    <li><span class="tag-pit">坑</span><strong>事务里夹带外部调用</strong>：持锁时间变长，高峰期锁等待增多；把外部调用挪出事务解决。</li>
+  </ul>
+</section>

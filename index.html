@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>全栈技术栈详解 · 资料库总览</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230f766e'/%3E%3Ctext x='32' y='44' font-size='34' font-weight='bold' text-anchor='middle' fill='white' font-family='Arial'%3E栈%3C/text%3E%3C/svg%3E">
+<style>
+  :root{
+    --bg:#f4f6fb; --card:#ffffff; --line:#e6ebf3; --ink:#0f172a; --muted:#64748b; --muted2:#94a3b8;
+    --deep:#c2410c; --deep-bg:#fff7ed; --deep-ink:#9a3412;
+    --std:#1d4ed8; --std-bg:#eff6ff; --std-ink:#1e40af;
+    --base:#15803d; --base-bg:#f0fdf4; --base-ink:#166534;
+    --accent:#0f766e; --accent2:#14b8a6; --accent-ink:#0f766e;
+    --shadow-sm:0 1px 2px rgba(15,23,42,.05);
+    --shadow-md:0 8px 24px -8px rgba(15,23,42,.12);
+    --shadow-lg:0 20px 50px -20px rgba(15,23,42,.25);
+    --radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased}
+  /* 阅读进度条 */
+  #progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:100}
+  /* 顶栏 */
+  .topbar{position:sticky;top:0;z-index:90;background:rgba(255,255,255,.86);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+  .topbar .inner{max-width:1140px;margin:0 auto;padding:10px 22px;display:flex;align-items:center;gap:18px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px;color:var(--ink);white-space:nowrap}
+  .brand .logo{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;display:grid;place-items:center;font-size:16px;flex:none}
+  .brand small{color:var(--muted2);font-weight:400}
+  .search{flex:1;max-width:420px;position:relative}
+  .search svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke:var(--muted2);fill:none;stroke-width:2}
+  .search input{width:100%;padding:9px 14px 9px 36px;border:1px solid var(--line);border-radius:999px;font-size:13.5px;outline:none;background:#f8fafc;transition:.2s;color:var(--ink)}
+  .search input:focus{background:#fff;border-color:var(--accent);box-shadow:0 0 0 3px rgba(15,118,110,.12)}
+  .filters{display:flex;gap:6px;margin-left:auto}
+  .pill{border:1px solid var(--line);background:#fff;color:var(--muted);font-size:12.5px;padding:6px 13px;border-radius:999px;cursor:pointer;transition:.18s;user-select:none}
+  .pill:hover{border-color:var(--accent);color:var(--accent)}
+  .pill.on{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+  .pill .n{opacity:.75;font-weight:500}
+  /* 头部 hero */
+  .hero{position:relative;overflow:hidden;color:#fff;padding:64px 22px 56px;background:radial-gradient(900px 400px at 12% -10%,rgba(20,184,166,.35),transparent 60%),radial-gradient(700px 360px at 88% -20%,rgba(29,78,216,.3),transparent 60%),linear-gradient(140deg,#0b1626,#123247 55%,#0f766e)}
+  .hero::after{content:"";position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:44px 44px;mask-image:radial-gradient(120% 100% at 50% 0%,#000 30%,transparent 90%)}
+  .hero .wrap{position:relative;max-width:1140px;margin:0 auto}
+  .hero .kicker{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;letter-spacing:.5px;color:#99f6e4;background:rgba(20,184,166,.14);border:1px solid rgba(20,184,166,.35);padding:5px 13px;border-radius:999px}
+  .hero h1{font-size:clamp(26px,4.4vw,40px);font-weight:800;line-height:1.25;margin:18px 0 10px;letter-spacing:.3px}
+  .hero h1 .grad{background:linear-gradient(90deg,#5eead4,#93c5fd);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p.sub{max-width:760px;color:#cbd5e1;font-size:14.5px}
+  .hero .stats{display:flex;flex-wrap:wrap;gap:14px;margin-top:28px}
+  .stat{flex:1;min-width:130px;max-width:190px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:16px 18px;backdrop-filter:blur(6px)}
+  .stat b{display:block;font-size:30px;font-weight:800;color:#5eead4;font-variant-numeric:tabular-nums}
+  .stat span{font-size:12.5px;color:#cbd5e1}
+  /* 目录导航条 */
+  .dirnav{position:sticky;top:51px;z-index:80;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  .dirnav .inner{max-width:1140px;margin:0 auto;padding:9px 22px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+  .dirnav .inner::-webkit-scrollbar{display:none}
+  .dirnav a{flex:none;font-size:12.5px;color:var(--muted);padding:6px 12px;border-radius:8px;text-decoration:none;transition:.15s}
+  .dirnav a:hover{color:var(--accent);background:#f0fdfa}
+  .dirnav a.on{color:#fff;background:var(--accent);font-weight:600}
+  .dirnav .sep{flex:none;color:var(--line);line-height:2;margin:0 2px}
+  main{max-width:1140px;margin:0 auto;padding:26px 22px 60px}
+  /* 工具栏 */
+  .toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;gap:14px;flex-wrap:wrap}
+  .toolbar .info{font-size:13px;color:var(--muted)}
+  .toolbar .info b{color:var(--ink)}
+  /* 分类区块 */
+  section.dir{scroll-margin-top:120px}
+  .dir-head{display:flex;align-items:baseline;gap:12px;padding:18px 4px 12px;border-bottom:2px solid var(--line)}
+  .dir-head .idx{font-size:13px;font-weight:700;color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent2));min-width:30px;height:30px;border-radius:9px;display:grid;place-items:center;align-self:center}
+  .dir-head h2{font-size:18px;font-weight:700}
+  .dir-head .desc{font-size:12.5px;color:var(--muted2)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px;padding:16px 0 8px}
+  /* 卡片 */
+  .card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px 16px 14px;display:flex;flex-direction:column;gap:9px;transition:transform .18s,box-shadow .18s,border-color .18s;overflow:hidden;cursor:pointer}
+  .card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--depthc,#0f766e)}
+  .card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:#cfd9e6}
+  .card .row{display:flex;align-items:center;gap:8px}
+  .badge{font-size:11px;padding:2px 10px;border-radius:999px;font-weight:600;letter-spacing:.3px}
+  .b-deep{color:var(--deep-ink);background:var(--deep-bg)}
+  .b-std{color:var(--std-ink);background:var(--std-bg)}
+  .b-base{color:var(--base-ink);background:var(--base-bg)}
+  .card a{font-size:14.5px;font-weight:700;color:var(--ink);text-decoration:none;line-height:1.4}
+  .card a:hover{color:var(--accent)}
+  .card .pos{font-size:13px;color:var(--muted);flex:1}
+  .card .proj{font-size:12px;color:var(--accent-ink);display:flex;align-items:center;gap:6px}
+  .card .proj::before{content:"▸";color:var(--accent2)}
+  .card .go{margin-left:auto;opacity:0;transition:.18s;color:var(--accent)}
+  .card:hover .go{opacity:1}
+  .empty{grid-column:1/-1;text-align:center;color:var(--muted2);padding:50px 0;font-size:14px}
+  /* 图例 + 使用建议 */
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px;margin-top:34px}
+  .legend{display:flex;flex-wrap:wrap;gap:16px}
+  .legend .item{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted)}
+  .legend .dot{width:10px;height:10px;border-radius:50%}
+  .panel h3{font-size:15px;margin:20px 0 12px;font-weight:700}
+  .panel h3:first-child{margin-top:0}
+  .panel ol,.panel ul{padding-left:22px;color:#475569;font-size:13.5px}
+  .panel li{margin:7px 0}
+  .panel code{background:#f1f5f9;border:1px solid var(--line);padding:1px 6px;border-radius:5px;font-size:12.5px;color:#0f766e}
+  footer{max-width:1140px;margin:0 auto;padding:26px 22px 40px;color:var(--muted2);font-size:12.5px;border-top:1px solid var(--line);text-align:center}
+  #toTop{position:fixed;right:24px;bottom:24px;width:42px;height:42px;border-radius:12px;background:var(--accent);color:#fff;border:none;font-size:18px;cursor:pointer;box-shadow:var(--shadow-lg);opacity:0;transform:translateY(10px);pointer-events:none;transition:.25s;z-index:95}
+  #toTop.show{opacity:1;transform:none;pointer-events:auto}
+  #toTop:hover{background:#115e59}
+  /* 响应式 */
+  @media(max-width:720px){
+    .topbar .inner{flex-wrap:wrap;gap:10px}
+    .filters{width:100%;justify-content:flex-start}
+    .search{max-width:none;flex-basis:100%;order:-1}
+    .grid{grid-template-columns:1fr}
+    .dirnav{top:0;position:static}
+    .stat{max-width:none}
+  }
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<div class="topbar">
+  <div class="inner">
+    <div class="brand"><span class="logo">栈</span>全栈技术栈详解 <small>· 简历复习资料库</small></div>
+    <div class="search">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input id="q" type="text" placeholder="搜索技术点 / 项目 / 关键词…" autocomplete="off">
+    </div>
+    <div class="filters" id="filters">
+      <button class="pill on" data-d="all">全部</button>
+      <button class="pill" data-d="deep">深入 <span class="n"></span></button>
+      <button class="pill" data-d="std">标准 <span class="n"></span></button>
+      <button class="pill" data-d="base">基础 <span class="n"></span></button>
+    </div>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="kicker">● 面向 10 年+ 全栈工程师 · 求职 / 面试复习</span>
+    <h1>全栈技术栈详解<span class="grad"> · 资料库总览</span></h1>
+    <p class="sub">85 个技术点、每篇自包含 HTML、图示为内联 SVG（离线可看、零外部依赖）。深度严格对应简历熟悉程度：深入=熟练掌握 · 标准=熟悉 · 基础=了解/经验。</p>
+    <div class="stats" id="stats"></div>
+  </div>
+</header>
+
+<nav class="dirnav"><div class="inner" id="dirnav"></div></nav>
+
+<main>
+  <div class="toolbar">
+    <div class="info" id="resultInfo"></div>
+    <div class="info" id="countInfo"></div>
+  </div>
+  <div id="sections"></div>
+
+  <div class="panel">
+    <div class="legend">
+      <span class="item"><span class="dot" style="background:var(--deep)"></span>【深入】熟练掌握：原理 + 流程 + 源码级 + 面试 + 项目实战</span>
+      <span class="item"><span class="dot" style="background:var(--std)"></span>【标准】熟悉：概念 + 要点 + 用法</span>
+      <span class="item"><span class="dot" style="background:var(--base)"></span>【基础】了解/经验：是什么 + 能做什么 + 入门要点</span>
+    </div>
+    <h3>使用与阅读建议</h3>
+    <ol>
+      <li><b>直接打开：</b>任一 HTML 双击即读，零外部依赖（图示为内联 SVG，字体/样式内联，断网可看）；代码块带「复制」按钮。</li>
+      <li><b>复习路径：</b>按「前端基础 → 框架与状态 → 数据可视化 → 实时通信 → 工具库 → 工程化 → 后端 → 数据库 → DevOps → 研发流程与 AI」顺序，每目录先读【深入】篇建立深度，再快速过【标准】/【基础】篇补广度。</li>
+      <li><b>面试前重点：</b>优先精读【深入】篇的「使用案例」与「易错点/面试重点」两节（含真实坑：全量 <code>setOption</code> 卡顿改 merge 局部更新、MyBatis <code>#{}</code> 与 <code>${}</code> 注入风险、Redisson 锁续期与看门狗等）。简历未主导的技术（GoJS、Oracle、Docker/K8s/Jenkins、React 等）各篇已如实标注定位，面试回答保持一致口径。</li>
+      <li><b>配套资料：</b><code>_模板/00_编写规范与模板说明.md</code> 为全库编写规范，扩展新技术点可照其结构续写。</li>
+    </ol>
+  </div>
+</main>
+
+<footer>
+  《全栈技术栈详解》· 85 篇技术点 + 本索引 · 全部页面经桌面与移动端渲染校验，零外部依赖。
+</footer>
+
+<button id="toTop" title="回到顶部">↑</button>
+
+<script>
+/* ========== 数据 ========== */
+const CATS = [
+  {id:"01",title:"前端基础",sub:"语言与渲染地基",pre:"01_前端基础/"},
+  {id:"02",title:"前端框架与状态管理",sub:"组件体系与数据流",pre:"02_前端框架与状态管理/"},
+  {id:"03",title:"数据可视化",sub:"图表 · 图论 · 3D",pre:"03_数据可视化/"},
+  {id:"04",title:"实时通信",sub:"WebRTC 与流媒体",pre:"04_实时通信/"},
+  {id:"05",title:"前端常用工具库",sub:"表格 · 连线 · 编辑器",pre:"05_前端常用工具库/"},
+  {id:"06",title:"前端工程化与工具链",sub:"构建 · 规范 · 测试",pre:"06_前端工程化与工具链/"},
+  {id:"07",title:"后端开发",sub:"Java · Spring · 接口",pre:"07_后端开发/"},
+  {id:"08",title:"数据库与建模",sub:"MySQL · Oracle · Redis",pre:"08_数据库与建模/"},
+  {id:"09",title:"DevOps 部署与运维",sub:"Nginx · 容器 · 远程管理",pre:"09_DevOps部署与运维/"},
+  {id:"10",title:"研发流程与 AI 辅助",sub:"敏捷 · AI 编码 · 协作",pre:"10_研发流程与AI辅助/"}
+];
+const D = {deep:"深入",std:"标准",base:"基础"};
+const ITEMS = [
+// 01 前端基础
+{c:0,f:"01_HTML5与CSS3【深入】.html",d:"deep",n:"01_HTML5与CSS3【深入】",p:"表现层地基：语义化标记、盒模型、BFC/层叠上下文、现代布局与动画，含大屏多分辨率适配",j:"电力大屏项目群（iClean 通用 Grid/Tree/Dialog 插件）"},
+{c:0,f:"02_JavaScript核心【深入】.html",d:"deep",n:"02_JavaScript核心【深入】",p:"语言本体：类型系统、作用域与闭包、原型链、this 绑定规则，逐条对应真实踩坑",j:"iClean 智能监控、大屏分布式数据聚合"},
+{c:0,f:"03_JavaScript进阶_事件循环与异步【深入】.html",d:"deep",n:"03_JavaScript进阶_事件循环与异步【深入】",p:"事件循环、微任务/宏任务、Promise 全流程，解析异步时序类面试题",j:"变电 2.0 高频刷新、WebRTC 信令流程"},
+{c:0,f:"04_TypeScript【深入】.html",d:"deep",n:"04_TypeScript【深入】",p:"类型系统：类型推导、泛型、条件类型、工程化配置，类型即文档",j:"DCP-RMP 自动生成类型化 API 客户端"},
+{c:0,f:"05_Canvas与SVG【深入】.html",d:"deep",n:"05_Canvas与SVG【深入】",p:"两套绘图 API 的架构差异、性能边界与选型，含 Diff 高亮实战",j:"WebRTC 播放器 Canvas 渲染、一体化版本对比"},
+{c:0,f:"06_浏览器原理与渲染机制【标准】.html",d:"std",n:"06_浏览器原理与渲染机制【标准】",p:"多进程架构、导航、渲染流水线、性能指标与长任务排查",j:"大屏高频刷新卡顿定位"},
+{c:0,f:"07_HTTP与跨域请求【标准】.html",d:"std",n:"07_HTTP与跨域请求【标准】",p:"HTTP 语义、缓存策略、CORS 与常见跨域方案，含网关转发实测",j:"DCP-RMP 联调、WebRTC 信令服务"},
+{c:0,f:"08_响应式布局_Flex与Grid【标准】.html",d:"std",n:"08_响应式布局_Flex与Grid【标准】",p:"rem 适配、媒体查询、Flex/Grid 布局体系的取舍与组合",j:"大屏项目群多分辨率"},
+{c:0,f:"09_前端安全_XSS与CSRF【基础】.html",d:"base",n:"09_前端安全_XSS与CSRF【基础】",p:"两类攻击的原理、危害面与防御基线，富文本场景专项",j:"低代码平台富文本组件清洗"},
+{c:0,f:"10_Tailwind_CSS原子化【标准】.html",d:"std",n:"10_Tailwind_CSS原子化【标准】",p:"原子化 CSS 体系、utility 类、与 Bootstrap/手写 CSS 的演进对比与工程化取舍",j:"低代码平台组件样式体系（评估/规划）"},
+// 02 前端框架与状态管理
+{c:1,f:"01_Vue框架【标准】.html",d:"std",n:"01_Vue框架【标准】",p:"响应式、模板编译、生命周期、组件通信的完整认知框架",j:"源启、低代码平台、一体化开发平台"},
+{c:1,f:"02_Vue3组合式API与响应式原理【深入】.html",d:"deep",n:"02_Vue3组合式API与响应式原理【深入】",p:"Proxy 响应式源码级拆解、effect 调度、组合式设计动机",j:"DCP-RMP 表单设计器/渲染器"},
+{c:1,f:"03_状态管理_Vuex与Pinia【标准】.html",d:"std",n:"03_状态管理_Vuex与Pinia【标准】",p:"集中式状态管理的演进、设计差异与选型依据",j:"源启（Vuex）、DCP-RMP（Pinia）"},
+{c:1,f:"04_React与Hooks【基础】.html",d:"base",n:"04_React与Hooks【基础】",p:"以对比视角理解 React 心智模型与 Hooks 规则",j:"以 Vue 项目为主，如实定位为对比认知"},
+{c:1,f:"05_微前端架构_Qiankun【标准】.html",d:"std",n:"05_微前端架构_Qiankun【标准】",p:"基座/子应用、JS 沙箱与样式隔离、独立部署的完整链路",j:"变电 2.0 整合 5+ 子应用、WebRTC 播放器子应用化"},
+{c:1,f:"06_ElementUI与ElementPlus【标准】.html",d:"std",n:"06_ElementUI与ElementPlus【标准】",p:"组件体系、二次封装、主题定制与工程化引入",j:"源启、低代码平台、DCP-RMP"},
+{c:1,f:"07_组件设计模式与插槽机制【标准】.html",d:"std",n:"07_组件设计模式与插槽机制【标准】",p:"props/emit/slot/provide-inject，配置驱动渲染的通用组件设计",j:"源启 CommonSlot 通用动态组件渲染容器"},
+{c:1,f:"08_jQuery与Bootstrap【深入】.html",d:"deep",n:"08_jQuery与Bootstrap【深入】",p:"链式调用、事件委托、插件模式与栅格体系，历史项目兜底能力",j:"iClean（jQuery 通用插件库）"},
+{c:1,f:"09_Nuxt3与SSR_SSG【标准】.html",d:"std",n:"09_Nuxt3与SSR_SSG【标准】",p:"SSR/SSG/同构、SSR 数据获取、SEO 与首屏，与纯 SPA(Vite) 的取舍",j:"DCP-RMP（Vite SPA）SSR 取舍评估"},
+{c:1,f:"10_微信小程序与uni-app【标准】.html",d:"std",n:"10_微信小程序与uni-app【标准】",p:"双线程架构、uni-app 跨端原理、与 Vue 的映射与发布链路",j:"规划中的经营类小程序（进行中/规划）"},
+// 03 数据可视化
+{c:2,f:"01_ECharts【深入】.html",d:"deep",n:"01_ECharts【深入】",p:"全库金标准：option 配置引擎、渲染管线、merge 增量更新、大数据渲染，含横向选型对比",j:"大屏实时告警热力图、变电 2.0 高频负荷监测"},
+{c:2,f:"02_AntV_G6【深入】.html",d:"deep",n:"02_AntV_G6【深入】",p:"图（graph）数据模型、布局算法、交互与性能调优",j:"源启、一体化开发平台流程编辑器"},
+{c:2,f:"03_GoJS【深入】.html",d:"deep",n:"03_GoJS【深入】",p:"数据绑定/模板/事务栈与图编辑能力，如实写为选型评估对比",j:"流程编辑类项目选型评估（诚实定位）"},
+{c:2,f:"04_Three.js_3D可视化【深入】.html",d:"deep",n:"04_Three.js_3D可视化【深入】",p:"场景图、相机、渲染循环与万级数据点优化",j:"电力大屏 3D 场景万级数据点稳定渲染"},
+{c:2,f:"05_可视化性能优化与大数据渲染【深入】.html",d:"deep",n:"05_可视化性能优化与大数据渲染【深入】",p:"分层渲染、增量更新、虚拟化、帧预算与大数据降级策略",j:"一体化开发平台千节点虚拟渲染"},
+{c:2,f:"06_可视化技术选型与原理【标准】.html",d:"std",n:"06_可视化技术选型与原理【标准】",p:"SVG/Canvas/WebGL 原理边界与选型矩阵",j:"项目群可视化选型决策"},
+// 04 实时通信
+{c:3,f:"01_WebRTC【深入】.html",d:"deep",n:"01_WebRTC【深入】",p:"PeerConnection/SDP/ICE 信令全流程、低延迟播放与多路同屏",j:"WebRTC 无插件播放器（去 ActiveX）"},
+{c:3,f:"02_Janus网关【深入】.html",d:"deep",n:"02_Janus网关【深入】",p:"SFU 架构、插件机制、信令与浏览器接入链路",j:"WebRTC 播放器项目（Janus 网关）"},
+{c:3,f:"03_音视频基础与流媒体协议【标准】.html",d:"std",n:"03_音视频基础与流媒体协议【标准】",p:"编码/封装/传输分层、延迟构成与协议对照",j:"播放器低延迟配置调优"},
+{c:3,f:"04_WebSocket通用实时通信【基础】.html",d:"base",n:"04_WebSocket通用实时通信【基础】",p:"握手、帧、心跳/重连、与 WebRTC 信令的关系",j:"WebRTC/Janus 信令链路"},
+// 05 前端常用工具库
+{c:4,f:"01_Axios【深入】.html",d:"deep",n:"01_Axios【深入】",p:"拦截器链、取消请求、并发与适配器原理，含自动生成客户端配合",j:"DCP-RMP API 客户端自动生成"},
+{c:4,f:"02_vxe_table表格【深入】.html",d:"deep",n:"02_vxe_table表格【深入】",p:"虚拟滚动、自定义渲染、单元格编辑与大数据表格方案",j:"源启大表格数据展示"},
+{c:4,f:"03_JsPlumb连线【深入】.html",d:"deep",n:"03_JsPlumb连线【深入】",p:"Endpoint/Connector 模型、拖拽连线与模型序列化",j:"源启 G6+JsPlumb 拖拽编排连线"},
+{c:4,f:"04_Monaco与CodeMirror编辑器【深入】.html",d:"deep",n:"04_Monaco与CodeMirror编辑器【深入】",p:"语言服务、架构差异与编辑器嵌入工程化",j:"源启（Monaco）、低代码平台（CodeMirror）"},
+{c:4,f:"05_ZTree树组件【深入】.html",d:"deep",n:"05_ZTree树组件【深入】",p:"大节点懒加载、勾选联动、性能边界与异步树工程实践",j:"变电 2.0 大节点树懒加载"},
+{c:4,f:"06_vue_draggable与v-code-diff【标准】.html",d:"std",n:"06_vue_draggable与v-code-diff【标准】",p:"拖拽布局组件与代码 Diff 展示组件的接入要点",j:"低代码平台拖拽布局、一体化版本对比"},
+{c:4,f:"07_VueUse组合式工具库【标准】.html",d:"std",n:"07_VueUse组合式工具库【标准】",p:"组合式复用 hooks 体系、常用函数、与手写 composable 的关系",j:"DCP-RMP 组合式实践（自写 useTable 类 hooks）"},
+// 06 前端工程化与工具链
+{c:5,f:"01_Webpack【标准】.html",d:"std",n:"01_Webpack【标准】",p:"依赖图、loader/plugin 机制、分包与构建优化",j:"源启、低代码平台构建体系"},
+{c:5,f:"02_Vite【标准】.html",d:"std",n:"02_Vite【标准】",p:"dev server 预构建、原生 ESM、构建产出的取舍",j:"DCP-RMP（Vite 工程）"},
+{c:5,f:"03_Monorepo_pnpm与Turborepo【标准】.html",d:"std",n:"03_Monorepo_pnpm与Turborepo【标准】",p:"workspace 依赖管理、任务编排与增量缓存",j:"DCP-RMP（web/drawio/工作流多应用 + 公共包）"},
+{c:5,f:"04_前端性能优化_懒加载与虚拟列表【深入】.html",d:"deep",n:"04_前端性能优化_懒加载与虚拟列表【深入】",p:"懒加载体系、虚拟列表窗口原理与长列表性能模型",j:"一体化开发平台千节点虚拟渲染"},
+{c:5,f:"05_Git版本控制【标准】.html",d:"std",n:"05_Git版本控制【标准】",p:"对象模型、分支策略、冲突解决与团队协作流",j:"各项目日常协作"},
+{c:5,f:"06_ESLint与Prettier代码规范【标准】.html",d:"std",n:"06_ESLint与Prettier代码规范【标准】",p:"静态检查与格式化的分工、配置落地与团队推广",j:"低代码平台（ESLint+Prettier 规范）"},
+{c:5,f:"07_前端测试_Jest与Vitest【标准】.html",d:"std",n:"07_前端测试_Jest与Vitest【标准】",p:"测试分层、断言与工具选型对比",j:"DCP-RMP 组件/逻辑单测"},
+{c:5,f:"08_npm与包管理【基础】.html",d:"base",n:"08_npm与包管理【基础】",p:"语义版本、lockfile、registry 与依赖陷阱",j:"DCP-RMP（pnpm workspace）"},
+{c:5,f:"09_前端E2E测试_Playwright与Cypress【标准】.html",d:"std",n:"09_前端E2E测试_Playwright与Cypress【标准】",p:"E2E 测试分层、选择器策略、断言与 CI 集成，与单测互补",j:"DCP-RMP 测试体系（规划/试点）"},
+// 07 后端开发
+{c:6,f:"01_Java基础【标准】.html",d:"std",n:"01_Java基础【标准】",p:"集合框架、泛型、函数式与异常体系的面试要点",j:"DCP-RMP（Java 17）"},
+{c:6,f:"02_Java并发与JVM【标准】.html",d:"std",n:"02_Java并发与JVM【标准】",p:"线程池、内存模型、垃圾回收与调优参数",j:"大屏分布式数据聚合服务"},
+{c:6,f:"03_Spring核心_IOC与AOP【深入】.html",d:"deep",n:"03_Spring核心_IOC与AOP【深入】",p:"Bean 生命周期、动态代理、切面原理与事务集成",j:"DCP-RMP、源启后端"},
+{c:6,f:"04_SpringBoot框架【标准】.html",d:"std",n:"04_SpringBoot框架【标准】",p:"自动配置、Starter、内嵌容器与多环境",j:"DCP-RMP、源启（SpringBoot 3）"},
+{c:6,f:"05_SSH框架【基础】.html",d:"base",n:"05_SSH框架【基础】",p:"Struts2/Spring/Hibernate 组合的演进与退役原因",j:"早期历史项目（诚实定位）"},
+{c:6,f:"06_MyBatis持久层【深入】.html",d:"deep",n:"06_MyBatis持久层【深入】",p:"SqlSession/Executor、动态 SQL、一级/二级缓存与 #{} 防注入",j:"源启、DCP-RMP 持久层"},
+{c:6,f:"07_Tomcat与Jetty服务器【基础】.html",d:"base",n:"07_Tomcat与Jetty服务器【基础】",p:"连接器/线程池、内嵌与外置部署的取舍",j:"SpringBoot 部署运维"},
+{c:6,f:"08_Swagger与OpenAPI接口契约【标准】.html",d:"std",n:"08_Swagger与OpenAPI接口契约【标准】",p:"契约先行、接口文档自动化与客户端代码生成链路",j:"DCP-RMP 亮点（自动生成接口客户端）"},
+{c:6,f:"09_RESTful_API设计【标准】.html",d:"std",n:"09_RESTful_API设计【标准】",p:"资源建模、状态码、版本与错误结构设计",j:"DCP-RMP、源启 API 设计"},
+{c:6,f:"10_接口安全_JWT与鉴权【标准】.html",d:"std",n:"10_接口安全_JWT与鉴权【标准】",p:"JWT 结构、拦截器鉴权、RBAC 与刷新策略",j:"DCP-RMP 接口安全"},
+{c:6,f:"11_SpringCloud微服务与网关【标准】.html",d:"std",n:"11_SpringCloud微服务与网关【标准】",p:"注册发现(Nacos)、网关、负载、Feign、配置中心，与单体架构取舍",j:"单体演进评估（学习/评估）"},
+{c:6,f:"12_消息队列_Kafka与RabbitMQ【标准】.html",d:"std",n:"12_消息队列_Kafka与RabbitMQ【标准】",p:"两类 MQ 模型、可靠投递/消费、死信与削峰场景",j:"大屏告警削峰规划（学习/评估）"},
+{c:6,f:"13_SpringSecurity与OAuth2【标准】.html",d:"std",n:"13_SpringSecurity与OAuth2【标准】",p:"过滤器链、认证授权模型、JWT/OAuth2/SSO 与现有拦截器关系",j:"DCP-RMP JWT 拦截器演进对比"},
+{c:6,f:"14_MyBatisPlus与SpringDataJPA【基础】.html",d:"base",n:"14_MyBatisPlus与SpringDataJPA【基础】",p:"两类 ORM 便捷化能力对比、与原生 MyBatis 的关系与选型",j:"DCP-RMP/源启（原生 MyBatis）选型对比"},
+// 08 数据库与建模
+{c:7,f:"01_MySQL【深入】.html",d:"deep",n:"01_MySQL【深入】",p:"InnoDB 架构、B+ 树索引、执行计划与表设计规范",j:"DCP-RMP、源启业务库"},
+{c:7,f:"02_MySQL进阶_索引与SQL优化【深入】.html",d:"deep",n:"02_MySQL进阶_索引与SQL优化【深入】",p:"最左前缀、覆盖索引、深分页与慢 SQL 优化实战",j:"大屏告警高频查询优化"},
+{c:7,f:"03_MySQL事务与锁【标准】.html",d:"std",n:"03_MySQL事务与锁【标准】",p:"ACID、隔离级别、MVCC 与锁/死锁排查",j:"需求平台状态流转一致性"},
+{c:7,f:"04_Oracle【深入】.html",d:"deep",n:"04_Oracle【深入】",p:"架构、undo/redo、与 MySQL 差异对照（如实标注简历未列 Oracle 项目）",j:"以接触/评估经历诚实定位"},
+{c:7,f:"05_Redis缓存【标准】.html",d:"std",n:"05_Redis缓存【标准】",p:"数据结构、过期策略、持久化与使用场景",j:"DCP-RMP 缓存层"},
+{c:7,f:"06_Redis进阶_缓存策略与分布式锁【深入】.html",d:"deep",n:"06_Redis进阶_缓存策略与分布式锁【深入】",p:"缓存穿透/击穿/雪崩、Redisson 分布式锁原理与一致性",j:"DCP-RMP（Redisson）"},
+{c:7,f:"07_数据库高可用与分库分表【标准】.html",d:"std",n:"07_数据库高可用与分库分表【标准】",p:"主从复制、读写分离、分片策略与评估模型",j:"通用架构 + 大屏数据归档实践"},
+{c:7,f:"08_PowerDesigner数据库建模【基础】.html",d:"base",n:"08_PowerDesigner数据库建模【基础】",p:"概念/逻辑/物理模型三级建模与正向/逆向工程",j:"需求平台早期建模"},
+{c:7,f:"09_Elasticsearch搜索引擎【标准】.html",d:"std",n:"09_Elasticsearch搜索引擎【标准】",p:"倒排索引、分词、聚合分析、与 MySQL 配合的检索架构",j:"告警/日志检索规划（学习/评估）"},
+{c:7,f:"10_MongoDB与NoSQL【基础】.html",d:"base",n:"10_MongoDB与NoSQL【基础】",p:"文档模型、复制集/分片、与关系型选型对比",j:"学习/评估与选型对比"},
+{c:7,f:"11_ClickHouse_OLAP分析【标准】.html",d:"std",n:"11_ClickHouse_OLAP分析【标准】",p:"列式存储、向量化执行、大屏/告警海量数据聚合",j:"大屏告警海量聚合（规划）"},
+// 09 DevOps
+{c:8,f:"01_Nginx【基础】.html",d:"base",n:"01_Nginx【基础】",p:"静态托管、反向代理、负载均衡与 gzip",j:"大屏、平台前端部署"},
+{c:8,f:"02_Docker容器化【基础】.html",d:"base",n:"02_Docker容器化【基础】",p:"镜像分层、容器与 Compose（如实写为通用实践）",j:"SpringBoot 容器化部署实践"},
+{c:8,f:"03_Kubernetes【基础】.html",d:"base",n:"03_Kubernetes【基础】",p:"Deployment/Service/探针与核心对象（如实写为学习/评估）",j:"部署编排学习与评估"},
+{c:8,f:"04_CI_CD_Jenkins与流水线【标准】.html",d:"std",n:"04_CI_CD_Jenkins与流水线【标准】",p:"Pipeline 构建-测试-部署全链路与常见坑",j:"团队 CI/CD 实践"},
+{c:8,f:"05_Linux基础与常用命令【标准】.html",d:"std",n:"05_Linux基础与常用命令【标准】",p:"进程、日志、端口、权限与磁盘排查命令集",j:"服务器日常运维"},
+{c:8,f:"06_Shell脚本【基础】.html",d:"base",n:"06_Shell脚本【基础】",p:"脚本语法、定时任务与常用运维脚本",j:"部署与日志清理脚本"},
+{c:8,f:"07_Xshell与WinSCP远程管理【深入】.html",d:"deep",n:"07_Xshell与WinSCP远程管理【深入】",p:"SSH 通道、六步握手、端口转发隧道与文件同步",j:"电力现场服务器远程运维"},
+{c:8,f:"08_Prometheus与Grafana监控【标准】.html",d:"std",n:"08_Prometheus与Grafana监控【标准】",p:"指标采集、告警规则、可视化面板、与 K8s/容器监控衔接",j:"容器/K8s 监控衔接（学习/评估）"},
+{c:8,f:"09_云原生与公有云部署【基础】.html",d:"base",n:"09_云原生与公有云部署【基础】",p:"云主机/容器服务/Serverless、对象存储与 CDN、与自建对比",j:"自建部署对比（评估/规划）"},
+// 10 研发流程与 AI
+{c:9,f:"01_Scrum敏捷开发【基础】.html",d:"base",n:"01_Scrum敏捷开发【基础】",p:"Sprint、站会、评审、回顾与团队角色",j:"团队迭代实践"},
+{c:9,f:"02_AI辅助开发_Cursor与Codex【深入】.html",d:"deep",n:"02_AI辅助开发_Cursor与Codex【深入】",p:"AI 编码工作流、提示词组织、Codex 自动化与局限边界",j:"本人 AI 辅助开发实践（编码/调试/评审）"},
+{c:9,f:"03_大模型应用_ChatGPT与Claude【标准】.html",d:"std",n:"03_大模型应用_ChatGPT与Claude【标准】",p:"代码生成、解释、评审与多轮澄清的实用技法",j:"本人实践（含 DeepSeek）"},
+{c:9,f:"04_代码评审与协作流程【标准】.html",d:"std",n:"04_代码评审与协作流程【标准】",p:"评审关注点、流程规范与工具落地",j:"团队协作流程"},
+{c:9,f:"05_LLM应用开发_RAG与FunctionCalling【标准】.html",d:"std",n:"05_LLM应用开发_RAG与FunctionCalling【标准】",p:"API 接入、RAG 检索增强、Function Calling 工具调用、提示词工程化",j:"本人 AI 辅助开发 + DCP-RMP 集成 AI（规划）"}
+];
+
+/* ========== 渲染 ========== */
+const depthColor={deep:"var(--deep)",std:"var(--std)",base:"var(--base)"};
+const depthCls={deep:"b-deep",std:"b-std",base:"b-base"};
+const depthLabel={deep:"深入",std:"标准",base:"基础"};
+let curFilter="all", curQ="";
+
+// 统计
+const counts={deep:0,std:0,base:0,total:ITEMS.length};
+ITEMS.forEach(i=>counts[i.d]++);
+
+// 头部统计
+function buildStats(){
+  const s=document.getElementById("stats");
+  const items=[
+    {v:ITEMS.length,label:"技术点详解"},{v:CATS.length,label:"能力目录"},
+    {v:counts.deep,label:"【深入】熟练掌握"},{v:counts.std,label:"【标准】熟悉"},{v:counts.base,label:"【基础】了解/经验"}
+  ];
+  s.innerHTML="";
+  items.forEach((it,ix)=>{const d=document.createElement("div");d.className="stat";
+    d.innerHTML=`<b data-c="${ix}">0</b><span>${it.label}</span>`;s.appendChild(d);countUp(d.querySelector("b"),it.v,900+ix*150);});
+}
+function countUp(el,target,dur){
+  const t0=performance.now();
+  function step(t){const p=Math.min(1,(t-t0)/dur);const e=1-Math.pow(1-p,3);el.textContent=Math.round(target*e);if(p<1)requestAnimationFrame(step);else el.textContent=target;}
+  requestAnimationFrame(step);
+}
+
+// 导航 + 筛选按钮数字
+function buildNav(){
+  const nav=document.getElementById("dirnav");
+  CATS.forEach(c=>{const a=document.createElement("a");a.href="#dir-"+c.id;a.dataset.dir=c.id;a.textContent=c.title;nav.appendChild(a);});
+}
+function setPillCounts(){
+  document.querySelectorAll(".filters .pill").forEach(p=>{
+    const d=p.dataset.d;if(d==="all")return;
+    const span=p.querySelector(".n");if(span)span.textContent=counts[d];
+  });
+}
+
+// 分类区块
+function buildSections(){
+  const wrap=document.getElementById("sections");
+  wrap.innerHTML="";
+  CATS.forEach((c,ix)=>{
+    const sec=document.createElement("section");sec.className="dir";sec.id="dir-"+c.id;
+    const items=ITEMS.filter(i=>i.c===ix);
+    const dh=items.reduce((a,i)=>(a[i.d]=(a[i.d]||0)+1,a),{});
+    const head=document.createElement("div");head.className="dir-head";
+    head.innerHTML=`<span class="idx">${c.id}</span><h2>${c.title}</h2><span class="desc">${c.sub} · ${items.length} 篇 · 深入 ${dh.deep||0} / 标准 ${dh.std||0} / 基础 ${dh.base||0}</span>`;
+    const grid=document.createElement("div");grid.className="grid";
+    items.forEach(it=>grid.appendChild(makeCard(it)));
+    sec.appendChild(head);sec.appendChild(grid);wrap.appendChild(sec);
+  });
+}
+function makeCard(it){
+  const el=document.createElement("div");el.className="card";el.style.setProperty("--depthc",depthColor[it.d]);
+  el.innerHTML=`<div class="row"><span class="badge ${depthCls[it.d]}">${depthLabel[it.d]}</span><span class="go">→</span></div>
+    <a href="${CATS[it.c].pre}${it.f}">${it.n}</a>
+    <div class="pos">${it.p}</div>
+    <div class="proj">${it.j}</div>`;
+  el.addEventListener("click",e=>{const a=el.querySelector("a");if(a&&!e.target.closest("a"))location.href=a.href;});
+  return el;
+}
+
+// 过滤 + 搜索
+function applyFilter(){
+  const q=curQ.trim().toLowerCase();
+  let shown=0;
+  document.querySelectorAll(".grid").forEach(g=>{
+    g.querySelectorAll(".card").forEach(card=>{
+      const text=card.textContent.toLowerCase();
+      const match=q===""||text.includes(q);
+      const catCard=card;
+      // 深度过滤：从 badge 判断
+      const badge=card.querySelector(".badge").textContent;
+      const depthKey = badge==="深入"?"deep":badge==="标准"?"std":"base";
+      const dm=curFilter==="all"||depthKey===curFilter;
+      const show=match&&dm;
+      card.style.display=show?"":"none";if(show)shown++;
+    });
+    // 隐藏空分类
+    const sec=g.closest(".dir");
+    const visible=g.querySelectorAll(".card").length>0;
+    g.style.display=visible?"":"none";
+    if(sec)sec.style.display=g.style.display;
+  });
+  document.getElementById("resultInfo").innerHTML=`显示 <b>${shown}</b> 篇${q?` · 关键词「<b>${curQ.trim()}</b>」`:""}${curFilter!=="all"?` · 深度「<b>${depthLabel[curFilter]}</b>」`:""}`;
+  document.getElementById("countInfo").innerHTML=`共 ${ITEMS.length} 篇 / ${CATS.length} 个目录`;
+}
+
+// 事件
+document.getElementById("q").addEventListener("input",e=>{curQ=e.target.value;applyFilter();});
+document.getElementById("filters").addEventListener("click",e=>{
+  const b=e.target.closest(".pill");if(!b)return;
+  document.querySelectorAll(".pill").forEach(p=>p.classList.remove("on"));
+  b.classList.add("on");curFilter=b.dataset.d;applyFilter();
+});
+
+// 滚动：进度条 + 返回顶部 + scrollspy
+const progress=document.getElementById("progress"),toTop=document.getElementById("toTop");
+window.addEventListener("scroll",()=>{
+  const h=document.documentElement;
+  const max=h.scrollHeight-h.clientHeight;
+  progress.style.width=(max>0?(h.scrollTop/max)*100:0)+"%";
+  toTop.classList.toggle("show",h.scrollTop>600);
+  // scrollspy
+  const navLinks=document.querySelectorAll(".dirnav a");
+  let cur="";
+  document.querySelectorAll("section.dir").forEach(sec=>{if(h.scrollTop>=sec.offsetTop-140)cur=sec.id;});
+  navLinks.forEach(a=>a.classList.toggle("on",a.dataset.dir===cur.replace("dir-","")));
+},{passive:true});
+toTop.addEventListener("click",()=>window.scrollTo({top:0,behavior:"smooth"}));
+
+buildStats();buildNav();setPillCounts();buildSections();applyFilter();
+</script>
+</body>
+</html>
