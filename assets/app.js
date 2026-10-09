@@ -176,6 +176,8 @@
 
     // 切换到新页面内容
     function navigateTo(url, pushUrl){
+      // 保存侧边栏滚动位置
+      const savedScroll = side.scrollTop;
       // 进度条动画
       prog.style.width = '20%';
       prog.style.transition = 'width 0.2s ease';
@@ -191,25 +193,24 @@
           if(crumb && curCat){
             crumb.innerHTML = `<span class="kb-cat">${curCat.icon} ${curCat.name}</span><span class="kb-sep">·</span><span class="kb-title">${doc.title.replace('｜全栈技术知识库','')}</span>`;
           }
-          // 先把新内容准备好（插入隐藏容器）
+          // 先把新内容准备好
           const temp = document.createElement('div');
           Array.from(doc.body.children).forEach(el => {
             if(isShell(el)) return;
             if(el.tagName === 'SCRIPT' && el.src && el.src.includes('app.js')) return;
             temp.appendChild(document.importNode(el, true));
           });
-          // 一次性替换：删旧内容，插新内容
+          // 一次性替换
           Array.from(document.body.children).forEach(el => {
             if(!isShell(el)) el.remove();
           });
-          // 按顺序插入新内容
           Array.from(temp.children).forEach(el => {
             document.body.appendChild(el);
-            // 给文章内容加丝滑滑入动画
             el.classList.add('kb-article-in');
           });
-          // 更新侧边栏 active
+          // 更新侧边栏 active，保持滚动位置
           renderSide(document.getElementById('kbSideSearch').value);
+          side.scrollTop = savedScroll;
           // 重建 pager
           buildPager();
           // 重新初始化术语
