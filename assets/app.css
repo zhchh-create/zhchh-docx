@@ -1,0 +1,250 @@
+/* ============================================================
+   知识库阅读外壳 app.css
+   注入到每篇文章顶部 <link>，提供：顶栏 / 侧边抽屉 / 暗色 / 进度 / 上下篇
+   ============================================================ */
+
+:root{
+  --kb-topbar-h:52px;
+  --kb-bg:#f7f7f8;
+  --kb-elev:#ffffff;
+  --kb-border:#e6e6eb;
+  --kb-ink:#18181b;
+  --kb-ink-2:#3f3f46;
+  --kb-ink-3:#71717a;
+  --kb-ink-4:#a1a1aa;
+  --kb-accent:#6366f1;
+  --kb-accent-soft:#eef0ff;
+  --kb-shadow:0 8px 30px rgba(0,0,0,.12);
+  --kb-sidebar-w:280px;
+}
+[data-theme="dark"]{
+  --kb-bg:#0c0c0d;
+  --kb-elev:#161618;
+  --kb-border:#26262b;
+  --kb-ink:#f4f4f5;
+  --kb-ink-2:#d4d4d8;
+  --kb-ink-3:#a1a1aa;
+  --kb-ink-4:#71717a;
+  --kb-accent:#818cf8;
+  --kb-accent-soft:#2a2a4a;
+  --kb-shadow:0 8px 30px rgba(0,0,0,.5);
+}
+
+/* 给文章主体腾出顶栏位置 */
+body{padding-top:var(--kb-topbar-h) !important;}
+
+/* ============ 阅读进度条 ============ */
+#kb-progress{
+  position:fixed;top:0;left:0;height:3px;width:0;
+  background:linear-gradient(90deg,#6366f1,#a855f7);
+  z-index:9999;transition:width .1s;
+}
+
+/* ============ 顶栏 ============ */
+#kb-topbar{
+  position:fixed;top:0;left:0;right:0;height:var(--kb-topbar-h);z-index:9998;
+  background:color-mix(in srgb, var(--kb-elev) 85%, transparent);
+  backdrop-filter:saturate(180%) blur(14px);
+  -webkit-backdrop-filter:saturate(180%) blur(14px);
+  border-bottom:1px solid var(--kb-border);
+  display:flex;align-items:center;gap:10px;
+  padding:0 14px;
+}
+#kb-topbar .kb-btn{
+  width:34px;height:34px;border-radius:8px;display:grid;place-items:center;
+  color:var(--kb-ink-3);transition:.15s;flex:none;
+}
+#kb-topbar .kb-btn:hover{background:rgba(127,127,127,.12);color:var(--kb-ink)}
+#kb-topbar .kb-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+#kb-crumb{
+  flex:1;min-width:0;display:flex;align-items:center;gap:8px;
+  font-size:13px;color:var(--kb-ink-3);
+  overflow:hidden;
+}
+#kb-crumb .kb-cat{flex:none;color:var(--kb-accent);font-weight:500}
+#kb-crumb .kb-sep{color:var(--kb-ink-4);flex:none}
+#kb-crumb .kb-title{
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--kb-ink);font-weight:500;
+}
+#kb-topbar .kb-right{display:flex;align-items:center;gap:4px;flex:none}
+
+/* ============ 侧边抽屉 ============ */
+#kb-sidebar{
+  position:fixed;top:var(--kb-topbar-h);left:0;bottom:0;
+  width:var(--kb-sidebar-w);max-width:85vw;
+  background:var(--kb-elev);
+  border-right:1px solid var(--kb-border);
+  z-index:9997;overflow-y:auto;
+  transform:translateX(-100%);
+  transition:transform .25s ease;
+  padding:14px 10px 40px;
+}
+#kb-sidebar.open{transform:translateX(0);box-shadow:var(--kb-shadow)}
+#kb-sidebar .kb-home{
+  display:flex;align-items:center;gap:8px;
+  padding:9px 12px;border-radius:8px;font-size:13.5px;font-weight:500;
+  color:var(--kb-ink);margin:0 4px 10px;
+  background:var(--kb-accent-soft);
+}
+#kb-sidebar .kb-home:hover{opacity:.85}
+#kb-sidebar .kb-side-search{
+  position:relative;margin:0 4px 10px;
+}
+#kb-sidebar .kb-side-search svg{
+  position:absolute;left:10px;top:50%;transform:translateY(-50%);
+  width:14px;height:14px;stroke:var(--kb-ink-4);fill:none;stroke-width:2;
+}
+#kb-sidebar .kb-side-search input{
+  width:100%;padding:8px 10px 8px 32px;border-radius:8px;
+  border:1px solid var(--kb-border);background:var(--kb-bg);
+  color:var(--kb-ink);font-size:13px;outline:none;transition:.15s;
+}
+#kb-sidebar .kb-side-search input:focus{border-color:var(--kb-accent)}
+#kb-sidebar .kb-cat-group{margin-bottom:6px}
+#kb-sidebar .kb-cat-name{
+  display:flex;align-items:center;gap:8px;
+  padding:8px 12px;font-size:12px;font-weight:600;
+  color:var(--kb-ink-4);text-transform:uppercase;letter-spacing:.04em;
+  margin-top:10px;
+}
+#kb-sidebar .kb-art{
+  display:flex;align-items:center;gap:8px;
+  padding:7px 12px 7px 24px;border-radius:7px;
+  font-size:13.5px;color:var(--kb-ink-2);transition:.12s;
+  border-left:2px solid transparent;
+}
+#kb-sidebar .kb-art:hover{background:rgba(127,127,127,.1);color:var(--kb-ink)}
+#kb-sidebar .kb-art.active{
+  background:var(--kb-accent-soft);color:var(--kb-accent);
+  border-left-color:var(--kb-accent);font-weight:500;
+}
+#kb-sidebar .kb-art .dot{flex:none;width:6px;height:6px;border-radius:50%}
+#kb-sidebar .kb-art .dot.deep{background:#ef4444}
+#kb-sidebar .kb-art .dot.std{background:#3b82f6}
+#kb-sidebar .kb-art .dot.basic{background:#22c55e}
+
+#kb-mask{
+  position:fixed;inset:var(--kb-topbar-h) 0 0 0;z-index:9996;
+  background:rgba(0,0,0,.4);opacity:0;visibility:hidden;transition:.25s;
+}
+#kb-mask.show{opacity:1;visibility:visible}
+
+/* ============ 上下篇导航 ============ */
+#kb-pager{
+  max-width:980px;margin:24px auto;padding:0 20px 60px;
+  display:grid;grid-template-columns:1fr 1fr;gap:12px;
+}
+#kb-pager a{
+  display:block;padding:16px 18px;border-radius:12px;
+  background:var(--kb-elev);border:1px solid var(--kb-border);
+  text-decoration:none;transition:.15s;
+}
+#kb-pager a:hover{border-color:var(--kb-accent);transform:translateY(-1px)}
+#kb-pager a.next{text-align:right}
+#kb-pager .dir{font-size:11.5px;color:var(--kb-ink-4);margin-bottom:4px}
+#kb-pager .name{font-size:13.5px;color:var(--kb-ink);font-weight:500;line-height:1.4;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+/* ============ 暗色模式：覆盖文章原有 CSS 变量 ============ */
+[data-theme="dark"]{
+  --bg:#0f0f10 !important;
+  --surface:#1a1a1d !important;
+  --line:#2a2a2e !important;
+  --line-2:#3a3a40 !important;
+  --ink:#e4e4e7 !important;
+  --ink-2:#c4c4c8 !important;
+  --ink-3:#a1a1aa !important;
+  --accent:#818cf1 !important;
+  --accent-2:#22d3ee !important;
+  --accent-soft:#2a2a4a !important;
+  --code-bg:#000 !important;
+  --code-ink:#e2e8f0 !important;
+  --warn-soft:#3a2a10 !important;
+  --danger-soft:#3a1d1d !important;
+  --ok-soft:#143322 !important;
+}
+[data-theme="dark"] body{background:#0f0f10 !important;color:#e4e4e7 !important}
+[data-theme="dark"] .hero{background:linear-gradient(180deg,#000 0%,#0f0f10 100%) !important}
+[data-theme="dark"] section.card,[data-theme="dark"] .toc{
+  background:#1a1a1d !important;border-color:#2a2a2e !important;color:#e4e4e7 !important;
+}
+[data-theme="dark"] th{background:#26262b !important;color:#e4e4e7 !important}
+[data-theme="dark"] tbody tr:nth-child(even){background:#1f1f23 !important}
+[data-theme="dark"] code{background:#26262b !important;color:#a5b4fc !important}
+[data-theme="dark"] .diagram svg{background:#fbfdff !important}
+[data-theme="dark"] footer{background:#000 !important;color:#71717a !important}
+
+/* ============ 移动端 ============ */
+@media (max-width:768px){
+  #kb-topbar{padding:0 10px}
+  #kb-crumb .kb-cat{display:none}
+  #kb-crumb .kb-sep{display:none}
+  #kb-pager{grid-template-columns:1fr;padding:0 14px 40px}
+}
+
+/* 宽屏：侧边栏常显（≥1280px）——整体右移，hero 不再被遮挡 */
+@media (min-width:1280px){
+  #kb-sidebar{
+    transform:translateX(0);
+    box-shadow:none;
+    border-right:1px solid var(--kb-border);
+  }
+  body.kb-sidebar-on{
+    padding-left:var(--kb-sidebar-w) !important;
+  }
+  /* 内容区在剩余空间里居中，宽度适中 */
+  body.kb-sidebar-on .container{
+    max-width:860px !important;
+    margin:0 auto !important;
+  }
+  body.kb-sidebar-on .hero{
+    /* hero 背景自然从 padding-left 后开始 */
+  }
+}
+
+/* ============================================================
+   文章页美化：压缩过大的 hero、去掉重复导航、增加呼吸感
+   ============================================================ */
+
+/* 隐藏文章自带的顶部导航条（顶栏 + 底部 pager 已覆盖） */
+nav.doc-nav{display:none !important}
+
+/* 压缩 hero 区，不要占太多屏 */
+.hero{padding:28px 0 24px !important}
+.hero .breadcrumb{margin-bottom:8px !important}
+.hero h1{font-size:26px !important;margin-bottom:8px !important}
+.hero .meta-row{margin-bottom:8px !important}
+.hero-desc{font-size:14.5px !important;line-height:1.7 !important}
+
+/* TOC 卡片更紧凑 */
+.toc{padding:16px 20px !important;margin:18px 0 !important}
+.toc h2{margin-bottom:8px !important}
+.toc ol{gap:4px 20px !important}
+
+/* 内容卡片之间更透气 */
+main{padding-bottom:20px !important}
+section.card{margin:20px 0 !important;padding:24px 30px !important}
+section.card h2{margin-bottom:14px !important}
+
+/* 表格、代码块呼吸 */
+table{margin:16px 0 !important;font-size:13.5px !important}
+pre.code{margin:16px 0 !important;padding:14px 16px !important}
+.diagram{margin:18px 0 !important}
+
+/* 手机端进一步压缩 */
+@media (max-width:768px){
+  .hero{padding:20px 0 18px !important}
+  .hero h1{font-size:21px !important}
+  .hero-desc{font-size:13.5px !important}
+  section.card{padding:18px 16px !important;margin:14px 0 !important;border-radius:10px !important}
+  .toc{padding:14px 16px !important}
+  .toc ol{grid-template-columns:1fr !important}
+  table{font-size:12.5px !important;display:block;overflow-x:auto;white-space:nowrap}
+  pre.code{font-size:12px !important;padding:12px !important}
+}
+
+/* 宽屏下内容区更宽一点，左右留白更舒服 */
+@media (min-width:1280px){
+  .container{max-width:1080px !important}
+}
