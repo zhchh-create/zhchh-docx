@@ -1,0 +1,149 @@
+/* ===== 全库公共样式 common.css ===== */
+
+/* 顶部导航 */
+.doc-nav{display:flex;justify-content:space-between;align-items:center;gap:8px;max-width:980px;margin:0 auto;padding:10px 20px}
+.doc-nav.top{position:sticky;top:0;z-index:70;background:#fff;border-bottom:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(15,23,42,.08)}
+.doc-nav.bottom{border-top:1px solid #e2e8f0;padding-top:16px;padding-bottom:16px;margin-top:8px}
+.doc-nav-btn{color:#1d4ed8;text-decoration:none;font-size:14px;font-weight:600;line-height:1;padding:7px 12px;border:1px solid #e2e8f0;border-radius:8px;background:#fff;white-space:nowrap;transition:border-color .15s,background .15s}
+a.doc-nav-btn:hover{border-color:#1d4ed8;background:#dbeafe}
+.doc-nav-btn.home{color:#475569}
+.doc-nav-btn.home:hover{color:#1d4ed8}
+.doc-nav-btn.hidden{visibility:hidden}
+@media(max-width:640px){.doc-nav{gap:6px;padding-left:14px;padding-right:14px}.doc-nav-btn{font-size:13px;padding:6px 9px}}
+
+/* Prism代码高亮基础 */
+code[class*=language-],pre[class*=language-]{color:#f8f8f2;background:0 0;text-shadow:0 1px rgba(0,0,0,.3);font-family:Consolas,Monaco,'Andale Mono','Ubuntu Mono',monospace;font-size:1em;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}
+pre[class*=language-]{padding:1em;margin:.5em 0;overflow:auto;border-radius:.3em}
+:not(pre)>code[class*=language-],pre[class*=language-]{background:#272822}
+:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal}
+.token.cdata,.token.comment,.token.doctype,.token.prolog{color:#8292a2}
+.token.punctuation{color:#f8f8f2}
+.token.namespace{opacity:.7}
+.token.constant,.token.deleted,.token.property,.token.symbol,.token.tag{color:#f92672}
+.token.boolean,.token.number{color:#ae81ff}
+.token.attr-name,.token.builtin,.token.char,.token.inserted,.token.selector,.token.string{color:#a6e22e}
+.language-css .token.string,.style .token.string,.token.entity,.token.operator,.token.url,.token.variable{color:#f8f8f2}
+.token.atrule,.token.attr-value,.token.class-name,.token.function{color:#e6db74}
+.token.keyword{color:#66d9ef}
+.token.important,.token.regex{color:#fd971f}
+.token.bold,.token.important{font-weight:700}
+.token.italic{font-style:italic}
+.token.entity{cursor:help}
+
+/* 可读性排版 */
+body{line-height:1.85}
+section.card{padding:34px 40px;margin:26px 0;background:#fff;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+section.card h2{font-size:24px;margin:0 0 22px;padding-left:14px;color:#1e293b}
+section.card h3{font-size:19px;margin:36px 0 12px;padding-left:10px;border-left:3px solid #10b981;color:#1e293b;line-height:1.45}
+section.card h4{font-size:16.5px;margin:24px 0 10px;padding-left:8px;border-left:3px solid #e2e8f0;color:#334155;font-weight:600;line-height:1.45}
+section.card p{margin:12px 0;color:#334155}
+section.card ul,section.card ol{margin:12px 0;padding-left:26px}
+section.card li{margin:8px 0;line-height:1.8;color:#334155}
+
+/* 左侧目录树（桌面端） */
+@media(min-width:1024px){
+  nav.toc {
+    position: fixed !important;
+    left: 20px;
+    top: 80px;
+    width: 240px;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 16px;
+    z-index: 60;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+  }
+  nav.toc h2 {
+    font-size: 14px !important;
+    color: #1e293b;
+    margin: 0 0 12px 0 !important;
+    padding: 0 0 8px 0 !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+    font-weight: 600 !important;
+  }
+  nav.toc ol {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  nav.toc ol li {
+    margin: 6px 0 !important;
+  }
+  nav.toc ol li a {
+    display: block !important;
+    padding: 6px 10px !important;
+    color: #64748b !important;
+    text-decoration: none !important;
+    font-size: 13px !important;
+    line-height: 1.4 !important;
+    border-radius: 6px !important;
+    transition: all .15s !important;
+  }
+  nav.toc ol li a:hover {
+    background: #eff6ff !important;
+    color: #1d4ed8 !important;
+  }
+  .container {
+    margin-left: 280px !important;
+    max-width: calc(100% - 300px) !important;
+  }
+}
+
+/* 手机端优化 */
+@media(max-width:768px){
+  html, body {
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+  body {
+    line-height: 1.7 !important;
+    font-size: 15px !important;
+  }
+  .container {
+    padding: 0 10px !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+  }
+  section.card {
+    padding: 16px 14px !important;
+    margin: 12px 0 !important;
+    border-radius: 8px !important;
+  }
+  section.card h2 {
+    font-size: 18px !important;
+    margin-bottom: 12px !important;
+    padding-left: 10px !important;
+  }
+  section.card h3 {
+    font-size: 16px !important;
+    margin: 20px 0 8px !important;
+  }
+  section.card p {
+    font-size: 14.5px !important;
+    line-height: 1.75 !important;
+    margin: 10px 0 !important;
+  }
+  code {
+    font-size: 13px !important;
+    padding: 2px 5px !important;
+    border-radius: 4px !important;
+    white-space: normal !important;
+    word-break: break-all !important;
+    overflow-wrap: anywhere !important;
+  }
+  pre.code {
+    font-size: 12px !important;
+    padding: 10px !important;
+    overflow-x: auto !important;
+    border-radius: 6px !important;
+  }
+  .diagram {
+    padding: 10px !important;
+    margin: 12px 0 !important;
+    overflow-x: auto !important;
+    border-radius: 8px !important;
+  }
+}
