@@ -160,14 +160,7 @@ pre.code code[class*=language-]{background:transparent;text-shadow:none;font-fam
 }
 
 
-/* ===== 手机端全面优化 ===== */
-@media(max-width:768px){
-  /* 顶部导航栏 */
-  .doc-nav.top {
-    padding: 8px 12px !important;
-    gap: 6px !important;
-    flex-wrap: wrap;
-  }
+
   .doc-nav-btn {
     font-size: 12px !important;
     padding: 6px 10px !important;
@@ -274,6 +267,164 @@ pre.code code[class*=language-]{background:transparent;text-shadow:none;font-fam
     font-size: 13px !important;
     padding: 4px 8px !important;
     margin: 4px !important;
+  }
+}
+
+
+/* ===== 手机端深度优化 ===== */
+@media(max-width:768px){
+  /* 全局 */
+  body {
+    line-height: 1.7 !important;
+    font-size: 15px !important;
+  }
+  
+  /* 顶部导航 */
+  .doc-nav.top {
+    padding: 8px 12px !important;
+    gap: 6px !important;
+  }
+  .doc-nav-btn {
+    font-size: 12px !important;
+    padding: 6px 10px !important;
+  }
+  
+  /* 页面头部 */
+  .hero {
+    padding: 16px 14px !important;
+  }
+  .hero h1 {
+    font-size: 20px !important;
+    line-height: 1.3 !important;
+  }
+  .hero-desc {
+    font-size: 13.5px !important;
+    line-height: 1.65 !important;
+  }
+  
+  /* 内容容器 */
+  .container {
+    padding: 0 10px !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+  }
+  
+  /* 卡片 */
+  section.card {
+    padding: 16px 14px !important;
+    margin: 12px 0 !important;
+    border-radius: 8px !important;
+  }
+  section.card h2 {
+    font-size: 18px !important;
+    margin-bottom: 12px !important;
+    padding-left: 10px !important;
+  }
+  section.card h2 .num {
+    min-width: 26px !important;
+    height: 26px !important;
+    line-height: 26px !important;
+    font-size: 13px !important;
+  }
+  section.card h3 {
+    font-size: 16px !important;
+    margin: 20px 0 8px !important;
+    padding-left: 8px !important;
+  }
+  section.card h4 {
+    font-size: 14.5px !important;
+    margin: 16px 0 6px !important;
+  }
+  section.card p {
+    font-size: 14.5px !important;
+    line-height: 1.75 !important;
+    margin: 10px 0 !important;
+  }
+  section.card ul, section.card ol {
+    padding-left: 20px !important;
+    margin: 10px 0 !important;
+  }
+  section.card li {
+    font-size: 14.5px !important;
+    line-height: 1.7 !important;
+    margin: 6px 0 !important;
+  }
+  
+  /* 行内代码 - 关键优化！ */
+  code {
+    font-size: 13px !important;
+    padding: 2px 5px !important;
+    border-radius: 4px !important;
+    word-break: break-all !important;
+    overflow-wrap: break-word !important;
+    white-space: normal !important;
+    display: inline !important;
+    max-width: 100% !important;
+  }
+  
+  /* 代码块 */
+  pre.code {
+    font-size: 12px !important;
+    padding: 10px !important;
+    overflow-x: auto !important;
+    border-radius: 6px !important;
+  }
+  
+  /* 图示 */
+  .diagram {
+    padding: 10px !important;
+    margin: 12px 0 !important;
+    overflow-x: auto !important;
+    border-radius: 8px !important;
+  }
+  .diagram svg {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+  
+  /* 目录 */
+  nav.toc {
+    margin: 0 0 12px 0 !important;
+    padding: 12px !important;
+    border-radius: 8px !important;
+  }
+  nav.toc h2 {
+    font-size: 13px !important;
+    margin-bottom: 8px !important;
+  }
+  nav.toc ol li a {
+    font-size: 12.5px !important;
+    padding: 4px 6px !important;
+  }
+  
+  /* 底部导航 */
+  .doc-nav.bottom {
+    padding: 10px !important;
+  }
+  
+  /* 术语条 */
+  .glossary-bar {
+    padding: 10px !important;
+    margin: 12px 0 !important;
+  }
+  .glossary-item {
+    font-size: 12.5px !important;
+    padding: 3px 6px !important;
+    margin: 3px !important;
+  }
+  
+  /* 强调句 */
+  .key-sentence, .pit-sentence {
+    padding: 8px 10px !important;
+    margin: 10px 0 !important;
+    font-size: 14px !important;
+  }
+  
+  /* lead */
+  .lead {
+    padding: 8px 10px !important;
+    font-size: 13.5px !important;
+    margin: 10px 0 !important;
   }
 }
 
