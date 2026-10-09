@@ -75,14 +75,10 @@ body{padding-top:var(--kb-topbar-h) !important;}
 
 /* ============ 侧边抽屉 ============ */
 #kb-sidebar{
-  position:fixed;top:var(--kb-topbar-h);left:0;bottom:0;
-  width:var(--kb-sidebar-w);max-width:85vw;
-  background:var(--kb-elev);
-  border-right:1px solid var(--kb-border);
-  z-index:9997;overflow-y:auto;
-  transform:translateX(-100%);
-  transition:transform .25s ease;
-  padding:14px 10px 40px;
+  display:none !important;
+}
+#kb-mask{
+  display:none !important;
 }
 #kb-sidebar.open{transform:translateX(0);box-shadow:var(--kb-shadow)}
 #kb-sidebar .kb-home{
@@ -238,19 +234,10 @@ a{color:#3D7A4F !important}
   #kb-pager{grid-template-columns:1fr;padding:0 14px 40px}
 }
 
-/* 宽屏：侧边栏常显 */
+/* 宽屏：侧边栏已隐藏，内容占满 */
 @media (min-width:1280px){
-  #kb-sidebar{
-    transform:translateX(0);
-    box-shadow:none;
-    border-right:1px solid var(--kb-border);
-  }
   body.kb-sidebar-on{
-    padding-left:var(--kb-sidebar-w) !important;
-  }
-  body.kb-sidebar-on .container{
-    max-width:860px !important;
-    margin:0 auto !important;
+    padding-left:0 !important;
   }
 }
 
@@ -318,14 +305,15 @@ pre.code{margin:16px 0 !important;padding:14px 16px !important}
 }
 
 /* ============================================================
-   宽屏三栏布局：左=文章目录  中=本节目录(sticky)  右=内容
+   宽屏布局：本节目录 sticky 在内容左侧
    ============================================================ */
-@media (min-width:1280px){
+@media (min-width:1024px){
   .container{
     display:grid !important;
-    grid-template-columns:220px 1fr !important;
+    grid-template-columns:200px 1fr !important;
     gap:24px !important;
     align-items:start !important;
+    max-width:1100px !important;
   }
   .container > .hero{grid-column:1 / -1 !important}
   .container > .toc{
