@@ -11,6 +11,59 @@ a.doc-nav-btn:hover{border-color:#1d4ed8;background:#dbeafe}
 .doc-nav-btn.hidden{visibility:hidden}
 @media(max-width:640px){.doc-nav{gap:6px;padding-left:14px;padding-right:14px}.doc-nav-btn{font-size:13px;padding:6px 9px}}
 
+/* 悬浮底部导航（滚动时出现） */
+.float-nav {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.15);
+  padding: 8px 12px;
+  display: flex;
+  gap: 8px;
+  z-index: 90;
+  transition: transform .3s ease;
+}
+.float-nav.show {
+  transform: translateX(-50%) translateY(0);
+}
+.float-nav a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: #f1f5f9;
+  color: #475569;
+  text-decoration: none;
+  font-size: 18px;
+  transition: all .15s;
+}
+.float-nav a:hover {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+.float-nav a.home {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+@media(max-width:768px){
+  .float-nav {
+    bottom: 16px;
+    padding: 6px 10px;
+    gap: 6px;
+  }
+  .float-nav a {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+}
+
 /* Prism代码高亮基础 */
 code[class*=language-],pre[class*=language-]{color:#f8f8f2;background:0 0;text-shadow:0 1px rgba(0,0,0,.3);font-family:Consolas,Monaco,'Andale Mono','Ubuntu Mono',monospace;font-size:1em;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}
 pre[class*=language-]{padding:1em;margin:.5em 0;overflow:auto;border-radius:.3em}
