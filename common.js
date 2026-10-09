@@ -1,49 +1,35 @@
-// 悬浮导航显示/隐藏 + 修复目录树 + 改造左右分栏布局
+// 悬浮导航显示/隐藏 + 修复目录树
 document.addEventListener('DOMContentLoaded', function() {
-  // ===== PC端：改造左右分栏布局 =====
-  if (window.innerWidth > 1023) {
-    const topNav = document.querySelector('.doc-nav.top');
-    const toc = document.querySelector('nav.toc, .toc');
-    const container = document.querySelector('.container');
+  // ===== 修复左侧目录树 =====
+  const toc = document.querySelector('nav.toc, .toc');
+  if (toc) {
+    toc.classList.add('sidebar-toc');
     
-    if (toc && container) {
-      // 创建主包装器
-      const mainWrapper = document.createElement('div');
-      mainWrapper.className = 'main-wrapper';
+    const ol = toc.querySelector('ol');
+    if (ol) {
+      ol.classList.add('toc-single-col');
       
-      // 把toc和container移到mainWrapper里
-      container.parentNode.insertBefore(mainWrapper, container);
-      mainWrapper.appendChild(toc);
-      mainWrapper.appendChild(container);
+      const links = [];
+      const liElements = ol.querySelectorAll('li');
+      liElements.forEach(li => {
+        const a = li.querySelector('a');
+        if (a) {
+          links.push({
+            href: a.getAttribute('href'),
+            text: a.textContent.trim()
+          });
+        }
+      });
       
-      // 给toc加类名
-      toc.classList.add('sidebar-toc');
-      
-      // 重新生成单列表目录
-      const ol = toc.querySelector('ol');
-      if (ol) {
-        ol.classList.add('toc-single-col');
-        const links = [];
-        const liElements = ol.querySelectorAll('li');
-        liElements.forEach(li => {
-          const a = li.querySelector('a');
-          if (a) {
-            links.push({
-              href: a.getAttribute('href'),
-              text: a.textContent.trim()
-            });
-          }
-        });
-        ol.innerHTML = '';
-        links.forEach(link => {
-          const li = document.createElement('li');
-          const a = document.createElement('a');
-          a.href = link.href;
-          a.textContent = link.text;
-          li.appendChild(a);
-          ol.appendChild(li);
-        });
-      }
+      ol.innerHTML = '';
+      links.forEach(link => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = link.href;
+        a.textContent = link.text;
+        li.appendChild(a);
+        ol.appendChild(li);
+      });
     }
   }
   
