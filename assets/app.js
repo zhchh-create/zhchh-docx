@@ -176,11 +176,9 @@
 
     // 切换到新页面内容
     function navigateTo(url, pushUrl){
-      // 显示进度条动画
-      prog.style.width = '30%';
-      // 淡出
-      document.body.style.opacity = '0.3';
-      document.body.style.transition = 'opacity 0.15s ease';
+      // 进度条动画
+      prog.style.width = '20%';
+      prog.style.transition = 'width 0.2s ease';
 
       fetch(url)
         .then(r => r.text())
@@ -193,16 +191,20 @@
           if(crumb && curCat){
             crumb.innerHTML = `<span class="kb-cat">${curCat.icon} ${curCat.name}</span><span class="kb-sep">·</span><span class="kb-title">${doc.title.replace('｜全栈技术知识库','')}</span>`;
           }
-          // 删除旧文章内容（保留 shell）
+          // 先把新内容准备好（插入隐藏容器）
+          const temp = document.createElement('div');
+          Array.from(doc.body.children).forEach(el => {
+            if(isShell(el)) return;
+            if(el.tagName === 'SCRIPT' && el.src && el.src.includes('app.js')) return;
+            temp.appendChild(document.importNode(el, true));
+          });
+          // 一次性替换：删旧内容，插新内容
           Array.from(document.body.children).forEach(el => {
             if(!isShell(el)) el.remove();
           });
-          // 插入新文章内容
-          Array.from(doc.body.children).forEach(el => {
-            if(isShell(el)) return;
-            // 跳过已有的外壳脚本
-            if(el.tagName === 'SCRIPT' && el.src && el.src.includes('app.js')) return;
-            document.body.appendChild(document.importNode(el, true));
+          // 按顺序插入新内容
+          Array.from(temp.children).forEach(el => {
+            document.body.appendChild(el);
           });
           // 更新侧边栏 active
           renderSide(document.getElementById('kbSideSearch').value);
@@ -213,12 +215,9 @@
           // 滚动到顶
           window.scrollTo(0, 0);
           prog.style.width = '100%';
-          // 淡入
-          document.body.style.opacity = '1';
-          setTimeout(() => { prog.style.width = '0'; }, 300);
+          setTimeout(() => { prog.style.width = '0'; }, 200);
         })
         .catch(() => {
-          // 失败就整页跳转
           location.href = url;
         });
     }
