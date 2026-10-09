@@ -1,8 +1,8 @@
 /* ===== 全库公共样式 common.css ===== */
 
-/* 顶部导航 */
+/* 顶部导航 - 标准模版，所有模块统一 */
 .doc-nav{display:flex;justify-content:space-between;align-items:center;gap:8px;max-width:980px;margin:0 auto;padding:10px 20px}
-.doc-nav.top{position:sticky;top:0;z-index:70;background:#fff;border-bottom:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(15,23,42,.08)}
+.doc-nav.top{position:sticky;top:0;z-index:100;background:#fff;border-bottom:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(15,23,42,.08);width:100%}
 .doc-nav.bottom{border-top:1px solid #e2e8f0;padding-top:16px;padding-bottom:16px;margin-top:8px}
 .doc-nav-btn{color:#1d4ed8;text-decoration:none;font-size:14px;font-weight:600;line-height:1;padding:7px 12px;border:1px solid #e2e8f0;border-radius:8px;background:#fff;white-space:nowrap;transition:border-color .15s,background .15s}
 a.doc-nav-btn:hover{border-color:#1d4ed8;background:#dbeafe}
@@ -98,9 +98,9 @@ section.card li{margin:8px 0;line-height:1.8;color:#334155}
   nav.toc, .toc {
     position: fixed !important;
     left: 20px !important;
-    top: 90px !important;
+    top: 70px !important;
     width: 240px !important;
-    max-height: calc(100vh - 110px) !important;
+    max-height: calc(100vh - 90px) !important;
     overflow-y: auto !important;
     background: #fff !important;
     border: 1px solid #e2e8f0 !important;
