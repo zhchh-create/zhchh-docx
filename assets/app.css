@@ -172,7 +172,12 @@ body{background:#DCE8D0 !important;color:#1F2E1F !important}
 }
 .hero h1{color:#1F4A2A !important}
 .hero-desc,.hero .lead,.hero p{color:#354835 !important}
-.hero .meta-row,.hero .breadcrumb{color:#5A6B52 !important}
+.hero .meta-row,.hero .breadcrumb,.hero .meta,.hero .tag-row{
+  color:#3D5240 !important;
+}
+.hero .meta-row *, .hero .breadcrumb *{color:#3D5240 !important}
+.hero .meta-row span, .hero .meta-row em, .hero .meta-row i{color:#3D5240 !important}
+.hero .badge, .hero .meta-tag{background:#D8E8C8 !important;color:#1F4A2A !important}
 
 /* 内容卡片：奶白圆角，柔和阴影 */
 section.card,.toc{
