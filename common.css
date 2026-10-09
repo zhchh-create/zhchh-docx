@@ -93,37 +93,48 @@ section.card p{margin:12px 0;color:#334155}
 section.card ul,section.card ol{margin:12px 0;padding-left:26px}
 section.card li{margin:8px 0;line-height:1.8;color:#334155}
 
-/* 左侧目录树（桌面端） */
+/* 左侧目录树（桌面端） - 强制覆盖 */
 @media(min-width:1024px){
   nav.toc {
     position: fixed !important;
-    left: 20px;
-    top: 80px;
-    width: 240px;
-    max-height: calc(100vh - 100px);
-    overflow-y: auto;
-    background: #fff;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    padding: 16px;
-    z-index: 60;
-    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    left: 20px !important;
+    top: 80px !important;
+    width: 240px !important;
+    max-height: calc(100vh - 100px) !important;
+    overflow-y: auto !important;
+    background: #fff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 12px !important;
+    padding: 16px !important;
+    z-index: 60 !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06) !important;
+    columns: 1 !important;
+    column-count: 1 !important;
   }
   nav.toc h2 {
     font-size: 14px !important;
-    color: #1e293b;
+    color: #1e293b !important;
     margin: 0 0 12px 0 !important;
     padding: 0 0 8px 0 !important;
     border-bottom: 1px solid #e2e8f0 !important;
     font-weight: 600 !important;
+    background: transparent !important;
+    border-radius: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    line-height: normal !important;
+    display: block !important;
   }
   nav.toc ol {
     list-style: none !important;
     padding: 0 !important;
     margin: 0 !important;
+    columns: 1 !important;
+    column-count: 1 !important;
   }
   nav.toc ol li {
     margin: 6px 0 !important;
+    break-inside: avoid !important;
   }
   nav.toc ol li a {
     display: block !important;
@@ -134,6 +145,12 @@ section.card li{margin:8px 0;line-height:1.8;color:#334155}
     line-height: 1.4 !important;
     border-radius: 6px !important;
     transition: all .15s !important;
+    background: transparent !important;
+    border: none !important;
+    font-weight: normal !important;
+    width: auto !important;
+    height: auto !important;
+    min-width: auto !important;
   }
   nav.toc ol li a:hover {
     background: #eff6ff !important;
