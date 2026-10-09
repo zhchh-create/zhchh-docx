@@ -318,6 +318,30 @@ pre.code{margin:16px 0 !important;padding:14px 16px !important}
 }
 
 /* ============================================================
+   宽屏三栏布局：左=文章目录  中=本节目录(sticky)  右=内容
+   ============================================================ */
+@media (min-width:1280px){
+  .container{
+    display:grid !important;
+    grid-template-columns:220px 1fr !important;
+    gap:24px !important;
+    align-items:start !important;
+  }
+  .container > .hero{grid-column:1 / -1 !important}
+  .container > .toc{
+    position:sticky !important;
+    top:68px !important;
+    max-height:calc(100vh - 80px) !important;
+    overflow-y:auto !important;
+    margin:0 !important;
+  }
+  .container > section.card{
+    grid-column:2 !important;
+  }
+  .container > footer{grid-column:1 / -1 !important}
+}
+
+/* ============================================================
    SPA 切换动画：新内容丝滑滑入
    ============================================================ */
 @keyframes kbSlideIn{
