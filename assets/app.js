@@ -1,6 +1,7 @@
 /* ============================================================
    知识库阅读外壳 app.js
    自动注入顶栏 / 侧边抽屉 / 进度条 / 上下篇 / 暗色模式
+   支持 SPA 无刷新导航（点击侧边栏不闪烁）
    ============================================================ */
 (function(){
   // 动态加载 manifest.js
@@ -20,8 +21,7 @@
     const M = window.KB_MANIFEST;
     if(!M) return;
 
-    // 当前文章的相对路径（相对根目录），例如 "01_前端基础/01_HTML5与CSS3【深入】.html"
-    const here = decodeURIComponent(location.pathname.split('/').slice(-2).join('/'));
+    let here = decodeURIComponent(location.pathname.split('/').slice(-2).join('/'));
     let curIdx = -1, prev = null, next = null, curCat = null;
     let flat = [];
     M.cats.forEach(c => c.arts.forEach(a => flat.push(a)));
@@ -97,14 +97,12 @@
     renderSide();
     document.getElementById('kbSideSearch').addEventListener('input', e => renderSide(e.target.value));
 
-    /* 打开/关闭 */
     function openSide(){ side.classList.add('open'); mask.classList.add('show'); }
     function closeSide(){ side.classList.remove('open'); mask.classList.remove('show'); }
     document.getElementById('kbMenuBtn').onclick = () => side.classList.contains('open') ? closeSide() : openSide();
     document.getElementById('kbSearchBtn').onclick = openSide;
     mask.onclick = closeSide;
 
-    // 宽屏时侧边栏常显，窄屏时隐藏；监听 resize
     function syncSidebarMode(){
       if(window.innerWidth >= 1280){
         side.classList.add('open');
@@ -126,17 +124,22 @@
     };
 
     /* ---------- 5. 上下篇 ---------- */
-    if(prev || next){
-      const pager = document.createElement('div');
-      pager.id = 'kb-pager';
-      pager.innerHTML = `
-        ${prev ? `<a class="prev" href="../${encodeURI(prev.u)}"><div class="dir">← 上一篇</div><div class="name">${prev.t}</div></a>` : '<span></span>'}
-        ${next ? `<a class="next" href="../${encodeURI(next.u)}"><div class="dir">下一篇 →</div><div class="name">${next.t}</div></a>` : '<span></span>'}`;
-      // 插到 footer 前
-      const footer = document.querySelector('footer');
-      if(footer) document.body.insertBefore(pager, footer);
-      else document.body.appendChild(pager);
+    function buildPager(){
+      // 移除旧 pager
+      const old = document.getElementById('kb-pager');
+      if(old) old.remove();
+      if(prev || next){
+        const pager = document.createElement('div');
+        pager.id = 'kb-pager';
+        pager.innerHTML = `
+          ${prev ? `<a class="prev" href="../${encodeURI(prev.u)}"><div class="dir">← 上一篇</div><div class="name">${prev.t}</div></a>` : '<span></span>'}
+          ${next ? `<a class="next" href="../${encodeURI(next.u)}"><div class="dir">下一篇 →</div><div class="name">${next.t}</div></a>` : '<span></span>'}`;
+        const footer = document.querySelector('footer');
+        if(footer) document.body.insertBefore(pager, footer);
+        else document.body.appendChild(pager);
+      }
     }
+    buildPager();
 
     /* ---------- 6. 滚动：进度条 ---------- */
     window.addEventListener('scroll', () => {
@@ -144,5 +147,106 @@
       const max = h.scrollHeight - h.clientHeight;
       prog.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
     }, {passive:true});
+
+    /* ============================================================
+       SPA 无刷新导航：拦截内部链接，只替换文章内容
+       ============================================================ */
+    const SHELL_IDS = ['kb-progress','kb-topbar','kb-sidebar','kb-mask','kb-pager'];
+
+    function isShell(el){
+      if(el.id && SHELL_IDS.includes(el.id)) return true;
+      if(el.id === 'gloss-overlay') return true;
+      return false;
+    }
+
+    // 重新初始化术语系统
+    function reinitGlossary(){
+      if(typeof window.initGlossary === 'function'){
+        try{ window.initGlossary(); }catch(e){}
+      }
+    }
+
+    // 更新当前文章索引
+    function updateHere(path){
+      here = path;
+      curIdx = -1; prev = null; next = null; curCat = null;
+      flat.forEach((a,i) => { if(a.u === here){ curIdx = i; prev = flat[i-1]||null; next = flat[i+1]||null; } });
+      M.cats.forEach(c => c.arts.forEach(a => { if(a.u === here) curCat = c; }));
+    }
+
+    // 切换到新页面内容
+    function navigateTo(url, pushUrl){
+      // 显示进度条动画
+      prog.style.width = '30%';
+      // 淡出
+      document.body.style.opacity = '0.3';
+      document.body.style.transition = 'opacity 0.15s ease';
+
+      fetch(url)
+        .then(r => r.text())
+        .then(html => {
+          const doc = new DOMParser().parseFromString(html, 'text/html');
+          // 更新标题
+          document.title = doc.title;
+          // 更新面包屑
+          const crumb = document.getElementById('kb-crumb');
+          if(crumb && curCat){
+            crumb.innerHTML = `<span class="kb-cat">${curCat.icon} ${curCat.name}</span><span class="kb-sep">·</span><span class="kb-title">${doc.title.replace('｜全栈技术知识库','')}</span>`;
+          }
+          // 删除旧文章内容（保留 shell）
+          Array.from(document.body.children).forEach(el => {
+            if(!isShell(el)) el.remove();
+          });
+          // 插入新文章内容
+          Array.from(doc.body.children).forEach(el => {
+            if(isShell(el)) return;
+            // 跳过已有的外壳脚本
+            if(el.tagName === 'SCRIPT' && el.src && el.src.includes('app.js')) return;
+            document.body.appendChild(document.importNode(el, true));
+          });
+          // 更新侧边栏 active
+          renderSide(document.getElementById('kbSideSearch').value);
+          // 重建 pager
+          buildPager();
+          // 重新初始化术语
+          reinitGlossary();
+          // 滚动到顶
+          window.scrollTo(0, 0);
+          prog.style.width = '100%';
+          // 淡入
+          document.body.style.opacity = '1';
+          setTimeout(() => { prog.style.width = '0'; }, 300);
+        })
+        .catch(() => {
+          // 失败就整页跳转
+          location.href = url;
+        });
+    }
+
+    // 拦截所有内部链接点击（事件委托）
+    document.addEventListener('click', e => {
+      const a = e.target.closest('a');
+      if(!a) return;
+      const href = a.getAttribute('href');
+      if(!href || href.startsWith('#') || href.startsWith('javascript:') || href.startsWith('http')) return;
+      if(a.target === '_blank') return;
+      // 只拦截 .html 链接
+      if(!href.endsWith('.html')) return;
+      // 首页链接不拦截（整页跳）
+      if(href.includes('index.html')) return;
+
+      e.preventDefault();
+      // 计算相对路径
+      const base = location.pathname.replace(/\/[^/]*$/, '/');
+      const url = base + href;
+      const path = decodeURIComponent(href.replace(/^\.\.\//,''));
+      updateHere(path);
+      navigateTo(url, href);
+    });
+
+    // 浏览器前进/后退
+    window.addEventListener('popstate', e => {
+      location.reload();
+    });
   }
 })();
