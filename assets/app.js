@@ -66,9 +66,7 @@
 
     const side = document.createElement('nav');
     side.id = 'kb-sidebar';
-    side.innerHTML = `<a class="kb-home" href="../index.html">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        知识库首页</a>
+    side.innerHTML = `
       <div class="kb-side-search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="kbSideSearch" placeholder="过滤文章…"></div>`;
     const listWrap = document.createElement('div');
     listWrap.id = 'kbSideList';
