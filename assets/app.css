@@ -156,21 +156,23 @@ body{padding-top:var(--kb-topbar-h) !important;}
   --surface:#F8FAF0 !important;
   --line:#C5D5B5 !important;
   --line-2:#B5C9A5 !important;
-  --ink:#2A3D2A !important;
-  --ink-2:#4F6348 !important;
-  --ink-3:#7A8A70 !important;
-  --accent:#3D7A4F !important;
-  --accent-2:#5A9E6A !important;
+  --ink:#1F2E1F !important;
+  --ink-2:#354835 !important;
+  --ink-3:#5A6B52 !important;
+  --accent:#2D6A3F !important;
+  --accent-2:#3D7A4F !important;
   --accent-soft:#D8E8C8 !important;
 }
-body{background:#DCE8D0 !important;color:#2A3D2A !important}
+body{background:#DCE8D0 !important;color:#1F2E1F !important}
 
 /* hero 区：淡绿渐变 */
 .hero{
   background:linear-gradient(180deg,rgba(122,158,126,.15),rgba(220,232,208,0)) !important;
   border-radius:0 !important;
 }
-.hero h1{color:#255A36 !important}
+.hero h1{color:#1F4A2A !important}
+.hero-desc,.hero .lead,.hero p{color:#354835 !important}
+.hero .meta-row,.hero .breadcrumb{color:#5A6B52 !important}
 
 /* 内容卡片：奶白圆角，柔和阴影 */
 section.card,.toc{
