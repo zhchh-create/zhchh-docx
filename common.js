@@ -1,6 +1,43 @@
-// 悬浮导航显示/隐藏
+// 悬浮导航显示/隐藏 + 修复目录树
 document.addEventListener('DOMContentLoaded', function() {
-  // 创建悬浮导航
+  // ===== 修复左侧目录树 =====
+  const toc = document.querySelector('nav.toc, .toc');
+  if (toc) {
+    // 给目录树加个类，方便CSS定位
+    toc.classList.add('sidebar-toc');
+    
+    // 强制把所有li的::before序号去掉（通过加类）
+    const ol = toc.querySelector('ol');
+    if (ol) {
+      ol.classList.add('toc-single-col');
+      
+      // 把所有链接文本提取出来，重新生成单列表
+      const links = [];
+      const liElements = ol.querySelectorAll('li');
+      liElements.forEach(li => {
+        const a = li.querySelector('a');
+        if (a) {
+          links.push({
+            href: a.getAttribute('href'),
+            text: a.textContent.trim()
+          });
+        }
+      });
+      
+      // 重新生成单列表
+      ol.innerHTML = '';
+      links.forEach(link => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = link.href;
+        a.textContent = link.text;
+        li.appendChild(a);
+        ol.appendChild(li);
+      });
+    }
+  }
+  
+  // ===== 创建悬浮导航 =====
   const floatNav = document.createElement('div');
   floatNav.className = 'float-nav';
   
