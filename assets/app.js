@@ -205,6 +205,8 @@
           // 按顺序插入新内容
           Array.from(temp.children).forEach(el => {
             document.body.appendChild(el);
+            // 给文章内容加丝滑滑入动画
+            el.classList.add('kb-article-in');
           });
           // 更新侧边栏 active
           renderSide(document.getElementById('kbSideSearch').value);
