@@ -198,9 +198,24 @@ body{padding-top:var(--kb-topbar-h) !important;}
     max-width:860px !important;
     margin:0 auto !important;
   }
-  body.kb-sidebar-on .hero{
-    /* hero 背景自然从 padding-left 后开始 */
-  }
+}
+
+/* 术语弹窗：文章自带的 *{max-width:100%!important} 会冲掉 glossary.css 的 560px，这里修回来 */
+.gloss-modal{
+  max-width:560px !important;
+  width:100% !important;
+}
+/* 暗色下弹窗背景适配 */
+[data-theme="dark"] .gloss-modal{
+  background:var(--kb-elev) !important;
+  color:var(--kb-ink) !important;
+}
+[data-theme="dark"] .gloss-modal-head{
+  background:var(--kb-elev) !important;
+  border-bottom-color:var(--kb-border) !important;
+}
+[data-theme="dark"] .gloss-short{
+  background:rgba(127,127,127,.1) !important;
 }
 
 /* ============================================================
