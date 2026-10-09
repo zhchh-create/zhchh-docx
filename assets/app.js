@@ -146,6 +146,19 @@
       prog.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
     }, {passive:true});
 
+    /* ---------- 7. TOC 锚点平滑滚动 ---------- */
+    document.addEventListener('click', e => {
+      const a = e.target.closest('.toc a, .toc ol a, .toc ul a');
+      if(!a) return;
+      const href = a.getAttribute('href');
+      if(!href || !href.startsWith('#')) return;
+      const target = document.querySelector(href);
+      if(!target) return;
+      e.preventDefault();
+      target.scrollIntoView({behavior:'smooth', block:'start'});
+      history.replaceState(null, '', href);
+    });
+
     /* ============================================================
        SPA 无刷新导航：拦截内部链接，只替换文章内容
        ============================================================ */
